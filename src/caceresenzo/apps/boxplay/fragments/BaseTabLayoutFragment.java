@@ -21,19 +21,25 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
  */
 public abstract class BaseTabLayoutFragment extends Fragment {
 	
-	private static final int OFFSCREEN_PAGE_LIMIT = 10;
+	/* Constants */
+	public static final int OFFSCREEN_PAGE_LIMIT = 10;
 	
+	/* Instance */
 	public static BaseTabLayoutFragment INSTANCE;
 	
+	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
 	protected BoxPlayApplication boxPlayActivity;
 	
+	/* Views */
 	protected TabLayout tabLayout;
 	protected ViewPager viewPager;
 	protected BaseViewPagerAdapter adapter;
 	
+	/* Listeners */
 	protected OnPageChangeListener onPageChangeListener;
 	
+	/* Variables */
 	protected int onOpenPageId = 0, lastOpenPosition = 0;
 	
 	/**
@@ -67,6 +73,9 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * Private, called if the {@link ViewPager} is null when {@link #onActivityCreated(Bundle)} is called
+	 */
 	private void initializeViewPager() {
 		adapter = new BaseViewPagerAdapter(getChildFragmentManager());
 		
@@ -131,11 +140,12 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 	}
 	
 	/**
-	 * Change Tab behavior
+	 * Change TabLayout behavior
 	 * 
 	 * Possible: TabLayout.MODE_FIXED or TabLayout.MODE_SCROLLABLE
 	 * 
 	 * @param mode
+	 *            New bahavior
 	 */
 	protected void setTabMode(int mode) {
 		tabLayout.setTabMode(mode);
@@ -161,14 +171,14 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 	}
 	
 	/**
-	 * Update drawer selection by lastOpenPosition
+	 * Update drawer selection by {@link #lastOpenPosition}
 	 */
 	private void updateDrawerSelection() {
 		updateDrawerSelection(getMenuItemIdByPageId(lastOpenPosition));
 	}
 	
 	/**
-	 * Update drawer selection by MenuItem's id
+	 * Update drawer selection by {@link MenuItem}'s id
 	 * 
 	 * @param menuItemId
 	 */
@@ -179,7 +189,7 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 	}
 	
 	/**
-	 * Update drawer selection by MenuItem instance directly
+	 * Update drawer selection by {@link MenuItem} instance directly
 	 * 
 	 * @param menuItem
 	 */
@@ -189,16 +199,16 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 	}
 	
 	/**
-	 * Get actual page's fragment
+	 * Get actual page's {@link Fragment}
 	 * 
-	 * @return The actual subfragment open
+	 * @return The actual displayed {@link Fragment}
 	 */
 	public Fragment getActualFragment() {
 		return adapter.getItem(lastOpenPosition);
 	}
 	
 	/**
-	 * Get the last open fragment id
+	 * Get the last open {@link Fragment} id
 	 * 
 	 * @return Last open position
 	 */
@@ -207,7 +217,7 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 	}
 	
 	/**
-	 * Get MenuItem's id by page position
+	 * Get {@link MenuItem}'s id by page position
 	 * 
 	 * Used to select item in the drawer
 	 * 

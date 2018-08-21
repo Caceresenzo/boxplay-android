@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import caceresenzo.apps.boxplay.R;
 
+/**
+ * Useless fragment used as a placeholder
+ * 
+ * @author Enzo CACERES
+ */
 public class PlaceholderFragment extends Fragment {
-	
-	public PlaceholderFragment() {
-		;
-	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_placeholder, container, false);
-		return view;
+		return inflater.inflate(R.layout.fragment_placeholder, container, false);
 	}
 	
 }

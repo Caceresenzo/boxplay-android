@@ -11,12 +11,14 @@ import caceresenzo.apps.boxplay.providers.media.music.MusicService;
 
 public class MusicNotificationBroadcast extends BroadcastReceiver {
 	
+	/* Tag */
 	public static final String TAG = MusicNotificationBroadcast.class.getSimpleName();
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if (intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) {
 			KeyEvent keyEvent = (KeyEvent) intent.getExtras().get(Intent.EXTRA_KEY_EVENT);
+			
 			if (keyEvent.getAction() != KeyEvent.ACTION_DOWN) {
 				return;
 			}
@@ -29,26 +31,38 @@ public class MusicNotificationBroadcast extends BroadcastReceiver {
 					} else {
 						MusicControls.getMusicControls().playControl(context);
 					}
+					
 					break;
 				}
+				
 				case KeyEvent.KEYCODE_MEDIA_PLAY: {
+					MusicControls.getMusicControls().playControl(context);
 					break;
 				}
+				
 				case KeyEvent.KEYCODE_MEDIA_PAUSE: {
+					MusicControls.getMusicControls().pauseControl(context);
 					break;
 				}
+				
 				case KeyEvent.KEYCODE_MEDIA_STOP: {
 					break;
 				}
+				
 				case KeyEvent.KEYCODE_MEDIA_NEXT: {
 					Log.d(TAG, TAG + ": KEYCODE_MEDIA_NEXT");
 					MusicControls.getMusicControls().nextControl(context);
 					break;
 				}
+				
 				case KeyEvent.KEYCODE_MEDIA_PREVIOUS: {
 					Log.d(TAG, TAG + ": KEYCODE_MEDIA_PREVIOUS");
 					MusicControls.getMusicControls().previousControl(context);
 					break;
+				}
+				
+				default: {
+					
 				}
 			}
 		} else {
@@ -57,14 +71,17 @@ public class MusicNotificationBroadcast extends BroadcastReceiver {
 					MusicControls.getMusicControls().playControl(context);
 					break;
 				}
+				
 				case MusicService.NOTIFY_PAUSE: {
 					MusicControls.getMusicControls().pauseControl(context);
 					break;
 				}
+				
 				case MusicService.NOTIFY_NEXT: {
 					MusicControls.getMusicControls().nextControl(context);
 					break;
 				}
+				
 				case MusicService.NOTIFY_DELETE: {
 					// Intent serviceIntent = new Intent(context, MusicService.class);
 					// context.stopService(serviceIntent);
@@ -74,6 +91,7 @@ public class MusicNotificationBroadcast extends BroadcastReceiver {
 					MusicService.destroyService(context);
 					break;
 				}
+				
 				case MusicService.NOTIFY_PREVIOUS: {
 					MusicControls.getMusicControls().previousControl(context);
 					break;

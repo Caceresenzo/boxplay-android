@@ -326,7 +326,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						progressDialog.update(R.string.boxplay_culture_searchngo_extractor_status_no_extractor_compatible);
+						boxPlayApplication.toast(R.string.boxplay_culture_searchngo_extractor_status_no_extractor_compatible).show();
 					}
 				});
 			}
