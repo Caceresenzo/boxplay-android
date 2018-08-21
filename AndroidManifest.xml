@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="caceresenzo.apps.boxplay"
+    android:versionCode="003141"
+    android:versionName="3.1.4.1 BETA" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="27" />
+
+    <!-- android:icon="@mipmap/ic_launcher" -->
+    <application
+        android:name=".application.BoxPlayApplication"
+        android:allowBackup="true"
+        android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+        android:icon="@mipmap/icon_boxplay3"
+        android:isGame="false"
+        android:label="@string/application_name"
+        android:largeHeap="true"
+        android:launchMode="singleTop"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activities.BoxPlayActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/application_name"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.VideoActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/title_activity_video"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.BoxPlayActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="caceresenzo.apps.boxplay.activities.BoxPlayActivity" />
+        </activity>
+        <activity
+            android:name=".activities.MusicActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/title_activity_music"
+            android:launchMode="standard" >
+        </activity>
+        <activity
+            android:name=".activities.SearchAndGoDetailActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/title_activity_searchandgo_detail"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.BoxPlayActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="caceresenzo.apps.boxplay.activities.BoxPlayActivity" />
+        </activity>
+        <activity
+            android:name=".activities.MangaChapterReaderActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/title_activity_manga_reader"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.SearchAndGoDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity" />
+        </activity>
+
+        <service
+            android:name=".providers.media.music.MusicService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver android:name="caceresenzo.apps.boxplay.receivers.MusicNotificationBroadcast" >
+            <intent-filter>
+                <action android:name="caceresenzo.apps.boxplay.DELETE" />
+                <action android:name="caceresenzo.apps.boxplay.PAUSE" />
+                <action android:name="caceresenzo.apps.boxplay.NEXT" />
+                <action android:name="caceresenzo.apps.boxplay.PLAY" />
+                <action android:name="caceresenzo.apps.boxplay.PREVIOUS" />
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="caceresenzo.apps.boxplay.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <!-- Libraries -->
+
+
+        <!-- <activity -->
+        <!-- android:name="com.rohitss.uceh.UCEDefaultActivity" -->
+        <!-- android:process=":error_activity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <activity
+            android:name=".activities.YoutubeDownloadActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".receivers.YoutubeDownloadFinishedReceiver"
+            android:exported="true"
+            android:process=".dlFinished" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

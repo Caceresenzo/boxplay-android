@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    android:padding="8dp" >
+
+    <include layout="@layout/activity_video_season_selector" />
+
+    <include layout="@layout/view_line_separator" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_video_recyclerview_videos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/view_line_separator" />
+
+</LinearLayout>

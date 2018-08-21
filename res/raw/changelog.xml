@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog bulletedList="false">
+
+	<changelogversion versionName="3.1.4.1 BETA" changeDate="20/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 6.1[/b]</changelogtext>
+		<changelogtext>[b]Quick Fix![/b] Changed code for older Android version</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.1.4 BETA" changeDate="20/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 6[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Adkami as a video provider</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility to chose source player if page have multiple</changelogtext>
+		<changelogtext>[b]Added![/b] Download confirm dialog showing file size</changelogtext>
+		<changelogtext>[b]Fixed![/b] A bug causing restoration to apply an empty string for Search n' Go</changelogtext>
+		<changelogtext>[b]Unresolvable Bug![/b] The Watch Later list will remove all Search n' Go element if you upgrade version</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.1.3 BETA" changeDate="18/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 5 + Watch Later List[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Cache version for offline checking</changelogtext>
+		<changelogtext>[b]Fixed![/b] Manga Reader, if activity killed, now restore actual page</changelogtext>
+		<changelogtext>[b]Fixed![/b] Search n' Go Provider Settings validate and cancel button was not translated</changelogtext>
+		<changelogtext>[b]Fixed![/b] Update value was not updating when refresh</changelogtext>
+		<changelogtext>[b]Fixed![/b] Serialized-Elements were not linked to the original</changelogtext>
+		<changelogtext>[b]Fixed![/b] (Maybe) Bug were the snackbar was displaying "downloading..." indefinetly if you network were too quick</changelogtext>
+		<changelogtext>[b]Fixed![/b] (Maybe) Bug were the application was crashing due to a bad Dynamic-NavigationView restoration</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.1.2 BETA" changeDate="17/08/2018">
+		<changelogtext>[b]BoxPlay Core Big Work 1[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Support for weak and older smartphone</changelogtext>
+		<changelogtext>[b]Changed![/b] Serialization added for everything in BoxPlay</changelogtext>
+		<changelogtext>[b]Fixed![/b] BoxPlay Core is now more stable</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing item to be forgot and application was crashing</changelogtext>
+		<changelogtext>[b]Fixed![/b] Managers was using wrong context, they now use the application main context</changelogtext>
+		<changelogtext>[b]Fixed![/b] Video Activity was crashing due to forgot configuration section</changelogtext>
+		<changelogtext>[b]Fixed![/b] Lot of managers was using a wrong UI context, and were causing NullPointerException because of this</changelogtext>
+		<changelogtext>[b]Fixed![/b] WorkingProgressDialog is now a full usable dialog (used in Premium and now in Search n' Go)</changelogtext>
+		<changelogtext>[b]Fixed![/b] Almost full BoxPlay Activity restoration if she was killed</changelogtext>
+		<changelogtext>[b]Fixed![/b] ... a lot of little one fixed too ...</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.1.1 BETA" changeDate="15/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 4[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Primtive video download button</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.1.0 BETA" changeDate="15/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 3[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Primitive Manga Reader</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.9 BETA" changeDate="15/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 2[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Site: VOIRFILM.bz</changelogtext>
+		<changelogtext>[b]Fixed![/b] Extractor was not checking if the streaming was possible before processing the page</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.8 BETA" changeDate="14/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 1[/b]</changelogtext>
+		<changelogtext>[b]New![/b] UI Icons</changelogtext>
+		<changelogtext>[b]New![/b] Search n' Go Page</changelogtext>
+		<changelogtext>[b]New![/b] Video extractor</changelogtext>
+		<changelogtext>[b]New![/b] Search engine</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bugs in the library page causing the Tabs not fully scrolling</changelogtext>
+		<changelogtext>[b]Optimized![/b] BoxPlay3 Core Library</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.7 BETA" changeDate="05/08/2018">
+		<changelogtext>[b]UI Rework Update (with Quentin)[/b]</changelogtext>
+		<changelogtext>[b]New![/b] UI Design</changelogtext>
+		<changelogtext>[b]New![/b] App relunch itself when changing language</changelogtext>
+		<changelogtext>[b]Fixed![/b] Some bugs</changelogtext>
+		<changelogtext>[b]Optimized![/b] Tutorials engine</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.6 BETA" changeDate="17/06/2018">
+		<changelogtext>[b]Premium Update[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Premium Features</changelogtext>
+		<changelogtext>[b]New![/b] BoxPlay3 Icon</changelogtext>
+		<changelogtext>[b]Fixed![/b] Some bug that was causing unexpected crash when restoring the app</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.5 BETA" changeDate="06/06/2018">
+		<changelogtext>[b]Music Player Update[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Music Player</changelogtext>
+		<changelogtext>[b]New![/b] Button for any music (play after current and add to queue)</changelogtext>
+		<changelogtext>[b]Info![/b] Reduced card size, for more intuitive navigation</changelogtext>
+		<changelogtext>[b]Optimized![/b] Highest image source calculator</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.4 BETA" changeDate="17/05/2018">
+		<changelogtext>[b]Tutorials Update[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Tutorials for dummies</changelogtext>
+		<changelogtext>[b]New![/b] Hosting Tab in About sections</changelogtext>
+		<changelogtext>[b]New![/b] Video will be checking on what server there are on</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility to reset tutorials progress (settings)</changelogtext>
+		<changelogtext>[b]Fixed![/b] A lot of typo (but a lot are still remaining)</changelogtext>
+		<changelogtext>[b]Started![/b] Working on a new API with Fabien</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.3 BETA" changeDate="08/05/2018">
+		<changelogtext>[b]Music Update[/b]</changelogtext>
+		<changelogtext>[b]Author or Band support[/b]</changelogtext>
+		<changelogtext>[b]Ask me to add song[/b]</changelogtext>
+		<changelogtext>[b]Primitive player for the moement (VLC)[/b]</changelogtext>
+		<changelogtext>[b]Possibility to travel throught music library[/b]</changelogtext>
+		<changelogtext>[b]Possibility select our music style[/b]</changelogtext>
+		<changelogtext>[b]--- Other change[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Music tab for the BoxPlay Store</changelogtext>
+		<changelogtext>[b]New![/b] Research feature; more optimized now, and also linked between Store</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility to clear image cache (settings)</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility force factory to work (settings)</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility remove the feature that lock the back button (settings)</changelogtext>
+		<changelogtext>[b]Changed![/b] And Polished a lot of the card design</changelogtext>
+		<changelogtext>[b]Fixed![/b] A bug that were unselecting menu if it was already clicked</changelogtext>
+		<changelogtext>[b](Possibly) Fixed![/b] A bug that caused image to be square, ramdomly append, don\'t know why...</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.2 BETA" changeDate="08/05/2018">
+		<changelogtext>[b]Welcome![/b] Dorian HARDY to our team! As a quick-hosting provider</changelogtext>
+		<changelogtext>[b]New![/b] Youtube Video Quick Downloader</changelogtext>
+		<changelogtext>[b]Added![/b] English SubTitled French Language</changelogtext>
+		<changelogtext>[b]Added![/b] New settings for background tasks, language and crash-reporting</changelogtext>
+		<changelogtext>[b]Added![/b] Per-Video overriding data (video url and language)</changelogtext>
+		<changelogtext>[b]Changed[/b] episode language disposition</changelogtext>
+		<changelogtext>[b]Changed[/b] language traduction</changelogtext>
+		<changelogtext>[b]Optimizing![/b] Video Factory, will change soon to a File Factory (seems like a hint to soon update ;))</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug that was crashing the app if you have no connection</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.1 BETA P1" changeDate="03/05/2018">
+		<changelogtext>[b]Changed[/b] design on various elements</changelogtext>
+		<changelogtext>[b]Optimized![/b] User interface</changelogtext>
+		<changelogtext>[b]Fixed![/b] A bug, that if VLC was returning an error, the application was crashing</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3.0.1 BETA" changeDate="02/05/2018">
+		<changelogtext>[b]New![/b] Crash reporter</changelogtext>
+		<changelogtext>[b]New![/b] Changelog category in About page</changelogtext>
+		<changelogtext>[b]New![/b] Search bar</changelogtext>
+		<changelogtext>[b]Fixed![/b] Typo in the description (french language)</changelogtext>
+		<changelogtext>[b]Fixed![/b] BoxPlay Activity was restarting if you were canceling Video Activity with aciton bar button</changelogtext>
+		<changelogtext>[b]Starting[/b] working on settings</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="3 BETA" changeDate="29/04/2018">
+		<changelogtext>[b] The futur is now [/b]</changelogtext>
+		<changelogtext>[b]New![/b] Interface.</changelogtext>
+		<changelogtext>[b]New![/b] BoxPlay Engine.</changelogtext>
+		<changelogtext>[b]I re-done everything...[/b] so any of previous changelog is wrong.</changelogtext>
+	</changelogversion>
+
+	<changelogversion versionName="2.2.0">
+		<changelogtext>VideoFactory 🏭 🏭 🏭</changelogtext>
+		<changelogtext>[b]Optimized![/b] Parsing BoxPlay server's data</changelogtext>
+		<changelogtext>[b]Added![/b] Now see the update name when the update ask you if you want to download the new version</changelogtext>
+		<changelogtext>[b]Created![/b] Own BoxPlay library! FINALLY!</changelogtext>
+		<changelogtext>[b]BoxPlay PC (Java) developement started![/b]</changelogtext>
+		<changelogtext>[b]Info[/b] Application architecture will change a lot to be compatible cross-plateform (PC, Phone, Web, ...), crash might occurs. If the application crashed for you, please tell me, BoxPlay automatically create a dump of the stacktrace before dieing (that help me to fix them!)</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="2.1.0">
+		<changelogtext>CDN UPDATE!</changelogtext>
+		<changelogtext>[b]Added![/b] CDN Explorer</changelogtext>
+		<changelogtext>[b]Added![/b] CDN Management</changelogtext>
+		<changelogtext>[b]VLC GOT SOME BUGS, SO YOU NEED TO CLICK MULTIPLES TIME ON THE SAME ITEM IF THAT NOT WORKING AT FIRST TRY[/b]</changelogtext>
+		<changelogtext>[b]ONLY USABLE WHEN CDN IS ONLINE, CDN=MY COMPUTER[/b]</changelogtext>
+		<changelogtext>Demo available on my Youtube channel if you want to see how it work!</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="2.0.6">
+		<changelogtext>[b]Added![/b] CDNs, Content Delivery Network, direct access of my hard drives for more animes, but will not be as beautiful as the main menu, that for fast delivery only!</changelogtext>
+		<changelogtext>[b]Added![/b] You can now reset the fast and local cache</changelogtext>
+		<changelogtext>[b]Added![/b] Color for video in video lists, for easiest reading</changelogtext>
+		<changelogtext>[b]New![/b] Color for the video group "Serie", is now easier to read</changelogtext>
+		<changelogtext>[b]Fixed![/b] OAV, SPECIAL and MOVIES for Anime finally work!</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="2.0.5">
+		<changelogtext>[b]Added![/b] This change log display</changelogtext>
+		<changelogtext>[b]Removed![/b] Anoying "Hey!! Register an account" message</changelogtext>
+		<changelogtext>[b]Fixed![/b] Saving progression work again! (optimized too)</changelogtext>
+		<changelogtext>[b]Fixed![/b] App was crashing if the server was unreachable</changelogtext>
+		<changelogtext>[b]Fixed![/b] Image loader/downloader</changelogtext>
+		<changelogtext>[b]Fixed![/b] Android Update Version (officially)</changelogtext>
+		<changelogtext>[b]Fixed![/b] Various bugs</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="2.0.4">
+		<changelogtext>[b]Added![/b] Optimization</changelogtext>
+		<changelogtext>[b]Added![/b] Login/Register system</changelogtext>
+		<changelogtext>[b]Break![/b] Progression saving system</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="2">
+		<changelogtext>Everything has been updated!</changelogtext>
+		<changelogtext>Some other changes I can't quite remember</changelogtext>
+		<changelogtext>[b]New![/b] Beautiful new interface!!!</changelogtext>
+		<changelogtext>[b]New![/b] Optimized json fetching</changelogtext>
+		<changelogtext>[b]Added![/b] New video type support</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="1.2.2">
+		<changelogtext>[b]New![/b] Episode System</changelogtext>
+		<changelogtext>[b]Optimized![/b] VLC API</changelogtext>
+		<changelogtext>[b]Fixed![/b] VLC error if video failed fetching</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="1.2.0.1">
+		<changelogtext>[b]New![/b] Login system</changelogtext>
+		<changelogtext>[b]New![/b] Sync. system</changelogtext>
+		<changelogtext>[b]Optimized![/b] API</changelogtext>
+		<changelogtext>[b]Fixed![/b] VLC not starting at saved time</changelogtext>
+		<changelogtext>[b]Fixed![/b] Infinite login loop in the code, API overloaded</changelogtext>
+	</changelogversion>
+	<changelogversion versionName="1">
+		<changelogtext>First release</changelogtext>
+	</changelogversion>
+
+</changelog>

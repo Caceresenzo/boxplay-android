@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/cardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/main_card_margin_vertical"
+    android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+    android:layout_marginStart="@dimen/main_card_margin_horizontal"
+    android:layout_marginTop="@dimen/main_card_margin_vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/item_about_hosting_textview_name"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_title_margin"
+            android:text="Name"
+            android:textColor="@color/white" />
+
+        <include layout="@layout/view_line_separator" />
+
+        <TextView
+            android:id="@+id/item_about_hosting_textview_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_title_margin"
+            android:text="Description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/item_about_hosting_imageview_image"
+            style="@style/imageViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_download_light" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

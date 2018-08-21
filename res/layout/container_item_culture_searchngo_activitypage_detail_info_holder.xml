@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/container_item_culture_searchandgo_detail_info_holder_textview_type"
+        style="@style/textViewSimpleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="TYPE"
+        android:textColor="@color/colorAccent"
+        android:textSize="14dp" />
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/item_culture_searchandgo_detail_info_textview_content" -->
+    <!-- style="@style/textViewTitleStyle" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_marginBottom="15dp" -->
+    <!-- android:layout_marginLeft="15dp" -->
+    <!-- android:gravity="start" -->
+    <!-- android:text="CONTENT" /> -->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/container_item_culture_searchandgo_detail_info_holder_recyclerview_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="start" >
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

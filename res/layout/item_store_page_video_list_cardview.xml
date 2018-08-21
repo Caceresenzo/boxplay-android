@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/cardViewStyleAccented"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/main_card_margin_vertical_big"
+    android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+    android:layout_marginStart="@dimen/main_card_margin_horizontal"
+    android:layout_marginTop="@dimen/main_card_margin_vertical_big"
+    android:clickable="true"
+    android:transitionName="@string/transition_view_reveal" >
+
+    <include layout="@layout/item_store_page_video_list_layout" />
+
+</android.support.v7.widget.CardView>

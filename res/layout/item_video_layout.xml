@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/cardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/main_card_margin_vertical"
+    android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+    android:layout_marginStart="@dimen/main_card_margin_horizontal"
+    android:layout_marginTop="@dimen/main_card_margin_vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <com.kyo.expandablelayout.ExpandableLayout
+            android:id="@+id/item_video_layout_expandablelayout_item_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RelativeLayout
+                android:id="@+id/item_video_layout_relativelayout_parent_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/item_video_layout_textview_episode_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:text="Episode ???*"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <ImageView
+                    android:id="@+id/item_video_layout_imageview_host_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@+id/item_video_layout_seekbar_saved_progress"
+                    android:src="@drawable/host_boxplay" />
+
+                <TextView
+                    android:id="@+id/item_video_layout_textview_saved_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/item_video_layout_seekbar_saved_progress"
+                    android:layout_below="@+id/item_video_layout_seekbar_saved_progress"
+                    android:text="00:00:00/00:00:00" />
+
+                <SeekBar
+                    android:id="@+id/item_video_layout_seekbar_saved_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/item_video_layout_textview_episode_title"
+                    android:layout_below="@+id/item_video_layout_imageview_host_icon"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:thumb="@null" />
+
+                <TextView
+                    android:id="@+id/item_video_layout_textview_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/item_video_layout_seekbar_saved_progress"
+                    android:layout_below="@+id/item_video_layout_seekbar_saved_progress"
+                    android:text="Language" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:canExpand="true" >
+
+                <!-- app:canExpand="true" > -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/item_video_layout_item_button_play"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="@string/boxplay_store_video_button_play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/item_video_layout_item_button_download"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="@string/boxplay_store_video_button_download" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/item_video_layout_item_button_watch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="@string/boxplay_store_video_button_watch" />
+
+                        <Button
+                            android:id="@+id/item_video_layout_item_button_share"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="@string/boxplay_store_video_button_share" />
+
+                        <Button
+                            android:id="@+id/item_video_layout_item_button_share_url"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:backgroundTint="@color/colorAccent"
+                            android:text="@string/boxplay_store_video_button_share_url" />
+                    </LinearLayout>
+
+                    <!--  -->
+
+                </LinearLayout>
+            </RelativeLayout>
+        </com.kyo.expandablelayout.ExpandableLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

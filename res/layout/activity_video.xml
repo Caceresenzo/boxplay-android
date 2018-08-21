@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_video_coordinatorlayout_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:transitionName="@string/transition_view_reveal" >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/activity_video_appbarlayout_container"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp" >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/activity_video_collapsingtoolbarlayout_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:collapsedTitleTextAppearance="@style/collapsedappbar"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@style/expandedappbar" >
+
+            <ImageView
+                android:id="@+id/activity_video_imageview_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_video"
+                android:transitionName="@string/transition_view_reveal" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_video_toolbar_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:elevation="0dp" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/activity_video_nestedscrollview_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="#ffe5e5e5"
+        android:fillViewport="true"
+        android:layoutMode="clipBounds" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <include layout="@layout/activity_video_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_video_floatingactionbutton_watch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/activity_video_appbarlayout_container"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/icon_eye_open_96px" />
+
+</android.support.design.widget.CoordinatorLayout>

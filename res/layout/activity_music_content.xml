@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical" >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/activity_music_cardview_container_head"
+        style="@style/cardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_card_margin_vertical"
+        android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+        android:layout_marginStart="@dimen/main_card_margin_horizontal"
+        android:layout_marginTop="@dimen/main_card_margin_vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:padding="4dp" >
+
+                <TextView
+                    android:id="@+id/activity_music_textview_title_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/music_data_section_margin"
+                    android:layout_marginTop="@dimen/music_data_separation"
+                    android:text="@string/boxplay_store_music_activity_head_album_title_album"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/activity_music_textview_content_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/music_data_margin"
+                    android:text="My Album"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/activity_music_textview_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/music_data_section_margin"
+                    android:layout_marginTop="@dimen/music_data_separation"
+                    android:text="@string/boxplay_store_music_activity_head_album_title_artist"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/activity_music_textview_content_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/music_data_margin"
+                    android:text="One, two"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/activity_music_textview_title_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/music_data_section_margin"
+                    android:layout_marginTop="@dimen/music_data_separation"
+                    android:text="@string/boxplay_store_music_activity_head_album_title_release"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    android:id="@+id/activity_music_textview_content_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/music_data_margin"
+                    android:text="00 xxx. 0000"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/activity_music_imageview_icon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_weight="0.5"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_video" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/activity_music_cardview_container_neck"
+        style="@style/cardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_card_margin_vertical"
+        android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+        android:layout_marginStart="@dimen/main_card_margin_horizontal"
+        android:layout_marginTop="@dimen/main_card_margin_vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/activity_music_textview_neck_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/music_title_margin"
+                android:text="@string/boxplay_store_music_activity_neck_album_genre_title"
+                android:textColor="@color/colorAccent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_music_recyclerview_neck_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/activity_music_cardview_container_body"
+        style="@style/cardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_card_margin_vertical"
+        android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+        android:layout_marginStart="@dimen/main_card_margin_horizontal"
+        android:layout_marginTop="@dimen/main_card_margin_vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/activity_music_textview_body_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/music_title_margin"
+                android:text="@string/boxplay_store_music_activity_body_album_song_title"
+                android:textColor="@color/colorAccent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_music_recyclerview_body_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/activity_music_cardview_container_feet"
+        style="@style/cardViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/main_card_margin_vertical"
+        android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+        android:layout_marginStart="@dimen/main_card_margin_horizontal"
+        android:layout_marginTop="@dimen/main_card_margin_vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/activity_music_textview_feet_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/music_title_margin"
+                android:text="@string/boxplay_store_music_activity_feet_album_other_title"
+                android:textColor="@color/colorAccent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_music_recyclerview_feet_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

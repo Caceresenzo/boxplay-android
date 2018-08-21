@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/item_culture_searchandgo_activitypage_detail_info_rating_textview_string"
+        style="@style/textViewTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="STRING" />
+
+    <RatingBar
+        android:id="@+id/item_culture_searchandgo_activitypage_detail_info_rating_ratingbar_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_culture_searchandgo_activitypage_detail_info_rating_textview_string"
+        android:layout_centerHorizontal="true"
+        android:isIndicator="true" />
+
+</RelativeLayout>

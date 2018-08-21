@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:title="@string/boxplay_store">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_store_video"
+                    android:icon="@drawable/icon_play_arrow_light"
+                    android:title="@string/boxplay_store_video"/>
+                <item
+                    android:id="@+id/drawer_boxplay_store_music"
+                    android:icon="@drawable/icon_music_note_light"
+                    android:title="@string/boxplay_store_music"/>
+                <!-- <item -->
+                <!-- android:id="@+id/drawer_boxplay_store_files" -->
+                <!-- android:icon="@drawable/icon_file_96px" -->
+                <!-- android:title="@string/boxplay_store_files"/> -->
+            </group>
+        </menu>
+    </item>
+    <item
+        android:title="@string/boxplay_connect"
+        android:visible="false">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_connect_feed"
+                    android:icon="@drawable/icon_rss_feed_light"
+                    android:title="@string/boxplay_connect_feed"
+                    android:visible="true"/>
+                <item
+                    android:id="@+id/drawer_boxplay_connect_friends"
+                    android:icon="@drawable/icon_people_light"
+                    android:title="@string/boxplay_connect_friends"
+                    android:visible="true"/>
+                <item
+                    android:id="@+id/drawer_boxplay_connect_chat"
+                    android:icon="@drawable/icon_chat_light"
+                    android:title="@string/boxplay_connect_chat"
+                    android:visible="true"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/drawer_boxplay_culture"
+        android:title="@string/boxplay_culture">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_culture_searchngo"
+                    android:icon="@drawable/icon_search_light"
+                    android:title="@string/boxplay_culture_searchngo"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/drawer_boxplay_premium"
+        android:title="@string/boxplay_premium"
+        android:visible="false">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_premium_adult"
+                    android:checked="false"
+                    android:icon="@drawable/icon_eggplant_dark"
+                    android:title="@string/boxplay_premium_adult"
+                    android:visible="false"/>
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/boxplay_mylist">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_mylist_watchlater"
+                    android:icon="@drawable/icon_watch_later_light"
+                    android:title="@string/boxplay_mylist_watchlater"/>
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/boxplay_other">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_other_settings"
+                    android:icon="@drawable/icon_settings_light"
+                    android:title="@string/boxplay_other_settings"/>
+                <item
+                    android:id="@+id/drawer_boxplay_other_about"
+                    android:icon="@drawable/icon_info_light"
+                    android:title="@string/boxplay_other_about"/>
+            </group>
+        </menu>
+    </item>
+    <!--  -->
+
+</menu>

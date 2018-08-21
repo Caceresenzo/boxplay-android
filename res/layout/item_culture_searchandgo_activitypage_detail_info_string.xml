@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_culture_searchandgo_activitypage_detail_info_string_textview_container"
+    style="@style/textViewTitleStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="STRING" />

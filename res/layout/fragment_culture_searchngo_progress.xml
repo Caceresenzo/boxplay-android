@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_culture_searchngo_relativelayout_progress_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/fragment_culture_searchngo_textview_progress_last"
+        style="@style/textViewSimpleStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="Last Progress" />
+
+    <TextView
+        android:id="@+id/fragment_culture_searchngo_textview_progress_actual"
+        style="@style/textViewTitleStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="start"
+        android:text="Progress" />
+
+</RelativeLayout>

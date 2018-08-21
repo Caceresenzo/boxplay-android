@@ -1,0 +1,120 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.NoActionBar">
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
+        <item name="cardViewStyle">@style/cardViewStyle</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <!-- Card View Theme -->
+    <style name="cardViewStyle" parent="CardView">
+        <item name="android:background">@color/colorCard</item>
+        <item name="cardBackgroundColor">@color/colorCard</item>
+        <item name="cardCornerRadius">@dimen/card_recycler_corner_radius</item>
+        <item name="cardElevation">@dimen/card_recycler_elevation</item>
+
+        <!-- android:foreground="?attr/selectableItemBackground" -->
+        <!-- android:background="?attr/selectableItemBackground" -->
+    </style>
+
+    <!-- Card View Theme -->
+    <style name="cardViewStyleAccented" parent="cardViewStyle">
+        <item name="android:backgroundTint">@color/colorAccent</item>
+    </style>
+
+    <!-- Image View Theme -->
+    <style name="imageViewStyle">
+        <item name="android:background">@color/colorImage</item>
+    </style>
+
+    <!-- Button Theme -->
+    <style name="buttonStyle">
+        <item name="android:backgroundTint">@color/colorButton</item>
+    </style>
+
+    <!-- Text View Theme -->
+    <style name="textViewTitleStyle" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="textViewSimpleStyle" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">11dp</item>
+    </style>
+
+    <!--  -->
+    <style name="expandedappbar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">24sp</item>
+        <!-- <item name="android:textColor">@android:color/white</item> -->
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <!-- <item name="android:visibility">invisible</item> -->
+    </style>
+
+    <style name="collapsedappbar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!--  -->
+    <style name="AppTheme.NoActionBar">
+        <!-- <item name="windowActionBar">false</item> -->
+        <!-- <item name="windowNoTitle">true</item> -->
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--  -->
+    <!-- Library Style -->
+    <!--  -->
+
+
+    <!-- Stylable Toast -->
+    <style name="customStylableToastStyle">
+        <item name="strokeWidth">2dp</item>
+        <item name="strokeColor">@color/colorAccent</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="radius">18dp</item>
+        <item name="textSize">18sp</item>
+        <item name="textColor">@color/white</item>
+        <item name="solidBackground">true</item>
+        <!-- <item name="iconStart">@drawable/ic_airplanemode_inactive_black_24dp</item> -->
+        <!-- <item name="iconEnd">@drawable/ic_airplanemode_inactive_black_24dp</item> -->
+        <item name="length">SHORT</item>
+    </style>
+
+    <style name="customMaterialSearchBarStyle" parent="@style/MaterialSearchBarDark">
+        <item name="mt_dividerColor">@color/colorAccent</item>
+        <item name="mt_hint">@string/boxplay_culture_searchngo_searchbar_hint</item>
+        <item name="mt_maxSuggestionsCount">0</item>
+        <item name="mt_roundedSearchBarEnabled">false</item>
+        <item name="mt_navIconTint">@color/white</item>
+        <item name="mt_searchIconTint">@color/white</item>
+        <item name="mt_clearIconTint">@color/white</item>
+        <item name="mt_menuIconTint">@color/white</item>
+        <item name="mt_backIconTint">@color/white</item>
+        <item name="mt_textCursorTint">@color/colorAccent</item>
+        <item name="mt_textColor">@color/white</item>
+        <item name="mt_hintColor">@color/white</item>
+    </style>
+
+</resources>

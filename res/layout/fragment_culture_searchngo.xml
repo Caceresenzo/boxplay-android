@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/colorBackground"
+        android:fillViewport="true"
+        android:layoutMode="clipBounds" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_card_margin_vertical_big"
+                android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+                android:layout_marginStart="@dimen/main_card_margin_horizontal"
+                android:layout_marginTop="@dimen/main_card_margin_vertical_big" >
+
+                <com.mancj.materialsearchbar.MaterialSearchBar
+                    android:id="@+id/fragment_culture_searchngo_materialsearchbar_searchbar"
+                    style="@style/customMaterialSearchBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include layout="@layout/fragment_culture_searchngo_progress" />
+            </FrameLayout>
+
+            <include layout="@layout/view_line_separator" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/fragment_culture_searchngo_imagebutton_bookmark"
+                    style="@style/imageViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/searchngo_button_margin"
+                    android:layout_weight="0.3"
+                    android:padding="@dimen/searchngo_button_padding"
+                    android:src="@drawable/icon_bookmark_border_light"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/fragment_culture_searchngo_imagebutton_history"
+                    style="@style/imageViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/searchngo_button_margin"
+                    android:layout_weight="0.3"
+                    android:padding="@dimen/searchngo_button_padding"
+                    android:src="@drawable/icon_history_light" />
+
+                <ImageButton
+                    android:id="@+id/fragment_culture_searchngo_imagebutton_settings"
+                    style="@style/imageViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/searchngo_button_margin"
+                    android:layout_weight="0.3"
+                    android:padding="@dimen/searchngo_button_padding"
+                    android:src="@drawable/icon_settings_light" />
+            </LinearLayout>
+
+            <include layout="@layout/view_line_separator" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_culture_searchngo_recyclerview_search_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_card_margin_vertical_big"
+                android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+                android:layout_marginStart="@dimen/main_card_margin_horizontal"
+                android:layout_marginTop="@dimen/main_card_margin_vertical_big"
+                android:fillViewport="true" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/fragment_culture_searchngo_progressbar_loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <FrameLayout
+        android:id="@+id/fragment_culture_searchngo_framelayout_info_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+
+        <TextView
+            android:id="@+id/fragment_culture_searchngo_textview_info_text"
+            style="@style/textViewTitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/boxplay_culture_searchngo_info_make_a_search" />
+    </FrameLayout>
+
+</RelativeLayout>

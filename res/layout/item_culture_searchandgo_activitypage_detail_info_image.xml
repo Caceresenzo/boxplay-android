@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_culture_searchandgo_activitypage_detail_info_image_imageview_container"
+    style="@style/imageViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />

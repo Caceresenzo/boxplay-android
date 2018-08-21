@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="application_name">BoxPlay</string>
+    <!--  -->
+    <string name="boxplay_viewhelper_recaching">Remise en cache...\nVeuillez redémarrer l\'appli. pour appliquer le nouveau langage de partout!</string>
+    <!--  -->
+    <string name="boxplay_menu_action_update">Mise à jour</string>
+    <string name="boxplay_menu_action_search">Recherche</string>
+    <!--  -->
+    <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
+    <string name="navigation_drawer_close">Fermer le menu de navigation</string>
+    <!--  -->
+    <string name="boxplay_update_uptodate">Déjà à jour!</string>
+    <string name="boxplay_update_available" formatted="false">Mise à jour dispo! %s</string>
+    <string name="boxplay_update_available_message_format" formatted="false">Version: _version_ \nNom: _name_ \nTaille: _size_ \n\nTéléchargé: _downloaded_</string>
+    <string name="boxplay_update_available_message_format_size_searching">[recherche]</string>
+    <string name="boxplay_update_available_message_format_size_searching_error">[erreur]</string>
+    <string name="boxplay_update_available_download_starting">Téléchargement débuté en arrière plan...</string>
+    <string name="boxplay_update_available_install">Téléchargement terminé, vous pouvez maintenant installer la mise à jour</string>
+    <string name="boxplay_update_available_download_failed" formatted="false">Téléchargement échoué, réessayez plus tard!\n\nErreur: %s</string>
+    <!-- <string name="boxplay_update_available_message_format_downloaded">0</string> -->
+    <string name="boxplay_update_available_download">La télécharger!</string>
+    <string name="boxplay_update_available_cancel">Annuler</string>
+    <!--  -->
+    <string name="boxplay_navigation_version">BoxPlay 3</string>
+    <string name="boxplay_navigation_author">par Enzo CACERES</string>
+    <!--  -->
+    <string name="boxplay_store">Magasin</string>
+    <string name="boxplay_store_video">Video</string>
+    <string name="boxplay_store_music">Musique</string>
+    <string name="boxplay_store_files">Fichiers</string>
+    <!--  -->
+    <string name="boxplay_connect">Social</string>
+    <string name="boxplay_connect_feed">Actualitées</string>
+    <string name="boxplay_connect_friends">Amis</string>
+    <string name="boxplay_connect_chat">Messagerie</string>
+    <!--  -->
+    <string name="boxplay_culture">Culture</string>
+    <string name="boxplay_culture_searchngo">Search n\' Go</string>
+    <!--  -->
+    <string name="boxplay_premium">Plus</string>
+    <string name="boxplay_premium_adult">Adulte</string>
+    <!--  -->
+    <string name="boxplay_mylist">Mes Listes</string>
+    <string name="boxplay_mylist_watchlater">À regarder plus tard</string>
+    <!--  -->
+    <string name="boxplay_other">Autre</string>
+    <string name="boxplay_other_settings">Paramètres</string>
+    <string name="boxplay_other_about">A propos</string>
+    <!-- <string name="boxplay_preferences_title">BoxPlay Settings</string> -->
+
+
+    <!--  -->
+    <!-- Tutorial > BoxPlayActivity -->
+    <!--  -->
+    <string name="boxplay_tutorial_main_drawer_title">Tirroir</string>
+    <string name="boxplay_tutorial_main_drawer_description">Vous pourrez accéder aux autres pages depuis celui-ci!</string>
+    <string name="boxplay_tutorial_main_search_title">Recherche</string>
+    <string name="boxplay_tutorial_main_search_description">Relié à tous les éléments du magasin, vous serez capable de rechercher n\'importe quoi par son nom!</string>
+    <string name="boxplay_tutorial_main_options_title">Menu d\'Accés Rapide</string>
+    <string name="boxplay_tutorial_main_options_description">Contients des actions, comme pouvoir mettre à jour l\'application...</string>
+    <string name="boxplay_tutorial_main_swipe_title">Glissable</string>
+    <string name="boxplay_tutorial_main_swipe_description">Glisser de droite à gauche pour accéder à tous les fichiers!</string>
+    <string name="boxplay_tutorial_main_video_title">Magasin Video BoxPlay</string>
+    <string name="boxplay_tutorial_main_video_description">Contient toutes les vidéos dispo sur le magasin!</string>
+    <string name="boxplay_tutorial_main_music_title">Magasin Musique BoxPlay</string>
+    <string name="boxplay_tutorial_main_music_description">Contient toutes les musiques dispo sur le magasin!</string>
+
+    <!--  -->
+    <!-- Tutorial > VideoActivity -->
+    <!--  -->
+    <string name="boxplay_tutorial_video_back_title">Quitter ce menu</string>
+    <string name="boxplay_tutorial_video_back_description">Retourner à l\'application principale avec la flèche ou le bouton retour!</string>
+    <string name="boxplay_tutorial_video_watch_list_title">Ma Liste</string>
+    <string name="boxplay_tutorial_video_watch_list_description">Ajouter cette serie/film dans votre list pour pouvoir y accéder plus rapidement!</string>
+    <string name="boxplay_tutorial_video_season_selector_title">Selecteur de saison</string>
+    <string name="boxplay_tutorial_video_season_selector_description">Selectionner une saison avec ce selecteur!</string>
+    <string name="boxplay_tutorial_video_season_watched_title">Marquer comme vu</string>
+    <string name="boxplay_tutorial_video_season_watched_description">Marquer cette saison en tant que vu quand vous avez fini de voir tous les épisodes!</string>
+    <string name="boxplay_tutorial_video_episodes_title">Voir les épisodes</string>
+    <string name="boxplay_tutorial_video_episodes_description">Tous les episodes dispo sont dans cette liste, regardez s\'en un en ouvrant son menu déroulant!</string>
+
+    <!--  -->
+    <!-- Store > Video -->
+    <!--  -->
+
+    <string name="boxplay_store_video_video">Video</string>
+    <!-- Translation -->
+    <string name="boxplay_store_video_file_type_anime">Anime%s</string>
+    <string name="boxplay_store_video_file_type_serie">Série%s</string>
+    <string name="boxplay_store_video_file_type_movie">Film%s</string>
+    <string name="boxplay_store_video_file_type_animemovie">Film%s</string>
+    <string name="boxplay_store_video_type_episode">Episode</string>
+    <string name="boxplay_store_video_type_oav">OAV</string>
+    <string name="boxplay_store_video_type_special">Special</string>
+    <string name="boxplay_store_video_type_movie">Film</string>
+    <string name="boxplay_store_video_type_other">Autre</string>
+    <string name="boxplay_store_video_language_french">FRANÇAIS</string>
+    <string name="boxplay_store_video_language_english_subtitle_french">ANGLAIS S-TITRÉ FR.</string>
+    <string name="boxplay_store_video_language_japanese_subtitle_french">JAPONAIS S-TITRÉ FR.</string>
+    <string name="boxplay_store_video_category_your_list">Votre liste</string>
+    <string name="boxplay_store_video_category_recommended">Recommandé*</string>
+    <string name="boxplay_store_video_category_animes">Animes</string>
+    <string name="boxplay_store_video_category_movies">Films</string>
+    <string name="boxplay_store_video_category_series">Séries</string>
+    <string name="boxplay_store_video_category_random">Aléatoire</string>
+    <string name="boxplay_store_video_category_release">Sortie</string>
+    <string name="boxplay_store_video_enum_unknown">*inconnu*</string>
+    <!-- Strings -->
+    <string name="boxplay_store_video_data_downloading">téléchargement...</string>
+    <string name="boxplay_store_data_downloading_new_content">nouveau contenu dispo!</string>
+    <string name="boxplay_store_video_data_watching">Ajouté à votre liste</string>
+    <string name="boxplay_store_video_data_unwatching">Supprimé de votre liste</string>
+    <string name="boxplay_store_video_season_selector_item">Saison %s</string>
+    <string name="boxplay_store_video_season_view" formatted="false">%s saison%s</string>
+    <string name="boxplay_store_video_season_selector_item_no_season">Aucune saison</string>
+    <string name="boxplay_store_video_group_watched"></string>
+    <string name="boxplay_store_video_season_selector_result">%s</string>
+    <string name="boxplay_store_video_activity_episode_title" formatted="false">%s %s</string>
+    <string name="boxplay_store_video_activity_movie_title" formatted="false">%s (%s)</string>
+    <string name="boxplay_store_video_activity_episode_language" formatted="false">%s</string>
+    <string name="boxplay_store_video_activity_episode_time" formatted="false">%s/%s</string>
+    <string name="boxplay_store_video_activity_episode_time_watched">Vu</string>
+    <string name="boxplay_store_video_activity_episode_time_available">Disponible</string>
+    <string name="boxplay_store_video_activity_episode_time_unavailable">Non disponible</string>
+    <string name="boxplay_store_video_activity_vlc_title" formatted="false">[%s] %s, saison %s, %s %s</string>
+    <string name="boxplay_store_video_activity_vlc_title_movie" formatted="false">[%s] %s</string>
+    <!-- <string name="boxplay_store_video_action_mark_as_watched" formatted="true">You completed more than 80\% of the video</string> -->
+    <!-- <string name="boxplay_store_video_action_mark_as_watched_ok">Done watching?</string> -->
+    <!-- Button -->
+    <string name="boxplay_store_video_button_play">LECTURE</string>
+    <string name="boxplay_store_video_button_download">TÉLÉCHARGER</string>
+    <string name="boxplay_store_video_button_watch">VU</string>
+    <string name="boxplay_store_video_button_unwatch">DE-VOIR</string>
+    <string name="boxplay_store_video_button_share">PARTAGER</string>
+    <string name="boxplay_store_video_button_share_url">LIEN</string>
+
+    <!--  -->
+    <!-- Store > Music -->
+    <!--  -->
+
+    <string name="boxplay_store_music_music">Musique</string>
+    <!-- Translation -->
+    <string name="boxplay_store_music_author_type_author">Auteur</string>
+    <string name="boxplay_store_music_author_type_band">Groupe</string>
+    <string name="boxplay_store_music_type_african">Africain</string>
+    <string name="boxplay_store_music_type_asian">Asiatique</string>
+    <string name="boxplay_store_music_type_comedy">Comédie</string>
+    <string name="boxplay_store_music_type_country">Country</string>
+    <string name="boxplay_store_music_type_easy_listening">Facile d\'écoute</string>
+    <string name="boxplay_store_music_type_electronic">Electro</string>
+    <string name="boxplay_store_music_type_folk">Folk</string>
+    <string name="boxplay_store_music_type_hip_hop">Hip Hop</string>
+    <string name="boxplay_store_music_type_jazz">Jazz</string>
+    <string name="boxplay_store_music_type_latin">Latin</string>
+    <string name="boxplay_store_music_type_pop">Pop</string>
+    <string name="boxplay_store_music_type_rap">RAP</string>
+    <string name="boxplay_store_music_type_rock">Rock</string>
+    <string name="boxplay_store_music_type_soca">Soca</string>
+    <string name="boxplay_store_music_type_unknown">*inconnu*</string>
+    <string name="boxplay_store_music_category_your_list">Votre liste d\'écoute</string>
+    <string name="boxplay_store_music_category_recommended">Recommandé*</string>
+    <string name="boxplay_store_music_category_albums">Albums</string>
+    <string name="boxplay_store_music_category_random">Aléatoire</string>
+    <string name="boxplay_store_music_category_release">Sortie</string>
+    <!-- Strings -->
+    <string name="boxplay_store_music_fragment_error_no_genre_selected_title">Oups!</string>
+    <string name="boxplay_store_music_fragment_error_no_genre_selected_content">On dirait que vous n\'avez pas encore choisi un style de musique qui vous plait!</string>
+    <string name="boxplay_store_music_fragment_error_no_genre_selected_button_settings">PARAMÈTRES</string>
+    <string name="boxplay_store_music_fragment_error_no_genre_selected_button_selector">SELECTEUR</string>
+    <string name="boxplay_store_music_fragment_error_genre_selector_content">Changer vos préférences musicales</string>
+    <string name="boxplay_store_music_fragment_error_genre_selector_button_change">CHANGER</string>
+    <string name="boxplay_store_music_activity_album_title" formatted="false">%s (par %s)</string>
+    <string name="boxplay_store_music_activity_head_group_title_name">Nom</string>
+    <string name="boxplay_store_music_activity_head_group_title_type">Type</string>
+    <string name="boxplay_store_music_activity_head_group_title_downloadable">Téléchargeable?</string>
+    <string name="boxplay_store_music_activity_head_group_content_downloadable_yes">Oui</string>
+    <string name="boxplay_store_music_activity_head_group_content_downloadable_no">Non</string>
+    <string name="boxplay_store_music_activity_head_album_title_album">Album</string>
+    <string name="boxplay_store_music_activity_head_album_title_artist">Artiste%s</string>
+    <string name="boxplay_store_music_activity_head_album_title_release">Dernière sortie</string>
+    <string name="boxplay_store_music_activity_neck_album_genre_title">Genre%s</string>
+    <string name="boxplay_store_music_activity_body_album_song_title">Piste%s</string>
+    <string name="boxplay_store_music_activity_feet_album_title">Album%s</string>
+    <string name="boxplay_store_music_activity_feet_album_other_title">Autre Album%s</string>
+    <string name="boxplay_store_music_activity_body_song_item_title" formatted="false">%s - %s</string>
+    <string name="boxplay_store_music_activity_body_song_item_time_hour">h</string>
+    <string name="boxplay_store_music_activity_body_song_item_time_minute">m</string>
+    <string name="boxplay_store_music_activity_body_song_item_time_seconde">s</string>
+    <string name="boxplay_store_music_activity_body_song_badge">n°%s</string>
+    <string name="boxplay_store_music_card_info" formatted="false">%s album%s, %s piste%s</string>
+    <string name="boxplay_store_music_menu_popup_action_play">Lire</string>
+    <string name="boxplay_store_music_menu_popup_action_play_after">Lire après</string>
+    <string name="boxplay_store_music_menu_popup_action_add_to_queue">Ajouter à la liste</string>
+    <string name="boxplay_store_music_menu_popup_action_download">Télécharger</string>
+    <!--  -->
+    <!-- Music Player -->
+    <!--  -->
+    <string name="boxplay_player_music_button_play">Lire</string>
+    <string name="boxplay_player_music_button_pause">Pause</string>
+    <string name="boxplay_player_music_button_back">Retour</string>
+    <string name="boxplay_player_music_button_next">Suivant</string>
+    <string name="boxplay_player_music_name">Lecteur de musique</string>
+    <string name="boxplay_player_music_track_description" formatted="false">[ %s ] par %s</string>
+
+    <!--  -->
+    <!-- Store > Files -->
+    <!--  -->
+
+    <string name="boxplay_store_files_files">Fichiers</string>
+
+    <!--  -->
+    <!-- Culture > Search n' Go -->
+    <!--  -->
+
+    <string name="boxplay_culture_searchngo_title">Search n\' Go</string>
+    <string name="boxplay_culture_searchngo_searchbar_hint">Rechercher...</string>
+    <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
+    <string name="boxplay_culture_searchngo_detail_tab_content">CONTENU</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Ajouter à votre liste</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_remove_to_watchlist">Supprimer de votre liste</string>
+    <string name="boxplay_culture_searchngo_content_limit_reached" formatted="false">Limite d\'affichage dépassé, reduction de %s à %s resultats.</string>
+    <string name="boxplay_culture_searchngo_info_no_provider">Aucun fournisseur sélectionné.\nAllez dans les Paramètres, cliquez sur \"Fournisseurs\", et selectionnez en au moins un.</string>
+    <string name="boxplay_culture_searchngo_info_make_a_search">Faite une recherche!</string>
+    <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">Une erreur est apparu lors de l\'extraction: %s \n\nAllez dans les paramètres, et choissisez d\'ouvrir les logs d\'extraction pour plus de details!</string>
+    <!-- DIALOGS -->
+    <string name="boxplay_culture_searchngo_dialog_search_history">Historique de recherche (10 derniers)</string>
+    <string name="boxplay_culture_searchngo_dialog_settings">Paramètres</string>
+    <string name="boxplay_culture_searchngo_dialog_settings_item_provider">Fournisseurs</string>
+    <string name="boxplay_culture_searchngo_dialog_settings_item_provider_button_validate">Valider</string>
+    <string name="boxplay_culture_searchngo_dialog_settings_item_provider_button_cancel">Annuler</string>
+    <!-- CALLBACKS -->
+    <string name="boxplay_culture_searchngo_search_status_global_started">Démarrage de la recherche globale...</string>
+    <string name="boxplay_culture_searchngo_search_status_global_sorting">Triage des résultats...</string>
+    <string name="boxplay_culture_searchngo_search_status_global_finished">Recherche globale terminée!</string>
+    <string name="boxplay_culture_searchngo_search_status_global_failed">La recherche a échoué.</string>
+    <string name="boxplay_culture_searchngo_search_status_provider_started">Recherche sur %s...</string>
+    <string name="boxplay_culture_searchngo_search_status_provider_sorting">Triage des resultats de %s...</string>
+    <string name="boxplay_culture_searchngo_search_status_provider_finished">La recherche sur %s est terminée!</string>
+    <string name="boxplay_culture_searchngo_search_status_provider_failed" formatted="false">La recherche sur %s a échoué. (erreur: %s)</string>
+    <string name="boxplay_culture_searchngo_extractor_status_downloading_video_site_url">Téléchargement de l\'url du site video "%s"...</string>
+    <string name="boxplay_culture_searchngo_extractor_status_no_extractor_compatible">Aucun extracteur compatible.</string>
+    <string name="boxplay_culture_searchngo_extractor_status_downloading_url">Téléchargement de l\'url "%s"...</string>
+    <string name="boxplay_culture_searchngo_extractor_status_file_not_available">Le fichier n\'est pas disponible.</string>
+    <string name="boxplay_culture_searchngo_extractor_status_extracting_link">Extraction du lien...</string>
+    <string name="boxplay_culture_searchngo_extractor_status_formatting_result">Formattage du résultat...</string>
+    <string name="boxplay_culture_searchngo_extractor_dialog_possible_player">Lecteurs Possible</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_title">Taille du Fichier</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">Le fichier %s pèse %s, continuer ?</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_button_continue">CONTINUER</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_button_cancel">ANNULER</string>
+    <!-- ENUMS -->
+    <string name="boxplay_culture_searchngo_search_result_data_type_thumbnail">Vignette</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_name">Nom</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_original_name">Nom original</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_alternative_name">Nom(s) alternatif(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_other_name">Autre(s) nom(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_type">Type</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_quality">Qualité</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_version">Version</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_traduction_team">Équipe de Traduction</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_genders">Genre(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_status">Status</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_country">Pays</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_director">Directeur</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_authors">Autheur/e(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_actors">Acteur/rice(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_artists">Artist/e(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_studios">Studio(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_release_date">Date de parution</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_views">Vue(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_duration">Durée</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_resume">Résumé</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_rating">Note [ moyenne / max (nbr de vote) ]</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_item_video">Vidéo</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_item_chapter">Chapitre</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_null">NULL</string>
+    <!-- MANGA VIEWER -->
+    <string name="boxplay_manga_chapter_reader_format_info" formatted="false">%s\nPage %s/%s</string>
+    <string name="boxplay_manga_chapter_reader_format_error" formatted="false">- ERREUR -\n%s\n\n- Stacktrace -\n%s\n\nS\'il vous plait, envoyez moi une capture d\'écren si vous voyez ceci!</string>
+    <string name="boxplay_manga_chapter_reader_controller_coming_soon">À Venir !</string>
+
+    <!--  -->
+    <!-- Premium > Adult -->
+    <!--  -->
+
+    <string name="boxplay_premium_adult_adult">Adulte</string>
+    <string name="boxplay_premium_adult_warning_dialog_message">A cause de votre version d\'Android, il a été testé que BoxPlay Adulte risquait de ne pas marcher (correctement), causé par l\'interpretation trop vielle du code JavaScript.</string>
+    <string name="boxplay_premium_adult_warning_dialog_done">TERMINÉ</string>
+    <string name="boxplay_premium_adult_status_downloading_data">Téléchargement des données...</string>
+    <string name="boxplay_premium_adult_status_parsing">Analyse...</string>
+    <string name="boxplay_premium_adult_status_computing_url">Calcule du lien...</string>
+
+    <!--  -->
+    <!-- My Lists > Watch Later -->
+    <!--  -->
+
+    <string name="boxplay_mylist_watchlater_title">À regarder plus tard</string>
+    <string name="boxplay_mylist_watchlater_source_store_video">Magasin - Vidéo</string>
+    <string name="boxplay_mylist_watchlater_source_culture_searchngo">Culture - Search n\' Go</string>
+
+    <!--  -->
+    <!-- Settings -->
+    <!--  -->
+    <string name="boxplay_other_settings_store_music_category_title">Magasin > Musique</string>
+    <!--  -->
+    <string name="boxplay_other_settings_store_music_pref_my_genre_title">Mes préférence musicales</string>
+    <string name="boxplay_other_settings_store_music_pref_my_genre_summary_empty">*vide*</string>
+    <string name="boxplay_other_settings_store_music_pref_my_genre_dialog_ok">TERMINÉ</string>
+    <!--  -->
+    <string name="boxplay_other_settings_boxplay_category_title">BoxPlay</string>
+    <!--  -->
+    <string name="boxplay_other_settings_boxplay_pref_background_service_title">Autoriser les services en arrière-plan</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_summary_enabled">Oui (rien pour le moment)</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_summary_disabled">Non</string>
+    <!--  -->
+    <string name="boxplay_other_settings_boxplay_pref_force_factory_title">Forcer le traitement des données</string>
+    <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_enabled">Les données seront re-travaillées de force quand vous rafraichirez</string>
+    <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_disabled">Les données seront re-travaillées seulement si du nouveau contenu est disponible</string>
+    <!--  -->
+    <string name="boxplay_other_settings_boxplay_pref_reset_tutorials_title">Réinitialiser les tutoriels</string>
+    <string name="boxplay_other_settings_boxplay_pref_reset_tutorials_summary_done">Réinitialisés</string>
+    <string name="boxplay_other_settings_boxplay_pref_reset_tutorials_summary_error">Error: %s</string>
+    <!--  -->
+    <string name="boxplay_other_settings_premium_category_title">Plus</string>
+    <!--  -->
+    <string name="boxplay_other_settings_premium_pref_premium_key_title">Clé d\'activation</string>
+    <string name="boxplay_other_settings_premium_pref_premium_key_summary_no_key">Aucune clé</string>
+    <string name="boxplay_other_settings_premium_pref_premium_key_summary_valid">Clé valide (%s)</string>
+    <string name="boxplay_other_settings_premium_pref_premium_key_summary_invalid">Clé invalide (%s)</string>
+    <!--  -->
+    <string name="boxplay_other_settings_debug_category_title">Débugage</string>
+    <!--  -->
+    <string name="boxplay_other_settings_debug_pref_extractor_show_logs_title">Montrer les informations des extracteurs</string>
+    <string name="boxplay_other_settings_debug_pref_extractor_show_logs_summary_enabled">Ouvrir les informations à la fin du travail d\'une extraction</string>
+    <string name="boxplay_other_settings_debug_pref_extractor_show_logs_summary_disabled">Ne pas ouvrir les informations à la fin du travail d\'une extraction</string>
+    <!--  -->
+    <string name="boxplay_other_settings_menu_category_title">Menu</string>
+    <!--  -->
+    <string name="boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_title">Bouton retour</string>
+    <string name="boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_summary_enabled">Étendre/plier le tirroir avec le bouton retour</string>
+    <string name="boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_summary_disabled">Quitter l\'application avec le bouton retour</string>
+    <!--  -->
+    <string name="boxplay_other_settings_application_category_title">Application</string>
+    <!--  -->
+    <string name="boxplay_other_settings_application_pref_language_title">Selectionner un langage</string>
+    <string name="boxplay_other_settings_application_pref_language_default_value">fr</string>
+    <!--  -->
+    <string name="boxplay_other_settings_application_pref_crash_reporter_title">Activer le rapporteur d\'accident</string>
+    <string name="boxplay_other_settings_application_pref_crash_reporter_summary_enabled">Activé</string>
+    <string name="boxplay_other_settings_application_pref_crash_reporter_summary_disabled">Désactivé (déconseillé)</string>
+    <string name="boxplay_other_settings_application_pref_clear_image_cache_title">Effacer le cache des images</string>
+    <string name="boxplay_other_settings_application_pref_clear_image_cache_summary_done">Terminé</string>
+    <string name="boxplay_other_settings_application_pref_clear_image_cache_summary_error">Erreur: %s</string>
+
+    <!-- Other > About -->
+
+    <string name="boxplay_other_about_about">A propos</string>
+    <!-- Description -->
+    <string name="boxplay_other_about_description">BoxPlay est une application qui fournit de multiples services (qu\'un pour le moment), comme le steaming de vidéo. Dans un futur proche, BoxPlay aura son propre serveur et de nouveaux logiciels vont être crées pour élargir BoxPlay encore plus! Comme des services de téléchargement et de conversion de video Youtube avec un simple partage à l\'application. La création d\'un (petit) réseau social est aussi planifié. Et tout cela, avec rapidité, éfficacité et surtout sans aucune publicité, du moins, pour le moment ;).</string>
+    <!-- Starting - About -->
+    <string name="boxplay_other_about_group_app_information">Application</string>
+    <string name="boxplay_other_about_group_app_information_version">Version %s</string>
+    <!--  -->
+    <string name="boxplay_other_about_group_team_format" formatted="false">%s (%s)</string>
+    <string name="boxplay_other_about_group_team_format_type_application">application</string>
+    <string name="boxplay_other_about_group_team_format_type_api">API</string>
+    <string name="boxplay_other_about_group_team_format_type_ui">ui</string>
+    <string name="boxplay_other_about_group_team_format_type_icons">icons</string>
+    <string name="boxplay_other_about_group_team_format_type_hosting">hébergement</string>
+    <string name="boxplay_other_about_group_team_format_type_eclipse">eclipse fix</string>
+    <string name="boxplay_other_about_group_team_format_type_because">parce que :/</string>
+    <!--  -->
+    <string name="boxplay_other_about_group_team_programmer">Team / Développeur</string>
+    <string name="boxplay_other_about_group_team_designer">Team / Designer</string>
+    <string name="boxplay_other_about_group_team_supporter">Team / Supporter</string>
+    <string name="boxplay_other_about_group_team_helper">Team / Aideur</string>
+    <!--  -->
+    <string name="boxplay_other_about_hosting">Hébergement</string>
+    <!--  -->
+    <string name="boxplay_other_about_changelog">Historique</string>
+    <!-- Libraries -->
+    <string name="boxplay_other_about_libraries">Bibliothèque</string>
+    <string name="boxplay_other_about_libraries_error_no_url">Aucun lien</string>
+    <string name="boxplay_other_about_libraries_format" formatted="false">%s\npar %s</string>
+    <!-- Ending - About -->
+
+
+    <!-- Error -->
+
+    <string name="boxplay_error_manager_json_null">Erreur. Les données reçu du serveur sont vide.</string>
+    <string name="boxplay_error_activity_invalid_data">Erreur. Démarrage de l\'activité sans information valide.</string>
+    <string name="boxplay_error_fragment_type_unbind" formatted="false">Erreur. Element avec l\'id %s a été désynchronisé.</string>
+    <string name="boxplay_error_not_implemented_yet">Erreur. Fonctionnalité manquante!</string>
+    <string name="boxplay_error_video_activity_invalid_time">Erreur. Temps invalide.</string>
+    <string name="boxplay_error_video_activity_vlc_error">Erreur. VLC à renvoyé une erreur.</string>
+    <string name="boxplay_error_video_file_forget">Erreur. Le dernier fichier ouvert a été oublié.</string>
+    <string name="boxplay_error_config_failed">Erreur. La lecture/écriture du fichier a échoué.</string>
+
+    <!-- Error Row -->
+    <string name="boxplay_error_row_default_title">Oups!</string>
+    <string name="boxplay_error_row_default_content">On dirait qu\'une erreur vient juste d\'arriver!</string>
+    <string name="boxplay_error_row_default_button">Bouton</string>
+
+    <!-- Urls -->
+
+
+    <!-- <string name="boxplay_data_download_url">https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/data/boxplay_3.json</string> -->
+
+
+    <!-- Other -->
+
+    <string name="title_activity_video">VideoActivity</string>
+
+    <!-- LIBRARIES -->
+
+    <string name="ask_for_error_log">Une erreur est apparue!\nS\'il vous plait aidez le developpeur en lui envoyant ce rapport d\'erreur.\nMerci de votre aide!</string>
+    <string name="email_welcome_note">Cher équipe de developpement,\n\nL\'Application vient juste de planter, veuillez jeter un coup d\'oeil à l\'historique d\'erreur pour plus de détails.\n\n\n</string>
+    <string name="button_view_error_log">Voir le rapport d\'erreur</string>
+    <string name="button_copy_error_log">Copier le rapport d\'erreur</string>
+    <string name="button_share_error_log">Partager le rapport d\'erreur</string>
+    <string name="button_email_error_log">Envoyer (email) le rapport d\'erreur</string>
+    <string name="button_save_error_log">Sauvegarder le rapport d\'erreur</string>
+    <string name="button_close_app">Fermer l\'application</string>
+
+</resources>

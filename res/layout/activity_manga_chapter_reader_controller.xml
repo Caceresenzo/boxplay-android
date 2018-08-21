@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_boxplay_framelayout_container_music_player"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/manga_chapter_reader_panel_max_height" >
+
+    <RelativeLayout
+        android:id="@+id/activity_manga_chapter_reader_relativelayout_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/manga_chapter_reader_panel_height" >
+
+        <include layout="@layout/view_line_separator" />
+
+        <TextView
+            android:id="@+id/activity_manga_chapter_reader_textview_info"
+            style="@style/textViewSimpleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Chapter 0\nPage 01/25" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/activity_manga_chapter_reader_relativelayout_info_container" >
+
+        <include layout="@layout/view_line_separator" />
+
+        <Button
+            android:id="@+id/activity_manga_chapter_reader_button_controller"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorPanel"
+            android:text="@string/boxplay_manga_chapter_reader_controller_coming_soon" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- <color name="colorPrimary">#3F51B5</color> -->
+    <!-- <color name="colorPrimaryDark">#303F9F</color> -->
+    <!-- <color name="colorAccent">#FF4081</color> -->
+    <!-- <color name="colorPrimary">#5974FF</color> -->
+
+
+    <!-- Dark blue (main color) -->
+    <color name="colorPrimary">#1C1C1C</color>
+    <color name="colorAccent">#4FC3F7</color>
+    <color name="colorBackground">#151515</color>
+    <color name="colorPanel">#191919</color>
+    <color name="colorImage">#252525</color>
+    <color name="colorCard">#202020</color>
+    <color name="colorButton">#424242</color>
+    <color name="colorError">#f44336</color>
+    <!-- <color name="colorDarkGray">#404040</color> -->
+    <!-- <color name="colorPrimaryDark">#303F9F</color> -->
+    <!-- <color name="green">#4CAF50</color> -->
+    <!-- <color name="orange">#FF5722</color> -->
+    <!-- <color name="purple">#9C27B0</color> -->
+    <!-- <color name="purple_700">#7B1FA2</color> -->
+
+
+    <!--  -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_deep">#666666</color>
+
+    <!-- <color name="dark_blue">#3F51B5</color> -->
+    <!-- <color name="colorDarkGray">#404040</color> -->
+    <!-- <color name="colorPrimaryDark">#303F9F</color> -->
+    <!-- <color name="background_dark_gray">#303030</color> -->
+    <!-- <color name="color">#4FC3F7</color> -->
+    <!-- <color name="green">#4CAF50</color> -->
+    <!-- <color name="orange">#FF5722</color> -->
+    <!-- <color name="purple">#9C27B0</color> -->
+    <!-- <color name="purple_700">#7B1FA2</color> -->
+
+
+    <!--  -->
+    <!-- <color name="white">#FFFFFF</color> -->
+    <!-- <color name="black">#000000</color> -->
+    <!-- <color name="gray_deep">#666666</color> -->
+</resources>
