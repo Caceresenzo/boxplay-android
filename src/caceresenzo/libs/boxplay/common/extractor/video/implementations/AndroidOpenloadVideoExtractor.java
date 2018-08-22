@@ -1,18 +1,26 @@
 package caceresenzo.libs.boxplay.common.extractor.video.implementations;
 
+import java.io.File;
+import java.io.IOException;
+
 import android.os.Handler;
+import android.util.Log;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.managers.XManagers;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderHelper;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
 
 public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	
+	public static final String TAG = AndroidOpenloadVideoExtractor.class.getSimpleName();
+	
 	public static final String FILE_DELETED = "We can't find the file you are looking for. It maybe got deleted by the owner or was removed due a copyright violation.";
 	
+	private final XManagers managers;
 	private final Handler handler;
 	
 	private WebView webView;
@@ -20,6 +28,7 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	private String pageContent, resolvedHtml;
 	
 	public AndroidOpenloadVideoExtractor() {
+		this.managers = BoxPlayApplication.getManagers();
 		this.handler = BoxPlayApplication.getHandler();
 		
 		lock();
@@ -38,7 +47,23 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 		
 		try {
 			pageContent = Downloader.getUrlContent(url);
-			getLogger().appendln("-- Finished > size= " + pageContent.length()).separator();
+			getLogger().appendln("-- Finished > size= " + pageContent.length());
+			
+			File cacheFile = new File(managers.getBaseDataDirectory(), "/openload.html");
+			try {
+				cacheFile.createNewFile();
+				
+				StringUtils.stringToFile(cacheFile, pageContent); // Seems to have "encoding" problem, regex is sometimes not working without this
+				pageContent = StringUtils.fromFile(cacheFile);
+				
+				getLogger().appendln("-- Caching OK");
+			} catch (IOException exception) {
+				Log.e(TAG, "Failed to restore openload file from cache", exception);
+				getLogger().appendln("-- Caching FAIL");
+			}
+			
+			getLogger().separator();
+			
 			return pageContent;
 		} catch (Exception exception) {
 			getLogger().appendln("-- Finished > Failed").separator();

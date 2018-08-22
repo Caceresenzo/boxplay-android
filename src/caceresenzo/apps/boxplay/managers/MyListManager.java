@@ -63,7 +63,6 @@ public class MyListManager extends AbstractManager {
 	}
 	
 	public boolean containsInWatchList(MyListable myListable) {
-		Log.d(TAG, "---------------: " + watchLaterList.containsKey(myListable.toUniqueString()));
 		return watchLaterList.containsKey(myListable.toUniqueString());
 	}
 	

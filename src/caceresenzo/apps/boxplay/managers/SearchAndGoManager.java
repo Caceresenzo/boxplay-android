@@ -86,29 +86,38 @@ public class SearchAndGoManager extends AbstractManager {
 			return null;
 		}
 		
+		Class<? extends ContentExtractor> extractorClass = getExtractorClassFromBaseUrl(baseUrl);
+		
+		if (extractorClass != null) {
+			Log.i(TAG, String.format("An instance of ContentExtractor has been asked. (base url: %s, returned class: %s)", baseUrl, extractorClass.getSimpleName()));
+			
+			try {
+				return extractorClass.newInstance();
+			} catch (Exception exception) {
+				Log.e(TAG, "Failed to instanciate new instance of content explorer.", exception);
+			}
+			
+			return null;
+		}
+		
+		Log.e(TAG, String.format("No compatible ContentExtract instance found for base url %s.", baseUrl));
+		return null;
+	}
+	
+	private Class<? extends ContentExtractor> getExtractorClassFromBaseUrl(String baseUrl) {
 		for (Entry<Class<? extends ContentExtractor>, ContentExtractor> entry : EXTRACTORS.entrySet()) {
 			InternetSource internetSource = entry.getValue();
 			
 			if (internetSource.matchUrl(baseUrl)) {
-				Log.i(TAG, String.format("An instance of ContentExtractor has been asked (base url: %s, returned class: %s)", baseUrl, entry.getKey()));
-				
-				try {
-					return entry.getValue().getClass().newInstance();
-				} catch (Exception exception) {
-					Log.e(TAG, "Failed to instanciate new instance of content explorer, returning saved one", exception);
-				}
-				
-				entry.getValue().getLogger().clear();
-				return entry.getValue();
+				return entry.getValue().getClass();
 			}
 		}
 		
-		Log.e(TAG, String.format("No compatible ContentExtract instance found for base url %s", baseUrl));
 		return null;
 	}
 	
 	public boolean hasCompatibleExtractor(String baseUrl) {
-		return getExtractorFromBaseUrl(baseUrl) != null;
+		return getExtractorClassFromBaseUrl(baseUrl) != null;
 	}
 	
 	public void bindCallback(SearchAndGoSearchCallback callback) {

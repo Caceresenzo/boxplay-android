@@ -353,6 +353,8 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 					
 					@Override
 					public void onFileNotAvailable() {
+						cancel();
+						
 						handler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -384,39 +386,50 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 				
 				closeDialog();
 				
-				final String filename = String.format("%s %s.mp4", FileUtils.remplaceIllegalChar(result.getName()), videoItem.getName());
-				
-				switch (action) {
-					case ACTION_STREAMING: {
-						BoxPlayApplication.getManagers().getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
-						break;
-					}
-					
-					case ACTION_DOWNLOAD: {
-						final String fileSize = ByteFormat.toHumanBytes(Downloader.getFileSize(directUrl));
-						
-						lock();
+				if (directUrl == null) {
+					if (!isCancelled()) {
 						handler.post(new Runnable() {
 							@Override
 							public void run() {
-								unlock();
-								
-								dialogCreator.showFileSizeDialog(filename, fileSize, new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										Log.e(getClass().getSimpleName(), "Downloading file: " + filename);
-										AndroidDownloader.askDownload(boxPlayApplication, Uri.parse(directUrl), filename);
-									}
-								});
+								boxPlayApplication.toast(R.string.boxplay_culture_searchngo_extractor_status_url_not_available).show();
 							}
 						});
-						
-						waitUntilUnlock();
-						break;
 					}
+				} else {
+					final String filename = String.format("%s %s.mp4", FileUtils.remplaceIllegalChar(result.getName()), videoItem.getName());
 					
-					default: {
-						throw new IllegalStateException();
+					switch (action) {
+						case ACTION_STREAMING: {
+							BoxPlayApplication.getManagers().getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
+							break;
+						}
+						
+						case ACTION_DOWNLOAD: {
+							final String fileSize = ByteFormat.toHumanBytes(Downloader.getFileSize(directUrl));
+							
+							lock();
+							handler.post(new Runnable() {
+								@Override
+								public void run() {
+									unlock();
+									
+									dialogCreator.showFileSizeDialog(filename, fileSize, new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											Log.e(getClass().getSimpleName(), "Downloading file: " + filename);
+											AndroidDownloader.askDownload(boxPlayApplication, Uri.parse(directUrl), filename);
+										}
+									});
+								}
+							});
+							
+							waitUntilUnlock();
+							break;
+						}
+						
+						default: {
+							throw new IllegalStateException();
+						}
 					}
 				}
 			} catch (Exception exception) {

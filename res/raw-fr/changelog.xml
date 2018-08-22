@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
+
+	<changelogversion versionName="3.1.5 BETA" changeDate="22/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 7[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Ajout complet de Full-Stream.nu en tant que fournisseur de vidéo</changelogtext>
+		<changelogtext>[b]-----------[/b]</changelogtext>
+		<changelogtext>[b]Valeurs théorique:[/b]</changelogtext>
+		<changelogtext> - JetAnime: +1300 Anime</changelogtext>
+		<changelogtext> - Manga-LEL: +350 Manga</changelogtext>
+		<changelogtext> - Adkami: +2100 Anime, +300 Série, +330 Hentai, +200 Drama</changelogtext>
+		<changelogtext> - VOIRFILM.bz: +220 Série, +2500 Film</changelogtext>
+		<changelogtext> - Full-Stream.nu: +3600 Série, +10'000 Film</changelogtext>
+		<changelogtext>[b]TOTAL:[/b] +3400 Anime, +350 Manga, +330 Hentai, +200 Drama, +4120 Série, +12'500 Film</changelogtext>
+	</changelogversion>
     
 	<changelogversion versionName="3.1.4.1 BETA" changeDate="20/08/2018">
 		<changelogtext>[b]Search n' Go PREVIEW 6.1[/b]</changelogtext>

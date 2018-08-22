@@ -243,6 +243,7 @@
     <string name="boxplay_culture_searchngo_extractor_status_no_extractor_compatible">Aucun extracteur compatible.</string>
     <string name="boxplay_culture_searchngo_extractor_status_downloading_url">Téléchargement de l\'url "%s"...</string>
     <string name="boxplay_culture_searchngo_extractor_status_file_not_available">Le fichier n\'est pas disponible.</string>
+    <string name="boxplay_culture_searchngo_extractor_status_url_not_available">L\'url n\'est pas disponible.</string>
     <string name="boxplay_culture_searchngo_extractor_status_extracting_link">Extraction du lien...</string>
     <string name="boxplay_culture_searchngo_extractor_status_formatting_result">Formattage du résultat...</string>
     <string name="boxplay_culture_searchngo_extractor_dialog_possible_player">Lecteurs Possible</string>
