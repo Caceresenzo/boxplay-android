@@ -222,6 +222,7 @@
 
     <string name="boxplay_culture_searchngo_title">Search n\' Go</string>
     <string name="boxplay_culture_searchngo_searchbar_hint">Search...</string>
+    <string name="boxplay_culture_searchngo_history_clear">Cleared history!</string>
     <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
     <string name="boxplay_culture_searchngo_detail_tab_content">CONTENT</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Add to Watch List</string>

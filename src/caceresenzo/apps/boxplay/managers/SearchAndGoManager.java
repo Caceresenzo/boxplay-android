@@ -15,11 +15,13 @@ import java.util.Set;
 import android.support.v4.util.ArraySet;
 import android.util.Log;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractor;
 import caceresenzo.libs.boxplay.common.extractor.InternetSource;
 import caceresenzo.libs.boxplay.common.extractor.image.manga.implementations.GenericMangaLelChapterExtractor;
+import caceresenzo.libs.boxplay.common.extractor.video.IHentaiVideoContentProvider;
 import caceresenzo.libs.boxplay.common.extractor.video.implementations.AndroidOpenloadVideoExtractor;
 import caceresenzo.libs.boxplay.common.extractor.video.implementations.GenericVidozaVideoExtractor;
 import caceresenzo.libs.boxplay.common.extractor.video.implementations.OpenloadVideoExtractor;
@@ -39,10 +41,13 @@ import caceresenzo.libs.thread.HelpedThread;
 
 public class SearchAndGoManager extends AbstractManager {
 	
-	private static final String TAG = SearchAndGoManager.class.getSimpleName();
+	/* Tag */
+	public static final String TAG = SearchAndGoManager.class.getSimpleName();
 	
+	/* Constants */
 	public static final int MAX_SEARCH_QUERY_COUNT = 10;
 	
+	/* TODO: Need to be moved to ContentExtractorManager */
 	private static final Map<Class<? extends ContentExtractor>, ContentExtractor> EXTRACTORS = new HashMap<>();
 	
 	static {
@@ -54,17 +59,26 @@ public class SearchAndGoManager extends AbstractManager {
 		EXTRACTORS.put(GenericMangaLelChapterExtractor.class, new GenericMangaLelChapterExtractor());
 	}
 	
-	private SearchHistorySubManager searchHistorySubManager;
+	/* Managers */
+	private PremiumManager premiumManager;
 	
-	private Worker worker;
+	/* Sub Managers */
+	private SearchHistorySubManager searchHistorySubManager;
+	private List<SearchHistoryItem> queryHistory = new ArrayList<>();
+	
+	/* Provider */
 	private List<SearchAndGoProvider> providers;
 	
+	/* Callbacks */
 	private SearchAndGoSearchCallback callback;
 	
-	private List<SearchHistoryItem> queryHistory = new ArrayList<>();
+	/* Worker */
+	private Worker worker;
 	
 	@Override
 	public void initialize() {
+		this.premiumManager = BoxPlayApplication.getManagers().getPremiumManager();
+		
 		this.searchHistorySubManager = new SearchHistorySubManager();
 		this.searchHistorySubManager.load();
 		
@@ -189,6 +203,14 @@ public class SearchAndGoManager extends AbstractManager {
 		@Override
 		protected void onRun() {
 			try {
+				boolean hentaiAllowed = premiumManager != null && premiumManager.isPremiumKeyValid();
+				
+				for (SearchAndGoProvider provider : localProviders) {
+					if (provider instanceof IHentaiVideoContentProvider) {
+						((IHentaiVideoContentProvider) provider).allowHentai(hentaiAllowed);
+					}
+				}
+				
 				SearchAndGoProvider.provide(localProviders, localSearchQuery, true);
 			} catch (Exception exception) {
 				; // Handled by callbacks
@@ -361,6 +383,11 @@ public class SearchAndGoManager extends AbstractManager {
 				;
 			}
 			
+			save();
+		}
+		
+		public void clear() {
+			queryHistory.clear();
 			save();
 		}
 		

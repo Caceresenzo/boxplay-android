@@ -216,6 +216,7 @@
 
     <string name="boxplay_culture_searchngo_title">Search n\' Go</string>
     <string name="boxplay_culture_searchngo_searchbar_hint">Rechercher...</string>
+    <string name="boxplay_culture_searchngo_history_clear">Historique supprimé!</string>
     <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
     <string name="boxplay_culture_searchngo_detail_tab_content">CONTENU</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Ajouter à votre liste</string>

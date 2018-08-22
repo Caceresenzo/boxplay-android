@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -40,17 +41,21 @@ import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 
 public class PageCultureSearchAndGoFragment extends Fragment {
 	
+	/* Constants */
 	public static final int MAX_CONTENT_ITEM_DISPLAYABLE = 70;
 	
+	/* Managers */
 	private BoxPlayApplication boxPlayApplication;
 	
 	private SearchAndGoManager searchAndGoManager;
 	
 	private DialogCreator dialogCreator;
 	
+	/* Local lists */
 	private List<SearchAndGoResult> results;
 	private List<SearchHistoryItem> searchQueryHistory;
 	
+	/* Views */
 	private MaterialSearchBar materialSearchBar;
 	private RelativeLayout progressContainerRelativeLayout;
 	private TextView actualProgressTextView, lastProgressTextView;
@@ -62,10 +67,13 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	private FrameLayout informationContainerFrameLayout;
 	private TextView informationTextView;
 	
+	/* Adapters */
 	private SearchAndGoResultViewAdapter searchAdapter;
 	
+	/* Listeners */
 	private OnSearchActionListener onSearchActionListener;
 	
+	/* Constructor */
 	public PageCultureSearchAndGoFragment() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		
@@ -76,7 +84,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		this.searchQueryHistory = searchAndGoManager.getSearchHistory();
 		
 		this.searchAndGoManager.bindCallback(new SearchAndGoSearchCallback() {
-			private String getString(int ressourceId, Object... formatArgs) {
+			private String getString(int ressourceId, Object... formatArgs) { /* Avoid un-contextualized fragments */
 				return boxPlayApplication.getString(ressourceId, formatArgs);
 			}
 			
@@ -97,7 +105,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 				results.addAll(workmap.values());
 				
 				if (results.size() > MAX_CONTENT_ITEM_DISPLAYABLE) {
-					BoxPlayApplication.getBoxPlayApplication().toast(R.string.boxplay_culture_searchngo_content_limit_reached, results.size(), MAX_CONTENT_ITEM_DISPLAYABLE).show();
+					boxPlayApplication.toast(R.string.boxplay_culture_searchngo_content_limit_reached, results.size(), MAX_CONTENT_ITEM_DISPLAYABLE).show();
 					
 					while (results.size() > MAX_CONTENT_ITEM_DISPLAYABLE) {
 						results.remove(results.size() - 1);
@@ -184,6 +192,18 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 				dialogCreator.showHistoryDialog();
 			}
 		});
+		historyImageButton.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View view) {
+				if (!searchAndGoManager.getSearchHistory().isEmpty() && historyImageButton.isEnabled()) {
+					boxPlayApplication.toast(R.string.boxplay_culture_searchngo_history_clear).show();
+					searchAndGoManager.getSearchSuggestionSubManager().clear();
+					return true;
+				}
+
+				return false;
+			}
+		});
 		settingsImageButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -216,9 +236,9 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	}
 	
 	public void setSearchBarHidden(boolean hidden) {
-		bookmarkImageButton.setClickable(!hidden);
-		historyImageButton.setClickable(!hidden);
-		settingsImageButton.setClickable(!hidden);
+		bookmarkImageButton.setEnabled(!hidden);
+		historyImageButton.setEnabled(!hidden);
+		settingsImageButton.setEnabled(!hidden);
 		
 		progressContainerRelativeLayout.setVisibility(hidden ? View.VISIBLE : View.GONE);
 		materialSearchBar.setVisibility(hidden ? View.GONE : View.VISIBLE);
@@ -326,6 +346,8 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	/**
 	 * Class to quickly create dialog used by the Search n' Go fragment
 	 * 
+	 * Help: https://stackoverflow.com/questions/15762905/how-can-i-display-a-list-view-in-an-android-alert-dialog
+	 * 
 	 * TODO: Make a better settings system
 	 * 
 	 * @author Enzo CACERES
@@ -333,7 +355,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	class DialogCreator {
 		private final int SETTINGS_DIALOG_SELECTION_PROVIDERS = 0;
 		
-		private SharedPreferences preferences = BoxPlayApplication.getBoxPlayApplication().getPreferences();
+		private SharedPreferences preferences = boxPlayApplication.getPreferences();
 		
 		private AlertDialog searchHistoryDialog, settingsDialog, providersSettingsDialog;
 		

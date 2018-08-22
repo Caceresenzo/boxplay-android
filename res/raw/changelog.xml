@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.5.1 BETA" changeDate="22/08/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 7.1[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility to search Hentai on Adkami</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility clear search history</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.5 BETA" changeDate="22/08/2018">
 		<changelogtext>[b]Search n' Go PREVIEW 7[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Fully added Full-Stream.nu as a video provider</changelogtext>

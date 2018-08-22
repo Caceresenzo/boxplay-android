@@ -52,10 +52,6 @@ public class PremiumManager extends AbstractManager {
 	}
 	
 	@Override
-	protected void initialize() {
-	}
-	
-	@Override
 	protected void initializeWhenUiReady(BaseBoxPlayActivty attachedActivity) {
 		adultSubManager = new AdultPremiumSubManager();
 		adultSubManager.initialize();
