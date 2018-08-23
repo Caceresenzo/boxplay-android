@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers;
+import caceresenzo.libs.boxplay.common.extractor.html.HtmlCommonExtractor;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderHelper;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
@@ -17,8 +18,6 @@ import caceresenzo.libs.string.StringUtils;
 public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	
 	public static final String TAG = AndroidOpenloadVideoExtractor.class.getSimpleName();
-	
-	public static final String FILE_DELETED = "We can't find the file you are looking for. It maybe got deleted by the owner or was removed due a copyright violation.";
 	
 	private final XManagers managers;
 	private final Handler handler;
@@ -73,15 +72,6 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	}
 	
 	@Override
-	public boolean checkStreamingAvailability(String html) {
-		if (html == null) {
-			return false;
-		}
-		
-		return !html.contains(FILE_DELETED);
-	}
-	
-	@Override
 	public void injectJsCode(final String code) {
 		lock();
 		
@@ -112,7 +102,7 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-				webView.evaluateJavascript("(function() { return (document.getElementsByTagName('html')[0].innerHTML); })();", new ValueCallback<String>() {
+				webView.evaluateJavascript(HtmlCommonExtractor.COMMON_JS_FUNCTION_EXTRACT_HTML, new ValueCallback<String>() {
 					@Override
 					public void onReceiveValue(String html) {
 						resolvedHtml = html.replace("\\u003C", "<").replace("\\\"", "\"").replace("\\n", "\n");
