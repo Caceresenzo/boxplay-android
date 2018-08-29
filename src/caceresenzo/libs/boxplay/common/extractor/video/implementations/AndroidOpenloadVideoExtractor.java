@@ -29,15 +29,6 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	public AndroidOpenloadVideoExtractor() {
 		this.managers = BoxPlayApplication.getManagers();
 		this.handler = BoxPlayApplication.getHandler();
-		
-		lock();
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				webView = new WebView(BoxPlayApplication.getBoxPlayApplication());
-				unlock();
-			}
-		});
 	}
 	
 	@Override
@@ -74,6 +65,19 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	@Override
 	public void injectJsCode(final String code) {
 		lock();
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				getLogger().appendln("Creating WebView instance...");
+				
+				webView = new WebView(BoxPlayApplication.getBoxPlayApplication());
+				unlock();
+			}
+		});
+		
+		waitUntilUnlock();
+		
+		lock();
 		
 		getLogger().appendln("WebView > Starting code injection...");
 		
@@ -108,6 +112,10 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 						resolvedHtml = html.replace("\\u003C", "<").replace("\\\"", "\"").replace("\\n", "\n");
 						
 						getLogger().appendln("WebView > Resolved HTML: \"" + StringUtils.cutIfTooLong(resolvedHtml, 150) + "\" (cut a length 150)");
+						
+						getLogger().appendln("Destroying WebView instance...");
+						webView.destroy();
+						webView = null;
 						
 						unlock();
 					}
