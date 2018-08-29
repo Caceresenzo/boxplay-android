@@ -16,12 +16,15 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
+import caceresenzo.android.libs.service.ServiceUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
+import caceresenzo.apps.boxplay.receivers.BoxPlayServiceRestartBroadcastReceiver;
+import caceresenzo.apps.boxplay.services.BoxPlayBackgroundService;
 import caceresenzo.libs.comparator.Version;
 import caceresenzo.libs.comparator.VersionType;
 
@@ -72,6 +75,10 @@ public class BoxPlayApplication extends Application {
 		StrictMode.setVmPolicy(builder.build());
 		
 		MANAGERS.initialize(this);
+		
+		if (!ServiceUtils.isServiceRunning(this, BoxPlayBackgroundService.class)) {
+			BoxPlayServiceRestartBroadcastReceiver.start(this);
+		}
 	}
 	
 	@Override
