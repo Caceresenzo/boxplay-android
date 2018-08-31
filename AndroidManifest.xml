@@ -90,8 +90,7 @@
             android:name=".services.BoxPlayBackgroundService"
             android:enabled="true"
             android:exported="true"
-            android:process=":boxplaybackgroundservice"
-            android:stopWithTask="false" >
+            android:process=":boxplaybackgroundservice" >
         </service>
 
         <receiver android:name="caceresenzo.apps.boxplay.receivers.MusicNotificationBroadcast" >
@@ -127,7 +126,8 @@
 
         <!-- Libraries -->
 
-        <!-- <activity -->
+
+        <!-- <activity -->
         <!-- android:name="com.rohitss.uceh.UCEDefaultActivity" -->
         <!-- android:process=":error_activity" -->
         <!-- android:screenOrientation="portrait" /> -->

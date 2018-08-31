@@ -12,15 +12,22 @@ public class BoxPlayServiceRestartBroadcastReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		start(context);
-	}
-	
-	public static void start(Context context) {
-		Intent intent = new Intent(context, BoxPlayBackgroundService.class);
-		if (Build.VERSION.SDK_INT < 26) {
-			context.startService(intent);
-		} else {
-			context.startForegroundService(intent);
+		switch (intent.getAction()) {
+			case RESTART_ACTION: {
+				BoxPlayBackgroundService.startIfNotAlready(context);
+				break;
+			}
+			
+			case "android.intent.action.BOOT_COMPLETED": {
+				if (Build.VERSION.SDK_INT < 26) { /* Android O don't allow it anymore */
+					BoxPlayBackgroundService.startIfNotAlready(context);
+				}
+				break;
+			}
+			
+			default: {
+				throw new IllegalStateException("Unhandled intent action: " + intent.getAction());
+			}
 		}
 	}
 	
