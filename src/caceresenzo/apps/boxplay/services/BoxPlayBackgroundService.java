@@ -13,7 +13,6 @@ import android.util.Log;
 import caceresenzo.android.libs.internet.NetworkUtils;
 import caceresenzo.android.libs.service.ServiceUtils;
 import caceresenzo.apps.boxplay.receivers.BoxPlayServiceRestartBroadcastReceiver;
-import caceresenzo.libs.boxplay.culture.searchngo.subscribe.Subscriber;
 import caceresenzo.libs.thread.HelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
@@ -84,7 +83,7 @@ public class BoxPlayBackgroundService extends Service {
 		
 		Log.d(TAG, "Service started!");
 		
-		return START_STICKY;
+		return START_REDELIVER_INTENT;
 	}
 	
 	@Override
