@@ -24,6 +24,7 @@ import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.MyListManager;
+import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalDataType;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.additional.CategoryResultData;
@@ -344,6 +345,7 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 	
 	class AddToWatchListDetailItem extends DetailListItem {
 		private MyListManager myListManager = BoxPlayApplication.getManagers().getMyListManager();
+		private MyList watchLaterList = myListManager.getWatchLaterList();
 		private MyListable myListable;
 		
 		public AddToWatchListDetailItem(MyListable myListable) {
@@ -355,14 +357,14 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		}
 		
 		public boolean isInList() {
-			return myListManager.containsInWatchList(myListable);
+			return watchLaterList.containsInList(myListable);
 		}
 		
 		public void updateState() {
-			if (myListManager.containsInWatchList(myListable)) {
-				myListManager.removeFromWatchList(myListable);
+			if (watchLaterList.containsInList(myListable)) {
+				watchLaterList.removeFromList(myListable);
 			} else {
-				myListManager.addToWatchList(myListable);
+				watchLaterList.addToList(myListable);
 			}
 		}
 		
