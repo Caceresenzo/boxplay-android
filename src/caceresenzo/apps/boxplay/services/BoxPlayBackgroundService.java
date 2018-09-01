@@ -13,6 +13,7 @@ import android.util.Log;
 import caceresenzo.android.libs.internet.NetworkUtils;
 import caceresenzo.android.libs.service.ServiceUtils;
 import caceresenzo.apps.boxplay.receivers.BoxPlayServiceRestartBroadcastReceiver;
+import caceresenzo.libs.boxplay.culture.searchngo.subscribe.Subscriber;
 import caceresenzo.libs.thread.HelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
@@ -26,6 +27,9 @@ public class BoxPlayBackgroundService extends Service {
 	
 	public static final long TASK_WAIT_PERIOD = 1000 * 5;
 	public static final long TASK_WAIT_INTERNET = 1000 * 15;
+	
+	/* Instance */
+	private static BoxPlayBackgroundService SERVICE;
 	
 	/* Managers */
 	private Handler handler;
@@ -51,6 +55,7 @@ public class BoxPlayBackgroundService extends Service {
 	/* Constructor */
 	public BoxPlayBackgroundService() {
 		super();
+		SERVICE = this;
 		
 		this.handler = new Handler();
 		
@@ -125,6 +130,7 @@ public class BoxPlayBackgroundService extends Service {
 			 * 
 			 * TODO: Add Search n' Go Subscribers
 			 */
+			// Subscriber.checkEveryProvider();
 			// String content;
 			// try {
 			// content = Downloader.getUrlContent("http://monip.org");
@@ -175,6 +181,10 @@ public class BoxPlayBackgroundService extends Service {
 		if (isRunning(context)) {
 			context.stopService(getServiceIntent(context));
 		}
+	}
+	
+	public static BoxPlayBackgroundService getBoxPlayBackgroundService() {
+		return SERVICE;
 	}
 	
 }

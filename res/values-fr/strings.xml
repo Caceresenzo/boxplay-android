@@ -44,6 +44,7 @@
     <!--  -->
     <string name="boxplay_mylist">Mes Listes</string>
     <string name="boxplay_mylist_watchlater">À regarder plus tard</string>
+    <string name="boxplay_mylist_subscriptions">Abonnements</string>
     <!--  -->
     <string name="boxplay_other">Autre</string>
     <string name="boxplay_other_settings">Paramètres</string>
@@ -295,12 +296,23 @@
     <string name="boxplay_premium_adult_status_computing_url">Calcule du lien...</string>
 
     <!--  -->
+    <!-- My Lists -->
+    <!--  -->
+
+    <string name="boxplay_mylist_source_store_video">Magasin - Vidéo</string>
+    <string name="boxplay_mylist_source_culture_searchngo">Culture - Search n\' Go</string>
+
+    <!--  -->
     <!-- My Lists > Watch Later -->
     <!--  -->
 
     <string name="boxplay_mylist_watchlater_title">À regarder plus tard</string>
-    <string name="boxplay_mylist_watchlater_source_store_video">Magasin - Vidéo</string>
-    <string name="boxplay_mylist_watchlater_source_culture_searchngo">Culture - Search n\' Go</string>
+
+    <!--  -->
+    <!-- My Lists > Subscriptions -->
+    <!--  -->
+
+    <string name="boxplay_mylist_subscriptions_title">Abonnements</string>
 
     <!--  -->
     <!-- Settings -->

@@ -46,6 +46,7 @@
     <!--  -->
     <string name="boxplay_mylist">My Lists</string>
     <string name="boxplay_mylist_watchlater">Watch Later</string>
+    <string name="boxplay_mylist_subscriptions">Subscriptions</string>
     <!--  -->
     <string name="boxplay_other">Other</string>
     <string name="boxplay_other_settings">Settings</string>
@@ -302,12 +303,23 @@
     <string name="boxplay_premium_adult_status_computing_url">Computing url...</string>
 
     <!--  -->
+    <!-- My Lists -->
+    <!--  -->
+
+    <string name="boxplay_mylist_source_store_video">Store - Video</string>
+    <string name="boxplay_mylist_source_culture_searchngo">Culture - Search n\' Go</string>
+
+    <!--  -->
     <!-- My Lists > Watch Later -->
     <!--  -->
 
     <string name="boxplay_mylist_watchlater_title">Watch Later</string>
-    <string name="boxplay_mylist_watchlater_source_store_video">Store - Video</string>
-    <string name="boxplay_mylist_watchlater_source_culture_searchngo">Culture - Search n\' Go</string>
+
+    <!--  -->
+    <!-- My Lists > Subscriptions -->
+    <!--  -->
+
+    <string name="boxplay_mylist_subscriptions_title">Subscriptions</string>
 
     <!--  -->
     <!-- Settings -->

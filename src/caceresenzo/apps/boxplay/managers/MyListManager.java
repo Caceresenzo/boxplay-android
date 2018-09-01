@@ -13,11 +13,14 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.os.Handler;
 import android.util.Log;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
@@ -25,154 +28,363 @@ import caceresenzo.libs.boxplay.mylist.MyListable;
 import caceresenzo.libs.thread.HelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
+/**
+ * Manager for Lists managements
+ * 
+ * @author Enzo CACERES
+ */
 public class MyListManager extends AbstractManager {
 	
+	/* Tag */
 	public static final String TAG = MyListManager.class.getSimpleName();
 	
-	private File listFolder, rawListDataFile;
+	/* File / Folders */
+	private File listFolder; /* Used by MyList instances, must be define before creating lists */
 	
-	private Map<String, MyListable> watchLaterList;
+	/* Lists */
+	private MyList watchLaterList, subscriptionsList;
 	
-	private FetchWorker fetchWorker;
+	private List<MyList> myLists;
 	
-	private boolean videoManagerFinished;
+	/* Variables */
+	private static boolean videoManagerFinished;
 	
 	@Override
 	public void initialize() {
 		this.listFolder = new File(getManagers().getBaseApplicationDirectory() + "/list/");
-		this.rawListDataFile = new File(listFolder, "watchinglist.javaraw");
 		
-		this.watchLaterList = new LinkedHashMap<>();
+		this.myLists = new ArrayList<>();
 		
-		this.fetchWorker = new FetchWorker();
+		this.myLists.add(this.watchLaterList = new WatchLaterList());
+		this.myLists.add(this.subscriptionsList = new SubscriptionsList());
 		
-		load();
+		loadAll();
 	}
 	
 	@Override
 	protected void destroy() {
-		save();
+		saveAll();
 	}
 	
-	public void addToWatchList(MyListable myListable) {
-		if (!containsInWatchList(myListable)) {
-			watchLaterList.put(myListable.toUniqueString(), myListable);
+	/**
+	 * Call {@link MyList#load()} for every {@link MyList}
+	 */
+	public void loadAll() {
+		for (MyList myList : myLists) {
+			myList.load();
+		}
+	}
+	
+	/**
+	 * Call {@link MyList#save()} for every {@link MyList}
+	 */
+	public void saveAll() {
+		for (MyList myList : myLists) {
+			myList.save();
+		}
+	}
+	
+	/**
+	 * Get the Watch Later {@link MyList} instance
+	 * 
+	 * @return Watch Later List
+	 */
+	public MyList getWatchLaterList() {
+		return watchLaterList;
+	}
+	
+	/**
+	 * Get the Subscriptions {@link MyList} instance
+	 * 
+	 * @return Subscriptions List
+	 */
+	public MyList getSubscriptionsList() {
+		return subscriptionsList;
+	}
+	
+	/**
+	 * Tell if the VideoManager has finished working
+	 * 
+	 * @param hasFinished
+	 *            New state
+	 */
+	public static void videoManagerFinished(boolean hasFinished) {
+		videoManagerFinished = hasFinished;
+	}
+	
+	/**
+	 * Lock the {@link Thread} while the {@link VideoManager} finish
+	 */
+	public static void waitVideoManager() {
+		while (!videoManagerFinished) {
+			ThreadUtils.sleep(100L);
+		}
+	}
+	
+	/**
+	 * Watch Later List
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class WatchLaterList extends MyList {
+		private File rawDataFile;
+		
+		public WatchLaterList() {
+			super(new WatchListFetchWorker());
 			
-			save();
-		}
-	}
-	
-	public boolean containsInWatchList(MyListable myListable) {
-		return watchLaterList.containsKey(myListable.toUniqueString());
-	}
-	
-	public void removeFromWatchList(MyListable myListable) {
-		watchLaterList.remove(myListable.toUniqueString());
-		
-		save();
-	}
-	
-	public void fetchWatchLaterItems(FetchCallback callback) {
-		if (fetchWorker.isRunning()) {
-			boxPlayApplication.toast("Worker is budy").show();
-			return;
+			this.rawDataFile = new File(listFolder, "watchlater.list.javaraw");
 		}
 		
-		fetchWorker = new FetchWorker();
-		fetchWorker.applyData(callback).start();
-	}
-	
-	public void videoManagerFinished(boolean hasFinished) {
-		this.videoManagerFinished = hasFinished;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void load() {
-		if (!checkFile()) {
-			return;
-		}
-		
-		try {
-			InputStream file = new FileInputStream(rawListDataFile);
-			InputStream buffer = new BufferedInputStream(file);
-			ObjectInput input = new ObjectInputStream(buffer);
+		@SuppressWarnings("unchecked")
+		@Override
+		public void load() {
+			if (!checkFile()) {
+				Log.e(TAG, "Loading aborted.");
+				return;
+			}
+			Log.i(TAG, String.format("Loading list: %s", getClass().getSimpleName()));
+			
+			if (myListables == null) {
+				myListables = new LinkedHashMap<>();
+			}
 			
 			try {
-				Map<String, MyListable> recoveredItems = (Map<String, MyListable>) input.readObject();
+				InputStream file = new FileInputStream(rawDataFile);
+				InputStream buffer = new BufferedInputStream(file);
+				ObjectInput input = new ObjectInputStream(buffer);
 				
-				if (recoveredItems != null) {
-					watchLaterList.putAll(recoveredItems);
+				try {
+					Map<String, MyListable> recoveredItems = (Map<String, MyListable>) input.readObject();
+					
+					if (recoveredItems != null) {
+						myListables.putAll(recoveredItems);
+					}
+				} finally {
+					input.close();
 				}
-			} finally {
-				input.close();
+			} catch (Exception exception) {
+				Log.e(TAG, "Failed to load Watch Later list, first time ?", exception);
 			}
-		} catch (Exception exception) {
-			Log.e(TAG, "Failed to load Watch Later list, first time ?", exception);
-		}
-		
-		save(); // Will reset everything if incompatible or invalid loading
-	}
-	
-	public void save() {
-		if (!checkFile() && watchLaterList != null) {
-			return;
-		}
-		
-		try {
-			OutputStream file = new FileOutputStream(rawListDataFile);
-			OutputStream buffer = new BufferedOutputStream(file);
-			ObjectOutput output = new ObjectOutputStream(buffer);
 			
-			try {
-				output.writeObject(watchLaterList);
-			} finally {
-				output.close();
-			}
-		} catch (IOException exception) {
-			Log.e(TAG, "Failed to save Watch Later list", exception);
-		}
-	}
-	
-	public boolean checkFile() {
-		if (!rawListDataFile.exists() || rawListDataFile.isDirectory()) {
-			try {
-				rawListDataFile.mkdirs();
-				rawListDataFile.delete();
-				rawListDataFile.createNewFile();
-				Log.i(TAG, "Base directory created!");
-				return true;
-			} catch (IOException exception) {
-				Log.e(TAG, "Failed to create base directory.", exception);
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	class FetchWorker extends HelpedThread {
-		private FetchCallback callback;
-		private List<MyListable> outputListable;
-		
-		public FetchWorker() {
-			super();
-			
-			this.outputListable = new ArrayList<>();
+			save(); // Will reset everything if incompatible or invalid loading
 		}
 		
 		@Override
-		protected void onRun() {
-			save();
+		public void save() {
+			if (!checkFile() || myListables == null) {
+				Log.e(TAG, "Saving aborted.");
+				return;
+			}
+			Log.i(TAG, String.format("Saving list: %s with content: %s", getClass().getSimpleName(), values()));
 			
-			while (!videoManagerFinished) {
-				ThreadUtils.sleep(100L);
+			try {
+				OutputStream file = new FileOutputStream(rawDataFile);
+				OutputStream buffer = new BufferedOutputStream(file);
+				ObjectOutput output = new ObjectOutputStream(buffer);
+				
+				try {
+					output.writeObject(myListables);
+				} finally {
+					output.close();
+				}
+			} catch (IOException exception) {
+				Log.e(TAG, "Failed to save Watch Later list", exception);
+			}
+		}
+		
+		public boolean checkFile() {
+			if (!rawDataFile.exists() || rawDataFile.isDirectory()) {
+				try {
+					rawDataFile.mkdirs();
+					rawDataFile.delete();
+					rawDataFile.createNewFile();
+					Log.i(TAG, "Base directory created!");
+					return true;
+				} catch (IOException exception) {
+					Log.e(TAG, "Failed to create base directory. (absolute path=" + rawDataFile.getAbsolutePath() + ")", exception);
+					return false;
+				}
 			}
 			
-			watchLaterList.clear();
+			return true;
+		}
+	}
+	
+	/**
+	 * Subscriptions List
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class SubscriptionsList extends MyList {
+		public SubscriptionsList() {
+			super(null);
+		}
+		
+		@Override
+		public void save() {
+			;
+		}
+		
+		@Override
+		public void load() {
+			;
+		}
+	}
+	
+	/**
+	 * Abstract class, base class to extend to create a new List
+	 * 
+	 * @author Enzo CACERES
+	 */
+	public abstract static class MyList {
+		protected Map<String, MyListable> myListables;
+		protected FetchWorker worker;
+		
+		/* Constructor */
+		public MyList(FetchWorker worker) {
+			this.worker = worker;
 			
-			load();
+			this.myListables = new LinkedHashMap<>();
 			
-			outputListable.addAll(watchLaterList.values());
+			if (worker != null) {
+				worker.attachList(this);
+			}
+		}
+		
+		/**
+		 * Add a {@link MyListable} to this {@link MyList} instance, will automaticly call {@link MyList#save()}
+		 * 
+		 * @param myListable
+		 *            {@link MyListable} to be added
+		 */
+		public void addToList(MyListable myListable) {
+			if (!containsInList(myListable)) {
+				myListables.put(myListable.toUniqueString(), myListable);
+				
+				Log.d(TAG, String.format("Added item: %s to list: %s", myListable.toUniqueString(), getClass().getSimpleName()));
+				
+				save();
+			}
+		}
+		
+		/**
+		 * Check if a {@link MyListable} is in this list
+		 * 
+		 * @param myListable
+		 *            {@link MyListable} to check
+		 * @return If it present or not ({@link Map#containsKey(Object)})
+		 */
+		public boolean containsInList(MyListable myListable) {
+			return myListables.containsKey(myListable.toUniqueString());
+		}
+		
+		/**
+		 * Remove a {@link MyListable} to this {@link MyList} instance, will automaticly call {@link MyList#save()}
+		 * 
+		 * @param myListable
+		 *            {@link MyListable} to be added
+		 */
+		public void removeFromList(MyListable myListable) {
+			if (containsInList(myListable)) {
+				myListables.remove(myListable.toUniqueString());
+				
+				Log.d(TAG, String.format("Removed item: %s from list: %s", myListable.toUniqueString(), getClass().getSimpleName()));
+				
+				save();
+			}
+		}
+		
+		/**
+		 * Call {@link #clearList(boolean)} with autosave as false
+		 */
+		public void clearList() {
+			clearList(false);
+		}
+		
+		/**
+		 * Clear list content
+		 * 
+		 * @param autosave
+		 *            If you want to automaticly call {@link #save()} after clear
+		 */
+		public void clearList(boolean autosave) {
+			myListables.clear();
+			
+			if (autosave) {
+				save();
+			}
+		}
+		
+		/**
+		 * Get the values of this list
+		 * 
+		 * @return All values
+		 */
+		public Collection<MyListable> values() {
+			return myListables.values();
+		}
+		
+		/**
+		 * Get attached worker if this {@link MyList}
+		 * 
+		 * @return Attached {@link FetchWorker} instance
+		 */
+		public FetchWorker getWorker() {
+			return worker;
+		}
+		
+		/**
+		 * 
+		 * 
+		 * @param callback
+		 */
+		public void fetch(FetchCallback callback) {
+			if (worker.isRunning()) {
+				BoxPlayApplication.getBoxPlayApplication().toast("Worker is budy").show();
+				return;
+			}
+			
+			// if (worker instanceof WatchListFetchWorker) {
+			// worker = new WatchListFetchWorker();
+			// } else {
+			// throw new IllegalStateException("Unknown instance type of worker.");
+			// }
+			try {
+				worker = worker.getClass().newInstance();
+				
+				worker.attachList(this).applyCallback(callback).start();
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+			
+		}
+		
+		public abstract void save();
+		
+		public abstract void load();
+	}
+	
+	static class WatchListFetchWorker extends FetchWorker {
+		@Override
+		protected void onRun() {
+			if (myList == null) {
+				cancel();
+				return;
+			}
+			
+			Log.d(TAG, "MyList content (before save): " + myList.values());
+			
+			myList.save();
+			
+			waitVideoManager();
+			
+			// myList.clearList();
+			
+			myList.load();
+			
+			Log.d(TAG, "MyList content (after load): " + myList.values());
+			
+			outputListable.addAll(myList.values());
 			
 			for (Object object : BoxPlayElement.getInstances().values()) {
 				if (object instanceof VideoGroup) {
@@ -183,28 +395,52 @@ public class MyListManager extends AbstractManager {
 					}
 				}
 			}
+		}
+	}
+	
+	abstract static class FetchWorker extends HelpedThread {
+		protected Handler handler;
+		
+		protected MyList myList;
+		protected FetchCallback callback;
+		protected List<MyListable> outputListable;
+		
+		public FetchWorker() {
+			super();
 			
+			this.handler = BoxPlayApplication.getHandler();
+			
+			this.outputListable = new ArrayList<>();
+		}
+		
+		public FetchWorker attachList(MyList myList) {
+			this.myList = myList;
+			
+			return this;
+		}
+		
+		@Override
+		protected void onFinished() {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
 					if (callback != null) {
-						callback.onFetchFinished(outputListable);
+						if (isCancelled()) {
+							callback.onException(new HelpedThreadCancelledException());
+						} else {
+							callback.onFetchFinished(outputListable);
+						}
 					}
 				}
 			});
 		}
 		
 		@Override
-		protected void onFinished() {
-			;
-		}
-		
-		@Override
 		protected void onCancelled() {
-			;
+			onFinished();
 		}
 		
-		public FetchWorker applyData(FetchCallback callback) {
+		public FetchWorker applyCallback(FetchCallback callback) {
 			this.callback = callback;
 			
 			return this;
@@ -212,9 +448,9 @@ public class MyListManager extends AbstractManager {
 	}
 	
 	public static interface FetchCallback {
-		
 		void onFetchFinished(List<MyListable> myListables);
 		
+		void onException(Exception exception);
 	}
 	
 }

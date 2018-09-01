@@ -13,7 +13,7 @@
         android:layoutMode="clipBounds" >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_mylist_watchlater_recyclerview_content"
+            android:id="@+id/fragment_mylist_page_recyclerview_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/main_card_margin_vertical"
@@ -24,14 +24,14 @@
     </android.support.v4.widget.NestedScrollView>
 
     <ProgressBar
-        android:id="@+id/fragment_mylist_watchlater_progressbar_loading"
+        android:id="@+id/fragment_mylist_page_progressbar_loading"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
     <TextView
-        android:id="@+id/fragment_mylist_watchlater_textview_info_text"
+        android:id="@+id/fragment_mylist_page_textview_info_text"
         style="@style/textViewTitleStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

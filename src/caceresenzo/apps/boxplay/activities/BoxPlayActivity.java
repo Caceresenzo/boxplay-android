@@ -569,7 +569,8 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 			
 			/* My List */
-			case R.id.drawer_boxplay_mylist_watchlater: {
+			case R.id.drawer_boxplay_mylist_watchlater:
+			case R.id.drawer_boxplay_mylist_subscriptions: {
 				MyListFragment myListFragment;
 				
 				if (actualFragment instanceof MyListFragment) {
@@ -582,6 +583,11 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 					default:
 					case R.id.drawer_boxplay_mylist_watchlater: {
 						myListFragment.withWatchLater();
+						break;
+					}
+					
+					case R.id.drawer_boxplay_mylist_subscriptions: {
+						myListFragment.withSubscriptions();
 						break;
 					}
 				}

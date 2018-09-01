@@ -1,17 +1,19 @@
 package caceresenzo.apps.boxplay.activities.base;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
 
 public abstract class BaseBoxPlayActivty extends AppCompatActivity {
 	
 	public static final int NO_VALUE = -1;
-
+	
 	protected static Fragment FRAGMENT_TO_OPEN = null;
 	protected static int MENUITEM_ID_TO_SELECT = NO_VALUE;
 	
@@ -35,6 +37,11 @@ public abstract class BaseBoxPlayActivty extends AppCompatActivity {
 	
 	protected void initialize() {
 		
+	}
+	
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(LocaleHelper.onAttach(base));
 	}
 	
 	/**

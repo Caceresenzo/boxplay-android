@@ -73,6 +73,7 @@ public class ViewHelper {
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_culture_searchngo), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_premium_adult), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_mylist_watchlater), null);
+		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_mylist_subscriptions), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_other_settings), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_other_about), null);
 		
