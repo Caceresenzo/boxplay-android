@@ -20,7 +20,6 @@
         android:minSdkVersion="21"
         android:targetSdkVersion="27" />
 
-    <!-- android:icon="@mipmap/ic_launcher" -->
     <application
         android:name=".application.BoxPlayApplication"
         android:allowBackup="true"
@@ -90,7 +89,8 @@
             android:name=".services.BoxPlayBackgroundService"
             android:enabled="true"
             android:exported="true"
-            android:process=":boxplaybackgroundservice" >
+            android:process=":boxplaybackgroundservice"
+            android:stopWithTask="false" >
         </service>
 
         <receiver android:name="caceresenzo.apps.boxplay.receivers.MusicNotificationBroadcast" >

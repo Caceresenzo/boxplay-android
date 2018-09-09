@@ -3,9 +3,14 @@ package caceresenzo.apps.boxplay.helper;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import com.budiyev.android.imageloader.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -234,13 +239,18 @@ public class ViewHelper {
 	 * View Help
 	 */
 	public void downloadToImageView(ImageView imageView, String url) {
-		downloadToImageView(null, imageView, url);
+		downloadToImageView(null, imageView, url, null);
 	}
 	
-	/*
-	 * View Help
-	 */
+	public void downloadToImageView(ImageView imageView, String url, Map<String, Object> headers) {
+		downloadToImageView(null, imageView, url, headers);
+	}
+	
 	public void downloadToImageView(Context context, ImageView imageView, String url) {
+		downloadToImageView(context, imageView, url, null);
+	}
+	
+	public void downloadToImageView(Context context, ImageView imageView, String url, Map<String, Object> headers) {
 		if (imageView == null) {
 			return;
 		}
@@ -250,10 +260,25 @@ public class ViewHelper {
 			return;
 		}
 		
-		ImageLoader.with(context != null ? context : boxPlayApplication) //
-				.from(url) //
-				.errorDrawable(new ColorDrawable(color(R.color.colorError))) //
-				.load(imageView); //
+		if (context == null) {
+			context = boxPlayApplication;
+		}
+		
+		if (headers == null) {
+			ImageLoader.with(context) //
+					.from(url) //
+					.errorDrawable(new ColorDrawable(color(R.color.colorError))) //
+					.load(imageView); //
+		} else {
+			LazyHeaders.Builder builder = new LazyHeaders.Builder();
+			
+			for (Entry<String, Object> entry : headers.entrySet()) {
+				builder.addHeader(entry.getKey(), String.valueOf(entry.getValue()));
+			}
+			
+			Glide.with(context).load(new GlideUrl(url, builder.build())).apply(new RequestOptions().centerCrop().error(new ColorDrawable(color(R.color.colorError)))).into(imageView);
+		}
+		
 	}
 	
 	public void clearImageCache() {

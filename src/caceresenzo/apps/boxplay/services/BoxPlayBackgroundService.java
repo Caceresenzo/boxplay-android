@@ -83,7 +83,7 @@ public class BoxPlayBackgroundService extends Service {
 		
 		Log.d(TAG, "Service started!");
 		
-		return START_REDELIVER_INTENT;
+		return START_STICKY;
 	}
 	
 	@Override
@@ -172,7 +172,7 @@ public class BoxPlayBackgroundService extends Service {
 	
 	public static void startIfNotAlready(Context context) {
 		if (!isRunning(context)) {
-			context.startService(getServiceIntent(context));
+			// context.startService(getServiceIntent(context)); // TODO: Make it work properly
 		}
 	}
 	

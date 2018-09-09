@@ -339,7 +339,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 			providerTextView.setText(result.getParentProvider().getSiteName().toUpperCase());
 			typeTextView.setText(result.getType().toString().toUpperCase());
 			
-			BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, result.getBestImageUrl());
+			BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, result.getBestImageUrl(), result.getRequireHeaders());
 		}
 	}
 	

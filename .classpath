@@ -10,5 +10,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="src" path="/Java.Library.LicenceKey"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Android Glide"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
