@@ -18,9 +18,12 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractor;
 import caceresenzo.libs.boxplay.common.extractor.InternetSource;
 import caceresenzo.libs.boxplay.common.extractor.image.manga.implementations.GenericMangaLelChapterExtractor;
+import caceresenzo.libs.boxplay.common.extractor.image.manga.implementations.GenericScanMangaChapterExtractor;
 import caceresenzo.libs.boxplay.common.extractor.video.IHentaiVideoContentProvider;
 import caceresenzo.libs.boxplay.common.extractor.video.implementations.AndroidOpenloadVideoExtractor;
 import caceresenzo.libs.boxplay.common.extractor.video.implementations.GenericVidozaVideoExtractor;
@@ -46,18 +49,6 @@ public class SearchAndGoManager extends AbstractManager {
 	
 	/* Constants */
 	public static final int MAX_SEARCH_QUERY_COUNT = 10;
-	
-	/* TODO: Need to be moved to ContentExtractorManager */
-	private static final Map<Class<? extends ContentExtractor>, ContentExtractor> EXTRACTORS = new HashMap<>();
-	
-	static {
-		/* Video */
-		EXTRACTORS.put(OpenloadVideoExtractor.class, new AndroidOpenloadVideoExtractor());
-		EXTRACTORS.put(GenericVidozaVideoExtractor.class, new GenericVidozaVideoExtractor());
-		
-		/* Manga */
-		EXTRACTORS.put(GenericMangaLelChapterExtractor.class, new GenericMangaLelChapterExtractor());
-	}
 	
 	/* Managers */
 	private PremiumManager premiumManager;
@@ -88,50 +79,13 @@ public class SearchAndGoManager extends AbstractManager {
 		readProviders();
 		
 		registerCallbacks();
+		
+		ContentExtractionManager.bindExtractor(ExtractorType.VIDEO, OpenloadVideoExtractor.class, new AndroidOpenloadVideoExtractor());
 	}
 	
 	@Override
 	protected void destroy() {
 		this.searchHistorySubManager.save();
-	}
-	
-	public ContentExtractor getExtractorFromBaseUrl(String baseUrl) {
-		if (baseUrl == null) {
-			return null;
-		}
-		
-		Class<? extends ContentExtractor> extractorClass = getExtractorClassFromBaseUrl(baseUrl);
-		
-		if (extractorClass != null) {
-			Log.i(TAG, String.format("An instance of ContentExtractor has been asked. (base url: %s, returned class: %s)", baseUrl, extractorClass.getSimpleName()));
-			
-			try {
-				return extractorClass.newInstance();
-			} catch (Exception exception) {
-				Log.e(TAG, "Failed to instanciate new instance of content explorer.", exception);
-			}
-			
-			return null;
-		}
-		
-		Log.e(TAG, String.format("No compatible ContentExtract instance found for base url %s.", baseUrl));
-		return null;
-	}
-	
-	private Class<? extends ContentExtractor> getExtractorClassFromBaseUrl(String baseUrl) {
-		for (Entry<Class<? extends ContentExtractor>, ContentExtractor> entry : EXTRACTORS.entrySet()) {
-			InternetSource internetSource = entry.getValue();
-			
-			if (internetSource.matchUrl(baseUrl)) {
-				return entry.getValue().getClass();
-			}
-		}
-		
-		return null;
-	}
-	
-	public boolean hasCompatibleExtractor(String baseUrl) {
-		return getExtractorClassFromBaseUrl(baseUrl) != null;
 	}
 	
 	public void bindCallback(SearchAndGoSearchCallback callback) {

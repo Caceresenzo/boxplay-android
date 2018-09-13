@@ -52,7 +52,7 @@ public class DataManager extends AbstractManager {
 		try {
 			cachedUrlFileName = MD5.generateStringMD5(downloadUrl);
 		} catch (NoSuchAlgorithmException exception) {
-			cachedUrlFileName = FileUtils.remplaceIllegalChar(downloadUrl);
+			cachedUrlFileName = FileUtils.replaceIllegalChar(downloadUrl);
 		}
 		
 		this.cachedUrlFile = new File(cacheFolder, cachedUrlFileName + ".cache");

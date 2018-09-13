@@ -264,6 +264,7 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_version">Version</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_traduction_team">Équipe de Traduction</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_genders">Genre(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_last_chapter">Dernier chapitre</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_status">Status</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_country">Pays</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_director">Directeur</string>
@@ -271,7 +272,9 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_actors">Acteur/rice(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_artists">Artist/e(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_studios">Studio(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_channels">Chaîne(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_release_date">Date de parution</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_publishers">Editeur(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_views">Vue(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_duration">Durée</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_resume">Résumé</string>
@@ -279,6 +282,8 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_item_video">Vidéo</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_item_chapter">Chapitre</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_null">NULL</string>
+    <!-- Other -->
+    <string name="boxplay_culture_searchngo_search_result_data_item_disabled">Désactivé</string>
     <!-- MANGA VIEWER -->
     <string name="boxplay_manga_chapter_reader_format_info" formatted="false">%s\nPage %s/%s</string>
     <string name="boxplay_manga_chapter_reader_format_error" formatted="false">- ERREUR -\n%s\n\n- Stacktrace -\n%s\n\nS\'il vous plait, envoyez moi une capture d\'écren si vous voyez ceci!</string>

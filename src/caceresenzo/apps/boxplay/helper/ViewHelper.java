@@ -3,14 +3,9 @@ package caceresenzo.apps.boxplay.helper;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import com.budiyev.android.imageloader.ImageLoader;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.model.LazyHeaders;
-import com.bumptech.glide.request.RequestOptions;
 
 import android.content.Context;
 import android.content.Intent;
@@ -150,6 +145,7 @@ public class ViewHelper {
 		enumCacheTranslation.put(AdditionalDataType.VERSION, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_version));
 		enumCacheTranslation.put(AdditionalDataType.TRADUCTION_TEAM, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_traduction_team));
 		enumCacheTranslation.put(AdditionalDataType.GENDERS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_genders));
+		enumCacheTranslation.put(AdditionalDataType.LAST_CHAPTER, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_last_chapter));
 		enumCacheTranslation.put(AdditionalDataType.STATUS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_status));
 		enumCacheTranslation.put(AdditionalDataType.COUNTRY, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_country));
 		enumCacheTranslation.put(AdditionalDataType.DIRECTOR, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_director));
@@ -157,7 +153,9 @@ public class ViewHelper {
 		enumCacheTranslation.put(AdditionalDataType.ACTORS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_actors));
 		enumCacheTranslation.put(AdditionalDataType.ARTISTS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_artists));
 		enumCacheTranslation.put(AdditionalDataType.STUDIOS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_studios));
+		enumCacheTranslation.put(AdditionalDataType.CHANNELS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_channels));
 		enumCacheTranslation.put(AdditionalDataType.RELEASE_DATE, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_release_date));
+		enumCacheTranslation.put(AdditionalDataType.PUBLISHERS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_publishers));
 		enumCacheTranslation.put(AdditionalDataType.VIEWS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_views));
 		enumCacheTranslation.put(AdditionalDataType.DURATION, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_duration));
 		enumCacheTranslation.put(AdditionalDataType.RESUME, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_resume));
@@ -264,21 +262,11 @@ public class ViewHelper {
 			context = boxPlayApplication;
 		}
 		
-		if (headers == null) {
-			ImageLoader.with(context) //
-					.from(url) //
-					.errorDrawable(new ColorDrawable(color(R.color.colorError))) //
-					.load(imageView); //
-		} else {
-			LazyHeaders.Builder builder = new LazyHeaders.Builder();
-			
-			for (Entry<String, Object> entry : headers.entrySet()) {
-				builder.addHeader(entry.getKey(), String.valueOf(entry.getValue()));
-			}
-			
-			Glide.with(context).load(new GlideUrl(url, builder.build())).apply(new RequestOptions().centerCrop().error(new ColorDrawable(color(R.color.colorError)))).into(imageView);
-		}
-		
+		ImageLoader.with(context) //
+				.from(url) //
+				.errorDrawable(new ColorDrawable(color(R.color.colorError))) //
+				.httpHeaders(headers) //
+				.load(imageView); //
 	}
 	
 	public void clearImageCache() {

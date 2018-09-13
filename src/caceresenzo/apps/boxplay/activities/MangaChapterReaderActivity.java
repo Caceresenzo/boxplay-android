@@ -2,6 +2,7 @@ package caceresenzo.apps.boxplay.activities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.github.chrisbanes.photoview.HackyProblematicViewPager;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,9 +25,14 @@ import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseViewPagerAdapter;
 import caceresenzo.apps.boxplay.fragments.utils.ViewFragment;
-import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractor;
 import caceresenzo.libs.boxplay.common.extractor.image.manga.MangaChapterContentExtractor;
+import caceresenzo.libs.boxplay.common.extractor.text.TextContentExtractor.TextFormat;
+import caceresenzo.libs.boxplay.common.extractor.text.novel.NovelChapterContentExtractor;
 import caceresenzo.libs.boxplay.culture.searchngo.content.image.implementations.IMangaContentProvider;
+import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.ChapterItemResultData;
 import caceresenzo.libs.string.StringUtils;
 import caceresenzo.libs.thread.HelpedThread;
@@ -52,9 +60,6 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	/* Actual chapter item */
 	private ChapterItemResultData chapterItem;
 	
-	/* Manager(s) */
-	private SearchAndGoManager searchAndGoManager;
-	
 	/* Views */
 	private SlidingUpPanelLayout slidingUpPanelLayout;
 	
@@ -67,7 +72,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	private ProgressBar loadingProgressBar;
 	
 	/* Worker */
-	private ExtractionWorker extractionWorker;
+	private MangaExtractionWorker mangaExtractionWorker;
+	private NovelExtractionWorker novelExtractionWorker;
 	
 	/* Local data */
 	private String chapterName;
@@ -78,9 +84,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	public MangaChapterReaderActivity() {
 		super();
 		
-		this.searchAndGoManager = BoxPlayApplication.getManagers().getSearchAndGoManager();
-		
-		this.extractionWorker = new ExtractionWorker();
+		this.mangaExtractionWorker = new MangaExtractionWorker();
+		this.novelExtractionWorker = new NovelExtractionWorker();
 	}
 	
 	@Override
@@ -124,7 +129,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		
 		INSTANCE = null;
 		
-		extractionWorker.cancel();
+		mangaExtractionWorker.cancel();
 	}
 	
 	/* Initialization -> Views */
@@ -159,19 +164,41 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	
 	/* Initialization -> Manga */
 	private void initializeManga(boolean validRestoredData) {
-		if (validRestoredData) {
-			reloadImages();
-		} else {
-			this.chapterName = chapterItem.getName();
-			
-			if (extractionWorker.isRunning()) {
-				boxPlayApplication.toast("ExtractionWorker is busy").show();
-				return;
+		this.chapterName = chapterItem.getName();
+		
+		switch (chapterItem.getChapterType()) {
+			case IMAGE_ARRAY: {
+				if (validRestoredData) {
+					reloadImages();
+				} else {
+					if (mangaExtractionWorker.isRunning()) {
+						boxPlayApplication.toast("ExtractionWorker is busy").show();
+						return;
+					}
+					
+					setViewerHidden(true);
+					
+					mangaExtractionWorker.applyData(chapterItem).start();
+				}
+				break;
 			}
 			
-			setViewerHidden(true);
+			case TEXT: {
+				if (novelExtractionWorker.isRunning()) {
+					boxPlayApplication.toast("ExtractionWorker is busy").show();
+					return;
+				}
+				
+				setViewerHidden(true);
+				
+				novelExtractionWorker.applyData(chapterItem).start();
+				break;
+			}
 			
-			extractionWorker.applyData(chapterItem).start();
+			default: {
+				displayError(new IllegalStateException("Unhandled chapter type: " + chapterItem.getChapterType()));
+				break;
+			}
 		}
 	}
 	
@@ -192,11 +219,17 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	 * 
 	 * @param imageUrls
 	 */
+	@SuppressWarnings("unchecked")
 	private void showPages(List<String> imageUrls) {
 		this.imageUrls = imageUrls;
 		this.chapterSize = imageUrls.size();
 		
 		mangaViewPager.setAdapter(pagerAdapter = new BaseViewPagerAdapter(getSupportFragmentManager()));
+		
+		Map<String, Object> requireHttpHeaders = null;
+		if (chapterItem.hasInitializedComplements()) {
+			requireHttpHeaders = (Map<String, Object>) chapterItem.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT);
+		}
 		
 		for (String imageUrl : imageUrls) {
 			PhotoView imageView = new PhotoView(this);
@@ -210,7 +243,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			
 			pagerAdapter.addFragment(new ViewFragment(imageView, false), "");
 			
-			BoxPlayApplication.getViewHelper().downloadToImageView(this, imageView, imageUrl);
+			BoxPlayApplication.getViewHelper().downloadToImageView(this, imageView, imageUrl, requireHttpHeaders);
 			
 			pagerAdapter.notifyDataSetChanged(); // Need to be called everytime
 		}
@@ -223,6 +256,28 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		} else {
 			updateSelectedPage(1);
 		}
+		
+		setViewerHidden(false);
+	}
+	
+	/**
+	 * Fill the {@link ViewPager} with a text
+	 * 
+	 * @param imageUrls
+	 */
+	private void showNovelPage(Spanned spannedText) {
+		this.imageUrls = null;
+		this.chapterSize = 1;
+		
+		mangaViewPager.setAdapter(pagerAdapter = new BaseViewPagerAdapter(getSupportFragmentManager()));
+		
+		TextView textView = new TextView(this);
+		textView.setText(spannedText);
+		
+		pagerAdapter.addFragment(new ViewFragment(textView), "");
+		
+		pagerAdapter.notifyDataSetChanged();
+		updateSelectedPage(1);
 		
 		setViewerHidden(false);
 	}
@@ -257,7 +312,6 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 				
 				errorTextView.setVisibility(View.VISIBLE);
 				errorTextView.setText(getString(R.string.boxplay_manga_chapter_reader_format_error, exception.getLocalizedMessage(), StringUtils.fromException(exception)));
-				
 			}
 		});
 	}
@@ -314,36 +368,112 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class ExtractionWorker extends HelpedThread {
-		/* Parent Activity set when creating new Instance */
-		private final MangaChapterReaderActivity parentActivity;
-		/* Actual result to fetch */
-		private ChapterItemResultData result;
-		
-		/* Result's parent class */
-		private IMangaContentProvider mangaContentProvider;
-		private MangaChapterContentExtractor chapterContentExtractor;
-		
+	class MangaExtractionWorker extends ExtractionWorker<MangaChapterContentExtractor> {
 		/* Local list of imageUrls, not initialized */
 		private List<String> imageUrls;
+		
+		@Override
+		protected void work() {
+			imageUrls = chapterContentExtractor.getImageUrls(mangaContentProvider.extractMangaPageUrl(localChapterItem));
+			
+			if (imageUrls == null) {
+				cancel();
+			}
+		}
+		
+		@Override
+		protected void finish() {
+			showPages(imageUrls);
+		}
+		
+		@Override
+		public ExtractorType getExtractionType() {
+			return ExtractorType.MANGA;
+		}
+	}
+	
+	/**
+	 * Extraction thread linked to the UI to fetch data like novels texts
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class NovelExtractionWorker extends ExtractionWorker<NovelChapterContentExtractor> {
+		/* Text Format */
+		private TextFormat extractedNovelTextFormat;
+		
+		/* Content */
+		private String novel;
+		
+		@Override
+		protected void work() {
+			novel = chapterContentExtractor.extractNovel(localChapterItem);
+			
+			if (!StringUtils.validate(novel)) {
+				cancel();
+			}
+		}
+		
+		@Override
+		protected void finish() {
+			switch (extractedNovelTextFormat) {
+				case HTML: {
+					showNovelPage(Html.fromHtml(novel, Html.FROM_HTML_MODE_LEGACY));
+					break;
+				}
+				
+				default: {
+					displayError(new IllegalStateException("Unhandled text format: " + extractedNovelTextFormat));
+					break;
+				}
+			}
+		}
+		
+		@Override
+		public void onAppliedData(ChapterItemResultData result) {
+			this.extractedNovelTextFormat = chapterContentExtractor.getSupposedExtractedTextFormat();
+		}
+		
+		@Override
+		public ExtractorType getExtractionType() {
+			return ExtractorType.NOVEL;
+		}
+	}
+	
+	abstract class ExtractionWorker<E extends ContentExtractor> extends HelpedThread {
+		/* Parent Activity set when creating new Instance */
+		protected final MangaChapterReaderActivity parentActivity;
+		/* Actual result to fetch */
+		protected ChapterItemResultData localChapterItem;
+		
+		/* Result's parent class */
+		protected IMangaContentProvider mangaContentProvider;
+		protected E chapterContentExtractor;
 		
 		/* Constructor */
 		public ExtractionWorker() {
 			this.parentActivity = INSTANCE;
 		}
 		
+		/**
+		 * Abstract function, called when the thread just start.
+		 */
+		protected abstract void work();
+		
 		@Override
 		protected void onRun() {
 			try {
-				imageUrls = chapterContentExtractor.getImageUrls(mangaContentProvider.extractMangaPageUrl(result));
+				work();
 			} catch (Exception exception) {
 				displayError(exception);
-			}
-			
-			if (imageUrls == null) {
 				cancel();
 			}
 		}
+		
+		/**
+		 * Abstract function, called when the thread has finished working.<br>
+		 * He will be call on the main UI thread.
+		 */
+		protected abstract void finish();
 		
 		@Override
 		protected void onFinished() {
@@ -354,10 +484,9 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					showPages(imageUrls);
+					finish();
 				}
 			});
-			
 		}
 		
 		@Override
@@ -372,19 +501,30 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		 *            Target result
 		 * @return Itself
 		 */
-		public ExtractionWorker applyData(ChapterItemResultData result) {
+		@SuppressWarnings("unchecked")
+		public ExtractionWorker<E> applyData(ChapterItemResultData result) {
 			if (result == null) {
 				return this;
 			}
 			
-			this.result = result;
+			this.localChapterItem = result;
 			
 			this.mangaContentProvider = (IMangaContentProvider) result.getImageContentProvider();
-			this.chapterContentExtractor = (MangaChapterContentExtractor) searchAndGoManager.getExtractorFromBaseUrl(result.getUrl());
+			this.chapterContentExtractor = (E) ContentExtractionManager.getExtractorFromBaseUrl(getExtractionType(), result.getUrl());
+			
+			onAppliedData(result);
 			
 			return this;
 		}
 		
+		/**
+		 * Function to override if necessary, called when {@link #applyData(ChapterItemResultData)} has been called
+		 */
+		public void onAppliedData(ChapterItemResultData result) {
+			;
+		}
+		
+		public abstract ExtractorType getExtractionType();
 	}
 	
 }

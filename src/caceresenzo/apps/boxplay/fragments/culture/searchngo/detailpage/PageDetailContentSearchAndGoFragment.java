@@ -30,10 +30,13 @@ import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.DebugManager;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
+import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor;
 import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor.VideoContentExtractorProgressCallback;
 import caceresenzo.libs.boxplay.culture.searchngo.content.video.IVideoContentProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
+import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleUrlData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.ChapterItemResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.VideoItemResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
@@ -175,7 +178,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	 */
 	class ContentViewHolder extends RecyclerView.ViewHolder {
 		private View view;
-		private TextView typeTextView, contentTextView;
+		private TextView typeTextView, disabledTextView, contentTextView;
 		private ImageView iconImageView, downloadImageView;
 		
 		public ContentViewHolder(View itemView) {
@@ -184,6 +187,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 			view = itemView;
 			
 			typeTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_type);
+			disabledTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_disabled);
 			
 			iconImageView = (ImageView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_imageview_icon);
 			contentTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_content);
@@ -218,44 +222,54 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 			contentTextView.setText(additionalData.convert());
 			downloadImageView.setVisibility(hideDownload ? View.GONE : View.VISIBLE);
 			
-			if (validType) {
-				OnClickListener onClickListener = new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						if (videoExtractionWorker.isRunning()) {
-							boxPlayApplication.toast("ExtractionWorker is busy").show();
-							return;
-						}
-						
-						videoExtractionWorker = new VideoExtractionWorker();
-						
-						String action = ACTION_STREAMING;
-						if (view.equals(downloadImageView)) {
-							action = ACTION_DOWNLOAD;
-						}
-						
-						switch (additionalData.getType()) {
-							case ITEM_VIDEO: {
-								videoExtractionWorker.applyData((VideoItemResultData) additionalData.getData(), action).start();
-								progressDialog.show();
-								break;
+			String url = null;
+			if (additionalData.getData() instanceof SimpleUrlData) {
+				url = ((SimpleUrlData) additionalData.getData()).getUrl();
+			}
+			
+			if (url == null) {
+				view.setClickable(false);
+				disabledTextView.setVisibility(View.VISIBLE);
+			} else {
+				if (validType) {					
+					OnClickListener onClickListener = new OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							if (videoExtractionWorker.isRunning()) {
+								boxPlayApplication.toast("ExtractionWorker is busy").show();
+								return;
 							}
 							
-							case ITEM_CHAPTER: {
-								MangaChapterReaderActivity.start((ChapterItemResultData) additionalData.getData());
-								break;
+							videoExtractionWorker = new VideoExtractionWorker();
+							
+							String action = ACTION_STREAMING;
+							if (view.equals(downloadImageView)) {
+								action = ACTION_DOWNLOAD;
 							}
 							
-							default: {
-								throw new IllegalStateException(); // Impossible to reach
+							switch (additionalData.getType()) {
+								case ITEM_VIDEO: {
+									videoExtractionWorker.applyData((VideoItemResultData) additionalData.getData(), action).start();
+									progressDialog.show();
+									break;
+								}
+								
+								case ITEM_CHAPTER: {
+									MangaChapterReaderActivity.start((ChapterItemResultData) additionalData.getData());
+									break;
+								}
+								
+								default: {
+									throw new IllegalStateException(); // Impossible to reach
+								}
 							}
+							
 						}
-						
-					}
-				};
-				
-				view.setOnClickListener(onClickListener);
-				downloadImageView.setOnClickListener(onClickListener);
+					};
+					
+					view.setOnClickListener(onClickListener);
+					downloadImageView.setOnClickListener(onClickListener);
+				}
 			}
 		}
 	}
@@ -286,7 +300,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 			final List<String> compatibleVideoPageUrls = new ArrayList<>();
 			
 			for (String videoPageUrl : videoContentProvider.extractVideoPageUrl(videoItem)) {
-				if (searchAndGoManager.hasCompatibleExtractor(videoPageUrl)) {
+				if (ContentExtractionManager.hasCompatibleExtractor(ExtractorType.VIDEO, videoPageUrl)) {
 					compatibleVideoPageUrls.add(videoPageUrl);
 				}
 			}
@@ -334,7 +348,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		
 		public void processUrl(String videoPageUrl) {
 			try {
-				extractor = (VideoContentExtractor) searchAndGoManager.getExtractorFromBaseUrl(videoPageUrl);
+				extractor = (VideoContentExtractor) ContentExtractionManager.getExtractorFromBaseUrl(ExtractorType.VIDEO, videoPageUrl);
 				
 				if (extractor == null) {
 					throw new NullPointerException(String.format("ContentExtractor is null, site not supported? (page url: %s)", videoPageUrl));
@@ -396,7 +410,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 						});
 					}
 				} else {
-					final String filename = String.format("%s %s.mp4", FileUtils.remplaceIllegalChar(result.getName()), videoItem.getName());
+					final String filename = String.format("%s %s.mp4", FileUtils.replaceIllegalChar(result.getName()), videoItem.getName());
 					
 					switch (action) {
 						case ACTION_STREAMING: {

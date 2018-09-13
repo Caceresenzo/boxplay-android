@@ -270,6 +270,7 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_version">Version</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_traduction_team">Traduction Team</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_genders">Genders</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_last_chapter">Last chapter</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_status">Statut</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_country">Country</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_director">Director</string>
@@ -277,7 +278,9 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_actors">Actor/ress(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_artists">Artist(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_studios">Studio(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_channels">Channel(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_release_date">Release Date</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_publishers">Publisher(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_views">Views</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_duration">Duration</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_resume">Resume</string>
@@ -285,6 +288,8 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_item_video">Video</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_item_chapter">Chapter</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_null">NULL</string>
+    <!-- Other -->
+    <string name="boxplay_culture_searchngo_search_result_data_item_disabled">Disabled</string>
     <!-- MANGA VIEWER -->
     <string name="boxplay_manga_chapter_reader_format_info" formatted="false">%s\nPage %s/%s</string>
     <string name="boxplay_manga_chapter_reader_format_error" formatted="false">- ERROR -\n%s\n\n- Stacktrace -\n%s\n\nPlease send me a screenshot if you see this!</string>

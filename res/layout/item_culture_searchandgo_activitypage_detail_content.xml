@@ -15,17 +15,39 @@
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/item_culture_searchandgo_activitypage_detail_content_textview_type"
-            style="@style/textViewSimpleStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="start"
-            android:text="TYPE"
-            android:textColor="@color/colorAccent"
-            android:textSize="14dp" />
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/item_culture_searchandgo_activitypage_detail_content_textview_type"
+                style="@style/textViewSimpleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="TYPE"
+                android:textColor="@color/colorAccent"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/item_culture_searchandgo_activitypage_detail_content_textview_disabled"
+                style="@style/textViewSimpleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0"
+                android:gravity="start"
+                android:text="@string/boxplay_culture_searchngo_search_result_data_item_disabled"
+                android:textColor="@color/colorError"
+                android:textSize="14dp"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,8 +76,8 @@
                 android:id="@+id/item_culture_searchandgo_activitypage_detail_content_imageview_download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_margin="16dp"
                 android:src="@drawable/icon_download_light" />
         </RelativeLayout>

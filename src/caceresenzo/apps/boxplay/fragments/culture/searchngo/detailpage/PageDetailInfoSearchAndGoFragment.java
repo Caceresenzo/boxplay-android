@@ -81,9 +81,9 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 	 */
 	public void applyResult(SearchAndGoResult result, List<AdditionalResultData> additionals) {
 		this.items.clear();
-
+		
 		this.items.add(new ImageDetailItem(result.getBestImageUrl()).dataType(AdditionalDataType.THUMBNAIL));
-
+		
 		this.items.add(new AddToWatchListDetailItem(result));
 		
 		for (AdditionalResultData additionalResultData : additionals) {
@@ -103,7 +103,8 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 					
 					item = new CategoryDetailItem(categories);
 				} else {
-					item = new StringDetailItem("#LIST/" + additionalResultData.convert());
+					// item = new StringDetailItem("#LIST/" + additionalResultData.convert());
+					 item = new StringDetailItem(additionalResultData.convert());
 				}
 			} else if (data instanceof RatingResultData) {
 				item = new RatingDetailItem((RatingResultData) data);
@@ -530,7 +531,7 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		
 		public void bind(RatingDetailItem ratingItem) {
 			RatingResultData ratingData = ratingItem.getRatingResultData();
-
+			
 			starRatingBar.setNumStars(5);
 			starRatingBar.setMax(5);
 			
