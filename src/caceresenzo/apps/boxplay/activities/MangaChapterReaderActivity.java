@@ -413,11 +413,12 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			}
 		}
 		
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void finish() {
 			switch (extractedNovelTextFormat) {
 				case HTML: {
-					showNovelPage(Html.fromHtml(novel, Html.FROM_HTML_MODE_LEGACY));
+					showNovelPage(Html.fromHtml(novel));
 					break;
 				}
 				

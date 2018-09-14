@@ -164,9 +164,6 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 					results.clear();
 					searchAdapter.notifyDataSetChanged();
 					
-					informationContainerFrameLayout.setVisibility(View.VISIBLE);
-					informationTextView.setText(R.string.boxplay_culture_searchngo_info_make_a_search);
-					
 					actualQuery = null;
 				}
 			}

@@ -224,7 +224,6 @@
     <string name="boxplay_culture_searchngo_detail_info_button_remove_to_watchlist">Supprimer de votre liste</string>
     <string name="boxplay_culture_searchngo_content_limit_reached" formatted="false">Limite d\'affichage dépassé, reduction de %s à %s resultats.</string>
     <string name="boxplay_culture_searchngo_info_no_provider">Aucun fournisseur sélectionné.\nAllez dans les Paramètres, cliquez sur \"Fournisseurs\", et selectionnez en au moins un.</string>
-    <string name="boxplay_culture_searchngo_info_make_a_search">Faite une recherche!</string>
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">Une erreur est apparu lors de l\'extraction: %s \n\nAllez dans les paramètres, et choissisez d\'ouvrir les logs d\'extraction pour plus de details!</string>
     <!-- DIALOGS -->
     <string name="boxplay_culture_searchngo_dialog_search_history">Historique de recherche (10 derniers)</string>

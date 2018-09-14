@@ -569,8 +569,8 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 			
 			/* My List */
-			case R.id.drawer_boxplay_mylist_watchlater:
-			case R.id.drawer_boxplay_mylist_subscriptions: {
+			case R.id.drawer_boxplay_mylist_watchlater: {
+				// case R.id.drawer_boxplay_mylist_subscriptions: {
 				MyListFragment myListFragment;
 				
 				if (actualFragment instanceof MyListFragment) {
@@ -586,10 +586,10 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 						break;
 					}
 					
-					case R.id.drawer_boxplay_mylist_subscriptions: {
-						myListFragment.withSubscriptions();
-						break;
-					}
+					// case R.id.drawer_boxplay_mylist_subscriptions: {
+					// myListFragment.withSubscriptions();
+					// break;
+					// }
 				}
 				
 				showFragment(myListFragment);

@@ -230,7 +230,6 @@
     <string name="boxplay_culture_searchngo_detail_info_button_remove_to_watchlist">Remove from your Watch List</string>
     <string name="boxplay_culture_searchngo_content_limit_reached" formatted="false">Display limit reached, reducing from %s to %s results.</string>
     <string name="boxplay_culture_searchngo_info_no_provider">Error: No provider selected.\nGo into Settings, click \"Providers\", and select at least one.</string>
-    <string name="boxplay_culture_searchngo_info_make_a_search">Make a search!</string>
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">An error append when extracting: %s \n\nGo to settings and choose to open logs at the extraction end for more details!</string>
     <!-- DIALOGS -->
     <string name="boxplay_culture_searchngo_dialog_search_history">Search history (10 last)</string>

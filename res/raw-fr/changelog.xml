@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.6 BETA" changeDate="14/09/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 8[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Nouveau founisseur de Manga et de Novel: Scan-Manga</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Lecteur de Novel (texte)</changelogtext>
+		<changelogtext>[b]Fixé![/b] L'url de VoirFilm à été changé</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.5.1 BETA" changeDate="22/08/2018">
 		<changelogtext>[b]Search n' Go PREVIEW 7.1[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Possinilité de chercher des Hentai sur Adkami</changelogtext>

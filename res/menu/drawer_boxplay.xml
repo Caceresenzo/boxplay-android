@@ -76,10 +76,10 @@
                     android:id="@+id/drawer_boxplay_mylist_watchlater"
                     android:icon="@drawable/icon_watch_later_light"
                     android:title="@string/boxplay_mylist_watchlater"/>
-                <item
-                    android:id="@+id/drawer_boxplay_mylist_subscriptions"
-                    android:icon="@drawable/icon_subscriptions_light"
-                    android:title="@string/boxplay_mylist_subscriptions"/>
+                <!-- <item -->
+                <!-- android:id="@+id/drawer_boxplay_mylist_subscriptions" -->
+                <!-- android:icon="@drawable/icon_subscriptions_light" -->
+                <!-- android:title="@string/boxplay_mylist_subscriptions"/> -->
             </group>
         </menu>
     </item>
