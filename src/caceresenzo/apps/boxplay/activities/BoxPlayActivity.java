@@ -170,30 +170,29 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
+		
 		onNavigationItemSelected(navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video));
 		navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video).setChecked(true);
-		
-		// getManagers().getUpdateManager().debugForceFirstTimeInstalled();
-		if (managers.getUpdateManager().isFirstTimeInstalled()) {
+
+		if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					helper.updateSeachMenu(R.id.drawer_boxplay_other_about);
+					showFragment(new AboutFragment().withChangeLog());
+				}
+			}, 3000);
+		} else {
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					managers.getTutorialManager().executeActivityTutorial(BoxPlayActivity.this);
 				}
 			}, 1000);
-		} else {
-			if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
-				handler.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						helper.updateSeachMenu(R.id.drawer_boxplay_other_about);
-						showFragment(new AboutFragment().withChangeLog());
-					}
-					
-				}, 3000);
-			}
 		}
+		
 		managers.getUpdateManager().saveUpdateVersion();
+	
 	}
 	
 	@Override

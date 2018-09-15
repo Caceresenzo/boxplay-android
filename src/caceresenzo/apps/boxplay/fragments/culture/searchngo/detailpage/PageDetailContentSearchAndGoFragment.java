@@ -29,7 +29,6 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.DebugManager;
-import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor;
@@ -39,6 +38,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleUrlData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.ChapterItemResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.VideoItemResultData;
+import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.completed.CompletedVideoItemResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 import caceresenzo.libs.bytes.ByteFormat;
 import caceresenzo.libs.databridge.ObjectWrapper;
@@ -62,7 +62,6 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	private BoxPlayApplication boxPlayApplication;
 	private Handler handler;
 	private ViewHelper viewHelper;
-	private SearchAndGoManager searchAndGoManager;
 	private DebugManager debugManager;
 	
 	private boolean uiReady = false;
@@ -88,7 +87,6 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.handler = BoxPlayApplication.getHandler();
 		this.viewHelper = BoxPlayApplication.getViewHelper();
-		this.searchAndGoManager = BoxPlayApplication.getManagers().getSearchAndGoManager();
 		this.debugManager = BoxPlayApplication.getManagers().getDebugManager();
 		
 		this.dialogCreator = new DialogCreator();
@@ -223,15 +221,17 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 			downloadImageView.setVisibility(hideDownload ? View.GONE : View.VISIBLE);
 			
 			String url = null;
-			if (additionalData.getData() instanceof SimpleUrlData) {
+			boolean checkNeeded = false;
+			if (additionalData.getData() instanceof SimpleUrlData && !(additionalData.getData() instanceof CompletedVideoItemResultData)) {
 				url = ((SimpleUrlData) additionalData.getData()).getUrl();
+				checkNeeded = true;
 			}
 			
-			if (url == null) {
+			if (url == null && checkNeeded) {
 				view.setClickable(false);
 				disabledTextView.setVisibility(View.VISIBLE);
 			} else {
-				if (validType) {					
+				if (validType) {
 					OnClickListener onClickListener = new OnClickListener() {
 						@Override
 						public void onClick(View view) {
@@ -293,7 +293,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					progressDialog.update(R.string.boxplay_culture_searchngo_extractor_status_downloading_video_site_url, videoItem.getUrl());
+					progressDialog.update(R.string.boxplay_culture_searchngo_extractor_status_downloading_video_site_url, (videoItem instanceof CompletedVideoItemResultData) ? "<multiple>" : videoItem.getUrl());
 				}
 			});
 			
@@ -442,7 +442,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 						}
 						
 						default: {
-							throw new IllegalStateException();
+							throw new IllegalStateException("Unknown action: " + action);
 						}
 					}
 				}

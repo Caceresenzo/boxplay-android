@@ -2,6 +2,7 @@ package caceresenzo.apps.boxplay.fragments.mylist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import caceresenzo.apps.boxplay.activities.VideoActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.MyListManager;
+import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleData;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
@@ -212,12 +214,13 @@ public abstract class MyListPageFragment extends Fragment implements MyListManag
 			super(itemView);
 		}
 		
+		@SuppressWarnings("unchecked")
 		@Override
 		public void bind(CultureSearchAndGoResultItem item) {
 			final SearchAndGoResult searchAndGoResult = item.getSearchAndGoResult();
 			
 			titleTextView.setText(searchAndGoResult.getName());
-			viewHelper.downloadToImageView(thumbnailImageView, searchAndGoResult.getImageUrl());
+			viewHelper.downloadToImageView(thumbnailImageView, searchAndGoResult.getImageUrl(), (Map<String, Object>) searchAndGoResult.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT));
 			
 			view.setOnClickListener(new OnClickListener() {
 				@Override

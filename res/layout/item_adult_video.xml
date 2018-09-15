@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/cardViewStyleAccented"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/main_card_margin_vertical"
     android:layout_marginEnd="@dimen/main_card_margin_horizontal"
@@ -17,17 +17,17 @@
         <ImageView
             android:id="@+id/item_adult_video_imageview_thumbnail"
             style="@style/imageViewStyle"
-            android:layout_width="@dimen/adult_video_width"
-            android:layout_height="@dimen/adult_video_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_video" />
+            android:src="@drawable/placeholder_video_cube" />
 
         <TextView
             android:id="@+id/item_adult_video_textview_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/item_adult_video_imageview_thumbnail"
             android:layout_alignRight="@+id/item_adult_video_imageview_thumbnail"

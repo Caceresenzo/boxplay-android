@@ -13,16 +13,17 @@ import caceresenzo.apps.boxplay.R;
  * @author Enzo CACERES
  */
 public class WorkingProgressDialog {
+	/* Base context */
 	private Context context;
 	
+	/* Dialog */
 	private AlertDialog.Builder dialogBuilder;
 	private AlertDialog dialog;
 	
+	/* Views */
 	private TextView statusTextView;
 	
-	/**
-	 * Private constructor
-	 */
+	/* Constructor, private */
 	private WorkingProgressDialog(Context context) {
 		this.context = context;
 		
@@ -93,7 +94,7 @@ public class WorkingProgressDialog {
 	/**
 	 * Create a new instance of the {@link WorkingProgressDialog}
 	 * 
-	 * @return A new instance
+	 * @return A new instance of the dialog
 	 */
 	public static WorkingProgressDialog create(Context context) {
 		return new WorkingProgressDialog(context);

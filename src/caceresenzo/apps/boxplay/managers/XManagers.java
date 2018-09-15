@@ -215,10 +215,8 @@ public class XManagers {
 		}
 	}
 	
-	protected abstract static class SubManager {
-		protected void initialize() {
-			;
-		}
+	protected abstract static class SubManager extends AbstractManager {
+		;
 	}
 	
 	protected String getString(int ressourceId, Object... args) {

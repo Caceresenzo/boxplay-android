@@ -299,12 +299,18 @@
     <!--  -->
 
     <string name="boxplay_premium_adult_adult">Adult</string>
-    <string name="boxplay_premium_adult_warning_dialog_message">Due to your Android version, it has been tested that BoxPlay Adult maybe not working (correctly), caused by too old js-code interpretation.</string>
-    <string name="boxplay_premium_adult_warning_dialog_done">DONE</string>
     <!-- Processor status -->
     <string name="boxplay_premium_adult_status_downloading_data">Downloading data...</string>
     <string name="boxplay_premium_adult_status_parsing">Parsing...</string>
     <string name="boxplay_premium_adult_status_computing_url">Computing url...</string>
+    <string name="boxplay_premium_adult_status_downloading_video_page">Downloading video page...</string>
+    <string name="boxplay_premium_adult_status_extracting_link">Extracting link...</string>
+    <string name="boxplay_premium_adult_status_formatting_result">Formatting result...</string>
+    <string name="boxplay_premium_adult_status_error_failed_to_load">Failed to load: %s</string>
+    <string name="boxplay_premium_adult_status_error_file_not_found">File not available.</string>
+    <string name="boxplay_premium_adult_status_error_error_occured">An error occured:\n\n%s\n\nOpen logger for more info.</string>
+    <string name="boxplay_premium_adult_status_error_extraction_failed">Extraction failed.</string>
+    <string name="boxplay_premium_adult_status_error_vlc_not_installed">VLC not found.</string>
 
     <!--  -->
     <!-- My Lists -->

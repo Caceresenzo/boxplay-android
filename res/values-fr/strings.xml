@@ -293,11 +293,17 @@
     <!--  -->
 
     <string name="boxplay_premium_adult_adult">Adulte</string>
-    <string name="boxplay_premium_adult_warning_dialog_message">A cause de votre version d\'Android, il a été testé que BoxPlay Adulte risquait de ne pas marcher (correctement), causé par l\'interpretation trop vielle du code JavaScript.</string>
-    <string name="boxplay_premium_adult_warning_dialog_done">TERMINÉ</string>
     <string name="boxplay_premium_adult_status_downloading_data">Téléchargement des données...</string>
-    <string name="boxplay_premium_adult_status_parsing">Analyse...</string>
-    <string name="boxplay_premium_adult_status_computing_url">Calcule du lien...</string>
+    <string name="boxplay_premium_adult_status_parsing">Traitement...</string>
+    <string name="boxplay_premium_adult_status_computing_url">Calcule de l\'url...</string>
+    <string name="boxplay_premium_adult_status_downloading_video_page">Téléchargement de la page de la vidéo...</string>
+    <string name="boxplay_premium_adult_status_extracting_link">Extraction du lien...</string>
+    <string name="boxplay_premium_adult_status_formatting_result">Formattage du résultat...</string>
+    <string name="boxplay_premium_adult_status_error_failed_to_load">Le chargement a échoué: %s</string>
+    <string name="boxplay_premium_adult_status_error_file_not_found">Fichier non disponible.</string>
+    <string name="boxplay_premium_adult_status_error_error_occured">Une erreur est apparu:\n\n%s\n\nOuvrer les logs pour plus d\'information.</string>
+    <string name="boxplay_premium_adult_status_error_extraction_failed">L\'extraction a échoué.</string>
+    <string name="boxplay_premium_adult_status_error_vlc_not_installed">VLC n\'a pas été trouvé.</string>
 
     <!--  -->
     <!-- My Lists -->

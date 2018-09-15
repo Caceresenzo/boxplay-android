@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.6.1 BETA" changeDate="15/09/2018">
+		<changelogtext>[b]Search n' Go PREVIEW 8.1[/b]</changelogtext>
+		<changelogtext>[b]Fixed![/b] Provider VOIRFILM.pro was sometimes locking search due to bad processing</changelogtext>
+		<changelogtext>[b]Fixed![/b] Providers VOIRFILM.pro and FilmStream.nu was showing "Disabled" to every movie/series</changelogtext>
+		<changelogtext>[b]Fixed![/b] When rotating, some list were not applying new size to their items</changelogtext>
+		<changelogtext>[b]Changed![/b] Extraction system of certain module</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.6 BETA" changeDate="14/09/2018">
 		<changelogtext>[b]Search n' Go PREVIEW 8[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] New Manga and Novel Provider: Scan-Manga</changelogtext>

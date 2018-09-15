@@ -3,6 +3,7 @@ package caceresenzo.apps.boxplay.fragments.premium.adult;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -15,26 +16,42 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import caceresenzo.android.libs.list.EndlessRecyclerViewScrollListener;
-import caceresenzo.android.libs.toast.ToastUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
+import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.PremiumManager.AdultPremiumSubManager;
 import caceresenzo.apps.boxplay.managers.PremiumManager.AdultSubModuleCallback;
+import caceresenzo.apps.boxplay.managers.XManagers;
 import caceresenzo.libs.boxplay.models.premium.adult.AdultVideo;
 
 public class AdultExplorerFragment extends Fragment {
+	/* Managers */
+	private BoxPlayApplication boxPlayApplication;
+	private Handler handler;
+	private ViewHelper viewHelper;
+	private XManagers managers;
 	
+	/* Sub-Managers */
 	private AdultPremiumSubManager adultSubManager = BoxPlayApplication.getManagers().getPremiumManager().getAdultSubManager();
 	
+	/* Views */
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private RecyclerView recyclerView;
 	
+	/* Dialog */
 	private WorkingProgressDialog workingProgressDialog;
 	
+	/* Variables */
 	private boolean startingAsRefreshing = true;
 	
+	/* Constructor */
 	public AdultExplorerFragment() {
+		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
+		this.handler = BoxPlayApplication.getHandler();
+		this.viewHelper = BoxPlayApplication.getViewHelper();
+		this.managers = BoxPlayApplication.getManagers();
+		
 		adultSubManager.attachCallback(new AdultSubModuleCallback() {
 			@Override
 			public void onLoadFinish() {
@@ -44,22 +61,26 @@ public class AdultExplorerFragment extends Fragment {
 			}
 			
 			@Override
-			public void onUrlReady(String url) {
-				if (BoxPlayApplication.getViewHelper().isVlcInstalled()) {
-					BoxPlayApplication.getManagers().getVideoManager().openVLC(url, null);
-				} else {
-					
-				}
-				
-				swipeRefreshLayout.setRefreshing(false);
-				workingProgressDialog.hide();
+			public void onUrlReady(final String url) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						if (viewHelper.isVlcInstalled()) {
+							managers.getVideoManager().openVLC(url, null);
+						} else {
+							boxPlayApplication.toast(R.string.boxplay_premium_adult_status_error_vlc_not_installed).show();
+						}
+						
+						swipeRefreshLayout.setRefreshing(false);
+						workingProgressDialog.hide();
+					}
+				});
 			}
 			
 			@Override
 			public void onLoadFailed(Exception exception) {
-				if (getContext() != null) {
-					ToastUtils.makeLong(getContext(), exception.toString());
-					// DialogUtils.showDialog(getContext(), "Error.", StringUtils.fromException(exception));
+				if (boxPlayApplication != null) {
+					boxPlayApplication.toast(R.string.boxplay_premium_adult_status_error_failed_to_load, exception.toString()).show();
 				}
 				
 				if (swipeRefreshLayout != null) {
@@ -73,12 +94,29 @@ public class AdultExplorerFragment extends Fragment {
 			
 			@Override
 			public void onStatusUpdate(final int ressourceId) {
-				BoxPlayApplication.getHandler().post(new Runnable() {
+				handler.post(new Runnable() {
 					@Override
 					public void run() {
 						workingProgressDialog.update(ressourceId);
 					}
 				});
+			}
+			
+			@Override
+			public void onError(final int ressourceId, final Object... arguments) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						workingProgressDialog.hide();
+						
+						boxPlayApplication.toast(ressourceId, arguments).show();
+					}
+				});
+			}
+			
+			@Override
+			public WorkingProgressDialog returnDialog() {
+				return workingProgressDialog;
 			}
 		});
 		
@@ -121,11 +159,6 @@ public class AdultExplorerFragment extends Fragment {
 		});
 		
 		return view;
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
 	}
 	
 	class AdultViewAdapter extends RecyclerView.Adapter<AdultViewHolder> {
@@ -176,14 +209,15 @@ public class AdultExplorerFragment extends Fragment {
 				}
 			});
 			
-			BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, adultVideo.getImageUrl());
-			// thumbnailImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_boxplay_easter_egg));
+			viewHelper.downloadToImageView(thumbnailImageView, adultVideo.getImageUrl());
 			
 			titleTextView.setText(adultVideo.getTitle());
-			// titleTextView.setText("Cool stuff");
 			
-			viewCountTextView.setText(String.valueOf(adultVideo.getViewCount()));
-			viewCountTextView.setVisibility(adultVideo.hasViewCount() ? View.VISIBLE : View.GONE);
+			if (adultVideo.hasViewCount()) {
+				viewCountTextView.setText(String.valueOf(adultVideo.getViewCount()));
+			} else {
+				viewCountTextView.setVisibility(View.GONE);
+			}
 		}
 	}
 	
