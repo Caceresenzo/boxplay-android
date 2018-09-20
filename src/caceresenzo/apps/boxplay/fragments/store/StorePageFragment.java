@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,16 +31,30 @@ import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicElem
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicElementRowViewAdapter;
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicListRowItem;
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicListRowViewAdapter;
-import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoElementRowItem;
-import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoElementRowViewAdapter;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoListRowItem;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoListRowViewAdapter;
+import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.managers.DataManager;
+import caceresenzo.apps.boxplay.managers.VideoManager;
 
 public abstract class StorePageFragment extends Fragment {
 	
-	protected static StorePageFragment INSTANCE;
+	/* Tag */
+	public static final String TAG = StorePageFragment.class.getSimpleName();
+	
+	/* Static Instances */
+	// protected static StorePageFragment INSTANCE;
 	protected static List<StorePageFragment> INSTANCES;
 	
+	/* Managers */
+	protected BoxPlayApplication boxPlayApplication;
+	protected Handler handler;
+	protected ViewHelper viewHelper;
+	
+	protected DataManager dataManager;
+	protected VideoManager videoManager;
+	
+	/* Views */
 	protected RecyclerView recyclerView;
 	protected SwipeRefreshLayout swipeRefreshLayout;
 	protected OnRefreshListener onRefreshListener;
@@ -53,11 +68,19 @@ public abstract class StorePageFragment extends Fragment {
 	
 	protected StoreSearchHandler<?> storeSearchHandler;
 	
+	/* Constructor */
 	public StorePageFragment() {
-		INSTANCE = this;
+		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
+		this.handler = BoxPlayApplication.getHandler();
+		this.viewHelper = BoxPlayApplication.getViewHelper();
+		
+		this.dataManager = BoxPlayApplication.getManagers().getDataManager();
+		this.videoManager = BoxPlayApplication.getManagers().getVideoManager();
+		
+		// INSTANCE = this;
 		
 		if (INSTANCES == null) {
-			INSTANCES = new ArrayList<StorePageFragment>();
+			INSTANCES = new ArrayList<>();
 		}
 		
 		boolean alreadyContain = false;
@@ -88,7 +111,7 @@ public abstract class StorePageFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		INSTANCE = this;
+		// INSTANCE = this;
 		
 		recyclerView = (RecyclerView) getView().findViewById(R.id.fragment_store_page_recyclerview_list);
 		recyclerView.setHasFixedSize(true);
@@ -103,12 +126,14 @@ public abstract class StorePageFragment extends Fragment {
 				onUserRefresh();
 			}
 		});
+		
+		initializeViews(getView());
 	}
 	
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		INSTANCE = null;
+		// INSTANCE = null;
 		storeSearchHandlers.clear();
 		
 		if (INSTANCES != null) {
@@ -340,11 +365,11 @@ public abstract class StorePageFragment extends Fragment {
 			
 			switch (item.getType()) {
 				case RowListItem.TYPE_VIDEO_LIST: { // 0
-					recyclerView.setAdapter(new VideoListRowViewAdapter(((VideoListRowItem) item).getVideoElements()));
+					recyclerView.setAdapter(new VideoListRowViewAdapter(((VideoListRowItem) item).getBaseVideoStoreElements()));
 					break;
 				}
 				case RowListItem.TYPE_VIDEO_ELEMENT: { // 1
-					recyclerView.setAdapter(new VideoElementRowViewAdapter(((VideoElementRowItem) item).getVideoFile()));
+					// recyclerView.setAdapter(new VideoElementRowViewAdapter(((VideoElementRowItem) item).getVideoFile()));
 					break;
 				}
 				case RowListItem.TYPE_MUSIC_LIST: { // 100
@@ -634,9 +659,9 @@ public abstract class StorePageFragment extends Fragment {
 		abstract void populate();
 	}
 	
-	public static StorePageFragment getStorePageFragmentBasicInstance() {
-		return INSTANCE;
-	}
+	// public static StorePageFragment getStorePageFragmentBasicInstance() {
+	// return INSTANCE;
+	// }
 	
 	public static List<StorePageFragment> getStorePageFragmentRegisteredInstances() {
 		if (INSTANCES == null) {

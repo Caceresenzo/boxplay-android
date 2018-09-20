@@ -41,7 +41,14 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 			
 			File cacheFile = new File(managers.getBaseDataDirectory(), "/openload.html");
 			try {
-				cacheFile.createNewFile();
+				getLogger().appendln("-- Caching STARTING");
+				
+				getLogger().appendln("-- -- Old file exist? " + cacheFile.exists());
+				if (cacheFile.exists()) {
+					getLogger().appendln("-- -- Deleting old file. RESULT: " + cacheFile.delete());
+				}
+				
+				getLogger().appendln("-- -- Creating new file. RESULT: " + cacheFile.createNewFile());
 				
 				StringUtils.stringToFile(cacheFile, pageContent); // Seems to have "encoding" problem, regex is sometimes not working without this
 				pageContent = StringUtils.fromFile(cacheFile);
@@ -49,10 +56,18 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 				getLogger().appendln("-- Caching OK");
 			} catch (IOException exception) {
 				Log.e(TAG, "Failed to restore openload file from cache", exception);
+				getLogger().appendln("-- Caching ERROR");
+				getLogger().appendln(StringUtils.fromException(exception));
 				getLogger().appendln("-- Caching FAIL");
 			}
 			
 			getLogger().separator();
+			
+			try {
+				cacheFile.delete();
+			} catch (Exception exception) {
+				;
+			}
 			
 			return pageContent;
 		} catch (Exception exception) {

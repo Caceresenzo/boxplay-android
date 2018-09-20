@@ -50,9 +50,6 @@ import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
  */
 public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationView.OnNavigationItemSelectedListener, Tutorialable {
 	
-	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = false;
-	
 	/* Bundle Keys */
 	public static final String BUNDLE_KEY_LAST_FRAGMENT_CLASS = "last_fragment_class";
 	public static final String BUNDLE_KEY_LAST_FRAGMENT_TAB_ID = "last_fragment_tab_id";
@@ -313,7 +310,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	}
 	
 	private void initializeDebug() {
-		if (!BUILD_DEBUG) {
+		if (!BoxPlayApplication.BUILD_DEBUG) {
 			return;
 		}
 		

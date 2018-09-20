@@ -40,11 +40,13 @@ import caceresenzo.libs.random.Randomizer;
 
 public class PageMusicStoreFragment extends StorePageFragment {
 	
+	private static PageMusicStoreFragment INSTANCE;
+	
 	private MusicStorePopulator musicStorePopulator = new MusicStorePopulator();
 	
 	@Override
 	protected void initializeViews(View view) {
-		;
+		INSTANCE = this;
 	}
 	
 	@Override
@@ -512,7 +514,7 @@ public class PageMusicStoreFragment extends StorePageFragment {
 	}
 	
 	public static PageMusicStoreFragment getMusicFragment() {
-		return (PageMusicStoreFragment) INSTANCE;
+		return INSTANCE;
 	}
 	
 }

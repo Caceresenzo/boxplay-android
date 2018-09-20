@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import com.budiyev.android.imageloader.ImageLoader;
+import com.budiyev.android.imageloader.ImageRequest;
 
 import android.content.Context;
 import android.content.Intent;
@@ -237,18 +238,25 @@ public class ViewHelper {
 	 * View Help
 	 */
 	public void downloadToImageView(ImageView imageView, String url) {
-		downloadToImageView(null, imageView, url, null);
+		downloadToImageView(null, imageView, url, null, 0, 0);
+	}
+	
+	public void downloadToImageView(ImageView imageView, String url, int resizeHeight, int resizeWidth) {
+		downloadToImageView(null, imageView, url, null, resizeHeight, resizeWidth);
 	}
 	
 	public void downloadToImageView(ImageView imageView, String url, Map<String, Object> headers) {
-		downloadToImageView(null, imageView, url, headers);
+		downloadToImageView(null, imageView, url, headers, 0, 0);
 	}
 	
 	public void downloadToImageView(Context context, ImageView imageView, String url) {
-		downloadToImageView(context, imageView, url, null);
+		downloadToImageView(context, imageView, url, null, 0, 0);
+	}
+	public void downloadToImageView(Context context, ImageView imageView, String url, Map<String, Object> headers) {
+		downloadToImageView(context, imageView, url, headers, 0, 0);
 	}
 	
-	public void downloadToImageView(Context context, ImageView imageView, String url, Map<String, Object> headers) {
+	public void downloadToImageView(Context context, ImageView imageView, String url, Map<String, Object> headers, int resizeHeight, int resizeWidth) {
 		if (imageView == null) {
 			return;
 		}
@@ -262,11 +270,16 @@ public class ViewHelper {
 			context = boxPlayApplication;
 		}
 		
-		ImageLoader.with(context) //
+		ImageRequest<String> loader = ImageLoader.with(context) //
 				.from(url) //
 				.errorDrawable(new ColorDrawable(color(R.color.colorError))) //
-				.httpHeaders(headers) //
-				.load(imageView); //
+				.httpHeaders(headers); //
+		
+		if (resizeHeight != 0 && resizeWidth != 0) {
+			loader.size(resizeWidth, resizeHeight);
+		}
+		
+		loader.load(imageView); //
 	}
 	
 	public void clearImageCache() {

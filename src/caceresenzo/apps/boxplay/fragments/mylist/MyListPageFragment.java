@@ -181,7 +181,7 @@ public abstract class MyListPageFragment extends Fragment implements MyListManag
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					VideoActivity.start(group);
+					// VideoActivity.start(group); TODO
 				}
 			});
 		}
