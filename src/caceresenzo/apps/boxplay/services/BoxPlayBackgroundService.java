@@ -13,7 +13,7 @@ import android.util.Log;
 import caceresenzo.android.libs.internet.NetworkUtils;
 import caceresenzo.android.libs.service.ServiceUtils;
 import caceresenzo.apps.boxplay.receivers.BoxPlayServiceRestartBroadcastReceiver;
-import caceresenzo.libs.thread.HelpedThread;
+import caceresenzo.libs.thread.AbstractHelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 public class BoxPlayBackgroundService extends Service {
@@ -113,7 +113,7 @@ public class BoxPlayBackgroundService extends Service {
 		}
 	}
 	
-	class BackgroundTask extends HelpedThread {
+	class BackgroundTask extends AbstractHelpedThread {
 		@Override
 		protected void onRun() {
 			Log.d(TAG, "Looping... (" + ++loop + ")");

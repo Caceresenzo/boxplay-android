@@ -8,20 +8,16 @@
     <string name="boxplay_menu_action_update">Mise à jour</string>
     <string name="boxplay_menu_action_search">Recherche</string>
     <!--  -->
+    <!--  -->
+
+
+    <!--  -->
+    <!-- Drawer -->
+    <!--  -->
+
     <string name="navigation_drawer_open">Ouvrir le menu de navigation</string>
     <string name="navigation_drawer_close">Fermer le menu de navigation</string>
-    <!--  -->
-    <string name="boxplay_update_uptodate">Déjà à jour!</string>
-    <string name="boxplay_update_available" formatted="false">Mise à jour dispo! %s</string>
-    <string name="boxplay_update_available_message_format" formatted="false">Version: _version_ \nNom: _name_ \nTaille: _size_ \n\nTéléchargé: _downloaded_</string>
-    <string name="boxplay_update_available_message_format_size_searching">[recherche]</string>
-    <string name="boxplay_update_available_message_format_size_searching_error">[erreur]</string>
-    <string name="boxplay_update_available_download_starting">Téléchargement débuté en arrière plan...</string>
-    <string name="boxplay_update_available_install">Téléchargement terminé, vous pouvez maintenant installer la mise à jour</string>
-    <string name="boxplay_update_available_download_failed" formatted="false">Téléchargement échoué, réessayez plus tard!\n\nErreur: %s</string>
-    <!-- <string name="boxplay_update_available_message_format_downloaded">0</string> -->
-    <string name="boxplay_update_available_download">La télécharger!</string>
-    <string name="boxplay_update_available_cancel">Annuler</string>
+
     <!--  -->
     <string name="boxplay_navigation_version">BoxPlay 3</string>
     <string name="boxplay_navigation_author">par Enzo CACERES</string>
@@ -53,8 +49,43 @@
 
 
     <!--  -->
+    <!-- Update -->
+    <!--  -->
+
+    <string name="boxplay_update_uptodate">Déjà à jour!</string>
+    <string name="boxplay_update_available" formatted="false">Mise à jour dispo! %s</string>
+    <string name="boxplay_update_available_message_format" formatted="false">Version: _version_ \nNom: _name_ \nTaille: _size_ \n\nTéléchargé: _downloaded_</string>
+    <string name="boxplay_update_available_message_format_size_searching">[recherche]</string>
+    <string name="boxplay_update_available_message_format_size_searching_error">[erreur]</string>
+    <string name="boxplay_update_available_download_starting">Téléchargement débuté en arrière plan...</string>
+    <string name="boxplay_update_available_install">Téléchargement terminé, vous pouvez maintenant installer la mise à jour</string>
+    <string name="boxplay_update_available_download_failed" formatted="false">Téléchargement échoué, réessayez plus tard!\n\nErreur: %s</string>
+    <!-- <string name="boxplay_update_available_message_format_downloaded">0</string> -->
+    <string name="boxplay_update_available_download">La télécharger!</string>
+    <string name="boxplay_update_available_cancel">Annuler</string>
+
+    <!--  -->
+    <!-- Identification -->
+    <!--  -->
+
+    <string name="boxplay_identification_input_username">Nom d\'utilisateur</string>
+    <string name="boxplay_identification_input_email">Email</string>
+    <string name="boxplay_identification_input_password">Mot de passe</string>
+    <string name="boxplay_identification_input_login">S\'identifier</string>
+    <string name="boxplay_identification_input_login_link">Déja membre? S\'identifier</string>
+    <string name="boxplay_identification_input_register">Créer un compte</string>
+    <string name="boxplay_identification_input_register_link">Pas encore de compte? S\'en créer un</string>
+    <!--  -->
+    <string name="boxplay_identification_input_error_username_too_short">Trop petit, au moins 4 caractères.</string>
+    <string name="boxplay_identification_input_error_username_too_long">Trop grand, maximum 16 caractères.</string>
+    <string name="boxplay_identification_input_error_username_illegal_character">Caractères non permis.</string>
+    <string name="boxplay_identification_input_error_email_invalid">Adresse mail non valide.</string>
+    <string name="boxplay_identification_input_error_password_too_short">Trop petit, au moins 4 caractères.</string>
+
+    <!--  -->
     <!-- Tutorial > BoxPlayActivity -->
     <!--  -->
+
     <string name="boxplay_tutorial_main_drawer_title">Tirroir</string>
     <string name="boxplay_tutorial_main_drawer_description">Vous pourrez accéder aux autres pages depuis celui-ci!</string>
     <string name="boxplay_tutorial_main_search_title">Recherche</string>

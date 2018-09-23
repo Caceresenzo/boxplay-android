@@ -7,6 +7,7 @@ import com.rohitss.uceh.UCEHandler;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
+import caceresenzo.apps.boxplay.activities.identification.LoginActivity;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
@@ -78,6 +80,10 @@ public class BoxPlayApplication extends Application {
 		MANAGERS.initialize(this);
 		
 		BoxPlayBackgroundService.startIfNotAlready(this);
+		
+		if (!MANAGERS.getIdentificationManager().checkUserValidity()) {
+			startActivity(new Intent(this, LoginActivity.class));
+		}
 	}
 	
 	@Override

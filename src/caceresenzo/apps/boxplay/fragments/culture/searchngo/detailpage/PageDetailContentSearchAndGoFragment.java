@@ -44,7 +44,7 @@ import caceresenzo.libs.bytes.ByteFormat;
 import caceresenzo.libs.databridge.ObjectWrapper;
 import caceresenzo.libs.filesystem.FileUtils;
 import caceresenzo.libs.network.Downloader;
-import caceresenzo.libs.thread.HelpedThread;
+import caceresenzo.libs.thread.AbstractHelpedThread;
 
 /**
  * Content page for the {@link SearchAndGoDetailActivity}
@@ -279,7 +279,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class VideoExtractionWorker extends HelpedThread {
+	class VideoExtractionWorker extends AbstractHelpedThread {
 		private VideoItemResultData videoItem;
 		private String action;
 		

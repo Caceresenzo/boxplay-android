@@ -33,6 +33,8 @@ public abstract class BaseBoxPlayActivty extends AppCompatActivity {
 		this.handler = BoxPlayApplication.getHandler();
 		this.managers = BoxPlayApplication.getManagers();
 		this.helper = BoxPlayApplication.getViewHelper();
+		
+		initialize();
 	}
 	
 	protected void initialize() {

@@ -22,7 +22,7 @@ import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.HelpedThread;
+import caceresenzo.libs.thread.AbstractHelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 public class DataManager extends AbstractManager {
@@ -86,7 +86,7 @@ public class DataManager extends AbstractManager {
 		return runningOnCacheVersion;
 	}
 	
-	class Worker extends HelpedThread {
+	class Worker extends AbstractHelpedThread {
 		private boolean forceFetch;
 		
 		@Override
@@ -170,7 +170,7 @@ public class DataManager extends AbstractManager {
 			
 		}
 		
-		public HelpedThread force(boolean force) {
+		public AbstractHelpedThread force(boolean force) {
 			forceFetch = force;
 			return this;
 		}

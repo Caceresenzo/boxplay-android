@@ -78,7 +78,7 @@ public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
 	}
 	
 	@Override
-	public void injectJsCode(final String code) {
+	public void injectJsCode(final String code, String openloadHtml) {
 		lock();
 		handler.post(new Runnable() {
 			@Override

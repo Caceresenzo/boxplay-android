@@ -33,7 +33,7 @@ import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.SimpleLineStringBuilder;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.HelpedThread;
+import caceresenzo.libs.thread.AbstractHelpedThread;
 
 public class SearchAndGoManager extends AbstractManager {
 	
@@ -143,7 +143,7 @@ public class SearchAndGoManager extends AbstractManager {
 		return queryHistory;
 	}
 	
-	private class Worker extends HelpedThread {
+	private class Worker extends AbstractHelpedThread {
 		private String localSearchQuery = "";
 		private List<SearchAndGoProvider> localProviders = new ArrayList<>();
 		

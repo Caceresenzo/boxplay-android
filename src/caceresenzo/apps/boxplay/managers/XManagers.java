@@ -12,11 +12,13 @@ import android.support.v7.preference.PreferenceManager;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.libs.boxplay.users.User;
 
 public class XManagers {
 	
 	protected BoxPlayApplication boxPlayApplication;
 	
+	protected IdentificationManager identificationManager;
 	protected PermissionManager permissionManager;
 	protected DataManager dataManager;
 	protected VideoManager videoManager;
@@ -48,6 +50,10 @@ public class XManagers {
 		
 		// Config
 		preferences = PreferenceManager.getDefaultSharedPreferences(BoxPlayApplication.getBoxPlayApplication());
+		
+		if (identificationManager == null) {
+			managers.add(identificationManager = new IdentificationManager());
+		}
 		
 		if (permissionManager == null) {
 			managers.add(permissionManager = new PermissionManager());
@@ -106,6 +112,12 @@ public class XManagers {
 		}
 	}
 	
+	public void onUserLogged(User user) {
+		for (AbstractManager manager : managers) {
+			manager.initializeWhenUserLogged(user);
+		}
+	}
+	
 	public void destroy() {
 		for (AbstractManager manager : managers) {
 			manager.destroy();
@@ -132,6 +144,11 @@ public class XManagers {
 	
 	public SharedPreferences getPreferences() {
 		return preferences;
+	}
+	
+	public IdentificationManager getIdentificationManager() {
+		checkAndRecreate();
+		return identificationManager;
 	}
 	
 	public PermissionManager getPermissionManager() {
@@ -202,6 +219,10 @@ public class XManagers {
 			;
 		}
 		
+		protected void initializeWhenUserLogged(User user) {
+			;
+		}
+		
 		protected void destroy() {
 			;
 		}
@@ -220,7 +241,7 @@ public class XManagers {
 	}
 	
 	protected String getString(int ressourceId, Object... args) {
-		return BoxPlayApplication.getBoxPlayApplication().getString(ressourceId, args);
+		return boxPlayApplication.getString(ressourceId, args);
 	}
 	
 	public void writeLocalFile(File file, String string) throws IOException {

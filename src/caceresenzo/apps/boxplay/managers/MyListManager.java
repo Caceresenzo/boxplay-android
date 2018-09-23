@@ -25,7 +25,7 @@ import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
-import caceresenzo.libs.thread.HelpedThread;
+import caceresenzo.libs.thread.AbstractHelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 /**
@@ -398,7 +398,7 @@ public class MyListManager extends AbstractManager {
 		}
 	}
 	
-	abstract static class FetchWorker extends HelpedThread {
+	abstract static class FetchWorker extends AbstractHelpedThread {
 		protected Handler handler;
 		
 		protected MyList myList;

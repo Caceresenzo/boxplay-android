@@ -30,7 +30,7 @@ import caceresenzo.libs.boxplay.models.premium.adult.AdultVideo;
 import caceresenzo.libs.licencekey.LicenceKey;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.HelpedThread;
+import caceresenzo.libs.thread.AbstractHelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 public class PremiumManager extends AbstractManager {
@@ -193,7 +193,7 @@ public class PremiumManager extends AbstractManager {
 		/**
 		 * Fetch a page by its number
 		 * 
-		 * TODO: Update code to a {@link HelpedThread} with a Worker
+		 * TODO: Update code to a {@link AbstractHelpedThread} with a Worker
 		 * 
 		 * @param targetPage
 		 *            Targetted page number
@@ -329,7 +329,7 @@ public class PremiumManager extends AbstractManager {
 		 * 
 		 * @author Enzo CACERES
 		 */
-		class VideoExtractorWorker extends HelpedThread {
+		class VideoExtractorWorker extends AbstractHelpedThread {
 			private String videoPageUrl;
 			private AdultSubModuleCallback callback;
 			

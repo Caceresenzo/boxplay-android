@@ -6,6 +6,7 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:layout_margin="32dp"
         android:layout_centerInParent="true" >
 
         <ProgressBar
