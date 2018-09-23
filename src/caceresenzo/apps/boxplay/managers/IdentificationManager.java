@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import caceresenzo.apps.boxplay.activities.identification.LoginActivity;
 import caceresenzo.apps.boxplay.managers.IdentificationManager.LoginSubManager.LoginWorker;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
-import caceresenzo.libs.boxplay.api.ApiResponse;
 import caceresenzo.libs.boxplay.api.BoxPlayApi;
 import caceresenzo.libs.boxplay.api.request.implementations.user.identification.UserLoginApiRequest;
+import caceresenzo.libs.boxplay.api.request.implementations.user.identification.UserRegisterApiRequest;
+import caceresenzo.libs.boxplay.api.response.ApiResponse;
 import caceresenzo.libs.boxplay.users.User;
 import caceresenzo.libs.thread.implementations.HelpedThread;
 
@@ -21,6 +23,9 @@ import caceresenzo.libs.thread.implementations.HelpedThread;
  */
 public class IdentificationManager extends AbstractManager {
 	
+	/* Tag */
+	public static final String TAG = IdentificationManager.class.getSimpleName();
+	
 	/* Sub Managers */
 	private final LoginSubManager loginSubManager;
 	private final RegisterSubManager registerSubManager;
@@ -29,7 +34,7 @@ public class IdentificationManager extends AbstractManager {
 	private UserDatabaseHelper userDatabaseHelper;
 	
 	/* Api */
-	private BoxPlayApi boxPlayApi;
+	private final BoxPlayApi boxPlayApi;
 	
 	private User loggedUser;
 	
@@ -38,12 +43,17 @@ public class IdentificationManager extends AbstractManager {
 		this.loginSubManager = new LoginSubManager();
 		this.registerSubManager = new RegisterSubManager();
 		
-		this.userDatabaseHelper = new UserDatabaseHelper(boxPlayApplication);
+		this.boxPlayApi = new BoxPlayApi();
 		
+		this.userDatabaseHelper = new UserDatabaseHelper(boxPlayApplication);
+	}
+	
+	@Override
+	protected void initialize() {
 		updateLoggerUser(userDatabaseHelper.getSavedUser());
 		
-		if (boxPlayApi == null) {
-			boxPlayApi = new BoxPlayApi("_invalid");
+		if (!checkUserValidity()) {
+			LoginActivity.start();
 		}
 	}
 	
@@ -89,8 +99,9 @@ public class IdentificationManager extends AbstractManager {
 	public void updateLoggerUser(User user) {
 		this.loggedUser = user;
 		
+		this.boxPlayApi.changeToken(user != null ? user.getIdentificationToken() : null);
 		if (user != null) {
-			this.boxPlayApi = new BoxPlayApi(user.getIdentificationToken());
+			getManagers().onUserLogged(user, boxPlayApi);
 		}
 	}
 	
@@ -103,6 +114,18 @@ public class IdentificationManager extends AbstractManager {
 	 */
 	public boolean checkUserValidity() {
 		return loggedUser != null; // TODO: Finish API-Retry system
+	}
+	
+	/**
+	 * Tell the manager that the user want to logout<br>
+	 * This will call a database clear and will start the {@link LoginActivity}
+	 */
+	public void logout() {
+		userDatabaseHelper.deleteUser();
+		
+		updateLoggerUser(null);
+		
+		LoginActivity.start();
 	}
 	
 	/**
@@ -207,9 +230,87 @@ public class IdentificationManager extends AbstractManager {
 		/* Worker */
 		private RegisterWorker worker;
 		
-		class RegisterWorker extends HelpedThread {
+		/**
+		 * Start, if not already, a new {@link RegisterWorker} to handle the register work with provided informations
+		 * 
+		 * @param username
+		 *            Target user's username to login
+		 * @param email
+		 *            Target user's email to login
+		 * @param password
+		 *            Target user's password to login
+		 * @param callback
+		 *            Callback used for communicating with the worker
+		 * @throws IllegalArgumentException
+		 *             If the callback is null
+		 */
+		public void register(String username, String email, String password, RegisterCallback callback) {
+			if (callback == null) {
+				throw new IllegalArgumentException("Callback can't be null.");
+			}
 			
+			if (!HelpedThread.isWorkerFree(worker)) {
+				boxPlayApplication.toast("RegisterWorker is busy.").show();
+				return;
+			}
+			
+			worker = new RegisterWorker();
+			worker.apply(username, email, password, callback).start();
 		}
+		
+		/**
+		 * Worker class that will contact the API
+		 * 
+		 * @author Enzo CACERES
+		 */
+		class RegisterWorker extends HelpedThread {
+			private String username, email, password;
+			private RegisterCallback callback;
+			
+			@Override
+			protected void onRun() {
+				ApiResponse<?> apiResponse = new UserRegisterApiRequest(username, email, password).call(boxPlayApi).selfProcess();
+				
+				callback.onApiResponse(apiResponse);
+			}
+			
+			/**
+			 * Apply the local data to the worker
+			 * 
+			 * @param username
+			 *            Target user's username to login
+			 * @param password
+			 *            Target user's password to login
+			 * @param callback
+			 *            Callback used for communicating with the worker
+			 * @return Itself
+			 */
+			public RegisterWorker apply(String username, String email, String password, RegisterCallback callback) {
+				this.username = username;
+				this.email = email;
+				this.password = password;
+				this.callback = callback;
+				
+				return this;
+			}
+		}
+	}
+	
+	/**
+	 * Callback class to communicate with the {@link RegisterWorker}
+	 * 
+	 * @author Enzo CACERES
+	 */
+	public static interface RegisterCallback {
+		
+		/**
+		 * Called when the API has returned a response for the register request
+		 * 
+		 * @param apiResponse
+		 *            Returned response
+		 */
+		void onApiResponse(ApiResponse<?> apiResponse);
+		
 	}
 	
 	/**
@@ -241,15 +342,15 @@ public class IdentificationManager extends AbstractManager {
 		
 		@Override
 		public void onCreate(SQLiteDatabase database) {
-			database.execSQL(String.format("CREATE TABLE `%s` (%s TEXT, %s TEXT)", TABLE_CREDIDENTIALS, COLUMN_CREDIDENTIALS_USERNAME, COLUMN_CREDIDENTIALS_PASSWORD));
-			database.execSQL(String.format("CREATE TABLE `%s` (%s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_USER_INFO, COLUMN_USER_INFO_ID, COLUMN_USER_INFO_USERNAME, COLUMN_USER_INFO_EMAIL, COLUMN_USER_INFO_TOKEN));
+			database.execSQL(String.format("CREATE TABLE IF NOT EXISTS `%s` (%s TEXT, %s TEXT)", TABLE_CREDIDENTIALS, COLUMN_CREDIDENTIALS_USERNAME, COLUMN_CREDIDENTIALS_PASSWORD));
+			database.execSQL(String.format("CREATE TABLE IF NOT EXISTS `%s` (%s INTEGER, %s TEXT, %s TEXT, %s TEXT)", TABLE_USER_INFO, COLUMN_USER_INFO_ID, COLUMN_USER_INFO_USERNAME, COLUMN_USER_INFO_EMAIL, COLUMN_USER_INFO_TOKEN));
 		}
 		
 		@Override
 		public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-			if (oldVersion > newVersion) {
+			if (oldVersion < newVersion) {
 				for (String table : TABLES) {
-					database.execSQL(String.format("DROP TABLE `%s`;", table));
+					database.execSQL(String.format("DROP TABLE %s;", table));
 				}
 				
 				onCreate(database);

@@ -7,6 +7,7 @@
     <!--  -->
     <string name="boxplay_menu_action_update">Mise à jour</string>
     <string name="boxplay_menu_action_search">Recherche</string>
+    <string name="boxplay_menu_action_logout">Se déconnecter</string>
     <!--  -->
     <!--  -->
 
@@ -21,6 +22,9 @@
     <!--  -->
     <string name="boxplay_navigation_version">BoxPlay 3</string>
     <string name="boxplay_navigation_author">par Enzo CACERES</string>
+    <!--  -->
+    <string name="boxplay_user">-- user --</string>
+    <string name="boxplay_user_profile">Profil</string>
     <!--  -->
     <string name="boxplay_store">Magasin</string>
     <string name="boxplay_store_video">Video</string>
@@ -81,6 +85,30 @@
     <string name="boxplay_identification_input_error_username_illegal_character">Caractères non permis.</string>
     <string name="boxplay_identification_input_error_email_invalid">Adresse mail non valide.</string>
     <string name="boxplay_identification_input_error_password_too_short">Trop petit, au moins 4 caractères.</string>
+    <!--  -->
+    <string name="boxplay_identification_login_working">Identification...</string>
+    <string name="boxplay_identification_register_working">Enregistrement...</string>
+    <!--  -->
+    <string name="boxplay_identification_response_error_err_invalid_page">Erreur, page invalide.</string>
+    <string name="boxplay_identification_response_error_err_invalid_limit">Erreur, limite invalide.</string>
+    <string name="boxplay_identification_response_error_err_movie_not_found">Erreur, le film n\'a pas été trouvé.</string>
+    <string name="boxplay_identification_response_error_err_movie_not_available">Erreur, le film n\'est pas disponible.</string>
+    <string name="boxplay_identification_response_error_err_movie_list_unavailable">Erreur, la liste des films n\'est pas disponible.</string>
+    <string name="boxplay_identification_response_error_err_series_not_found">Erreur, la série n\'a pas été trouvé.</string>
+    <string name="boxplay_identification_response_error_err_series_not_available">Erreur, la série n\'existe pas.</string>
+    <string name="boxplay_identification_response_error_err_series_list_unavailable">Erreur, la liste des séries n\'est pas disponible.</string>
+    <string name="boxplay_identification_response_error_err_animes_not_found">Erreur, l\'anime n\'a pas été trouvé.</string>
+    <string name="boxplay_identification_response_error_err_animes_not_available">Erreur, l\'anime n\'est pas disponible.</string>
+    <string name="boxplay_identification_response_error_err_animes_list_unavailable">Erreur, la liste des animes n\'est pas disponible.</string>
+    <string name="boxplay_identification_response_error_err_season_not_found">Erreur, la saison n\'a pas été trouvé.</string>
+    <string name="boxplay_identification_response_error_err_user_login">Erreur, la connection n\'a pas abouti.</string>
+    <string name="boxplay_identification_response_error_err_user_not_found">Erreur, aucun utilisateur trouvé.</string>
+    <string name="boxplay_identification_response_error_err_user_register">Erreur, l\'enregistrement n\'a pas abouti.</string>
+    <string name="boxplay_identification_response_error_err_user_already_exist">Erreur, un utilisateur existe déja.</string>
+    <string name="boxplay_identification_response_error_err_user_user_invalid">Erreur, l\'utilisateur n\'est pas valide.</string>
+    <string name="boxplay_identification_response_error_err_user_invalid_format">Erreur, le format de l\'utilisateur n\'est pas valide.</string>
+    <string name="boxplay_identification_response_ok">OK</string>
+    <string name="boxplay_identification_response_unknown">Inconnu.</string>
 
     <!--  -->
     <!-- Tutorial > BoxPlayActivity -->
@@ -112,6 +140,14 @@
     <string name="boxplay_tutorial_video_season_watched_description">Marquer cette saison en tant que vu quand vous avez fini de voir tous les épisodes!</string>
     <string name="boxplay_tutorial_video_episodes_title">Voir les épisodes</string>
     <string name="boxplay_tutorial_video_episodes_description">Tous les episodes dispo sont dans cette liste, regardez s\'en un en ouvrant son menu déroulant!</string>
+
+    <!--  -->
+    <!-- User > Profile -->
+    <!--  -->
+
+    <string name="boxplay_user_profile_profile">Profil</string>
+    <!-- Translation -->
+
 
     <!--  -->
     <!-- Store > Video -->

@@ -10,35 +10,47 @@ import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
 
+/**
+ * Base {@link AppCompatActivity} class for every other activity in BoxPlay, allow direct access to common managers like {@link XManagers}, {@link ViewHelper} and a {@link Handler}
+ * 
+ * @author Enzo CACERES
+ */
 public abstract class BaseBoxPlayActivty extends AppCompatActivity {
 	
+	/* Constants */
 	public static final int NO_VALUE = -1;
 	
+	/* Static */
 	protected static Fragment FRAGMENT_TO_OPEN = null;
 	protected static int MENUITEM_ID_TO_SELECT = NO_VALUE;
 	
+	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
-	
 	protected Handler handler;
+	protected ViewHelper viewHelper;
 	protected XManagers managers;
-	protected ViewHelper helper;
 	
-	private boolean ready = false;
-	
+	/* Views */
 	protected CoordinatorLayout coordinatorLayout;
 	
+	/* Variables */
+	private boolean ready = false;
+	
+	/* Constructor */
 	public BaseBoxPlayActivty() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
-		
 		this.handler = BoxPlayApplication.getHandler();
+		this.viewHelper = BoxPlayApplication.getViewHelper();
 		this.managers = BoxPlayApplication.getManagers();
-		this.helper = BoxPlayApplication.getViewHelper();
 		
 		initialize();
 	}
 	
+	/**
+	 * If you don't need to define any final variables, please use this function to initialize your system
+	 */
 	protected void initialize() {
-		
+		;
 	}
 	
 	@Override

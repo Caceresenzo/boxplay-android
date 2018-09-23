@@ -127,7 +127,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 			// population.put(category, new ArrayList<BaseVideoStoreElement>());
 			// }
 			
-			SimpleLineStringBuilder builder = new SimpleLineStringBuilder();
+			// SimpleLineStringBuilder builder = new SimpleLineStringBuilder();
 			
 			TagsCorresponder tagsCorresponder = videoManager.getTagsCorresponder();
 			
@@ -135,21 +135,21 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				return;
 			}
 			
-			builder.appendln("FETCHED TAGS\n").appendln(tagsCorresponder == null ? "NULL INSTANCE" : StringUtils.join(tagsCorresponder.getTagsCorrespondances(), "\n"));
+//			builder.appendln("FETCHED TAGS\n").appendln(tagsCorresponder == null ? "NULL INSTANCE" : StringUtils.join(tagsCorresponder.getTagsCorrespondances(), "\n"));
 			
 			for (SimpleVideoStoreElement videoElement : videoManager.getGroups()) {
 				if (videoElement == null) {
 					continue;
 				}
 				
-				builder.appendln("Item: " + videoElement.getTitle()).appendln("Tags (long): " + videoElement.getTagsBitset().getValue());
-				builder.appendln("Tags (string): ");
+//				builder.appendln("Item: " + videoElement.getTitle()).appendln("Tags (long): " + videoElement.getTagsBitset().getValue());
+//				builder.appendln("Tags (string): ");
 				for (String tag : tagsCorresponder.findCorrespondances(videoElement)) {
-					builder.append(tag).append(", ");
+//					builder.append(tag).append(", ");
 					populate(tag, videoElement);
 				}
-				builder.appendln();
-				builder.appendln();
+//				builder.appendln();
+//				builder.appendln();
 				
 				// if (videoGroup.isWatching()) {
 				// yourWatchingList.add(videoGroup);
@@ -170,7 +170,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				// populate(RANDOM, videoGroup);
 				// }
 			}
-			DialogUtils.showDialog(BoxPlayActivity.getBoxPlayActivity(), "tags output", builder.toString());
+			// DialogUtils.showDialog(BoxPlayActivity.getBoxPlayActivity(), "tags output", builder.toString());
 			
 			// if (!yourWatchingList.isEmpty()) {
 			// // rowListItems.add(new TitleRowItem(YOURLIST));

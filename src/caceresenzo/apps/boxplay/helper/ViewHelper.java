@@ -28,6 +28,7 @@ import caceresenzo.apps.boxplay.activities.VideoActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicStoreSubCategory;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoStoreSubCategory;
+import caceresenzo.libs.boxplay.api.response.ApiResponseStatus;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalDataType;
 import caceresenzo.libs.boxplay.models.element.enums.ElementLanguage;
 import caceresenzo.libs.boxplay.models.element.implementations.MusicElement;
@@ -63,9 +64,8 @@ public class ViewHelper {
 	public void prepareCache(BoxPlayApplication application) {
 		this.boxPlayApplication = application;
 		
-		/*
-		 * Menu cache
-		 */
+		/* Menu cache */
+		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_user_profile, true), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_store_video, true), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_store_music, true), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_connect_feed), null);
@@ -78,9 +78,7 @@ public class ViewHelper {
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_other_settings), null);
 		drawerMenuIds.put(new MenuIdItem(R.id.drawer_boxplay_other_about), null);
 		
-		/*
-		 * Translation cache
-		 */
+		/* Translation cache */
 		// Video
 		enumCacheTranslation.put(VideoFileType.ANIME, boxPlayApplication.getString(R.string.boxplay_store_video_file_type_anime));
 		enumCacheTranslation.put(VideoFileType.SERIE, boxPlayApplication.getString(R.string.boxplay_store_video_file_type_serie));
@@ -166,6 +164,28 @@ public class ViewHelper {
 		enumCacheTranslation.put(AdditionalDataType.ITEM_CHAPTER, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_item_chapter));
 		
 		enumCacheTranslation.put(AdditionalDataType.NULL, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_null));
+		
+		// Api Response Status
+		enumCacheTranslation.put(ApiResponseStatus.ERR_INVALID_PAGE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_invalid_page));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_INVALID_LIMIT, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_invalid_limit));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_MOVIE_NOT_FOUND, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_movie_not_found));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_MOVIE_NOT_AVAILABLE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_movie_not_available));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_MOVIE_LIST_UNAVAILABLE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_movie_list_unavailable));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_SERIES_NOT_FOUND, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_series_not_found));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_SERIES_NOT_AVAILABLE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_series_not_available));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_SERIES_LIST_UNAVAILABLE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_series_list_unavailable));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_ANIMES_NOT_FOUND, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_animes_not_found));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_ANIMES_NOT_AVAILABLE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_animes_not_available));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_ANIMES_LIST_UNAVAILABLE, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_animes_list_unavailable));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_SEASON_NOT_FOUND, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_season_not_found));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_USER_LOGIN, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_user_login));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_USER_NOT_FOUND, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_user_not_found));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_USER_REGISTER, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_user_register));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_USER_ALREADY_EXIST, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_user_already_exist));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_USER_USER_INVALID, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_user_user_invalid));
+		enumCacheTranslation.put(ApiResponseStatus.ERR_USER_INVALID_FORMAT, boxPlayApplication.getString(R.string.boxplay_identification_response_error_err_user_invalid_format));
+		enumCacheTranslation.put(ApiResponseStatus.OK, boxPlayApplication.getString(R.string.boxplay_identification_response_ok));
+		enumCacheTranslation.put(ApiResponseStatus.UNKNOWN, boxPlayApplication.getString(R.string.boxplay_identification_response_unknown));
 	}
 	
 	public void recache() {
@@ -252,6 +272,7 @@ public class ViewHelper {
 	public void downloadToImageView(Context context, ImageView imageView, String url) {
 		downloadToImageView(context, imageView, url, null, 0, 0);
 	}
+	
 	public void downloadToImageView(Context context, ImageView imageView, String url, Map<String, Object> headers) {
 		downloadToImageView(context, imageView, url, headers, 0, 0);
 	}

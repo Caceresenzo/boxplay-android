@@ -1,0 +1,28 @@
+
+	
+	// CommunicationListner listener;
+	
+		// try {
+		// unregisterReceiver(internetConnectionReceiver);
+		// } catch (Exception exception) {
+		// }
+		
+		// registerReceiver(internetConnectionReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+	
+	
+	
+	// communication with activity
+	// public void registerChatReceivedListener(CommunicationListner listener) {
+	// this.listener = listener;
+	// }
+	//
+	// public void removeChatReceivedListener() {
+	// chatListener = null;
+	// }
+	
+	// private BroadcastReceiver internetConnectionReceiver = new BroadcastReceiver() {
+	// @Override
+	// public void onReceive(Context context, Intent intent) {
+	//
+	// }
+	// };

@@ -1,18 +1,19 @@
 package caceresenzo.apps.boxplay.activities.identification;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
+import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
+import caceresenzo.apps.boxplay.managers.IdentificationManager.RegisterCallback;
 import caceresenzo.apps.boxplay.managers.IdentificationManager.RegisterSubManager;
 import caceresenzo.libs.boxplay.api.request.implementations.user.UserApiRequest;
+import caceresenzo.libs.boxplay.api.response.ApiResponse;
 import caceresenzo.libs.string.StringUtils;
 
 public class RegisterActivity extends BaseBoxPlayActivty {
@@ -20,8 +21,9 @@ public class RegisterActivity extends BaseBoxPlayActivty {
 	/* Tag */
 	public static final String TAG = RegisterActivity.class.getSimpleName();
 	
-	/* Bundle */
-	public static final String BUNDLE_USER = "user";
+	/* Bundle keys */
+	public static final String BUNDLE_KEY_USER_USERNAME = "username";
+	public static final String BUNDLE_KEY_USER_PASSWORD = "password";
 	
 	/* Managers */
 	private RegisterSubManager registerSubManager;
@@ -30,6 +32,9 @@ public class RegisterActivity extends BaseBoxPlayActivty {
 	private EditText usernameEditText, emailEditText, passwordEditText;
 	private Button registerButton;
 	private TextView loginBackTextView;
+	
+	/* Dialog */
+	private WorkingProgressDialog workingProgressDialog;
 	
 	/* Constructor */
 	public RegisterActivity() {
@@ -42,6 +47,9 @@ public class RegisterActivity extends BaseBoxPlayActivty {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
+		
+		this.workingProgressDialog = WorkingProgressDialog.create(this);
+		this.workingProgressDialog.update(R.string.boxplay_identification_register_working);
 		
 		initializeViews();
 	}
@@ -76,51 +84,72 @@ public class RegisterActivity extends BaseBoxPlayActivty {
 		});
 	}
 	
+	/**
+	 * Start the register sequence
+	 */
 	private void register() {
 		Log.d(TAG, "Starting registration");
 		
 		if (!validate()) {
-			onSignupFailed();
 			return;
 		}
 		
 		registerButton.setEnabled(false);
 		
-		final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this);
-		progressDialog.setIndeterminate(true);
-		progressDialog.setMessage("Creating Account...");
-		progressDialog.show();
+		workingProgressDialog.show();
 		
-		String name = usernameEditText.getText().toString();
+		final String username = usernameEditText.getText().toString();
 		String email = emailEditText.getText().toString();
-		String password = passwordEditText.getText().toString();
+		final String password = passwordEditText.getText().toString();
 		
-		// TODO: Implement your own signup logic here.
-		
-		new android.os.Handler().postDelayed(new Runnable() {
-			public void run() {
-				// On complete call either onSignupSuccess or onSignupFailed
-				// depending on success
-				onSignupSuccess();
-				// onSignupFailed();
-				progressDialog.dismiss();
+		registerSubManager.register(username, email, password, new RegisterCallback() {
+			@Override
+			public void onApiResponse(final ApiResponse<?> apiResponse) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						if (apiResponse.isSuccess()) {
+							onRegisterSuccess(username, password);
+						} else {
+							onRegisterFailed(apiResponse);
+						}
+						
+						workingProgressDialog.hide();
+					}
+				});
 			}
-		}, 3000);
+		});
 	}
 	
-	public void onSignupSuccess() {
+	/**
+	 * Called when the register has returned a success
+	 */
+	private void onRegisterSuccess(String username, String password) {
 		registerButton.setEnabled(true);
-		setResult(RESULT_OK, null);
+		
+		Intent dataIntent = new Intent();
+		dataIntent.putExtra(BUNDLE_KEY_USER_USERNAME, username);
+		dataIntent.putExtra(BUNDLE_KEY_USER_PASSWORD, password);
+		setResult(RESULT_OK, dataIntent);
+		
 		finish();
 	}
 	
-	public void onSignupFailed() {
-		Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-		
+	/**
+	 * Called when the register has failed
+	 */
+	private void onRegisterFailed(ApiResponse<?> sourceRequest) {
 		registerButton.setEnabled(true);
+		
+		boxPlayApplication.toast(viewHelper.enumToStringCacheTranslation(sourceRequest.getStatus())).show();
 	}
 	
-	public boolean validate() {
+	/**
+	 * Validate all input and show an error if necessary
+	 * 
+	 * @return If the register can continue: inputs respect formattings rules
+	 */
+	private boolean validate() {
 		boolean valid = true;
 		
 		String name = usernameEditText.getText().toString();
@@ -154,7 +183,7 @@ public class RegisterActivity extends BaseBoxPlayActivty {
 		
 		if (!StringUtils.validate(password) || password.length() < 4) {
 			valid = false;
-
+			
 			passwordEditText.setError(getString(R.string.boxplay_identification_input_error_password_too_short));
 		} else {
 			passwordEditText.setError(null);

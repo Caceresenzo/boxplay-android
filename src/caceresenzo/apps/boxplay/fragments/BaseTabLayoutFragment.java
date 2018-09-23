@@ -19,17 +19,13 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
  * 
  * @author Enzo CACERES
  */
-public abstract class BaseTabLayoutFragment extends Fragment {
+public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	
 	/* Constants */
 	public static final int OFFSCREEN_PAGE_LIMIT = 10;
 	
 	/* Instance */
 	public static BaseTabLayoutFragment INSTANCE;
-	
-	/* Managers */
-	protected BoxPlayApplication boxPlayApplication;
-	protected BoxPlayApplication boxPlayActivity;
 	
 	/* Views */
 	protected TabLayout tabLayout;
@@ -42,14 +38,10 @@ public abstract class BaseTabLayoutFragment extends Fragment {
 	/* Variables */
 	protected int onOpenPageId = 0, lastOpenPosition = 0;
 	
-	/**
-	 * Create new instance of BaseTabLayoutFragment
-	 */
+	/* Create new instance of BaseTabLayoutFragment */
 	public BaseTabLayoutFragment() {
+		super();
 		INSTANCE = this;
-		
-		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
-		this.boxPlayActivity = BoxPlayApplication.getBoxPlayApplication();
 	}
 	
 	@Override

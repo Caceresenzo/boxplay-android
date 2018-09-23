@@ -1,6 +1,5 @@
 package caceresenzo.apps.boxplay.activities.identification;
 
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,15 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
 import caceresenzo.apps.boxplay.managers.IdentificationManager;
 import caceresenzo.apps.boxplay.managers.IdentificationManager.LoginCallback;
 import caceresenzo.apps.boxplay.managers.IdentificationManager.LoginSubManager;
 import caceresenzo.apps.boxplay.managers.IdentificationManager.UserDatabaseHelper;
-import caceresenzo.libs.boxplay.api.ApiResponse;
 import caceresenzo.libs.boxplay.api.request.implementations.user.UserApiRequest;
+import caceresenzo.libs.boxplay.api.response.ApiResponse;
 import caceresenzo.libs.boxplay.users.User;
 import caceresenzo.libs.string.StringUtils;
 
@@ -29,6 +29,9 @@ public class LoginActivity extends BaseBoxPlayActivty {
 	/* Constants */
 	private static final int REQUEST_ID_SIGNUP = 0;
 	
+	/* Instance */
+	private static LoginActivity INSTANCE;
+	
 	/* Managers */
 	private IdentificationManager identificationManager;
 	private LoginSubManager loginSubManager;
@@ -37,6 +40,9 @@ public class LoginActivity extends BaseBoxPlayActivty {
 	private EditText usernameEditText, passwordEditText;
 	private Button loginButton;
 	private TextView registerLinkTextView;
+	
+	/* Dialog */
+	private WorkingProgressDialog workingProgressDialog;
 	
 	/* Constructor */
 	public LoginActivity() {
@@ -51,7 +57,19 @@ public class LoginActivity extends BaseBoxPlayActivty {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		INSTANCE = this;
+		
+		this.workingProgressDialog = WorkingProgressDialog.create(this);
+		this.workingProgressDialog.update(R.string.boxplay_identification_login_working);
+		
 		initializeViews();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		INSTANCE = null;
 	}
 	
 	/* Initialize Views */
@@ -89,20 +107,19 @@ public class LoginActivity extends BaseBoxPlayActivty {
 		});
 	}
 	
+	/**
+	 * Start the login sequence
+	 */
 	private void login() {
 		Log.d(TAG, "Starting login");
 		
 		if (!validate()) {
-			onLoginFailed();
 			return;
 		}
 		
 		loginButton.setEnabled(false);
 		
-		final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-		progressDialog.setIndeterminate(true);
-		progressDialog.setMessage("Authenticating...");
-		progressDialog.show();
+		workingProgressDialog.show();
 		
 		String username = usernameEditText.getText().toString();
 		String password = passwordEditText.getText().toString();
@@ -116,10 +133,10 @@ public class LoginActivity extends BaseBoxPlayActivty {
 						if (apiResponse.isSuccess()) {
 							onLoginSuccess();
 						} else {
-							onLoginFailed();
+							onLoginFailed(apiResponse);
 						}
 						
-						progressDialog.dismiss();
+						workingProgressDialog.hide();
 					}
 				});
 			}
@@ -128,32 +145,56 @@ public class LoginActivity extends BaseBoxPlayActivty {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_ID_SIGNUP) {
-			if (resultCode == RESULT_OK) {
-				
-				// TODO: Implement successful signup logic here
-				// By default we just finish the Activity and log them in automatically
-				this.finish();
+		switch (requestCode) {
+			case REQUEST_ID_SIGNUP: {
+				if (resultCode == RESULT_OK && data.getExtras() != null) {
+					Bundle extras = data.getExtras();
+
+					String username = extras.getString(RegisterActivity.BUNDLE_KEY_USER_USERNAME);
+					String password = extras.getString(RegisterActivity.BUNDLE_KEY_USER_PASSWORD);
+					
+					usernameEditText.setText(username);
+					passwordEditText.setText(password);
+					
+					login();
+				}
+				break;
+			}
+			
+			default: {
+				break;
 			}
 		}
 	}
 	
-	@Override
+	@Override /* Disable back button */
 	public void onBackPressed() {
 		moveTaskToBack(true);
 	}
 	
+	/**
+	 * Called when the login has returned a success
+	 */
 	private void onLoginSuccess() {
 		loginButton.setEnabled(true);
+		
 		finish();
 	}
 	
-	private void onLoginFailed() {
-		Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-		
+	/**
+	 * Called when the login has failed
+	 */
+	private void onLoginFailed(ApiResponse<User> sourceRequest) {
 		loginButton.setEnabled(true);
+		
+		boxPlayApplication.toast(viewHelper.enumToStringCacheTranslation(sourceRequest.getStatus())).show();
 	}
 	
+	/**
+	 * Validate all input and show an error if necessary
+	 * 
+	 * @return If the login can continue: inputs respect formattings rules
+	 */
 	private boolean validate() {
 		boolean valid = true;
 		
@@ -186,6 +227,22 @@ public class LoginActivity extends BaseBoxPlayActivty {
 		}
 		
 		return valid;
+	}
+	
+	/**
+	 * Start a new {@link LoginActivity}
+	 */
+	public static void start() {
+		if (INSTANCE != null) {
+			return; /* Already started */
+		}
+		
+		BoxPlayApplication application = BoxPlayApplication.getBoxPlayApplication();
+		
+		Intent intent = new Intent(application, LoginActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		application.startActivity(intent);
 	}
 	
 }

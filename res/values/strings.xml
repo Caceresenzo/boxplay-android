@@ -9,16 +9,19 @@
     <!--  -->
     <string name="boxplay_menu_action_search">Search</string>
     <string name="boxplay_menu_action_update">Update</string>
+    <string name="boxplay_menu_action_logout">Logout</string>
 
     <!--  -->
     <!-- Drawer -->
     <!--  -->
-    
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="boxplay_navigation_version">BoxPlay 3</string>
     <string name="boxplay_navigation_author">by Enzo CACERES</string>
+    <!--  -->
+    <string name="boxplay_user">-- user --</string>
+    <string name="boxplay_user_profile">Profile</string>
     <!--  -->
     <string name="boxplay_store">Store</string>
     <string name="boxplay_store_video">Video</string>
@@ -45,7 +48,6 @@
     <string name="boxplay_other_about">About</string>
     <string name="boxplay_preferences_title">BoxPlay Settings</string>
 
-
     <!--  -->
     <!-- Update -->
     <!--  -->
@@ -65,7 +67,7 @@
     <!--  -->
     <!-- Identification -->
     <!--  -->
-    
+
     <string name="boxplay_identification_input_username">Username</string>
     <string name="boxplay_identification_input_email">Email</string>
     <string name="boxplay_identification_input_password">Password</string>
@@ -79,6 +81,30 @@
     <string name="boxplay_identification_input_error_username_illegal_character">Illegal character.</string>
     <string name="boxplay_identification_input_error_email_invalid">Invalid email address.</string>
     <string name="boxplay_identification_input_error_password_too_short">Too short, at least 4 characters.</string>
+    <!--  -->
+    <string name="boxplay_identification_login_working">Login in...</string>
+    <string name="boxplay_identification_register_working">Registering...</string>
+    <!--  -->
+    <string name="boxplay_identification_response_error_err_invalid_page">Error, invalid page.</string>
+    <string name="boxplay_identification_response_error_err_invalid_limit">Error, invalid limit.</string>
+    <string name="boxplay_identification_response_error_err_movie_not_found">Error, movie not found.</string>
+    <string name="boxplay_identification_response_error_err_movie_not_available">Error, movie not available.</string>
+    <string name="boxplay_identification_response_error_err_movie_list_unavailable">Error, movie list not available.</string>
+    <string name="boxplay_identification_response_error_err_series_not_found">Error, series not found.</string>
+    <string name="boxplay_identification_response_error_err_series_not_available">Error, series not available.</string>
+    <string name="boxplay_identification_response_error_err_series_list_unavailable">Error, series list not available.</string>
+    <string name="boxplay_identification_response_error_err_animes_not_found">Error, anime not found.</string>
+    <string name="boxplay_identification_response_error_err_animes_not_available">Error, anime not available.</string>
+    <string name="boxplay_identification_response_error_err_animes_list_unavailable">Error, anime list not available.</string>
+    <string name="boxplay_identification_response_error_err_season_not_found">Error, season not found.</string>
+    <string name="boxplay_identification_response_error_err_user_login">Error, failed to login.</string>
+    <string name="boxplay_identification_response_error_err_user_not_found">Error, user not found.</string>
+    <string name="boxplay_identification_response_error_err_user_register">Error, failed to register.</string>
+    <string name="boxplay_identification_response_error_err_user_already_exist">Error, user already exists.</string>
+    <string name="boxplay_identification_response_error_err_user_user_invalid">Error, invalid user.</string>
+    <string name="boxplay_identification_response_error_err_user_invalid_format">Error, invalid user format.</string>
+    <string name="boxplay_identification_response_ok">OK</string>
+    <string name="boxplay_identification_response_unknown">Unknown.</string>
 
     <!--  -->
     <!-- Tutorial > BoxPlayActivity -->
@@ -111,6 +137,14 @@
     <string name="boxplay_tutorial_video_season_watched_description">Mark this season as watched when you finish to watch all of episodes!</string>
     <string name="boxplay_tutorial_video_episodes_title">See episodes</string>
     <string name="boxplay_tutorial_video_episodes_description">All episodes available are in this list, just watch one of them by opening the little menu!</string>
+
+    <!--  -->
+    <!-- User > Profile -->
+    <!--  -->
+
+    <string name="boxplay_user_profile_profile">Profile</string>
+    <!-- Translation -->
+
 
     <!--  -->
     <!-- Store > Video -->

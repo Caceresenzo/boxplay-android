@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <item
+        android:id="@+id/drawer_boxplay_user"
+        android:title="@string/boxplay_user">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/drawer_boxplay_user_profile"
+                    android:icon="@drawable/icon_account_circle_light"
+                    android:title="@string/boxplay_user_profile"/>
+            </group>
+        </menu>
+    </item>
     <item android:title="@string/boxplay_store">
         <menu>
             <group android:checkableBehavior="single" >

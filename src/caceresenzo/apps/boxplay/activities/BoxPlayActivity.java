@@ -38,6 +38,7 @@ import caceresenzo.apps.boxplay.fragments.premium.adult.AdultExplorerFragment;
 import caceresenzo.apps.boxplay.fragments.social.SocialFragment;
 import caceresenzo.apps.boxplay.fragments.store.StoreFragment;
 import caceresenzo.apps.boxplay.fragments.store.StorePageFragment;
+import caceresenzo.apps.boxplay.fragments.user.UserFragment;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.managers.TutorialManager.Tutorialable;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
@@ -170,12 +171,12 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		
 		onNavigationItemSelected(navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video));
 		navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video).setChecked(true);
-
+		
 		if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					helper.updateSeachMenu(R.id.drawer_boxplay_other_about);
+					viewHelper.updateSeachMenu(R.id.drawer_boxplay_other_about);
 					showFragment(new AboutFragment().withChangeLog());
 				}
 			}, 3000);
@@ -189,14 +190,14 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		}
 		
 		managers.getUpdateManager().saveUpdateVersion();
-	
+		
 	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		
-		Fragment lastFragment = helper.getLastFragment();
+		Fragment lastFragment = viewHelper.getLastFragment();
 		if (lastFragment != null) {
 			outState.putString(BUNDLE_KEY_LAST_FRAGMENT_CLASS, lastFragment.getClass().getCanonicalName());
 			
@@ -204,7 +205,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				outState.putInt(BUNDLE_KEY_LAST_FRAGMENT_TAB_ID, ((BaseTabLayoutFragment) lastFragment).getLastOpenPosition());
 			}
 			
-			outState.putInt(BUNDLE_KEY_LAST_DRAWER_SELECTED_ITEM_ID, helper.getLastFragmentMenuItemId());
+			outState.putInt(BUNDLE_KEY_LAST_DRAWER_SELECTED_ITEM_ID, viewHelper.getLastFragmentMenuItemId());
 			
 			if (lastFragment instanceof CultureFragment) {
 				CultureFragment cultureFragment = (CultureFragment) lastFragment;
@@ -277,7 +278,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	 * Function to initialize sub-systems, like cache
 	 */
 	private void initializeSystems() {
-		helper.prepareCache(boxPlayApplication);
+		viewHelper.prepareCache(boxPlayApplication);
 	}
 	
 	/**
@@ -372,6 +373,11 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				return true;
 			}
 			
+			case R.id.menu_main_action_logout: {
+				managers.getIdentificationManager().logout();
+				return true;
+			}
+			
 			case R.id.menu_main_action_search: {
 				StorePageFragment.handleSearch(item);
 				break;
@@ -450,12 +456,12 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		int id = item.getItemId();
 		
 		if (item.isCheckable()) {
-			helper.unselectAllMenu();
+			viewHelper.unselectAllMenu();
 			
 			item.setChecked(true);
 		}
 		
-		helper.updateSeachMenu(id);
+		viewHelper.updateSeachMenu(id);
 	}
 	
 	/**
@@ -464,12 +470,34 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		Fragment actualFragment = helper.getLastFragment();
-		helper.setLastFragmentMenuItemId(id);
+		Fragment actualFragment = viewHelper.getLastFragment();
+		viewHelper.setLastFragmentMenuItemId(id);
 		
 		updateDrawerSelection(item);
 		
 		switch (id) {
+			/* User */
+			case R.id.drawer_boxplay_user_profile: {
+				UserFragment userFragment;
+				
+				if (actualFragment instanceof UserFragment) {
+					userFragment = ((UserFragment) actualFragment);
+				} else {
+					userFragment = new UserFragment();
+				}
+				
+				switch (id) {
+					default:
+					case R.id.drawer_boxplay_user_profile: {
+						userFragment.withProfile();
+						break;
+					}
+				}
+				
+				showFragment(userFragment);
+				break;
+			}
+			
 			/* Store */
 			case R.id.drawer_boxplay_store_video:
 			case R.id.drawer_boxplay_store_music: {
@@ -636,7 +664,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 					.commit() //
 			;
 			
-			helper.setLastFragment(fragment);
+			viewHelper.setLastFragment(fragment);
 		} catch (Exception exception) {
 			FRAGMENT_TO_OPEN = fragment;
 		}
@@ -673,7 +701,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				.icon(getResources().getDrawable(R.mipmap.image_hand_swipe)) //
 		)); //
 		
-		Fragment lastFragment = helper.getLastFragment();
+		Fragment lastFragment = viewHelper.getLastFragment();
 		if (lastFragment instanceof StoreFragment) {
 			sequences.add(applyTutorialObjectTheme( //
 					TapTarget.forBounds(storeRectangle, getString(R.string.boxplay_tutorial_main_video_title), getString(R.string.boxplay_tutorial_main_video_description)) //
@@ -698,7 +726,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				.targets(sequences).listener(new TapTargetSequence.Listener() {
 					@Override
 					public void onSequenceFinish() {
-						Fragment lastFragment = helper.getLastFragment();
+						Fragment lastFragment = viewHelper.getLastFragment();
 						if (lastFragment instanceof StoreFragment) {
 							((StoreFragment) lastFragment).withVideo();
 						}
@@ -713,7 +741,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 						switch (id) {
 							case TUTORIAL_PROGRESS_VIDEO:
 							case TUTORIAL_PROGRESS_MUSIC: {
-								Fragment lastFragment = helper.getLastFragment();
+								Fragment lastFragment = viewHelper.getLastFragment();
 								
 								if (lastFragment instanceof StoreFragment) {
 									switch (id) {

@@ -9,16 +9,23 @@ import java.util.List;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.libs.boxplay.api.BoxPlayApi;
 import caceresenzo.libs.boxplay.users.User;
 
 public class XManagers {
 	
+	/* Tag */
+	public static final String TAG = XManagers.class.getSimpleName();
+	
+	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
 	
 	protected IdentificationManager identificationManager;
+	protected UserManager userManager;
 	protected PermissionManager permissionManager;
 	protected DataManager dataManager;
 	protected VideoManager videoManager;
@@ -31,11 +38,14 @@ public class XManagers {
 	protected MyListManager myListManager;
 	protected DebugManager debugManager;
 	
+	/* Files */
 	protected final File baseApplicationDirectory;
 	protected final File baseDataDirectory;
 	
+	/* Preferences */
 	protected SharedPreferences preferences;
 	
+	/* List */
 	private List<AbstractManager> managers;
 	
 	public XManagers() {
@@ -46,13 +56,23 @@ public class XManagers {
 	public XManagers initialize(final BoxPlayApplication boxPlayApplication) {
 		this.boxPlayApplication = boxPlayApplication;
 		
-		managers = new ArrayList<>();
+		managers = new ArrayList<AbstractManager>() {
+			@Override
+			public boolean add(AbstractManager manager) {
+				Log.d(TAG, "Registering manager: " + manager.getClass().getSimpleName() + " (size=" + (size() + 1) + ")");
+				return super.add(manager);
+			}
+		};
 		
 		// Config
 		preferences = PreferenceManager.getDefaultSharedPreferences(BoxPlayApplication.getBoxPlayApplication());
 		
 		if (identificationManager == null) {
 			managers.add(identificationManager = new IdentificationManager());
+		}
+		
+		if (userManager == null) {
+			managers.add(userManager = new UserManager());
 		}
 		
 		if (permissionManager == null) {
@@ -112,9 +132,9 @@ public class XManagers {
 		}
 	}
 	
-	public void onUserLogged(User user) {
+	public void onUserLogged(final User user, final BoxPlayApi boxPlayApi) {
 		for (AbstractManager manager : managers) {
-			manager.initializeWhenUserLogged(user);
+			manager.initializeWhenUserLogged(user, boxPlayApi);
 		}
 	}
 	
@@ -126,8 +146,6 @@ public class XManagers {
 	
 	public void checkAndRecreate() {
 		if (managers == null) {
-			managers = new ArrayList<>();
-			
 			if (BoxPlayApplication.getBoxPlayApplication() != null) {
 				initialize(BoxPlayApplication.getBoxPlayApplication());
 			}
@@ -149,6 +167,11 @@ public class XManagers {
 	public IdentificationManager getIdentificationManager() {
 		checkAndRecreate();
 		return identificationManager;
+	}
+	
+	public UserManager getUserManager() {
+		checkAndRecreate();
+		return userManager;
 	}
 	
 	public PermissionManager getPermissionManager() {
@@ -219,7 +242,7 @@ public class XManagers {
 			;
 		}
 		
-		protected void initializeWhenUserLogged(User user) {
+		protected void initializeWhenUserLogged(User user, BoxPlayApi boxPlayApi) {
 			;
 		}
 		
