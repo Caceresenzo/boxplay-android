@@ -42,11 +42,16 @@ public class UserManager extends AbstractManager {
 	 */
 	private void tryToUpdateDrawer() {
 		if (attachedActivity instanceof BoxPlayActivity) {
-			if (user != null) {
-				((BoxPlayActivity) attachedActivity).getNavigationView().getMenu().findItem(R.id.drawer_boxplay_user).setTitle(user.getUsername());
-			} else {
-				LoginActivity.start();
-			}
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					if (user != null) {
+						((BoxPlayActivity) attachedActivity).getNavigationView().getMenu().findItem(R.id.drawer_boxplay_user).setTitle(user.getUsername());
+					} else {
+						LoginActivity.start();
+					}
+				}
+			});
 		}
 	}
 	
