@@ -44,14 +44,18 @@ public class BoxPlayApplication extends Application {
 	/* File provider */
 	public static final String FILEPROVIDER_AUTHORITY = "caceresenzo.apps.boxplay.provider";
 	
+	/* Instance */
 	private static BoxPlayApplication APPLICATION;
 	
+	/* Managers */
 	private static Handler HANDLER = new Handler();
 	private static XManagers MANAGERS = new XManagers();
 	private static ViewHelper HELPER = new ViewHelper();
 	
+	/* Preferences */
 	private SharedPreferences sharedPreferences;
 	
+	/* Statics */
 	private static BaseBoxPlayActivty ATTACHED_ACTIVITY;
 	
 	@Override

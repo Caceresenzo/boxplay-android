@@ -50,11 +50,11 @@ public class IdentificationManager extends AbstractManager {
 	
 	@Override
 	protected void initialize() {
-		updateLoggerUser(userDatabaseHelper.getSavedUser());
+		// updateLoggerUser(userDatabaseHelper.getSavedUser());
 		
-		if (!checkUserValidity()) {
-			LoginActivity.start();
-		}
+		// if (!checkUserValidity()) {
+		LoginActivity.start();
+		// }
 	}
 	
 	/**

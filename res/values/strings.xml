@@ -84,6 +84,7 @@
     <!--  -->
     <string name="boxplay_identification_login_working">Login in...</string>
     <string name="boxplay_identification_register_working">Registering...</string>
+    <string name="boxplay_identification_error_no_internet">Your device is not connected to the Internet.</string>
     <!--  -->
     <string name="boxplay_identification_response_error_err_invalid_page">Error, invalid page.</string>
     <string name="boxplay_identification_response_error_err_invalid_limit">Error, invalid limit.</string>

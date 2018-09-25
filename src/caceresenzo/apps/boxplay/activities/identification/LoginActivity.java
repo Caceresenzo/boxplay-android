@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import caceresenzo.android.libs.internet.NetworkUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -63,6 +64,8 @@ public class LoginActivity extends BaseBoxPlayActivty {
 		this.workingProgressDialog.update(R.string.boxplay_identification_login_working);
 		
 		initializeViews();
+		
+		initializeRestoration();
 	}
 	
 	@Override
@@ -80,11 +83,6 @@ public class LoginActivity extends BaseBoxPlayActivty {
 		loginButton = (Button) findViewById(R.id.activity_login_button_login);
 		
 		registerLinkTextView = (TextView) findViewById(R.id.activity_login_textview_register);
-		
-		ContentValues contentValues = identificationManager.getUserDatabaseHelper().getSavedCredidentials(false);
-		if (contentValues.containsKey(UserDatabaseHelper.COLUMN_CREDIDENTIALS_USERNAME)) {
-			usernameEditText.setText(contentValues.getAsString(UserDatabaseHelper.COLUMN_CREDIDENTIALS_USERNAME));
-		}
 		
 		initializeListeners();
 	}
@@ -105,6 +103,22 @@ public class LoginActivity extends BaseBoxPlayActivty {
 				startActivityForResult(intent, REQUEST_ID_SIGNUP);
 			}
 		});
+	}
+
+	/* Initialize Saved Credidentials Restoration, and if user not null, try to re-login */
+	private void initializeRestoration() {
+		ContentValues contentValues = identificationManager.getUserDatabaseHelper().getSavedCredidentials(true);
+		User savedUser = identificationManager.getUserDatabaseHelper().getSavedUser();
+		
+		if (contentValues.containsKey(UserDatabaseHelper.COLUMN_CREDIDENTIALS_USERNAME)) {
+			usernameEditText.setText(contentValues.getAsString(UserDatabaseHelper.COLUMN_CREDIDENTIALS_USERNAME));
+
+			if (contentValues.containsKey(UserDatabaseHelper.COLUMN_CREDIDENTIALS_PASSWORD) && savedUser != null) {
+				passwordEditText.setText(contentValues.getAsString(UserDatabaseHelper.COLUMN_CREDIDENTIALS_PASSWORD));
+				
+				login();
+			}
+		}
 	}
 	
 	/**
@@ -187,7 +201,14 @@ public class LoginActivity extends BaseBoxPlayActivty {
 	private void onLoginFailed(ApiResponse<User> sourceRequest) {
 		loginButton.setEnabled(true);
 		
-		boxPlayApplication.toast(viewHelper.enumToStringCacheTranslation(sourceRequest.getStatus())).show();
+		String error;
+		if (!NetworkUtils.isConnected(this)) {
+			error = getString(R.string.boxplay_identification_error_no_internet);
+		} else {
+			error = viewHelper.enumToStringCacheTranslation(sourceRequest.getStatus());
+		}
+		
+		boxPlayApplication.toast(error).show();
 	}
 	
 	/**

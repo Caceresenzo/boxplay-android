@@ -88,6 +88,7 @@
     <!--  -->
     <string name="boxplay_identification_login_working">Identification...</string>
     <string name="boxplay_identification_register_working">Enregistrement...</string>
+    <string name="boxplay_identification_error_no_internet">Votre appareil n\'est pas connecté a Internet.</string>
     <!--  -->
     <string name="boxplay_identification_response_error_err_invalid_page">Erreur, page invalide.</string>
     <string name="boxplay_identification_response_error_err_invalid_limit">Erreur, limite invalide.</string>
