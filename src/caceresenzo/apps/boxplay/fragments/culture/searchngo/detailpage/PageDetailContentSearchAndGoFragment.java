@@ -44,7 +44,7 @@ import caceresenzo.libs.bytes.ByteFormat;
 import caceresenzo.libs.databridge.ObjectWrapper;
 import caceresenzo.libs.filesystem.FileUtils;
 import caceresenzo.libs.network.Downloader;
-import caceresenzo.libs.thread.AbstractHelpedThread;
+import caceresenzo.libs.thread.AbstractWorkerThread;
 
 /**
  * Content page for the {@link SearchAndGoDetailActivity}
@@ -279,7 +279,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class VideoExtractionWorker extends AbstractHelpedThread {
+	class VideoExtractionWorker extends AbstractWorkerThread {
 		private VideoItemResultData videoItem;
 		private String action;
 		
@@ -289,7 +289,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		private String directUrl;
 		
 		@Override
-		protected void onRun() {
+		protected void execute() {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -462,7 +462,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		}
 		
 		@Override
-		protected void onFinished() {
+		protected void done() {
 			closeDialog();
 		}
 		

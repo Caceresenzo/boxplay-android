@@ -16,33 +16,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import caceresenzo.android.libs.dialog.DialogUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.VideoActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment;
-import caceresenzo.apps.boxplay.fragments.store.StorePageFragment;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
-import caceresenzo.libs.boxplay.api.BoxPlayApi;
-import caceresenzo.libs.boxplay.api.request.implementations.tags.TagsApiRequest;
-import caceresenzo.libs.boxplay.api.request.implementations.video.movies.MoviesListApiRequest;
-import caceresenzo.libs.boxplay.api.request.implementations.video.series.SeriesListApiRequest;
 import caceresenzo.libs.boxplay.factory.VideoFactory;
 import caceresenzo.libs.boxplay.factory.VideoFactory.VideoFactoryListener;
 import caceresenzo.libs.boxplay.models.element.implementations.VideoElement;
 import caceresenzo.libs.boxplay.models.store.video.VideoFile;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.models.store.video.VideoSeason;
-import caceresenzo.libs.boxplay.models.store.video.enums.VideoFileType;
-import caceresenzo.libs.boxplay.store.video.BaseVideoStoreElement;
-import caceresenzo.libs.boxplay.store.video.TagsCorresponder;
-import caceresenzo.libs.boxplay.store.video.implementations.SimpleVideoStoreElement;
 import caceresenzo.libs.json.JsonObject;
 import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.parse.ParseUtils;
-import caceresenzo.libs.string.StringUtils;
 
 public class VideoManager extends AbstractManager {
+	
 	/* Tag */
 	public static final String TAG = VideoManager.class.getSimpleName();
 	
@@ -57,8 +46,8 @@ public class VideoManager extends AbstractManager {
 	
 	/* Factory */
 	private VideoFactory videoFactory = new VideoFactory();
-	private List<SimpleVideoStoreElement> groups;
-	private TagsCorresponder tagsCorresponder;
+	private List<VideoGroup> groups;
+	// private TagsCorresponder tagsCorresponder;
 	
 	private VideoFile lastVideoFileOpen;
 	
@@ -72,74 +61,74 @@ public class VideoManager extends AbstractManager {
 	private boolean working = false;
 	
 	public void callFactory() {
-		// groups.clear();
+		groups.clear();
 		
-		if (BoxPlayApplication.BUILD_DEBUG) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					if (working) {
-						return;
-					}
-					working = true;
-					
-					tagsCorresponder = new TagsApiRequest().processResponse(new BoxPlayApi("azeaze").call(new TagsApiRequest()));
-					
-					groups.clear();
-					for (SimpleVideoStoreElement video : new MoviesListApiRequest().processResponse(new BoxPlayApi("tokennn").call(new MoviesListApiRequest()))) {
-						groups.add(video);
-					}
-					
-					for (SimpleVideoStoreElement video : new SeriesListApiRequest().processResponse(new BoxPlayApi("tokennn").call(new SeriesListApiRequest()))) {
-						groups.add(video);
-					}
-					
-					prepareConfigurator();
-					Collections.shuffle(groups);
-					
-					MyListManager.videoManagerFinished(true);
-					
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							if (PageVideoStoreFragment.getVideoFragment() != null) {
-								PageVideoStoreFragment.getVideoFragment().callDataUpdater(true);
-							}
-						}
-					});
-					working = false;
-				}
-			}).start();
-		} else {
-			// videoFactory.parseServerJson(new VideoFactoryListener() {
-			// @Override
-			// public void onJsonMissingFileType() {
-			// boxPlayApplication.snackbar("Warning. Factory returned onJsonMissingFileType();", Snackbar.LENGTH_LONG).show();
-			// }
-			//
-			// @Override
-			// public void onVideoSeasonInvalidSeason(String element) {
-			// boxPlayApplication.snackbar("Warning. Factory returned onVideoSeasonInvalidSeason(element=\"" + element + "\");", Snackbar.LENGTH_LONG).show();
-			// }
-			//
-			// @Override
-			// public void onJsonNull() {
-			// boxPlayApplication.snackbar(R.string.boxplay_error_manager_json_null, Snackbar.LENGTH_LONG).show();
-			// }
-			//
-			// @Override
-			// public void onVideoGroupCreated(VideoGroup videoGroup) {
-			// groups.add(videoGroup);
-			// }
-			// }, BoxPlayApplication.getManagers().getDataManager().getJsonData());
+		// if (BoxPlayApplication.BUILD_DEBUG) {
+		// new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// if (working) {
+		// return;
+		// }
+		// working = true;
+		//
+		// tagsCorresponder = new TagsApiRequest().processResponse(new BoxPlayApi("azeaze").call(new TagsApiRequest()));
+		//
+		// groups.clear();
+		// for (SimpleVideoStoreElement video : new MoviesListApiRequest().processResponse(new BoxPlayApi("tokennn").call(new MoviesListApiRequest()))) {
+		// groups.add(video);
+		// }
+		//
+		// for (SimpleVideoStoreElement video : new SeriesListApiRequest().processResponse(new BoxPlayApi("tokennn").call(new SeriesListApiRequest()))) {
+		// groups.add(video);
+		// }
+		//
+		// prepareConfigurator();
+		// Collections.shuffle(groups);
+		//
+		// MyListManager.videoManagerFinished(true);
+		//
+		// handler.post(new Runnable() {
+		// @Override
+		// public void run() {
+		// if (PageVideoStoreFragment.getVideoFragment() != null) {
+		// PageVideoStoreFragment.getVideoFragment().callDataUpdater(true);
+		// }
+		// }
+		// });
+		// working = false;
+		// }
+		// }).start();
+		// } else {
+		videoFactory.parseServerJson(new VideoFactoryListener() {
+			@Override
+			public void onJsonMissingFileType() {
+				boxPlayApplication.snackbar("Warning. Factory returned onJsonMissingFileType();", Snackbar.LENGTH_LONG).show();
+			}
 			
-			// Collections.sort(groups, VideoGroup.COMPARATOR);
-			// Collections.shuffle(groups);
+			@Override
+			public void onVideoSeasonInvalidSeason(String element) {
+				boxPlayApplication.snackbar("Warning. Factory returned onVideoSeasonInvalidSeason(element=\"" + element + "\");", Snackbar.LENGTH_LONG).show();
+			}
 			
-			// prepareConfigurator();
+			@Override
+			public void onJsonNull() {
+				boxPlayApplication.snackbar(R.string.boxplay_error_manager_json_null, Snackbar.LENGTH_LONG).show();
+			}
 			
-			// getManagers().getMyListManager().videoManagerFinished(true);
-		}
+			@Override
+			public void onVideoGroupCreated(VideoGroup videoGroup) {
+				groups.add(videoGroup);
+			}
+		}, BoxPlayApplication.getManagers().getDataManager().getJsonData());
+		
+		Collections.sort(groups, VideoGroup.COMPARATOR);
+		Collections.shuffle(groups);
+		
+		prepareConfigurator();
+		
+		MyListManager.videoManagerFinished(true);
+		// }
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -193,27 +182,27 @@ public class VideoManager extends AbstractManager {
 			;
 		}
 		
-		// for (VideoGroup group : groups) {
-		// if (watchingGroups.contains(group.toString())) {
-		// group.setAsWatching(true);
-		// }
-		//
-		// for (VideoSeason season : group.getSeasons()) {
-		// if (watchedSeasons.contains(season.toString())) {
-		// season.asWatched(true);
-		// }
-		//
-		// for (VideoFile video : season.getVideos()) {
-		// if (dataVideos.containsKey(video.toString())) {
-		// Map<String, Object> data = dataVideos.get(video.toString());
-		//
-		// video.asWatched(ParseUtils.parseBoolean(data.get("watched"), false));
-		// video.newSavedTime(ParseUtils.parseLong(data.get("savedTime"), -1));
-		// video.newDuration(ParseUtils.parseLong(data.get("duration"), -1));
-		// }
-		// }
-		// }
-		// }
+		for (VideoGroup group : groups) {
+			if (watchingGroups.contains(group.toString())) {
+				group.setAsWatching(true);
+			}
+			
+			for (VideoSeason season : group.getSeasons()) {
+				if (watchedSeasons.contains(season.toString())) {
+					season.asWatched(true);
+				}
+				
+				for (VideoFile video : season.getVideos()) {
+					if (dataVideos.containsKey(video.toString())) {
+						Map<String, Object> data = dataVideos.get(video.toString());
+						
+						video.asWatched(ParseUtils.parseBoolean(data.get("watched"), false));
+						video.newSavedTime(ParseUtils.parseLong(data.get("savedTime"), -1));
+						video.newDuration(ParseUtils.parseLong(data.get("duration"), -1));
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -327,13 +316,13 @@ public class VideoManager extends AbstractManager {
 		}
 	}
 	
-	public List<SimpleVideoStoreElement> getGroups() {
+	public List<VideoGroup> getGroups() {
 		return groups;
 	}
 	
-	public TagsCorresponder getTagsCorresponder() {
-		return tagsCorresponder;
-	}
+	// public TagsCorresponder getTagsCorresponder() {
+	// return tagsCorresponder;
+	// }
 	
 	public VideoFile getLastVideoFileOpen() {
 		return lastVideoFileOpen;

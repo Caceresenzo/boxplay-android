@@ -22,7 +22,7 @@ import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.AbstractHelpedThread;
+import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 public class DataManager extends AbstractManager {
@@ -86,11 +86,11 @@ public class DataManager extends AbstractManager {
 		return runningOnCacheVersion;
 	}
 	
-	class Worker extends AbstractHelpedThread {
+	class Worker extends AbstractWorkerThread {
 		private boolean forceFetch;
 		
 		@Override
-		protected void onRun() {
+		protected void execute() {
 			while (!BoxPlayApplication.getBoxPlayApplication().isUiReady()) {
 				ThreadUtils.sleep(100L);
 			}
@@ -170,13 +170,13 @@ public class DataManager extends AbstractManager {
 			
 		}
 		
-		public AbstractHelpedThread force(boolean force) {
+		public AbstractWorkerThread force(boolean force) {
 			forceFetch = force;
 			return this;
 		}
 		
 		@Override
-		protected void onFinished() {
+		protected void done() {
 			;
 		}
 		

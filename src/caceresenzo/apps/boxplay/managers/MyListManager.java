@@ -25,7 +25,7 @@ import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
-import caceresenzo.libs.thread.AbstractHelpedThread;
+import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 /**
@@ -366,7 +366,7 @@ public class MyListManager extends AbstractManager {
 	
 	static class WatchListFetchWorker extends FetchWorker {
 		@Override
-		protected void onRun() {
+		protected void execute() {
 			if (myList == null) {
 				cancel();
 				return;
@@ -398,7 +398,7 @@ public class MyListManager extends AbstractManager {
 		}
 	}
 	
-	abstract static class FetchWorker extends AbstractHelpedThread {
+	abstract static class FetchWorker extends AbstractWorkerThread {
 		protected Handler handler;
 		
 		protected MyList myList;
@@ -420,7 +420,7 @@ public class MyListManager extends AbstractManager {
 		}
 		
 		@Override
-		protected void onFinished() {
+		protected void done() {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -437,7 +437,7 @@ public class MyListManager extends AbstractManager {
 		
 		@Override
 		protected void onCancelled() {
-			onFinished();
+			done();
 		}
 		
 		public FetchWorker applyCallback(FetchCallback callback) {

@@ -67,13 +67,13 @@ public class XManagers {
 		// Config
 		preferences = PreferenceManager.getDefaultSharedPreferences(BoxPlayApplication.getBoxPlayApplication());
 		
-		if (identificationManager == null) {
-			managers.add(identificationManager = new IdentificationManager());
-		}
+		// if (identificationManager == null) {
+		// managers.add(identificationManager = new IdentificationManager());
+		// }
 		
-		if (userManager == null) {
-			managers.add(userManager = new UserManager());
-		}
+		// if (userManager == null) {
+		// managers.add(userManager = new UserManager());
+		// }
 		
 		if (permissionManager == null) {
 			managers.add(permissionManager = new PermissionManager());
@@ -133,9 +133,10 @@ public class XManagers {
 	}
 	
 	public void onUserLogged(final User user, final BoxPlayApi boxPlayApi) {
-		for (AbstractManager manager : managers) {
-			manager.initializeWhenUserLogged(user, boxPlayApi);
-		}
+		// for (AbstractManager manager : managers) {
+		// manager.initializeWhenUserLogged(user, boxPlayApi);
+		// }
+		throw new IllegalStateException("Disabled.");
 	}
 	
 	public void destroy() {
@@ -165,13 +166,15 @@ public class XManagers {
 	}
 	
 	public IdentificationManager getIdentificationManager() {
-		checkAndRecreate();
-		return identificationManager;
+		// checkAndRecreate();
+		// return identificationManager;
+		throw new IllegalStateException("Disabled.");
 	}
 	
 	public UserManager getUserManager() {
-		checkAndRecreate();
-		return userManager;
+		// checkAndRecreate();
+		// return userManager;
+		throw new IllegalStateException("Disabled.");
 	}
 	
 	public PermissionManager getPermissionManager() {

@@ -30,7 +30,7 @@ import caceresenzo.libs.boxplay.models.premium.adult.AdultVideo;
 import caceresenzo.libs.licencekey.LicenceKey;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.AbstractHelpedThread;
+import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 public class PremiumManager extends AbstractManager {
@@ -193,7 +193,7 @@ public class PremiumManager extends AbstractManager {
 		/**
 		 * Fetch a page by its number
 		 * 
-		 * TODO: Update code to a {@link AbstractHelpedThread} with a Worker
+		 * TODO: Update code to a {@link AbstractWorkerThread} with a Worker
 		 * 
 		 * @param targetPage
 		 *            Targetted page number
@@ -329,14 +329,14 @@ public class PremiumManager extends AbstractManager {
 		 * 
 		 * @author Enzo CACERES
 		 */
-		class VideoExtractorWorker extends AbstractHelpedThread {
+		class VideoExtractorWorker extends AbstractWorkerThread {
 			private String videoPageUrl;
 			private AdultSubModuleCallback callback;
 			
 			private VideoContentExtractor extractor;
 			
 			@Override
-			protected void onRun() {
+			protected void execute() {
 				try {
 					/* Downloading video page url */
 					callback.onStatusUpdate(R.string.boxplay_premium_adult_status_downloading_data);
@@ -432,7 +432,7 @@ public class PremiumManager extends AbstractManager {
 			}
 			
 			@Override
-			protected void onFinished() {
+			protected void done() {
 				;
 			}
 			

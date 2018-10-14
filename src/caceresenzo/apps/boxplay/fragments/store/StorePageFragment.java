@@ -31,6 +31,8 @@ import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicElem
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicElementRowViewAdapter;
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicListRowItem;
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicListRowViewAdapter;
+import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoElementRowItem;
+import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoElementRowViewAdapter;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoListRowItem;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoListRowViewAdapter;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
@@ -365,11 +367,11 @@ public abstract class StorePageFragment extends Fragment {
 			
 			switch (item.getType()) {
 				case RowListItem.TYPE_VIDEO_LIST: { // 0
-					recyclerView.setAdapter(new VideoListRowViewAdapter(((VideoListRowItem) item).getBaseVideoStoreElements()));
+					recyclerView.setAdapter(new VideoListRowViewAdapter(((VideoListRowItem) item).getVideoElements()));
 					break;
 				}
 				case RowListItem.TYPE_VIDEO_ELEMENT: { // 1
-					// recyclerView.setAdapter(new VideoElementRowViewAdapter(((VideoElementRowItem) item).getVideoFile()));
+					recyclerView.setAdapter(new VideoElementRowViewAdapter(((VideoElementRowItem) item).getVideoFile()));
 					break;
 				}
 				case RowListItem.TYPE_MUSIC_LIST: { // 100

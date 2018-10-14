@@ -14,7 +14,7 @@ import caceresenzo.libs.boxplay.api.request.implementations.user.identification.
 import caceresenzo.libs.boxplay.api.request.implementations.user.identification.UserRegisterApiRequest;
 import caceresenzo.libs.boxplay.api.response.ApiResponse;
 import caceresenzo.libs.boxplay.users.User;
-import caceresenzo.libs.thread.implementations.HelpedThread;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 /**
  * Manager handling all stuff for the identification
@@ -155,7 +155,7 @@ public class IdentificationManager extends AbstractManager {
 				throw new IllegalArgumentException("Callback can't be null.");
 			}
 			
-			if (!HelpedThread.isWorkerFree(worker)) {
+			if (!WorkerThread.isWorkerFree(worker)) {
 				boxPlayApplication.toast("LoginWorker is busy.").show();
 				return;
 			}
@@ -169,12 +169,12 @@ public class IdentificationManager extends AbstractManager {
 		 * 
 		 * @author Enzo CACERES
 		 */
-		class LoginWorker extends HelpedThread {
+		class LoginWorker extends WorkerThread {
 			private String username, password;
 			private LoginCallback callback;
 			
 			@Override
-			protected void onRun() {
+			protected void execute() {
 				ApiResponse<User> apiResponse = new UserLoginApiRequest(username, password).call(boxPlayApi);
 				User user = apiResponse.selfProcess();
 				
@@ -249,7 +249,7 @@ public class IdentificationManager extends AbstractManager {
 				throw new IllegalArgumentException("Callback can't be null.");
 			}
 			
-			if (!HelpedThread.isWorkerFree(worker)) {
+			if (!WorkerThread.isWorkerFree(worker)) {
 				boxPlayApplication.toast("RegisterWorker is busy.").show();
 				return;
 			}
@@ -263,12 +263,12 @@ public class IdentificationManager extends AbstractManager {
 		 * 
 		 * @author Enzo CACERES
 		 */
-		class RegisterWorker extends HelpedThread {
+		class RegisterWorker extends WorkerThread {
 			private String username, email, password;
 			private RegisterCallback callback;
 			
 			@Override
-			protected void onRun() {
+			protected void execute() {
 				ApiResponse<?> apiResponse = new UserRegisterApiRequest(username, email, password).call(boxPlayApi).selfProcess();
 				
 				callback.onApiResponse(apiResponse);

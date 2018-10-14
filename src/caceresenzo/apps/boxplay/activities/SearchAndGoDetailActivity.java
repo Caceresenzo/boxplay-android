@@ -18,7 +18,7 @@ import caceresenzo.apps.boxplay.fragments.culture.searchngo.detailpage.PageDetai
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
-import caceresenzo.libs.thread.AbstractHelpedThread;
+import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
 
 public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
@@ -152,7 +152,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		application.startActivity(intent);
 	}
 	
-	class FetchingWorker extends AbstractHelpedThread {
+	class FetchingWorker extends AbstractWorkerThread {
 		private final SearchAndGoDetailActivity parentActivity;
 		private SearchAndGoResult result;
 		
@@ -164,7 +164,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		}
 		
 		@Override
-		protected void onRun() {
+		protected void execute() {
 			SearchAndGoProvider provider = result.getParentProvider();
 			
 			additionals = provider.fetchMoreData(result);
@@ -172,7 +172,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		}
 		
 		@Override
-		protected void onFinished() {
+		protected void done() {
 			if (parentActivity != INSTANCE) {
 				return;
 			}

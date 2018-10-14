@@ -13,8 +13,8 @@ import android.util.Log;
 import caceresenzo.android.libs.internet.NetworkUtils;
 import caceresenzo.android.libs.service.ServiceUtils;
 import caceresenzo.apps.boxplay.receivers.BoxPlayServiceRestartBroadcastReceiver;
-import caceresenzo.libs.thread.AbstractHelpedThread;
 import caceresenzo.libs.thread.ThreadUtils;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public class BoxPlayBackgroundService extends Service {
 	
@@ -113,9 +113,9 @@ public class BoxPlayBackgroundService extends Service {
 		}
 	}
 	
-	class BackgroundTask extends AbstractHelpedThread {
+	class BackgroundTask extends WorkerThread {
 		@Override
-		protected void onRun() {
+		protected void execute() {
 			Log.d(TAG, "Looping... (" + ++loop + ")");
 			
 			while (!internetConnected) {
@@ -149,16 +149,11 @@ public class BoxPlayBackgroundService extends Service {
 		}
 		
 		@Override
-		protected void onFinished() {
+		protected void done() {
 			ThreadUtils.sleep(TASK_WAIT_PERIOD);
 			
 			backgroundTask = new BackgroundTask();
 			backgroundTask.start();
-		}
-		
-		@Override
-		protected void onCancelled() {
-			;
 		}
 	}
 	

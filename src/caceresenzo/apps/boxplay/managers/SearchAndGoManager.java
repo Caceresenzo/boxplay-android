@@ -33,7 +33,7 @@ import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.SimpleLineStringBuilder;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.AbstractHelpedThread;
+import caceresenzo.libs.thread.AbstractWorkerThread;
 
 public class SearchAndGoManager extends AbstractManager {
 	
@@ -143,12 +143,12 @@ public class SearchAndGoManager extends AbstractManager {
 		return queryHistory;
 	}
 	
-	private class Worker extends AbstractHelpedThread {
+	private class Worker extends AbstractWorkerThread {
 		private String localSearchQuery = "";
 		private List<SearchAndGoProvider> localProviders = new ArrayList<>();
 		
 		@Override
-		protected void onRun() {
+		protected void execute() {
 			try {
 				boolean hentaiAllowed = premiumManager != null && premiumManager.isPremiumKeyValid();
 				
@@ -179,7 +179,7 @@ public class SearchAndGoManager extends AbstractManager {
 		}
 		
 		@Override
-		protected void onFinished() {
+		protected void done() {
 			worker = new Worker(); // New instance, this one will be forgot
 		}
 	}
