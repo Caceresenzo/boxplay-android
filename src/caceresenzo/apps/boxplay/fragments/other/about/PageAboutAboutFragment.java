@@ -44,7 +44,6 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 				.setTitle(R.string.boxplay_other_about_about_description) //
 				.addItem(new NormalAboutItem.Builder(context) //
 						.setTitle(R.string.boxplay_other_about_about_description_text) //
-						.setIcon(R.drawable.icon_info_light) //
 						.build()) //
 				.build()); //
 		
@@ -84,19 +83,21 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 								.toString()) //
 						.setIcon(R.drawable.profile_thegostisdead) //
 						.build()) //
-				.addItem(new NormalAboutItem.Builder(context) //
+				.addItem(new PersonAboutItem.Builder(context) //
 						.setTitle("Quentin BOTTA, @valgrebon") //
 						.setSubtitle(new StringBuilder() //
 								.append(typeIcons) //
 								.append(separator) //
 								.append(typeUi) //
 								.toString()) //
+						.setIcon(R.drawable.profile_valgrebon) //
 						.build()) //
-				.addItem(new NormalAboutItem.Builder(context) //
-						.setTitle("Jérémie BLERAUD") //
+				.addItem(new PersonAboutItem.Builder(context) //
+						.setTitle("Jérémie BERAUD") //
 						.setSubtitle(new StringBuilder() //
 								.append(typeBecause) //
 								.toString()) //
+						.setIcon(R.drawable.profile_jeremie_beraud) //
 						.build()) //
 				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/dandar3") //
 						.setTitle("@dandar3") //
