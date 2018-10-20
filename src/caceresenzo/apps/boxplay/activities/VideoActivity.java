@@ -45,7 +45,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import caceresenzo.android.libs.intent.IntentUtils;
+import caceresenzo.android.libs.intent.CommonIntentUtils;
 import caceresenzo.android.libs.internet.AndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
@@ -567,7 +567,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			shareUrlButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					IntentUtils.shareText(BoxPlayApplication.getBoxPlayApplication(), video.getUrl(), video.getUrl());
+					CommonIntentUtils.shareText(BoxPlayApplication.getBoxPlayApplication(), video.getUrl(), video.getUrl());
 				}
 			});
 			

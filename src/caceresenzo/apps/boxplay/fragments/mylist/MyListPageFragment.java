@@ -27,6 +27,7 @@ import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
 import caceresenzo.libs.string.StringUtils;
 
+@SuppressWarnings("unused")
 public abstract class MyListPageFragment extends Fragment implements MyListManager.FetchCallback {
 	
 	/* Managers */

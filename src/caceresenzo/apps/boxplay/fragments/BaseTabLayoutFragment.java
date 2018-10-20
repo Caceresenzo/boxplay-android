@@ -65,6 +65,13 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+		destroy();
+	}
+	
 	/**
 	 * Private, called if the {@link ViewPager} is null when {@link #onActivityCreated(Bundle)} is called
 	 */
@@ -106,6 +113,13 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	 * Now use the addFragment(Fragment, String) method to add pages
 	 */
 	protected abstract void initialize();
+	
+	/**
+	 * Override if you you need to have a destroyer
+	 */
+	protected void destroy() {
+		;
+	}
 	
 	/**
 	 * Delegate function of adapter.addFragment(Fragment, String);

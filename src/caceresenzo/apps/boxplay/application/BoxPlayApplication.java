@@ -22,7 +22,6 @@ import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
-import caceresenzo.apps.boxplay.services.BoxPlayBackgroundService;
 import caceresenzo.libs.comparator.Version;
 import caceresenzo.libs.comparator.VersionType;
 
@@ -81,7 +80,7 @@ public class BoxPlayApplication extends Application {
 		
 		MANAGERS.initialize(this);
 		
-		BoxPlayBackgroundService.startIfNotAlready(this);
+		// BoxPlayBackgroundService.startIfNotAlready(this);
 	}
 	
 	@Override

@@ -404,8 +404,20 @@
     <string name="boxplay_other_settings_boxplay_category_title">BoxPlay</string>
     <!--  -->
     <string name="boxplay_other_settings_boxplay_pref_background_service_title">Autoriser les services en arrière-plan</string>
-    <string name="boxplay_other_settings_boxplay_pref_background_service_summary_enabled">Oui (rien pour le moment)</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_summary_enabled">Oui</string>
     <string name="boxplay_other_settings_boxplay_pref_background_service_summary_disabled">Non</string>
+    <!--  -->
+    <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_title">Fréquence d\'execution</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_summary">%s</string>
+
+    <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_entries">
+        <item>Toutes les 30 minutes</item>
+        <item>Toutes les heures</item>
+        <item>Toutes les 2 heures</item>
+        <item>Toutes les 6 heures</item>
+        <item>Toutes les 12 heures</item>
+        <item>Chaque jour</item>
+    </string-array>
     <!--  -->
     <string name="boxplay_other_settings_boxplay_pref_force_factory_title">Forcer le traitement des données</string>
     <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_enabled">Les données seront re-travaillées de force quand vous rafraichirez</string>
@@ -448,26 +460,29 @@
 
     <!-- Other > About -->
 
-    <string name="boxplay_other_about_about">A propos</string>
-    <!-- Description -->
-    <string name="boxplay_other_about_description">BoxPlay est une application qui fournit de multiples services (qu\'un pour le moment), comme le steaming de vidéo. Dans un futur proche, BoxPlay aura son propre serveur et de nouveaux logiciels vont être crées pour élargir BoxPlay encore plus! Comme des services de téléchargement et de conversion de video Youtube avec un simple partage à l\'application. La création d\'un (petit) réseau social est aussi planifié. Et tout cela, avec rapidité, éfficacité et surtout sans aucune publicité, du moins, pour le moment ;).</string>
+    <string name="boxplay_other_about_about">A propos</string>    
     <!-- Starting - About -->
-    <string name="boxplay_other_about_group_app_information">Application</string>
-    <string name="boxplay_other_about_group_app_information_version">Version %s</string>
+    <string name="boxplay_other_about_about_application">Application</string>
+    <string name="boxplay_other_about_about_application_author">par @Caceresenzo</string>
+    <string name="boxplay_other_about_about_description">Description</string>
+    <string name="boxplay_other_about_about_description_text">BoxPlay est une application qui fournit de multiples services (qu\'un pour le moment), comme le steaming de vidéo. Dans un futur proche, BoxPlay aura son propre serveur et de nouveaux logiciels vont être crées pour élargir BoxPlay encore plus! Comme des services de téléchargement et de conversion de video Youtube avec un simple partage à l\'application. La création d\'un (petit) réseau social est aussi planifié. Et tout cela, avec rapidité, éfficacité et surtout sans aucune publicité, du moins, pour le moment ;).</string>
+    <string name="boxplay_other_about_about_author">Auteur</string>
+    <string name="boxplay_other_about_about_author_author_detail">Enzo Caceres</string>
+    <string name="boxplay_other_about_about_author_author_location">France</string>
+    <string name="boxplay_other_about_about_author_github">Voir mon Github</string>
+    <string name="boxplay_other_about_about_author_website">Voir mon site web</string>
+    <string name="boxplay_other_about_about_author_email">M\'envoyer un email</string>
     <!--  -->
-    <string name="boxplay_other_about_group_team_format" formatted="false">%s (%s)</string>
-    <string name="boxplay_other_about_group_team_format_type_application">application</string>
-    <string name="boxplay_other_about_group_team_format_type_api">API</string>
-    <string name="boxplay_other_about_group_team_format_type_ui">ui</string>
-    <string name="boxplay_other_about_group_team_format_type_icons">icons</string>
-    <string name="boxplay_other_about_group_team_format_type_hosting">hébergement</string>
-    <string name="boxplay_other_about_group_team_format_type_eclipse">eclipse fix</string>
-    <string name="boxplay_other_about_group_team_format_type_because">parce que :/</string>
+    <string name="boxplay_other_about_about_team">Équipe</string>
     <!--  -->
-    <string name="boxplay_other_about_group_team_programmer">Team / Développeur</string>
-    <string name="boxplay_other_about_group_team_designer">Team / Designer</string>
-    <string name="boxplay_other_about_group_team_supporter">Team / Supporter</string>
-    <string name="boxplay_other_about_group_team_helper">Team / Aideur</string>
+    <string name="boxplay_other_about_about_team_format_type_application">Application</string>
+    <string name="boxplay_other_about_about_team_format_type_api">API</string>
+    <string name="boxplay_other_about_about_team_format_type_ui">Interface</string>
+    <string name="boxplay_other_about_about_team_format_type_icons">Icons</string>
+    <string name="boxplay_other_about_about_team_format_type_hosting">Hébergement</string>
+    <string name="boxplay_other_about_about_team_format_type_eclipse">Eclipse fix</string>
+    <string name="boxplay_other_about_about_team_format_type_because">parce que :/</string>
+    <string name="boxplay_other_about_about_team_format_separator">,%s</string>
     <!--  -->
     <string name="boxplay_other_about_hosting">Hébergement</string>
     <!--  -->

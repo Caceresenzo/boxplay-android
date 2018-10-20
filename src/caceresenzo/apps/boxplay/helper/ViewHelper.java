@@ -415,7 +415,7 @@ public class ViewHelper {
 	}
 	
 	public void checkVlc() {
-		vlcInstalled = ApplicationUtils.isAppInstalled(boxPlayActivity, "org.videolan.vlc");
+		vlcInstalled = ApplicationUtils.isApplicationInstalled(boxPlayActivity, "org.videolan.vlc");
 	}
 	
 	/*

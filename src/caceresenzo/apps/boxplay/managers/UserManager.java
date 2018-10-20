@@ -8,17 +8,20 @@ import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.api.BoxPlayApi;
 import caceresenzo.libs.boxplay.users.User;
 
+@SuppressWarnings("unused")
 public class UserManager extends AbstractManager {
 	
 	/* Tag */
 	public static final String TAG = UserManager.class.getSimpleName();
 	
+	/* Manager */
 	private IdentificationManager identificationManager;
 	
 	/* Drawer Update */
 	private BaseBoxPlayActivty attachedActivity;
 	private User user;
 	
+	/* Constructor */
 	public UserManager() {
 		this.identificationManager = new IdentificationManager();
 	}

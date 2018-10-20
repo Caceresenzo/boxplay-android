@@ -37,6 +37,7 @@ public class XManagers {
 	protected SearchAndGoManager searchAndGoManager;
 	protected MyListManager myListManager;
 	protected DebugManager debugManager;
+	protected BackgroundServiceManager backgroundServiceManager;
 	
 	/* Files */
 	protected final File baseApplicationDirectory;
@@ -117,6 +118,10 @@ public class XManagers {
 		
 		if (debugManager == null) {
 			managers.add(debugManager = new DebugManager());
+		}
+		
+		if (backgroundServiceManager == null) {
+			managers.add(backgroundServiceManager = new BackgroundServiceManager());
 		}
 		
 		for (AbstractManager manager : managers) {
@@ -230,6 +235,11 @@ public class XManagers {
 	public DebugManager getDebugManager() {
 		checkAndRecreate();
 		return debugManager;
+	}
+	
+	public BackgroundServiceManager getBackgroundServiceManager() {
+		checkAndRecreate();
+		return backgroundServiceManager;
 	}
 	
 	protected abstract static class AbstractManager {

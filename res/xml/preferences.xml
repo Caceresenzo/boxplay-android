@@ -24,10 +24,22 @@
 
         <SwitchPreference
             android:defaultValue="true"
-            android:enabled="false"
             android:key="@string/boxplay_other_settings_boxplay_pref_background_service_key"
             android:summary=""
             android:title="@string/boxplay_other_settings_boxplay_pref_background_service_title" />
+
+        <!-- BoxPlay > Background Services > Frequency -->
+>
+        <ListPreference
+            android:defaultValue="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_default_value"
+            android:dependency="@string/boxplay_other_settings_boxplay_pref_background_service_key"
+            android:entries="@array/boxplay_other_settings_boxplay_pref_background_service_frequency_entries"
+            android:entryValues="@array/boxplay_other_settings_boxplay_pref_background_service_frequency_values"
+            android:key="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_key"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary=""
+            android:title="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_title" />
 
         <!-- BoxPlay > Processing > Force data processing -->
 

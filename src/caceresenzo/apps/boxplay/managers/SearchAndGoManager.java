@@ -174,7 +174,7 @@ public class SearchAndGoManager extends AbstractManager {
 		}
 		
 		@Override
-		protected void onCancelled() {
+		protected void cancel() {
 			;
 		}
 		

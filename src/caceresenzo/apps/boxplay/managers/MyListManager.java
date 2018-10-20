@@ -368,7 +368,7 @@ public class MyListManager extends AbstractManager {
 		@Override
 		protected void execute() {
 			if (myList == null) {
-				cancel();
+				terminate();
 				return;
 			}
 			
@@ -436,7 +436,7 @@ public class MyListManager extends AbstractManager {
 		}
 		
 		@Override
-		protected void onCancelled() {
+		protected void cancel() {
 			done();
 		}
 		

@@ -22,7 +22,7 @@ public class PageAboutLibrariesFragment extends Fragment {
 	private final List<LibraryItem> libraries;
 	
 	public PageAboutLibrariesFragment() {
-		this.libraries = new ArrayList<LibraryItem>();
+		this.libraries = new ArrayList<>();
 		
 		this.libraries.add(new LibraryItem("TapTargetView", "KeepSafe", "https://github.com/KeepSafe/TapTargetView"));
 		this.libraries.add(new LibraryItem("changeloglib", "gabrielemariotti", "https://github.com/gabrielemariotti/changeloglib"));

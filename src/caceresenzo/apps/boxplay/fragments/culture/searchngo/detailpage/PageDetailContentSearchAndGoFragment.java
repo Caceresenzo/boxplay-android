@@ -323,7 +323,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 							@Override
 							public void onCancel(DialogInterface dialog) {
 								closeDialog();
-								cancel();
+								terminate();
 							}
 						});
 					}
@@ -367,7 +367,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 					
 					@Override
 					public void onFileNotAvailable() {
-						cancel();
+						terminate();
 						
 						handler.post(new Runnable() {
 							@Override
@@ -467,7 +467,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		}
 		
 		@Override
-		protected void onCancelled() {
+		protected void cancel() {
 			closeDialog();
 		}
 		

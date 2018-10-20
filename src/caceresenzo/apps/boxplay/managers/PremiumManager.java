@@ -381,7 +381,7 @@ public class PremiumManager extends AbstractManager {
 						
 						@Override
 						public void onFileNotAvailable() {
-							cancel();
+							terminate();
 							
 							if (callback != null) {
 								callback.onError(R.string.boxplay_premium_adult_status_error_file_not_found);
@@ -437,7 +437,7 @@ public class PremiumManager extends AbstractManager {
 			}
 			
 			@Override
-			protected void onCancelled() {
+			protected void cancel() {
 				callback.returnDialog().hide();
 			}
 			

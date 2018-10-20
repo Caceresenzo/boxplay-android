@@ -13,6 +13,7 @@ import caceresenzo.apps.boxplay.R;
  * @author Enzo CACERES
  */
 public class WorkingProgressDialog {
+	
 	/* Base context */
 	private Context context;
 	

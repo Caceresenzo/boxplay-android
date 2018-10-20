@@ -2,6 +2,11 @@
 <resources>
 
     <string name="application_name">BoxPlay</string>
+    <string name="application_website">https://boxplay.io</string>
+    <string name="application_email">caceresenzo1502@gmail.com</string>
+    <!--  -->
+    <string name="author_github">https://github.com/Caceresenzo</string>
+
     <!--  -->
     <string name="transition_view_reveal">view_reveal</string>
     <!--  -->
@@ -445,6 +450,28 @@
     <string name="boxplay_other_settings_boxplay_pref_background_service_summary_disabled">No</string>
     <string name="boxplay_other_settings_boxplay_pref_background_service_key">boxplay_background_service</string>
     <!--  -->
+    <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_title">Task execution frequency</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_summary">%s</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_key">background_task_frequency</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_default_value">1800000</string>
+
+    <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_entries">
+        <item>Every 30 minutes</item>
+        <item>Every 1 hour</item>
+        <item>Every 2 hours</item>
+        <item>Every 6 hours</item>
+        <item>Every 12 hours</item>
+        <item>Every day</item>
+    </string-array>
+    <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_values" translatable="false">
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>7200000</item>
+        <item>21600000</item>
+        <item>43200000</item>
+        <item>86400000</item>
+    </string-array>
+    <!--  -->
     <string name="boxplay_other_settings_boxplay_pref_force_factory_title">Force data processing</string>
     <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_enabled">The data will be forced to be re-parsed when you will refresh</string>
     <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_disabled">The data will only be refresh when new content is added</string>
@@ -506,26 +533,29 @@
     <!-- Other > About -->
 
     <string name="boxplay_other_about_about">About</string>
-    <!-- Description -->
-    <string name="boxplay_other_about_description">BoxPlay is an application providing multiple service (just one for the moment), like video streaming. In a close futur, BoxPlay will get his own dedicated server and new software will be created to expend BoxPlay to do much more! Like Youtube video downloading and converting just by sharing it to the application. The creation of a little social network is also planified. And everything come with speed, efficiency and without any ads, for the moment ;).</string>
     <!-- Starting - About -->
-    <string name="boxplay_other_about_group_app_information">Application</string>
-    <string name="boxplay_other_about_group_app_information_version">Version %s</string>
+    <string name="boxplay_other_about_about_application">Application</string>
+    <string name="boxplay_other_about_about_application_author">by @Caceresenzo</string>
+    <string name="boxplay_other_about_about_description">Description</string>
+    <string name="boxplay_other_about_about_description_text">BoxPlay is an application providing multiple service (just one for the moment), like video streaming. In a close futur, BoxPlay will get his own dedicated server and new software will be created to expend BoxPlay to do much more! Like Youtube video downloading and converting just by sharing it to the application. The creation of a little social network is also planified. And everything come with speed, efficiency and without any ads, for the moment ;).</string>
+    <string name="boxplay_other_about_about_author">Author</string>
+    <string name="boxplay_other_about_about_author_author_detail">Enzo Caceres</string>
+    <string name="boxplay_other_about_about_author_author_location">France</string>
+    <string name="boxplay_other_about_about_author_github">See my Github</string>
+    <string name="boxplay_other_about_about_author_website">Visit my website</string>
+    <string name="boxplay_other_about_about_author_email">Send me an email</string>
     <!--  -->
-    <string name="boxplay_other_about_group_team_format" formatted="false">%s (%s)</string>
-    <string name="boxplay_other_about_group_team_format_type_application">application</string>
-    <string name="boxplay_other_about_group_team_format_type_api">API</string>
-    <string name="boxplay_other_about_group_team_format_type_ui">ui</string>
-    <string name="boxplay_other_about_group_team_format_type_icons">icons</string>
-    <string name="boxplay_other_about_group_team_format_type_hosting">hosting</string>
-    <string name="boxplay_other_about_group_team_format_type_eclipse">eclipse fix</string>
-    <string name="boxplay_other_about_group_team_format_type_because">because :/</string>
-    <string name="boxplay_other_about_group_team_format_separator">,%s</string>
+    <string name="boxplay_other_about_about_team">Team</string>
     <!--  -->
-    <string name="boxplay_other_about_group_team_programmer">Team / Programmer</string>
-    <string name="boxplay_other_about_group_team_designer">Team / Designer</string>
-    <string name="boxplay_other_about_group_team_supporter">Team / Supporter</string>
-    <string name="boxplay_other_about_group_team_helper">Team / Helper</string>
+    <string name="boxplay_other_about_about_team_format_type_application">Application</string>
+    <string name="boxplay_other_about_about_team_format_type_api">API</string>
+    <string name="boxplay_other_about_about_team_format_type_ui">UI</string>
+    <string name="boxplay_other_about_about_team_format_type_icons">Icons</string>
+    <string name="boxplay_other_about_about_team_format_type_hosting">Hosting</string>
+    <string name="boxplay_other_about_about_team_format_type_eclipse">Eclipse fix</string>
+    <string name="boxplay_other_about_about_team_format_type_because">Because :/</string>
+    <string name="boxplay_other_about_about_team_format_separator">,%s</string>
+
     <!--  -->
     <string name="boxplay_other_about_hosting">Hosting</string>
     <!-- Ending - About -->

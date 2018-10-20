@@ -129,7 +129,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		
 		INSTANCE = null;
 		
-		mangaExtractionWorker.cancel();
+		mangaExtractionWorker.terminate();
 	}
 	
 	/* Initialization -> Views */
@@ -377,7 +377,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			imageUrls = chapterContentExtractor.getImageUrls(mangaContentProvider.extractMangaPageUrl(localChapterItem));
 			
 			if (imageUrls == null) {
-				cancel();
+				terminate();
 			}
 		}
 		
@@ -409,7 +409,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			novel = chapterContentExtractor.extractNovel(localChapterItem);
 			
 			if (!StringUtils.validate(novel)) {
-				cancel();
+				terminate();
 			}
 		}
 		
@@ -466,7 +466,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 				work();
 			} catch (Exception exception) {
 				displayError(exception);
-				cancel();
+				terminate();
 			}
 		}
 		
@@ -491,7 +491,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		}
 		
 		@Override
-		protected void onCancelled() {
+		protected void cancel() {
 			;
 		}
 		

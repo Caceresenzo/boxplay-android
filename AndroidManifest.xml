@@ -101,13 +101,6 @@
             android:exported="true"
             android:process=":boxplaymusicplayer" >
         </service>
-        <service
-            android:name=".services.BoxPlayBackgroundService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":boxplaybackgroundservice"
-            android:stopWithTask="false" >
-        </service>
 
         <receiver android:name="caceresenzo.apps.boxplay.receivers.MusicNotificationBroadcast" >
             <intent-filter>
@@ -120,13 +113,13 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receivers.BoxPlayServiceRestartBroadcastReceiver"
+            android:name=".receivers.BoxPlayBackgroundTaskReceiver"
             android:enabled="true"
             android:exported="true"
-            android:label="BoxPlay Service Restarter" >
+            android:label="BoxPlay Background Task Receiver"
+            android:process=":backgroundtasks" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="caceresenzo.apps.boxplay.reveivers.BoxPlayServiceRestartBroadcastReceiver.RESTART_SERVICE" />
             </intent-filter>
         </receiver>
 

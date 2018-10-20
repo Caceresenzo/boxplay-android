@@ -100,7 +100,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		infoFragment = null;
 		contentFragment = null;
 		
-		fetchingWorker.cancel();
+		fetchingWorker.terminate();
 	}
 	
 	private void initializeViews() {
@@ -213,7 +213,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		}
 		
 		@Override
-		protected void onCancelled() {
+		protected void cancel() {
 			;
 		}
 		
