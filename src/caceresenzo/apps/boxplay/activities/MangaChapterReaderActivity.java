@@ -35,7 +35,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.content.image.implementations.
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.content.ChapterItemResultData;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.AbstractWorkerThread;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 /**
  * Activity to read Manga
@@ -440,7 +440,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		}
 	}
 	
-	abstract class ExtractionWorker<E extends ContentExtractor> extends AbstractWorkerThread {
+	abstract class ExtractionWorker<E extends ContentExtractor> extends WorkerThread {
 		/* Parent Activity set when creating new Instance */
 		protected final MangaChapterReaderActivity parentActivity;
 		/* Actual result to fetch */
@@ -488,11 +488,6 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 					finish();
 				}
 			});
-		}
-		
-		@Override
-		protected void cancel() {
-			;
 		}
 		
 		/**

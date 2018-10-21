@@ -22,6 +22,7 @@ import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
+import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.libs.comparator.Version;
 import caceresenzo.libs.comparator.VersionType;
 
@@ -32,16 +33,6 @@ public class BoxPlayApplication extends Application {
 	
 	/* Constants */
 	private static final Version VERSION = new Version("3.1.6.1", VersionType.BETA);
-	
-	/* Android request id */
-	public static final int REQUEST_ID_UPDATE = 20;
-	public static final int REQUEST_ID_VLC_VIDEO = 40;
-	public static final int REQUEST_ID_VLC_VIDEO_URL = 41;
-	public static final int REQUEST_ID_VLC_AUDIO = 42;
-	public static final int REQUEST_ID_PERMISSION = 100;
-	
-	/* File provider */
-	public static final String FILEPROVIDER_AUTHORITY = "caceresenzo.apps.boxplay.provider";
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;
@@ -80,7 +71,7 @@ public class BoxPlayApplication extends Application {
 		
 		MANAGERS.initialize(this);
 		
-		// BoxPlayBackgroundService.startIfNotAlready(this);
+		BoxPlayForegroundService.startIfNotAlready(this);
 	}
 	
 	@Override

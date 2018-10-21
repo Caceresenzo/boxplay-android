@@ -44,7 +44,7 @@ import caceresenzo.libs.bytes.ByteFormat;
 import caceresenzo.libs.databridge.ObjectWrapper;
 import caceresenzo.libs.filesystem.FileUtils;
 import caceresenzo.libs.network.Downloader;
-import caceresenzo.libs.thread.AbstractWorkerThread;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 /**
  * Content page for the {@link SearchAndGoDetailActivity}
@@ -53,8 +53,10 @@ import caceresenzo.libs.thread.AbstractWorkerThread;
  */
 public class PageDetailContentSearchAndGoFragment extends Fragment {
 	
-	private static final String TAG = PageDetailContentSearchAndGoFragment.class.getSimpleName();
+	/* Tag */
+	public static final String TAG = PageDetailContentSearchAndGoFragment.class.getSimpleName();
 	
+	/* Constants */
 	public static final String ACTION_STREAMING = "action.streaming";
 	public static final String ACTION_DOWNLOAD = "action.download";
 	
@@ -64,6 +66,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	private ViewHelper viewHelper;
 	private DebugManager debugManager;
 	
+	/* Ui */
 	private boolean uiReady = false;
 	
 	/* Actual result */
@@ -83,6 +86,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	/* Worker */
 	private VideoExtractionWorker videoExtractionWorker;
 	
+	/* Constructor */
 	public PageDetailContentSearchAndGoFragment() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.handler = BoxPlayApplication.getHandler();
@@ -279,7 +283,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class VideoExtractionWorker extends AbstractWorkerThread {
+	class VideoExtractionWorker extends WorkerThread {
 		private VideoItemResultData videoItem;
 		private String action;
 		
@@ -468,7 +472,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		
 		@Override
 		protected void cancel() {
-			closeDialog();
+			done();
 		}
 		
 		private void closeDialog() {

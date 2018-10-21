@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.fragments.BaseTabLayoutFragment;
 import caceresenzo.apps.boxplay.fragments.culture.CultureFragment;
 import caceresenzo.apps.boxplay.fragments.culture.searchngo.PageCultureSearchAndGoFragment;
@@ -242,7 +243,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-			case BoxPlayApplication.REQUEST_ID_VLC_VIDEO: {
+			case Constants.REQUEST_ID.REQUEST_ID_VLC_VIDEO: {
 				VideoActivity videoActivity = VideoActivity.getVideoActivity();
 				if (videoActivity != null) {
 					videoActivity.onActivityResult(requestCode, resultCode, data);

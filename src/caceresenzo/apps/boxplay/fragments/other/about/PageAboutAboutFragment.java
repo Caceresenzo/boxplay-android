@@ -59,7 +59,7 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 		addCard(new AboutCard.Builder(context) //
 				.setTitle(R.string.boxplay_other_about_about_team) //
 				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/Caceresenzo") //
-						.setTitle("Enzo CACERES, @Caceresenzo") //
+						.setTitle("@Caceresenzo") //
 						.setSubtitle(new StringBuilder() //
 								.append(typeApplication) //
 								.append(separator) //
@@ -70,21 +70,21 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 						.setIcon(R.drawable.profile_caceresenzo) //
 						.build()) //
 				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/TheWhoosher") //
-						.setTitle("Fanbien SENUT--SCHAPPACHER, @TheWhoosher") //
+						.setTitle("@TheWhoosher") //
 						.setSubtitle(new StringBuilder() //
 								.append(typeApi) //
 								.toString()) //
 						.setIcon(R.drawable.profile_thewhoosher) //
 						.build()) //
 				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/thegostisdead") //
-						.setTitle("Dorian HARDY, @thegostisdead") //
+						.setTitle("@thegostisdead") //
 						.setSubtitle(new StringBuilder() //
 								.append(typeHosting) //
 								.toString()) //
 						.setIcon(R.drawable.profile_thegostisdead) //
 						.build()) //
 				.addItem(new PersonAboutItem.Builder(context) //
-						.setTitle("Quentin BOTTA, @valgrebon") //
+						.setTitle("@valgrebon") //
 						.setSubtitle(new StringBuilder() //
 								.append(typeIcons) //
 								.append(separator) //

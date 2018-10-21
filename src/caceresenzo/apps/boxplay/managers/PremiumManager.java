@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import caceresenzo.android.libs.dialog.DialogUtils;
 import caceresenzo.android.libs.toast.ToastUtils;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.R.string;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -32,6 +33,7 @@ import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
 import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public class PremiumManager extends AbstractManager {
 	
@@ -329,7 +331,7 @@ public class PremiumManager extends AbstractManager {
 		 * 
 		 * @author Enzo CACERES
 		 */
-		class VideoExtractorWorker extends AbstractWorkerThread {
+		class VideoExtractorWorker extends WorkerThread {
 			private String videoPageUrl;
 			private AdultSubModuleCallback callback;
 			
@@ -429,11 +431,6 @@ public class PremiumManager extends AbstractManager {
 				if (debugManager.openLogsAtExtractorEnd() && extractor != null) {
 					DialogUtils.showDialog(handler, boxPlayApplication.getAttachedActivity(), "Extraction logs", extractor.getLogger().getContent());
 				}
-			}
-			
-			@Override
-			protected void done() {
-				;
 			}
 			
 			@Override

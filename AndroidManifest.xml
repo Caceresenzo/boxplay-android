@@ -98,8 +98,7 @@
         <service
             android:name=".providers.media.music.MusicService"
             android:enabled="true"
-            android:exported="true"
-            android:process=":boxplaymusicplayer" >
+            android:exported="true" >
         </service>
 
         <receiver android:name="caceresenzo.apps.boxplay.receivers.MusicNotificationBroadcast" >
@@ -113,15 +112,20 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receivers.BoxPlayBackgroundTaskReceiver"
+            android:name=".receivers.BoxPlayServiceBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
-            android:label="BoxPlay Background Task Receiver"
-            android:process=":backgroundtasks" >
+            android:label="BoxPlay Background Task Receiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".services.BoxPlayForegroundService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

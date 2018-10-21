@@ -8,6 +8,22 @@
     <string name="author_github">https://github.com/Caceresenzo</string>
 
     <!--  -->
+    <string name="boxplay_notification_channel_main_title">BoxPlay</string>
+    <string name="boxplay_notification_channel_main_description">BoxPlay services</string>
+    
+    
+    <!--  -->
+    <!-- Service -->
+    <!--  -->
+    <string name="boxplay_service_foreground_notification_title">BoxPlay Services</string>
+    <string name="boxplay_service_foreground_notification_eta">Running...</string>
+    <string name="boxplay_service_foreground_notification_button_cancel">Cancel</string>
+    <string name="boxplay_service_foreground_task_actual">Task: %s</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions_title">Search n\' Go Subscription</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions2_title">Search n\' Go Subscription 2</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Fetch site and check if there is any update/new content for the item you have subscribe.</string>
+
+    <!--  -->
     <string name="transition_view_reveal">view_reveal</string>
     <!--  -->
     <string name="boxplay_viewhelper_recaching">Re-caching...\nPlease restart the app to apply new language everywhere!</string>

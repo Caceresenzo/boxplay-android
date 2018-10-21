@@ -2,6 +2,22 @@
 <resources>
 
     <string name="application_name">BoxPlay</string>
+
+    <!--  -->
+    <string name="boxplay_notification_channel_main_title">BoxPlay</string>
+    <string name="boxplay_notification_channel_main_description">Services BoxPlay</string>
+
+    <!--  -->
+    <!-- Service -->
+    <!--  -->
+    <string name="boxplay_service_foreground_notification_title">Services BoxPlay</string>
+    <string name="boxplay_service_foreground_notification_eta">En cours...</string>
+    <string name="boxplay_service_foreground_notification_button_cancel">Annuler</string>
+    <string name="boxplay_service_foreground_task_actual">Tâche: %s</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions_title">Search n\' Go Abonnement</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions2_title">Search n\' Go Abonnemenet 2</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Va voir sur les site si il y du nouveau contenu sur les items auquels vous vous êtes abonné.</string>
+
     <!--  -->
     <string name="boxplay_viewhelper_recaching">Remise en cache...\nVeuillez redémarrer l\'appli. pour appliquer le nouveau langage de partout!</string>
     <!--  -->
@@ -460,7 +476,7 @@
 
     <!-- Other > About -->
 
-    <string name="boxplay_other_about_about">A propos</string>    
+    <string name="boxplay_other_about_about">A propos</string>
     <!-- Starting - About -->
     <string name="boxplay_other_about_about_application">Application</string>
     <string name="boxplay_other_about_about_application_author">par @Caceresenzo</string>

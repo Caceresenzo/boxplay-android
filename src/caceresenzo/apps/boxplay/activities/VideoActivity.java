@@ -50,6 +50,7 @@ import caceresenzo.android.libs.internet.AndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.TutorialManager.Tutorialable;
@@ -151,7 +152,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-			case BoxPlayApplication.REQUEST_ID_VLC_VIDEO:
+			case Constants.REQUEST_ID.REQUEST_ID_VLC_VIDEO:
 				if (data == null || data.getExtras() == null) {
 					Snackbar.make(coordinatorLayout, R.string.boxplay_error_video_activity_vlc_error, Snackbar.LENGTH_LONG).show();
 					return;

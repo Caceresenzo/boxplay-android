@@ -18,8 +18,8 @@ import caceresenzo.apps.boxplay.fragments.culture.searchngo.detailpage.PageDetai
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
-import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 	
@@ -152,7 +152,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		application.startActivity(intent);
 	}
 	
-	class FetchingWorker extends AbstractWorkerThread {
+	class FetchingWorker extends WorkerThread {
 		private final SearchAndGoDetailActivity parentActivity;
 		private SearchAndGoResult result;
 		
@@ -210,11 +210,6 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 					});
 				}
 			}
-		}
-		
-		@Override
-		protected void cancel() {
-			;
 		}
 		
 		boolean alreadyValidated = false;

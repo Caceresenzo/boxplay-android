@@ -33,7 +33,7 @@ import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.SimpleLineStringBuilder;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.AbstractWorkerThread;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public class SearchAndGoManager extends AbstractManager {
 	
@@ -143,7 +143,7 @@ public class SearchAndGoManager extends AbstractManager {
 		return queryHistory;
 	}
 	
-	private class Worker extends AbstractWorkerThread {
+	private class Worker extends WorkerThread {
 		private String localSearchQuery = "";
 		private List<SearchAndGoProvider> localProviders = new ArrayList<>();
 		
@@ -171,11 +171,6 @@ public class SearchAndGoManager extends AbstractManager {
 			this.localProviders.addAll(providers);
 			
 			return this;
-		}
-		
-		@Override
-		protected void cancel() {
-			;
 		}
 		
 		@Override

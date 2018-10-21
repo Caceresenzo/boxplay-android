@@ -23,20 +23,26 @@ import caceresenzo.libs.licencekey.LicenceKey;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 	
+	/* Static */
 	public static boolean PREF_MENU_EXPAND_COLLAPSE_BACK_BUTTON_ENABLE = true;
 	
+	/* Manager */
 	private BoxPlayApplication boxPlayApplication;
 	private ViewHelper viewHelper;
 	
+	/* Variables */
 	private SharedPreferences sharedPreferences;
 	
-	private boolean firstCheck = true;
+	private boolean firstCheck;
 	
 	private String lastPreferenceKey;
 	
+	/* Constructor */
 	public SettingsFragment() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.viewHelper = BoxPlayApplication.getViewHelper();
+		
+		this.firstCheck = true;
 	}
 	
 	@Override
@@ -49,6 +55,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_store_music_pref_my_genre_key));
 		// BoxPlay
 		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_boxplay_pref_background_service_key));
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key));
 		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_boxplay_pref_force_factory_key));
 		// Premium
 		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_premium_pref_premium_key_key));
@@ -163,9 +170,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 			}
 		} else if (preference instanceof ListPreference) {
 			ListPreference listPreference = (ListPreference) preference;
+			int prefIndex = listPreference.findIndexOfValue(sharedPreferences.getString(key, ""));
 			
-			if (key == getString(R.string.boxplay_other_settings_application_pref_language_key)) {
-				int prefIndex = listPreference.findIndexOfValue(sharedPreferences.getString(key, ""));
+			if (key == getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key)) {
+				preference.setSummary(getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_summary, listPreference.getEntries()[prefIndex]));
+				
+				BoxPlayApplication.getManagers().getBackgroundServiceManager().updateExecutionFrequency((String) listPreference.getEntryValues()[prefIndex]);
+			}
+			//
+			else if (key == getString(R.string.boxplay_other_settings_application_pref_language_key)) {
 				if (prefIndex >= 0) {
 					preference.setSummary(getString(R.string.boxplay_other_settings_application_pref_language_summary, listPreference.getEntries()[prefIndex]));
 				}

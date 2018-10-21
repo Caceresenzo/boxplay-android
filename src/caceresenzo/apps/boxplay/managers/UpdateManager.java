@@ -16,6 +16,7 @@ import caceresenzo.android.libs.internet.AndroidUpdater;
 import caceresenzo.android.libs.internet.AndroidUpdater.OnUpdateStateChange;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.bytes.ByteFormat;
 import caceresenzo.libs.comparator.Version;
@@ -215,7 +216,7 @@ public class UpdateManager extends AbstractManager {
 									}
 								});
 							}
-						}, BoxPlayApplication.REQUEST_ID_UPDATE);
+						}, Constants.REQUEST_ID.REQUEST_ID_UPDATE);
 						
 					}
 				});

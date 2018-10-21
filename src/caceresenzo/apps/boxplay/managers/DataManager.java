@@ -24,6 +24,7 @@ import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.StringUtils;
 import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public class DataManager extends AbstractManager {
 	
@@ -86,7 +87,7 @@ public class DataManager extends AbstractManager {
 		return runningOnCacheVersion;
 	}
 	
-	class Worker extends AbstractWorkerThread {
+	class Worker extends WorkerThread {
 		private boolean forceFetch;
 		
 		@Override
@@ -170,19 +171,9 @@ public class DataManager extends AbstractManager {
 			
 		}
 		
-		public AbstractWorkerThread force(boolean force) {
+		public WorkerThread force(boolean force) {
 			forceFetch = force;
 			return this;
-		}
-		
-		@Override
-		protected void done() {
-			;
-		}
-		
-		@Override
-		protected void cancel() {
-			;
 		}
 		
 	}

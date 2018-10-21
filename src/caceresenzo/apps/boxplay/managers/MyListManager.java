@@ -25,8 +25,9 @@ import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
-import caceresenzo.libs.thread.AbstractWorkerThread;
+import caceresenzo.libs.thread.AbstractWorkerThread.WorkerThreadCancelledException;
 import caceresenzo.libs.thread.ThreadUtils;
+import caceresenzo.libs.thread.implementations.WorkerThread;
 
 /**
  * Manager for Lists managements
@@ -398,7 +399,7 @@ public class MyListManager extends AbstractManager {
 		}
 	}
 	
-	abstract static class FetchWorker extends AbstractWorkerThread {
+	abstract static class FetchWorker extends WorkerThread {
 		protected Handler handler;
 		
 		protected MyList myList;
@@ -426,7 +427,7 @@ public class MyListManager extends AbstractManager {
 				public void run() {
 					if (callback != null) {
 						if (isCancelled()) {
-							callback.onException(new HelpedThreadCancelledException());
+							callback.onException(new WorkerThreadCancelledException());
 						} else {
 							callback.onFetchFinished(outputListable);
 						}

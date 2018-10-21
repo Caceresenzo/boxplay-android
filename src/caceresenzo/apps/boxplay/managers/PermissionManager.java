@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 
 public class PermissionManager extends AbstractManager {
@@ -28,7 +29,7 @@ public class PermissionManager extends AbstractManager {
 		if (Build.VERSION.SDK_INT >= 23) {
 			try {
 				String[] permissions = { Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.REQUEST_INSTALL_PACKAGES };
-				boxPlayApplication.getAttachedActivity().requestPermissions(permissions, BoxPlayApplication.REQUEST_ID_PERMISSION);
+				boxPlayApplication.getAttachedActivity().requestPermissions(permissions, Constants.REQUEST_ID.REQUEST_ID_PERMISSION);
 			} catch (Exception exception) {
 				Log.e(TAG, "Failed to request permissions", exception);
 			}
