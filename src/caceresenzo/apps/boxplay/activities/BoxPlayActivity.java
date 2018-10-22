@@ -629,7 +629,15 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			
 			/* About */
 			case R.id.drawer_boxplay_other_about: {
-				showFragment(new AboutFragment());
+				AboutFragment aboutFragment;
+				
+				if (actualFragment instanceof AboutFragment) {
+					aboutFragment = ((AboutFragment) actualFragment);
+				} else {
+					aboutFragment = new AboutFragment();
+				}
+				
+				showFragment(aboutFragment);
 				break;
 			}
 			
