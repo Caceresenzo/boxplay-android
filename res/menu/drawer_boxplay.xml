@@ -3,7 +3,8 @@
 
     <item
         android:id="@+id/drawer_boxplay_user"
-        android:title="@string/boxplay_user">
+        android:title="@string/boxplay_user"
+        android:visible="false">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
