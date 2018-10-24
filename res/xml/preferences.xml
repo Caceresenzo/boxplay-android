@@ -24,6 +24,7 @@
 
         <SwitchPreference
             android:defaultValue="true"
+            android:enabled="false"
             android:key="@string/boxplay_other_settings_boxplay_pref_background_service_key"
             android:summary=""
             android:title="@string/boxplay_other_settings_boxplay_pref_background_service_title" />
@@ -33,6 +34,7 @@
         <ListPreference
             android:defaultValue="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_default_value"
             android:dependency="@string/boxplay_other_settings_boxplay_pref_background_service_key"
+            android:enabled="false"
             android:entries="@array/boxplay_other_settings_boxplay_pref_background_service_frequency_entries"
             android:entryValues="@array/boxplay_other_settings_boxplay_pref_background_service_frequency_values"
             android:key="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_key"

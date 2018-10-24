@@ -145,8 +145,8 @@ public class BoxPlayForegroundService extends Service {
 	private void updateNotification(int progress) {
 		Notification notification = createNotification(progress);
 		
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		mNotificationManager.notify(NOTIFICATION_ID, notification);
+		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(NOTIFICATION_ID, notification);
 	}
 	
 	/**

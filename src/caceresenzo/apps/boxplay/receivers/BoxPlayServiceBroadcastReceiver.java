@@ -17,15 +17,15 @@ public class BoxPlayServiceBroadcastReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		ALARM_MANAGER_WRAPPER.context(context);
-		
-		if (!"android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-			ALARM_MANAGER_WRAPPER.cancel(getClass());
-		}
-		
-		BoxPlayForegroundService.startIfNotAlready(context);
-		
-		ALARM_MANAGER_WRAPPER.schedule(BoxPlayApplication.getManagers().getBackgroundServiceManager().getExecutionFrequency(), getClass());
+		// ALARM_MANAGER_WRAPPER.context(context);
+		//
+		// if (!"android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
+		// ALARM_MANAGER_WRAPPER.cancel(getClass());
+		// }
+		//
+		// BoxPlayForegroundService.startIfNotAlready(context);
+		//
+		// ALARM_MANAGER_WRAPPER.schedule(BoxPlayApplication.getManagers().getBackgroundServiceManager().getExecutionFrequency(), getClass());
 	}
 	
 }
