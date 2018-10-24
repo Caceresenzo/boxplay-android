@@ -22,20 +22,22 @@ import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
-import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.libs.comparator.Version;
 import caceresenzo.libs.comparator.VersionType;
 
 public class BoxPlayApplication extends Application {
 	
 	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = true;
+	public static final boolean BUILD_DEBUG = false;
 	
 	/* Constants */
-	private static final Version VERSION = new Version("3.1.6.1", VersionType.BETA);
+	private static final Version VERSION = new Version("3.1.7", VersionType.BETA);
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;
+	
+	/* Statics */
+	private static BaseBoxPlayActivty ATTACHED_ACTIVITY;
 	
 	/* Managers */
 	private static Handler HANDLER = new Handler();
@@ -44,9 +46,6 @@ public class BoxPlayApplication extends Application {
 	
 	/* Preferences */
 	private SharedPreferences sharedPreferences;
-	
-	/* Statics */
-	private static BaseBoxPlayActivty ATTACHED_ACTIVITY;
 	
 	@Override
 	public void onCreate() {
@@ -71,7 +70,7 @@ public class BoxPlayApplication extends Application {
 		
 		MANAGERS.initialize(this);
 		
-		BoxPlayForegroundService.startIfNotAlready(this);
+		// BoxPlayForegroundService.startIfNotAlready(this);
 	}
 	
 	@Override

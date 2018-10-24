@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.7 BETA" changeDate="22/10/2018">
+		<changelogtext>[b]Halloween!!![/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Nouvelle page "A Propos".</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que la page "A Propos" re-construisé si vous cliquiez a nouveau dessus alors qu'elle était déjâ affiché.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Bugs mineurs.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] La page des libraries dans le "A Propos". (pas à jour)</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.6.1 BETA" changeDate="15/09/2018">
 		<changelogtext>[b]Search n' Go PREVIEW 8.1[/b]</changelogtext>
 		<changelogtext>[b]Fixé![/b] Le fournisseur VOIRFILM.pro bloquait la recherche à cause d'un mauvais traitement des données</changelogtext>

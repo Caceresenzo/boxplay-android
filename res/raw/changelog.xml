@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.7 BETA" changeDate="22/10/2018">
+		<changelogtext>[b]Halloween!!![/b]</changelogtext>
+		<changelogtext>[b]Added![/b] New about page.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug that was causing the About page to recreate if you click on it when it already been shown.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Minor bugs.</changelogtext>
+		<changelogtext>[b]Removed![/b] Libraries page in the About section. (no up-to-date)</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.6.1 BETA" changeDate="15/09/2018">
 		<changelogtext>[b]Search n' Go PREVIEW 8.1[/b]</changelogtext>
 		<changelogtext>[b]Fixed![/b] Provider VOIRFILM.pro was sometimes locking search due to bad processing</changelogtext>
