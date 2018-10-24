@@ -1,6 +1,5 @@
 package caceresenzo.apps.boxplay.fragments.other.about;
 
-import android.support.design.widget.TabLayout;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.fragments.BaseTabLayoutFragment;
 
@@ -22,9 +21,9 @@ public class AboutFragment extends BaseTabLayoutFragment {
 		addFragment(new PageAboutAboutFragment(), R.string.boxplay_other_about_about);
 		addFragment(new PageAboutHostingFragment(), R.string.boxplay_other_about_hosting);
 		addFragment(new PageAboutChangeLogFragment(), R.string.boxplay_other_about_changelog);
-		addFragment(new PageAboutLibrariesFragment(), R.string.boxplay_other_about_libraries);
+		// addFragment(new PageAboutLibrariesFragment(), R.string.boxplay_other_about_libraries);
 		
-		setTabMode(TabLayout.MODE_SCROLLABLE);
+		// setTabMode(MODE_SCROLLABLE);
 	}
 	
 	@Override
