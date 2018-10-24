@@ -21,6 +21,16 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
  */
 public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	
+	/* Shortcuts Constants */
+	/**
+	 * See {@link TabLayout#MODE_FIXED}
+	 */
+	public static final int MODE_FIXED = TabLayout.MODE_FIXED;
+	/**
+	 * See {@link TabLayout#MODE_SCROLLABLE}
+	 */
+	public static final int MODE_SCROLLABLE = TabLayout.MODE_SCROLLABLE;
+	
 	/* Constants */
 	public static final int OFFSCREEN_PAGE_LIMIT = 10;
 	
