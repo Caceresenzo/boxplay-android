@@ -122,7 +122,7 @@ public class BoxPlayForegroundService extends Service {
 		builder.setProgress(100, progress, progress == INDETERMINATE_PROGRESS);
 		builder.setOnlyAlertOnce(true);
 		builder.setWhen(System.currentTimeMillis());
-		builder.setSmallIcon(R.mipmap.ic_launcher);
+		builder.setSmallIcon(R.mipmap.icon_launcher);
 		builder.setPriority(NotificationCompat.PRIORITY_MAX);
 		builder.setFullScreenIntent(pendingIntent, true);
 		
@@ -153,7 +153,7 @@ public class BoxPlayForegroundService extends Service {
 	 * Execute tasks
 	 */
 	public void execute() {
-		final ForegroundTask[] tasks = { new SearchAndGoUpdateCheckerTask(), new SearchAndGoUpdateCheckerTask2(), new SearchAndGoUpdateCheckerTask() };
+		final ForegroundTask[] tasks = { new UpdateCheckerTask(), new SearchAndGoUpdateCheckerTask(), new SearchAndGoUpdateCheckerTask2(), new SearchAndGoUpdateCheckerTask() };
 		
 		new WorkerThread() {
 			private Handler handler;
@@ -170,30 +170,33 @@ public class BoxPlayForegroundService extends Service {
 				for (int i = 0; i < tasks.length; i++) {
 					ForegroundTask task = actualForegroundTask = tasks[i];
 					
-					publishUpdate(INDETERMINATE_PROGRESS);
-					
-					task.observe(new WorkerThread.ProgressObserver() {
-						@Override
-						public void onProgress(WorkerThread worker, int max, int value) {
-							publishUpdate((int) MathUtils.pourcent(value, max));
-						}
-					});
-					
-					task.start();
-					
-					try {
-						task.join();
-					} catch (InterruptedException exception) {
-						Log.i(TAG, "Failed to join thread.", exception);
-					}
-					
-					task.removeObserver();
-					
-					/* Not the last */
-					if (i != tasks.length) {
+					if (task != null) { /* Security... */
+						Log.i(TAG, "Executing: " + task.getClass());
+						
 						publishUpdate(INDETERMINATE_PROGRESS);
 						
-						ThreadUtils.sleep(1000L);
+						task.observe(new WorkerThread.ProgressObserver() {
+							@Override
+							public void onProgress(WorkerThread worker, int max, int value) {
+								publishUpdate((int) MathUtils.pourcent(value, max));
+							}
+						});
+						
+						task.start();
+						
+						try {
+							task.join();
+						} catch (InterruptedException exception) {
+							Log.i(TAG, "Failed to join thread.", exception);
+						}
+						
+						task.removeObserver();
+						
+						if (i != tasks.length) { /* Not the last */
+							publishUpdate(INDETERMINATE_PROGRESS);
+							
+							ThreadUtils.sleep(1000L);
+						}
 					}
 				}
 			}
@@ -220,13 +223,28 @@ public class BoxPlayForegroundService extends Service {
 		}.start();
 	}
 	
+	class UpdateCheckerTask extends ForegroundTask {
+		@Override
+		protected void execute() {
+			ThreadUtils.sleep(5000L);
+		}
+		
+		@Override
+		public int getTaskName() {
+			return R.string.boxplay_service_foreground_task_application_update_title;
+		}
+		
+		@Override
+		public int getTaskDescription() {
+			return R.string.boxplay_service_foreground_task_application_update_description;
+		}
+	}
+	
 	class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 		private int maxSecond = 5;
 		
 		@Override
 		protected void execute() {
-			Log.d(TAG, "Executed SearchAndGoUpdateCheckerTask");
-			
 			for (int second = 0; second < maxSecond; second++) {
 				publishProgress(maxSecond, second + 1);
 				
@@ -250,8 +268,6 @@ public class BoxPlayForegroundService extends Service {
 		
 		@Override
 		protected void execute() {
-			Log.d(TAG, "Executed SearchAndGoUpdateCheckerTask2");
-			
 			for (int second = 0; second < maxSecond; second++) {
 				publishProgress(maxSecond, second + 1);
 				

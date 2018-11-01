@@ -14,6 +14,8 @@
     <string name="boxplay_service_foreground_notification_eta">En cours...</string>
     <string name="boxplay_service_foreground_notification_button_cancel">Annuler</string>
     <string name="boxplay_service_foreground_task_actual">Tâche: %s</string>
+    <string name="boxplay_service_foreground_task_application_update_title">Vérification des mise à jours...</string>
+    <string name="boxplay_service_foreground_task_application_update_description">Vérifie si une nouvelle version de BoxPlay est disponible.</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_title">Search n\' Go Abonnement</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions2_title">Search n\' Go Abonnemenet 2</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Va voir sur les site si il y du nouveau contenu sur les items auquels vous vous êtes abonné.</string>
