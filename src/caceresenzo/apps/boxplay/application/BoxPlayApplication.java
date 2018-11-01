@@ -28,7 +28,7 @@ import caceresenzo.libs.comparator.VersionType;
 public class BoxPlayApplication extends Application {
 	
 	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = false;
+	public static final boolean BUILD_DEBUG = true;
 	
 	/* Constants */
 	private static final Version VERSION = new Version("3.1.7", VersionType.BETA);

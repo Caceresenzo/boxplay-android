@@ -1,28 +1,29 @@
 package caceresenzo.apps.boxplay.fragments.culture.searchngo.detailpage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.managers.MyListManager;
 import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalDataType;
@@ -37,18 +38,18 @@ import caceresenzo.libs.boxplay.mylist.MyListable;
  * 
  * @author Enzo CACERES
  */
-public class PageDetailInfoSearchAndGoFragment extends Fragment {
+public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 	private boolean uiReady = false;
 	
-	private List<DetailListItem> items = new ArrayList<>();
+	private List<DetailListItem> items;
 	
-	private RecyclerView recyclerView;
+	private LinearLayout listLinearLayout;
 	private ProgressBar progressBar;
 	
-	private DetailRecyclerViewAdapter adapter;
-	
 	public PageDetailInfoSearchAndGoFragment() {
-		;
+		super();
+		
+		this.items = new ArrayList<>();
 	}
 	
 	@Override
@@ -57,14 +58,10 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		
 		progressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_progressbar_loading);
 		
-		recyclerView = (RecyclerView) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_recyclerview_list);
-		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		recyclerView.setAdapter(adapter = new DetailRecyclerViewAdapter(items));
-		recyclerView.setHasFixedSize(true);
-		recyclerView.setNestedScrollingEnabled(false);
+		listLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_linearlayout_list);
 		
 		progressBar.setVisibility(View.VISIBLE);
-		recyclerView.setVisibility(View.GONE);
+		listLinearLayout.setVisibility(View.GONE);
 		
 		uiReady = true;
 		
@@ -104,7 +101,7 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 					item = new CategoryDetailItem(categories);
 				} else {
 					// item = new StringDetailItem("#LIST/" + additionalResultData.convert());
-					 item = new StringDetailItem(additionalResultData.convert());
+					item = new StringDetailItem(additionalResultData.convert());
 				}
 			} else if (data instanceof RatingResultData) {
 				item = new RatingDetailItem((RatingResultData) data);
@@ -115,12 +112,9 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 			this.items.add(item.dataType(additionalResultData.getType()));
 		}
 		
-		if (adapter != null) {
-			adapter.notifyDataSetChanged();
-			
-			recyclerView.setVisibility(View.VISIBLE);
-			progressBar.setVisibility(View.GONE);
-		}
+		listLinearLayout.setVisibility(View.VISIBLE);
+		progressBar.setVisibility(View.GONE);
+		createNextDetailListItemView(new AsyncLayoutInflater(SearchAndGoDetailActivity.getSearchAndGoDetailActivity()), items.iterator());
 	}
 	
 	/**
@@ -132,135 +126,100 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		return uiReady;
 	}
 	
-	class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRowViewHolder> {
-		private List<DetailListItem> list;
-		
-		public DetailRecyclerViewAdapter(List<DetailListItem> list) {
-			this.list = list;
-		}
-		
-		@Override
-		public DetailRowViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.container_item_culture_searchngo_activitypage_detail_info_holder, viewGroup, false);
-			return new DetailRowViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(DetailRowViewHolder viewHolder, int position) {
-			DetailListItem item = list.get(position);
-			viewHolder.bind(item);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return list.size();
-		}
-	}
-	
-	class DetailRowViewHolder extends RecyclerView.ViewHolder {
-		private ViewHelper viewHelper;
-		
-		private TextView typeTextView;
-		private RecyclerView rowRecyclerView;
-		
-		public DetailRowViewHolder(View itemView) {
-			super(itemView);
+	private void createNextDetailListItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<DetailListItem> itemsIterator) {
+		if (itemsIterator.hasNext()) {
+			final DetailListItem item = itemsIterator.next();
 			
-			viewHelper = BoxPlayApplication.getViewHelper();
-			
-			typeTextView = (TextView) itemView.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_textview_type);
-			rowRecyclerView = (RecyclerView) itemView.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_recyclerview_list);
-			rowRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-		}
-		
-		public void bind(DetailListItem item) {
-			if (item.getDataType() == null) {
-				typeTextView.setVisibility(View.GONE);
-			} else {
-				typeTextView.setText(viewHelper.enumToStringCacheTranslation(item.getDataType()));
+			int layout = R.layout.container_item_culture_searchngo_activitypage_detail_info_holder;
+			if (item.needListToDisplay()) {
+				layout = R.layout.container_item_culture_searchngo_activitypage_detail_info_listholder;
 			}
 			
-			switch (item.getType()) {
-				case DetailListItem.TYPE_IMAGE: { // 0
-					rowRecyclerView.setAdapter(new ImageItemViewAdapter(((ImageDetailItem) item)));
-					break;
-				}
-				
-				case DetailListItem.TYPE_BUTTON_ADD_TO_WATCHLIST: { // 1
-					rowRecyclerView.setAdapter(new AddToWatchListItemViewAdapter((AddToWatchListDetailItem) item));
-					break;
-				}
-				
-				case DetailListItem.TYPE_STRING: { // 2
-					rowRecyclerView.setAdapter(new StringItemViewAdapter(((StringDetailItem) item)));
-					break;
-				}
-				
-				case DetailListItem.TYPE_CATEGORY: { // 3
-					FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
-					flowLayoutManager.setAutoMeasureEnabled(true);
-					rowRecyclerView.setLayoutManager(flowLayoutManager);
+			asyncLayoutInflater.inflate(layout, listLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+				@Override
+				public void onInflateFinished(View view, int resid, ViewGroup parent) {
+					TextView typeTextView = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_textview_type);
 					
-					rowRecyclerView.setAdapter(new CategoryItemViewAdapter(((CategoryDetailItem) item)));
-					break;
-				}
-				
-				case DetailListItem.TYPE_RATING: { // 4
-					// LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-					// linearLayoutManager.setAutoMeasureEnabled(true);
-					// rowRecyclerView.setLayoutManager(linearLayoutManager);
+					if (item.getDataType() == null) {
+						typeTextView.setVisibility(View.GONE);
+					} else {
+						typeTextView.setText(viewHelper.enumToStringCacheTranslation(item.getDataType()));
+					}
 					
-					rowRecyclerView.setAdapter(new RatingItemViewAdapter(((RatingDetailItem) item)));
-					break;
+					final View itemContainerView = view;
+					
+					if (item.getType() == DetailListItem.TYPE_CATEGORY) {
+						RecyclerView recyclerView = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_recyclerview_container);
+						FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
+						flowLayoutManager.setAutoMeasureEnabled(true);
+						
+						recyclerView.setLayoutManager(flowLayoutManager);
+						recyclerView.setAdapter(new CategoryItemViewAdapter(((CategoryDetailItem) item)));
+						recyclerView.setHasFixedSize(true);
+						recyclerView.setNestedScrollingEnabled(false);
+						
+						parent.addView(view);
+						
+						createNextDetailListItemView(asyncLayoutInflater, itemsIterator);
+					} else {
+						FrameLayout containerFrameLayout = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_framelayout_container);
+						
+						asyncLayoutInflater.inflate(item.getLayout(), containerFrameLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+							@Override
+							public void onInflateFinished(View view, int resid, ViewGroup parent) {
+								if (!destroyed) {
+									switch (item.getType()) {
+										case DetailListItem.TYPE_IMAGE: {
+											new ImageItemViewHolder(view).bind((ImageDetailItem) item);
+											break;
+										}
+										
+										case DetailListItem.TYPE_BUTTON_ADD_TO_WATCHLIST: {
+											new AddToWatchListItemViewHolder(view).bind((AddToWatchListDetailItem) item);
+											break;
+										}
+										
+										case DetailListItem.TYPE_STRING: {
+											new StringItemViewHolder(view).bind((StringDetailItem) item);
+											break;
+										}
+										
+										case DetailListItem.TYPE_CATEGORY: {
+											throw new IllegalStateException("The item type for category should have already been processed before.");
+										}
+										
+										case DetailListItem.TYPE_RATING: {
+											new RatingItemViewHolder(view).bind((RatingDetailItem) item);
+											break;
+										}
+										
+										default: {
+											throw new IllegalStateException("Unhandled item type: " + item.getType());
+										}
+									}
+									
+									parent.addView(view);
+									listLinearLayout.addView(itemContainerView);
+									
+									createNextDetailListItemView(asyncLayoutInflater, itemsIterator);
+								}
+							}
+						});
+					}
 				}
-				
-				default: {
-					BoxPlayApplication.getBoxPlayApplication().snackbar(getString(R.string.boxplay_error_fragment_type_unbind, item.getType()), Snackbar.LENGTH_LONG).show();
-					break;
-				}
-			}
+			});
 		}
-		
 	}
 	
-	/*
-	 * ************************************** IMAGE
-	 */
-	class ImageItemViewAdapter extends RecyclerView.Adapter<ImageItemViewHolder> {
-		private ImageDetailItem imageItem;
-		
-		public ImageItemViewAdapter(ImageDetailItem imageItem) {
-			this.imageItem = imageItem;
-		}
-		
-		@Override
-		public ImageItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_culture_searchandgo_activitypage_detail_info_image, viewGroup, false);
-			return new ImageItemViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(ImageItemViewHolder viewHolder, int position) {
-			viewHolder.bind(imageItem);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return 1;
-		}
-	}
-	
-	class ImageItemViewHolder extends RecyclerView.ViewHolder {
+	class ImageItemViewHolder {
 		private ImageView contentImageView;
 		
-		public ImageItemViewHolder(View itemView) {
-			super(itemView);
-			
-			contentImageView = (ImageView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_image_imageview_container);
+		public ImageItemViewHolder(View view) {
+			contentImageView = (ImageView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_image_imageview_container);
 		}
 		
 		public void bind(ImageDetailItem imageItem) {
-			BoxPlayApplication.getViewHelper().downloadToImageView(contentImageView, imageItem.getUrl());
+			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl());
 		}
 	}
 	
@@ -279,46 +238,22 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		public int getType() {
 			return TYPE_IMAGE;
 		}
-	}
-	
-	/*
-	 * ************************************** ADD TO WATCH LIST
-	 */
-	class AddToWatchListItemViewAdapter extends RecyclerView.Adapter<AddToWatchListItemViewHolder> {
-		private AddToWatchListDetailItem addToWatchListItem;
-		
-		public AddToWatchListItemViewAdapter(AddToWatchListDetailItem addToWatchListItem) {
-			this.addToWatchListItem = addToWatchListItem;
-		}
 		
 		@Override
-		public AddToWatchListItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_culture_searchandgo_activitypage_detail_info_add_to_wachlist, viewGroup, false);
-			return new AddToWatchListItemViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(AddToWatchListItemViewHolder viewHolder, int position) {
-			viewHolder.bind(addToWatchListItem);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return 1;
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_image;
 		}
 	}
 	
-	class AddToWatchListItemViewHolder extends RecyclerView.ViewHolder {
+	class AddToWatchListItemViewHolder {
 		private String addString, removeString;
 		private Button addToListButton;
 		
-		public AddToWatchListItemViewHolder(View itemView) {
-			super(itemView);
-			
+		public AddToWatchListItemViewHolder(View view) {
 			addString = getString(R.string.boxplay_culture_searchngo_detail_info_button_add_to_watchlist);
 			removeString = getString(R.string.boxplay_culture_searchngo_detail_info_button_remove_to_watchlist);
 			
-			addToListButton = (Button) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_add_to_watchlist_button_add_to_list);
+			addToListButton = (Button) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_add_to_watchlist_button_add_to_list);
 		}
 		
 		public void bind(final AddToWatchListDetailItem item) {
@@ -373,42 +308,18 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		public int getType() {
 			return TYPE_BUTTON_ADD_TO_WATCHLIST;
 		}
-	}
-	
-	/*
-	 * ************************************** STRING
-	 */
-	class StringItemViewAdapter extends RecyclerView.Adapter<StringItemViewHolder> {
-		private StringDetailItem stringItem;
-		
-		public StringItemViewAdapter(StringDetailItem stringItem) {
-			this.stringItem = stringItem;
-		}
 		
 		@Override
-		public StringItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_culture_searchandgo_activitypage_detail_info_string, viewGroup, false);
-			return new StringItemViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(StringItemViewHolder viewHolder, int position) {
-			viewHolder.bind(stringItem);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return 1;
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_add_to_wachlist;
 		}
 	}
 	
-	class StringItemViewHolder extends RecyclerView.ViewHolder {
+	class StringItemViewHolder {
 		private TextView contentTextView;
 		
-		public StringItemViewHolder(View itemView) {
-			super(itemView);
-			
-			contentTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_string_textview_container);
+		public StringItemViewHolder(View view) {
+			contentTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_string_textview_container);
 		}
 		
 		public void bind(StringDetailItem stringItem) {
@@ -431,11 +342,13 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		public int getType() {
 			return TYPE_STRING;
 		}
+		
+		@Override
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_string;
+		}
 	}
 	
-	/*
-	 * ************************************** CATEGORY (GENDER)
-	 */
 	class CategoryItemViewAdapter extends RecyclerView.Adapter<CategoryItemViewHolder> {
 		private List<CategoryResultData> categories;
 		
@@ -489,44 +402,25 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		public int getType() {
 			return TYPE_CATEGORY;
 		}
-	}
-	
-	/*
-	 * ************************************** RATING
-	 */
-	class RatingItemViewAdapter extends RecyclerView.Adapter<RatingItemViewHolder> {
-		private RatingDetailItem ratingItem;
 		
-		public RatingItemViewAdapter(RatingDetailItem ratingItem) {
-			this.ratingItem = ratingItem;
+		@Override
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_category;
 		}
 		
 		@Override
-		public RatingItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_culture_searchandgo_activitypage_detail_info_rating, viewGroup, false);
-			return new RatingItemViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(RatingItemViewHolder viewHolder, int position) {
-			viewHolder.bind(ratingItem);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return 1;
+		public boolean needListToDisplay() {
+			return true;
 		}
 	}
 	
-	class RatingItemViewHolder extends RecyclerView.ViewHolder {
+	class RatingItemViewHolder {
 		private RatingBar starRatingBar;
 		private TextView stringTextView;
 		
-		public RatingItemViewHolder(View itemView) {
-			super(itemView);
-			
-			starRatingBar = (RatingBar) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_rating_ratingbar_bar);
-			stringTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_rating_textview_string);
+		public RatingItemViewHolder(View view) {
+			starRatingBar = (RatingBar) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_rating_ratingbar_bar);
+			stringTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_rating_textview_string);
 		}
 		
 		public void bind(RatingDetailItem ratingItem) {
@@ -556,9 +450,14 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		public int getType() {
 			return TYPE_RATING;
 		}
+		
+		@Override
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_rating;
+		}
 	}
 	
-	abstract static class DetailListItem {
+	abstract class DetailListItem {
 		private AdditionalDataType dataType;
 		
 		public static final int TYPE_IMAGE = 0;
@@ -568,6 +467,12 @@ public class PageDetailInfoSearchAndGoFragment extends Fragment {
 		public static final int TYPE_RATING = 4;
 		
 		public abstract int getType();
+		
+		public abstract int getLayout();
+		
+		public boolean needListToDisplay() {
+			return false;
+		}
 		
 		public AdditionalDataType getDataType() {
 			return dataType;

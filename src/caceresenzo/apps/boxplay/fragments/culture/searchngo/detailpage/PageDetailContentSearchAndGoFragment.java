@@ -1,23 +1,22 @@
 package caceresenzo.apps.boxplay.fragments.culture.searchngo.detailpage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import caceresenzo.android.libs.dialog.DialogUtils;
@@ -27,8 +26,7 @@ import caceresenzo.apps.boxplay.activities.MangaChapterReaderActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
-import caceresenzo.apps.boxplay.managers.DebugManager;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor;
@@ -51,7 +49,7 @@ import caceresenzo.libs.thread.implementations.WorkerThread;
  * 
  * @author Enzo CACERES
  */
-public class PageDetailContentSearchAndGoFragment extends Fragment {
+public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	
 	/* Tag */
 	public static final String TAG = PageDetailContentSearchAndGoFragment.class.getSimpleName();
@@ -59,12 +57,6 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	/* Constants */
 	public static final String ACTION_STREAMING = "action.streaming";
 	public static final String ACTION_DOWNLOAD = "action.download";
-	
-	/* Managers */
-	private BoxPlayApplication boxPlayApplication;
-	private Handler handler;
-	private ViewHelper viewHelper;
-	private DebugManager debugManager;
 	
 	/* Ui */
 	private boolean uiReady = false;
@@ -74,10 +66,8 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	private List<AdditionalResultData> contents = new ArrayList<>();
 	
 	/* Views */
-	private RecyclerView recyclerView;
+	private LinearLayout listLinearLayout;
 	private ProgressBar progressBar;
-	
-	private ContentViewAdapter adapter;
 	
 	/* Dialog */
 	private WorkingProgressDialog progressDialog;
@@ -88,10 +78,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	
 	/* Constructor */
 	public PageDetailContentSearchAndGoFragment() {
-		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
-		this.handler = BoxPlayApplication.getHandler();
-		this.viewHelper = BoxPlayApplication.getViewHelper();
-		this.debugManager = BoxPlayApplication.getManagers().getDebugManager();
+		super();
 		
 		this.dialogCreator = new DialogCreator();
 		
@@ -106,14 +93,10 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		
 		progressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_progressbar_loading);
 		
-		recyclerView = (RecyclerView) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_recyclerview_list);
-		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		recyclerView.setAdapter(adapter = new ContentViewAdapter(contents));
-		recyclerView.setHasFixedSize(true);
-		recyclerView.setNestedScrollingEnabled(false);
+		listLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_linearlayout_list);
 		
 		progressBar.setVisibility(View.VISIBLE);
-		recyclerView.setVisibility(View.GONE);
+		listLinearLayout.setVisibility(View.GONE);
 		
 		uiReady = true;
 		
@@ -126,11 +109,26 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 		this.contents.clear();
 		this.contents.addAll(additionals);
 		
-		if (adapter != null) {
-			adapter.notifyDataSetChanged();
-			
-			recyclerView.setVisibility(View.VISIBLE);
-			progressBar.setVisibility(View.GONE);
+		listLinearLayout.setVisibility(View.VISIBLE);
+		progressBar.setVisibility(View.GONE);
+		
+		createNextContentItemView(new AsyncLayoutInflater(SearchAndGoDetailActivity.getSearchAndGoDetailActivity()), additionals.iterator());
+	}
+	
+	private void createNextContentItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<AdditionalResultData> contentIterator) {
+		if (contentIterator.hasNext()) {
+			asyncLayoutInflater.inflate(R.layout.item_culture_searchandgo_activitypage_detail_content, listLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+				@Override
+				public void onInflateFinished(View view, int resid, ViewGroup parent) {
+					if (!destroyed) {
+						new ContentViewHolder(view).bind(contentIterator.next());
+						
+						parent.addView(view);
+						
+						createNextContentItemView(asyncLayoutInflater, contentIterator);
+					}
+				}
+			});
 		}
 	}
 	
@@ -144,56 +142,27 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 	}
 	
 	/**
-	 * View adapter for content list item
-	 * 
-	 * @author Enzo CACERES
-	 */
-	class ContentViewAdapter extends RecyclerView.Adapter<ContentViewHolder> {
-		private List<AdditionalResultData> list;
-		
-		public ContentViewAdapter(List<AdditionalResultData> list) {
-			this.list = list;
-		}
-		
-		@Override
-		public ContentViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_culture_searchandgo_activitypage_detail_content, viewGroup, false);
-			return new ContentViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(ContentViewHolder viewHolder, int position) {
-			AdditionalResultData item = list.get(position);
-			viewHolder.bind(item);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return list.size();
-		}
-	}
-	
-	/**
 	 * View holder for content item
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class ContentViewHolder extends RecyclerView.ViewHolder {
+	class ContentViewHolder {
+		
+		/* Views */
 		private View view;
 		private TextView typeTextView, disabledTextView, contentTextView;
 		private ImageView iconImageView, downloadImageView;
 		
-		public ContentViewHolder(View itemView) {
-			super(itemView);
+		/* Constructor */
+		public ContentViewHolder(View view) {
+			this.view = view;
 			
-			view = itemView;
+			typeTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_type);
+			disabledTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_disabled);
 			
-			typeTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_type);
-			disabledTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_disabled);
-			
-			iconImageView = (ImageView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_imageview_icon);
-			contentTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_content);
-			downloadImageView = (ImageView) itemView.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_imageview_download);
+			iconImageView = (ImageView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_imageview_icon);
+			contentTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_content);
+			downloadImageView = (ImageView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_imageview_download);
 		}
 		
 		public void bind(final AdditionalResultData additionalData) {
@@ -460,7 +429,7 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 				BoxPlayApplication.getBoxPlayApplication().toast(R.string.boxplay_culture_searchngo_extractor_error_failed_to_extract, exception.getLocalizedMessage());
 			}
 			
-			if (debugManager.openLogsAtExtractorEnd() && extractor != null) {
+			if (managers.getDebugManager().openLogsAtExtractorEnd() && extractor != null) {
 				DialogUtils.showDialog(BoxPlayApplication.getHandler(), getContext(), "Extraction logs", extractor.getLogger().getContent());
 			}
 		}

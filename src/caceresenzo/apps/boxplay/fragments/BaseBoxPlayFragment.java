@@ -22,12 +22,22 @@ public class BaseBoxPlayFragment extends Fragment {
 	protected ViewHelper viewHelper;
 	protected XManagers managers;
 	
+	/* Variables */
+	protected boolean ready, destroyed;
+	
 	/* Constructor */
 	public BaseBoxPlayFragment() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.handler = BoxPlayApplication.getHandler();
 		this.viewHelper = BoxPlayApplication.getViewHelper();
 		this.managers = BoxPlayApplication.getManagers();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+		destroyed = true;
 	}
 	
 }
