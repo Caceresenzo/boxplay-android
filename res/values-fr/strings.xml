@@ -494,10 +494,10 @@
     <string name="boxplay_other_about_about_team_format_type_application">Application</string>
     <string name="boxplay_other_about_about_team_format_type_api">API</string>
     <string name="boxplay_other_about_about_team_format_type_ui">Interface</string>
-    <string name="boxplay_other_about_about_team_format_type_icons">Icons</string>
+    <string name="boxplay_other_about_about_team_format_type_icons">Icônes</string>
     <string name="boxplay_other_about_about_team_format_type_hosting">Hébergement</string>
+    <string name="boxplay_other_about_about_team_format_type_creative_assistant">Assistant créatif</string>
     <string name="boxplay_other_about_about_team_format_type_eclipse">Eclipse fix</string>
-    <string name="boxplay_other_about_about_team_format_type_because">parce que :/</string>
     <string name="boxplay_other_about_about_team_format_separator">,%s</string>
     <!--  -->
     <string name="boxplay_other_about_hosting">Hébergement</string>

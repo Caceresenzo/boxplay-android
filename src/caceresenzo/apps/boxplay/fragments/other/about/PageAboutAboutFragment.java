@@ -53,8 +53,8 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 		String typeUi = getString(R.string.boxplay_other_about_about_team_format_type_ui);
 		String typeIcons = getString(R.string.boxplay_other_about_about_team_format_type_icons);
 		String typeHosting = getString(R.string.boxplay_other_about_about_team_format_type_hosting);
+		String typeCreativeAssistant = getString(R.string.boxplay_other_about_about_team_format_type_creative_assistant);
 		String typeEclipseFix = getString(R.string.boxplay_other_about_about_team_format_type_eclipse);
-		String typeBecause = getString(R.string.boxplay_other_about_about_team_format_type_because);
 		
 		addCard(new AboutCard.Builder(context) //
 				.setTitle(R.string.boxplay_other_about_about_team) //
@@ -93,11 +93,11 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 						.setIcon(R.drawable.profile_valgrebon) //
 						.build()) //
 				.addItem(new PersonAboutItem.Builder(context) //
-						.setTitle("Jérémie BERAUD") //
+						.setTitle("@Paradox") //
 						.setSubtitle(new StringBuilder() //
-								.append(typeBecause) //
+								.append(typeCreativeAssistant) //
 								.toString()) //
-						.setIcon(R.drawable.profile_jeremie_beraud) //
+						.setIcon(R.drawable.profile_paradox) //
 						.build()) //
 				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/dandar3") //
 						.setTitle("@dandar3") //
