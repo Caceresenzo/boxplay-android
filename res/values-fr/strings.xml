@@ -211,8 +211,8 @@
     <string name="boxplay_store_video_activity_episode_time_unavailable">Non disponible</string>
     <string name="boxplay_store_video_activity_vlc_title" formatted="false">[%s] %s, saison %s, %s %s</string>
     <string name="boxplay_store_video_activity_vlc_title_movie" formatted="false">[%s] %s</string>
-    <!-- <string name="boxplay_store_video_action_mark_as_watched" formatted="true">You completed more than 80\% of the video</string> -->
-    <!-- <string name="boxplay_store_video_action_mark_as_watched_ok">Done watching?</string> -->
+    <string name="boxplay_store_video_action_mark_as_watched" formatted="true">Vous avez vu plus de 80\% de la video</string>
+    <string name="boxplay_store_video_action_mark_as_watched_ok">Episode terminé?</string>
     <!-- Button -->
     <string name="boxplay_store_video_button_play">LECTURE</string>
     <string name="boxplay_store_video_button_download">TÉLÉCHARGER</string>

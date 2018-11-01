@@ -3,6 +3,7 @@ package caceresenzo.apps.boxplay.activities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -22,13 +23,11 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,6 +52,7 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.managers.ServerManager;
 import caceresenzo.apps.boxplay.managers.TutorialManager.Tutorialable;
 import caceresenzo.apps.boxplay.managers.VideoManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
@@ -61,10 +61,14 @@ import caceresenzo.libs.boxplay.models.store.video.VideoFile;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.models.store.video.VideoSeason;
 
+@SuppressWarnings("deprecation")
 public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	
 	/* Tag */
 	public static final String TAG = VideoActivity.class.getSimpleName();
+	
+	/* Constants */
+	public static final int SNACKBAR_DURATION_DONE_WATCHING_PROMPT = 15000;
 	
 	/* Bundle Keys */
 	public static final String BUNDLE_KEY_VIDEO_GROUP_ITEM = "video_group_item";
@@ -72,12 +76,23 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	public static final String BUNDLE_KEY_VLC_EXTRA_POSITION = "extra_position";
 	public static final String BUNDLE_KEY_VLC_EXTRA_DURATION = "extra_duration";
 	
+	/* Tutorial Path Ids */
+	public static final int TUTORIAL_PROGRESS_ARROW = 0;
+	public static final int TUTORIAL_PROGRESS_WATCHING_LIST = 1;
+	public static final int TUTORIAL_PROGRESS_SEASON_SELECTOR = 2;
+	public static final int TUTORIAL_PROGRESS_WATCHED_SEASON = 3;
+	public static final int TUTORIAL_PROGRESS_EPISODES = 4;
+	
 	/* Instance */
 	private static VideoActivity INSTANCE;
 	
+	/* Managers */
+	private VideoManager videoManager;
+	private ServerManager serverManager;
+	
 	/* Element */
 	private VideoGroup videoGroup;
-	private VideoSeason videoSeason;
+	private VideoSeason selectedVideoSeason;
 	
 	/* Views */
 	private AppBarLayout appBarLayout;
@@ -86,26 +101,28 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	private CollapsingToolbarLayout collapsingToolbarLayout;
 	private NestedScrollView nestedScrollView;
 	private FloatingActionButton floatingActionButton;
-	private RecyclerView videoRecyclerView;
+	private LinearLayout videosLinearLayout;
 	
 	private ImageView videoImageView;
 	private TextView seasonTextView;
 	private Spinner seasonSpinner;
 	private CheckBox seasonCheckBox;
 	
-	/* Adapter */
-	private VideoListViewAdapter videoListViewAdapter;
-	
-	/* Variables*/
+	/* Variables */
 	private List<VideoItem> videoItems;
+	private List<VideoItemView> videoItemViews;
 	
-	private VideoItemViewHolder lastHolder;
+	private VideoItemView lastHolder;
 	
 	/* Constructor */
 	public VideoActivity() {
 		super();
 		
-		videoItems = new ArrayList<>();
+		this.videoManager = managers.getVideoManager();
+		this.serverManager = managers.getServerManager();
+		
+		this.videoItems = new ArrayList<>();
+		this.videoItemViews = new ArrayList<>();
 	}
 	
 	@Override
@@ -130,9 +147,9 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		
 		initializeViews();
 		
-		changeSeason(videoSeason = videoGroup.getSeasons().get(0));
+		changeSeason(videoGroup.getSeasons().get(0));
 		
-		BoxPlayApplication.getManagers().getTutorialManager().executeActivityTutorial(this);
+		managers.getTutorialManager().executeActivityTutorial(this);
 	}
 	
 	@Override
@@ -152,7 +169,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-			case Constants.REQUEST_ID.REQUEST_ID_VLC_VIDEO:
+			case Constants.REQUEST_ID.REQUEST_ID_VLC_VIDEO: {
 				if (data == null || data.getExtras() == null) {
 					Snackbar.make(coordinatorLayout, R.string.boxplay_error_video_activity_vlc_error, Snackbar.LENGTH_LONG).show();
 					return;
@@ -169,7 +186,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 					return;
 				}
 				
-				VideoManager videoManager = BoxPlayApplication.getManagers().getVideoManager();
 				VideoFile video = videoManager.getLastVideoFileOpen();
 				
 				if (video == null) {
@@ -182,21 +198,32 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				
 				if (lastHolder != null && lastHolder.bindVideoItem.videoFile == video) {
 					lastHolder.updateVideoFileItemInformations(video, false);
-					lastHolder.bindVideoItem.expanded = true;
-					lastHolder.expandableLayout.setExpanded(true);
+					
+					lastHolder.getBindVideoItem().setExpanded(true);
+					lastHolder.getExpandableLayout().setExpanded(true);
 				}
 				
-				if (!videoGroup.hasSeason()) { // Is movie
-					lastHolder = videoItemViewHolderInstances.get(0);
+				if (videoGroup.isMovie()) {
+					lastHolder = videoItemViews.get(0);
 					lastHolder.updateVideoFileItemInformations(video, false);
-					videoListViewAdapter.notifyItemChanged(0);
 				}
 				
 				videoManager.callConfigurator(video);
 				break;
+			}
 		}
 	}
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		
+		INSTANCE = null;
+	}
+	
+	/**
+	 * Initialize views
+	 */
 	private void initializeViews() {
 		coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_video_coordinatorlayout_container);
 		
@@ -213,11 +240,9 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		seasonSpinner = (Spinner) findViewById(R.id.activity_video_spinner_season_selector);
 		seasonCheckBox = (CheckBox) findViewById(R.id.activity_video_checkbox_season_watched);
 		
-		videoRecyclerView = (RecyclerView) this.findViewById(R.id.activity_video_recyclerview_videos);
+		videosLinearLayout = (LinearLayout) findViewById(R.id.activity_video_linearlayout_videos);
 		
-		/*
-		 * Code
-		 */
+		/* Code */
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		
@@ -237,21 +262,21 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				
 				videoGroup.setAsWatching(!videoGroup.isWatching());
 				
-				BoxPlayApplication.getManagers().getVideoManager().callConfigurator(videoGroup);
+				videoManager.callConfigurator(videoGroup);
 			}
 		});
 		floatingActionButton.setImageResource(videoGroup.isWatching() ? R.drawable.icon_eye_close_96px : R.drawable.icon_eye_open_96px);
 		
-		BoxPlayApplication.getViewHelper().downloadToImageView(videoImageView, videoGroup.getGroupImageUrl());
+		viewHelper.downloadToImageView(videoImageView, videoGroup.getGroupImageUrl());
 		
 		seasonCheckBox.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				boolean checked = seasonCheckBox.isChecked();
 				
-				videoSeason.asWatched(checked);
+				selectedVideoSeason.asWatched(checked);
 				
-				BoxPlayApplication.getManagers().getVideoManager().callConfigurator(videoSeason);
+				videoManager.callConfigurator(selectedVideoSeason);
 			}
 		});
 		
@@ -267,61 +292,120 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 					if (videoGroup.hasSeason()) {
-						videoSeason = videoGroup.getSeasons().get(position);
-						
-						seasonTextView.setText(getString(R.string.boxplay_store_video_season_selector_result, videoSeason.getTitle()));
-						changeSeason(videoSeason);
+						changeSeason(videoGroup.getSeasons().get(position));
 					}
 				}
 			});
 		} else {
 			seasonTextView.setText(videoGroup.getTitle());
 		}
-		ArrayAdapter<VideoSeason> dataAdapter = new SeasonSpinnerAdapter(this, videoGroup.getSeasons());
-		seasonSpinner.setAdapter(dataAdapter);
 		
-		videoRecyclerView.setAdapter(videoListViewAdapter = new VideoListViewAdapter(videoItems));
-		videoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-		videoRecyclerView.setHasFixedSize(false);
-		videoRecyclerView.setNestedScrollingEnabled(false);
+		SeasonSpinnerAdapter seasonSpinnerAdapter = new SeasonSpinnerAdapter(this, videoGroup.getSeasons());
+		seasonSpinner.setAdapter(seasonSpinnerAdapter);
 	}
 	
+	/**
+	 * Only change season with this function, if you change the {@link #selectedVideoSeason} by yourself, the list update will not be done.
+	 */
 	private void changeSeason(VideoSeason videoSeason) {
-		this.videoSeason = videoSeason;
-		
-		seasonCheckBox.setChecked(videoSeason.isWatched());
-		
-		videoItems.clear();
-		for (VideoFile video : videoSeason.getVideos()) {
-			videoItems.add(new VideoItem(video));
+		if (videoSeason != this.selectedVideoSeason) {
+			this.selectedVideoSeason = videoSeason;
+			
+			seasonTextView.setText(getString(R.string.boxplay_store_video_season_selector_result, selectedVideoSeason.getTitle()));
+			seasonCheckBox.setChecked(videoSeason.isWatched());
+			
+			videosLinearLayout.removeAllViews();
+			videoItems.clear();
+			for (VideoFile video : videoSeason.getVideos()) {
+				videoItems.add(new VideoItem(video));
+			}
+			
+			createNextVideoView(new AsyncLayoutInflater(this), new ArrayList<>(videoItems).iterator(), videoSeason, 0);
+			
+			String imageUrl = videoSeason.getImageHdUrl();
+			if (imageUrl == null) {
+				imageUrl = videoSeason.getImageUrl();
+			}
+			
+			if (imageUrl != null) {
+				viewHelper.downloadToImageView(videoImageView, imageUrl);
+			}
+			
+			appBarLayout.setExpanded(true, true);
+			nestedScrollView.getParent().requestChildFocus(nestedScrollView, nestedScrollView);
 		}
-		videoListViewAdapter.notifyDataSetChanged();
-		
-		String imageUrl = videoSeason.getImageHdUrl();
-		if (imageUrl == null) {
-			imageUrl = videoSeason.getImageUrl();
-		}
-		
-		if (imageUrl != null) {
-			BoxPlayApplication.getViewHelper().downloadToImageView(videoImageView, imageUrl);
-		}
-		
-		appBarLayout.setExpanded(true, true);
-		nestedScrollView.getParent().requestChildFocus(nestedScrollView, nestedScrollView);
 	}
 	
+	/**
+	 * "Recursive" function to create as much view as needed one by one added to the main {@link #videosLinearLayout}.<br>
+	 * This function will not continue if the season has been changed while views are populatings.<br>
+	 * All of the information update is done by the {@link VideoItemView}.<br>
+	 * 
+	 * @param asyncLayoutInflater
+	 *            An {@link AsyncLayoutInflater} layout instance that will be constantly used
+	 * @param videoIterator
+	 *            VideoItem's list iterator to go over all instances
+	 * @param sourceSeason
+	 *            Season selected when the populating begin, will stop if this instance if not the same as {@link #selectedVideoSeason}
+	 * @param position
+	 *            Incremented position (+1 every "recursive" call)
+	 */
+	private void createNextVideoView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<VideoItem> videoIterator, final VideoSeason sourceSeason, final int position) {
+		if (videoIterator.hasNext()) {
+			asyncLayoutInflater.inflate(R.layout.item_video_layout, videosLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+				@Override
+				public void onInflateFinished(View view, int resid, ViewGroup parent) {
+					if (sourceSeason == selectedVideoSeason) {
+						new VideoItemView(view, position).bind(videoIterator.next());
+						
+						parent.addView(view);
+						
+						createNextVideoView(asyncLayoutInflater, videoIterator, sourceSeason, position + 1);
+					}
+				}
+			});
+		}
+	}
+	
+	/**
+	 * Simple {@link ArrayAdapter} to be used with a {@link Spinner}.<br>
+	 * This implementations will handle all work do display season and ask a change if the user want it.
+	 * 
+	 * @author Enzo CACERES
+	 */
 	class SeasonSpinnerAdapter extends ArrayAdapter<VideoSeason> {
+		
+		/* Constructor */
 		public SeasonSpinnerAdapter(Context context, List<VideoSeason> objects) {
 			super(context, android.R.layout.simple_spinner_item, objects);
 		}
 		
-		@SuppressWarnings("deprecation")
+		@Override
+		public View getView(int position, View view, ViewGroup parent) {
+			return createTextView(position, true, true);
+		};
+		
+		@Override
+		public View getDropDownView(int position, View convertView, ViewGroup parent) {
+			return createTextView(position, true, false);
+		}
+		
+		/**
+		 * Create a {@link TextView} that can display a {@link VideoSeason} by its position
+		 * 
+		 * @param position
+		 *            Season position
+		 * @param useColor
+		 *            If you want to use text color
+		 * @param addDropdownArrow
+		 *            If you want to add a dropdown arrow near the text
+		 * @return A {@link TextView} in a {@link LinearLayout} for better padding uses
+		 */
 		private LinearLayout createTextView(int position, boolean useColor, boolean addDropdownArrow) {
 			TextView textView = new TextView(getContext());
 			textView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 			
-			int[] attrs = new int[] { R.attr.selectableItemBackground };
-			TypedArray typedArray = getContext().obtainStyledAttributes(attrs);
+			TypedArray typedArray = getContext().obtainStyledAttributes(new int[] { R.attr.selectableItemBackground });
 			int backgroundResource = typedArray.getResourceId(0, 0);
 			textView.setBackgroundResource(backgroundResource);
 			typedArray.recycle();
@@ -349,145 +433,93 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				targetColorId = R.color.colorAccent;
 			}
 			
-			textView.setTextColor(VideoActivity.this.getResources().getColor(targetColorId));
+			textView.setTextColor(getResources().getColor(targetColorId));
 			
 			if (Build.VERSION.SDK_INT >= 23) {
-				textView.setCompoundDrawableTintList(VideoActivity.this.getResources().getColorStateList(targetColorId));
+				textView.setCompoundDrawableTintList(getResources().getColorStateList(targetColorId));
 			}
 			
 			LinearLayout linearLayout = new LinearLayout(getContext());
 			linearLayout.addView(textView);
-			linearLayout.setBackgroundColor(VideoActivity.this.getResources().getColor(R.color.colorPrimary));
+			linearLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 			return linearLayout;
 		}
-		
-		@Override
-		public View getView(int position, View view, ViewGroup parent) {
-			return createTextView(position, true, true);
-		};
-		
-		@Override
-		public View getDropDownView(int position, View convertView, ViewGroup parent) {
-			return createTextView(position, true, false);
-		}
 	}
 	
-	class VideoListViewAdapter extends RecyclerView.Adapter<VideoItemViewHolder> {
-		private List<VideoItem> list;
+	/**
+	 * {@link VideoItem} handler to update information in a generated {@link View}
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class VideoItemView {
 		
-		public VideoListViewAdapter(List<VideoItem> list) {
-			this.list = list;
-		}
-		
-		@Override
-		public VideoItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_video_layout, viewGroup, false);
-			return new VideoItemViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(VideoItemViewHolder viewHolder, int position) {
-			VideoItem item = list.get(position);
-			viewHolder.bind(item);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return list.size();
-		}
-	}
-	
-	public static List<VideoItemViewHolder> videoItemViewHolderInstances = new ArrayList<VideoItemViewHolder>();
-	
-	class VideoItemViewHolder extends RecyclerView.ViewHolder {
-		
-		private OnClickListener viewOnClickListener = new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				VideoItemViewHolder holder = (VideoItemViewHolder) view.getTag();
-				
-				/**
-				 * @Movie
-				 */
-				if (!videoGroup.hasSeason()) {
-					holder.expandableLayout.setExpanded(true, false);
-					holder.bindVideoItem.expanded = true;
-					return;
-				}
-				
-				/**
-				 * @Multiple
-				 */
-				resetExpensableLayout();
-				boolean result = holder.expandableLayout.toggleExpansion();
-				VideoItem info = videoItems.get(holder.position);
-				info.expanded = result ? !info.expanded : info.expanded;
-				
-				lastHolder = holder;
-			}
-		};
-		
-		public void resetExpensableLayout() {
-			for (VideoItemViewHolder holder : videoItemViewHolderInstances) {
-				holder.expandableLayout.setExpanded(false, true);
-				holder.bindVideoItem.expanded = false;
-			}
-		}
-		
-		private ExpandableLayout.OnExpandListener expandableLayoutItemOnExpandListener = new ExpandableLayout.OnExpandListener() {
-			@Override
-			public void onToggle(ExpandableLayout view, View child, boolean isExpanded) {
-				;
-			}
-			
-			@Override
-			public void onExpandOffset(ExpandableLayout view, View child, float offset, boolean isExpanding) {
-				;
-			}
-		};
-		
-		public int position;
+		/* Views */
 		public ExpandableLayout expandableLayout;
 		public View relativeLayout;
 		public TextView episodeTextView, timeTextView, languageTextView;
 		public ImageView hostIconImageView;
 		public SeekBar progressSeekBar;
 		public Button playButton, downloadButton, watchButton, shareButton, shareUrlButton;
+		
+		/* Information holder */
 		public VideoItem bindVideoItem;
 		
-		public VideoItemViewHolder(View itemView) {
-			super(itemView);
-			videoItemViewHolderInstances.add(this);
+		/* Variables */
+		public int position;
+		
+		/* Listeners */
+		private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				VideoItemView holder = (VideoItemView) view.getTag();
+				
+				if (videoGroup.isMovie()) {
+					holder.getExpandableLayout().setExpanded(true, false);
+					holder.getBindVideoItem().setExpanded(true);
+				} else {
+					resetExpendableLayout();
+					
+					holder.getExpandableLayout().toggleExpansion();
+				}
+				
+				lastHolder = holder;
+			}
+		};
+		
+		/* Constructor */
+		public VideoItemView(View view, int position) {
+			videoItemViews.add(this);
 			
-			// Parent
-			expandableLayout = (ExpandableLayout) itemView.findViewById(R.id.item_video_layout_expandablelayout_item_container);
-			relativeLayout = (View) itemView.findViewById(R.id.item_video_layout_relativelayout_parent_container);
-			episodeTextView = (TextView) itemView.findViewById(R.id.item_video_layout_textview_episode_title);
-			progressSeekBar = (SeekBar) itemView.findViewById(R.id.item_video_layout_seekbar_saved_progress);
-			timeTextView = (TextView) itemView.findViewById(R.id.item_video_layout_textview_saved_time);
-			languageTextView = (TextView) itemView.findViewById(R.id.item_video_layout_textview_language);
-			hostIconImageView = (ImageView) itemView.findViewById(R.id.item_video_layout_imageview_host_icon);
+			this.position = position;
 			
-			// Child
-			playButton = (Button) itemView.findViewById(R.id.item_video_layout_item_button_play);
-			downloadButton = (Button) itemView.findViewById(R.id.item_video_layout_item_button_download);
-			watchButton = (Button) itemView.findViewById(R.id.item_video_layout_item_button_watch);
-			shareButton = (Button) itemView.findViewById(R.id.item_video_layout_item_button_share);
-			shareUrlButton = (Button) itemView.findViewById(R.id.item_video_layout_item_button_share_url);
+			/* Parent */
+			this.expandableLayout = (ExpandableLayout) view.findViewById(R.id.item_video_layout_expandablelayout_item_container);
+			this.relativeLayout = (View) view.findViewById(R.id.item_video_layout_relativelayout_parent_container);
+			this.episodeTextView = (TextView) view.findViewById(R.id.item_video_layout_textview_episode_title);
+			this.progressSeekBar = (SeekBar) view.findViewById(R.id.item_video_layout_seekbar_saved_progress);
+			this.timeTextView = (TextView) view.findViewById(R.id.item_video_layout_textview_saved_time);
+			this.languageTextView = (TextView) view.findViewById(R.id.item_video_layout_textview_language);
+			this.hostIconImageView = (ImageView) view.findViewById(R.id.item_video_layout_imageview_host_icon);
+			
+			/* Child */
+			this.playButton = (Button) view.findViewById(R.id.item_video_layout_item_button_play);
+			this.downloadButton = (Button) view.findViewById(R.id.item_video_layout_item_button_download);
+			this.watchButton = (Button) view.findViewById(R.id.item_video_layout_item_button_watch);
+			this.shareButton = (Button) view.findViewById(R.id.item_video_layout_item_button_share);
+			this.shareUrlButton = (Button) view.findViewById(R.id.item_video_layout_item_button_share_url);
 		}
 		
-		@SuppressWarnings("deprecation")
+		/**
+		 * Bind a {@link VideoItem} to this {@link View}
+		 * 
+		 * @param item
+		 *            Target item
+		 */
 		public void bind(VideoItem item) {
 			bindVideoItem = item;
 			final VideoFile video = item.videoFile;
 			
-			position = getAdapterPosition();
-			
-			/**
-			 * @Parent
-			 */
-			
-			expandableLayout.setOnExpandListener(expandableLayoutItemOnExpandListener);
+			/* Parent */
 			relativeLayout.setOnClickListener(viewOnClickListener);
 			progressSeekBar.setOnClickListener(viewOnClickListener);
 			progressSeekBar.setOnTouchListener(new OnTouchListener() {
@@ -505,16 +537,16 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			languageTextView.setTag(this);
 			
 			expandableLayout.setExpanded(item.expanded, false);
-			episodeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_title, BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(item.videoFile.getVideoType()), item.videoFile.getRawEpisodeValue()));
-			languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(item.videoFile.getLanguage())));
-			progressSeekBar.getProgressDrawable().setColorFilter(VideoActivity.this.getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
+			episodeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_title, viewHelper.enumToStringCacheTranslation(item.videoFile.getVideoType()), item.videoFile.getRawEpisodeValue()));
+			languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
+			progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
 			
 			boolean iconImageViewAvailable = false;
-			if (BoxPlayApplication.getManagers().getServerManager() != null && BoxPlayApplication.getManagers().getServerManager().getServerHostings().size() > 0) {
-				for (ServerHosting hosting : BoxPlayApplication.getManagers().getServerManager().getServerHostings()) {
+			if (!serverManager.getServerHostings().isEmpty()) {
+				for (ServerHosting hosting : serverManager.getServerHostings()) {
 					if (video.getUrl() != null && video.getUrl().startsWith(hosting.getStartingStringUrl()) && hosting.getIconUrl() != null && video.isAvailable()) {
 						iconImageViewAvailable = true;
-						BoxPlayApplication.getViewHelper().downloadToImageView(hostIconImageView, hosting.getIconUrl());
+						viewHelper.downloadToImageView(hostIconImageView, hosting.getIconUrl());
 						break;
 					}
 				}
@@ -526,14 +558,11 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			
 			updateVideoFileItemInformations(video);
 			
-			/**
-			 * @Child
-			 */
-			
+			/* Child */
 			playButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					BoxPlayApplication.getManagers().getVideoManager().openVLC(video);
+					managers.getVideoManager().openVLC(video);
 				}
 			});
 			
@@ -553,7 +582,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 					
 					updateVideoFileItemInformations(video);
 					
-					BoxPlayApplication.getManagers().getVideoManager().callConfigurator(video);
+					videoManager.callConfigurator(video);
 				}
 			});
 			
@@ -561,7 +590,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				@Override
 				public void onClick(View view) {
 					// IntentUtils.shareText(BoxPlayApplication.getBoxPlayApplication(), parsedTitle + "\n\nLink: " + parsedUrl, parsedTitle); TODO
-					BoxPlayApplication.getBoxPlayApplication().toast(getString(R.string.boxplay_error_not_implemented_yet)).show();
+					boxPlayApplication.toast(getString(R.string.boxplay_error_not_implemented_yet)).show();
 				}
 			});
 			
@@ -572,29 +601,43 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				}
 			});
 			
-			/**
-			 * @Movie
-			 */
-			if (!videoGroup.hasSeason()) {
-				// episodeTextView.setText(getString(R.string.boxplay_store_video_activity_movie_title, BoxPlayApplication.getViewHelper().videoEnumTypeToStringTranslation(item.videoFile.getFileType()), BoxPlayApplication.getViewHelper().videoEnumTypeToStringTranslation(item.videoFile.getLanguage())));
+			/* Movie */
+			if (videoGroup.isMovie()) {
+				episodeTextView.setText(getString(R.string.boxplay_store_video_activity_movie_title, viewHelper.enumToStringCacheTranslation(item.videoFile.getFileType()), viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
 				episodeTextView.setVisibility(View.GONE);
-				languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(item.videoFile.getLanguage())));
+				languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
 				
-				bindVideoItem.expanded = true;
+				bindVideoItem.setExpanded(true);
 				expandableLayout.setExpanded(true, false);
 			}
 		}
 		
-		private void updateVideoFileItemInformations(final VideoFile video) {
+		/**
+		 * Update the information, and don't show the {@link Snackbar} for auto-set-as-view if you watch more than 80%<br>
+		 * See {@link #updateVideoFileItemInformations(VideoFile, boolean)} for more information.
+		 * 
+		 * @param video
+		 *            Target {@link VideoFile} to update
+		 */
+		private void updateVideoFileItemInformations(VideoFile video) {
 			updateVideoFileItemInformations(video, true);
 		}
 		
-		@SuppressWarnings("deprecation")
+		/**
+		 * Update this group of {@link View}s<br>
+		 * This will update the language, actual time, and progress bar.<br>
+		 * 
+		 * @param video
+		 *            Target {@link VideoFile} to update information from
+		 * @param disableSnackbarConfirm
+		 *            If you want to disable or not the creation and display of a {@link Snackbar} that will prompt the user if he want to set this episode as "watched".<br>
+		 *            This bar will only show up if the actual watch time is more than 80% of the total time of the video.
+		 */
 		private void updateVideoFileItemInformations(final VideoFile video, boolean disableSnackbarConfirm) {
-			// Default action
-			progressSeekBar.getProgressDrawable().setColorFilter(VideoActivity.this.getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
+			/* Default action */
+			progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
 			
-			// Video unavailable
+			/* Video unavailable */
 			if (!video.isAvailable()) {
 				progressSeekBar.setVisibility(View.INVISIBLE);
 				languageTextView.setVisibility(View.INVISIBLE);
@@ -604,15 +647,15 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				return;
 			}
 			
-			// Video available
+			/* Video available */
 			progressSeekBar.setVisibility(View.VISIBLE);
 			languageTextView.setVisibility(View.VISIBLE);
 			timeTextView.setText(R.string.boxplay_store_video_activity_episode_time_available);
 			setGlobalButtonEnabled(true);
 			
-			// Already watched
+			/* Already watched */
 			if (video.isWatched()) {
-				progressSeekBar.getProgressDrawable().setColorFilter(VideoActivity.this.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
+				progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
 				progressSeekBar.setProgress(100);
 				timeTextView.setText(R.string.boxplay_store_video_activity_episode_time_watched);
 				watchButton.setText(R.string.boxplay_store_video_button_unwatch);
@@ -622,65 +665,118 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			
 			watchButton.setText(R.string.boxplay_store_video_button_watch);
 			
-			// Not finished, and not saved progress (-1 or 0)
+			/* Not finished, and not saved progress (-1 or 0) */
 			if (video.getSavedTime() < 1) {
-				progressSeekBar.getProgressDrawable().setColorFilter(VideoActivity.this.getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
+				progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
 				
 				return;
 			}
 			
-			// Not finished, but saved progress
-			progressSeekBar.getProgressDrawable().setColorFilter(VideoActivity.this.getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
+			/* Not finished, but saved progress */
+			progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
 			progressSeekBar.setProgress((int) ((video.getSavedTime() * 100) / video.getDuration()));
 			timeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_time, ViewHelper.DATEFORMAT_VIDEO_DURATION.format(new Date(video.getSavedTime())), ViewHelper.DATEFORMAT_VIDEO_DURATION.format(new Date(video.getDuration()))));
 			
 			if (!disableSnackbarConfirm) {
-				// if (video.getSavedTime() > video.getDuration() * 0.80) {
-				// Snackbar.make(coordinatorLayout, R.string.boxplay_store_video_action_mark_as_watched, Snackbar.LENGTH_LONG).setAction(R.string.boxplay_store_video_action_mark_as_watched_ok, new OnClickListener() {
-				// @Override
-				// public void onClick(View view) {
-				// video.asWatched(true);
-				// updateVideoFileItemInformations(video);
-				// }
-				// }).show();
-				// }
-				
-				if (lastHolder != null) {
-					videoListViewAdapter.notifyItemChanged(lastHolder.position);
+				if (video.getSavedTime() > video.getDuration() * 0.80) {
+					Snackbar.make(coordinatorLayout, R.string.boxplay_store_video_action_mark_as_watched, SNACKBAR_DURATION_DONE_WATCHING_PROMPT).setAction(R.string.boxplay_store_video_action_mark_as_watched_ok, new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							video.asWatched(true);
+							updateVideoFileItemInformations(video);
+							videoManager.callConfigurator(video);
+						}
+					}).show();
 				}
 			}
-			return;
 		}
 		
+		/**
+		 * Update every {@link Button} their enabled state.<br>
+		 * The {@link #playButton} will only be able to change his state if VLC is installed.
+		 * 
+		 * @param enabled
+		 *            New state
+		 */
 		private void setGlobalButtonEnabled(boolean enabled) {
-			playButton.setEnabled(BoxPlayApplication.getViewHelper().isVlcInstalled() ? enabled : false);
+			playButton.setEnabled(viewHelper.isVlcInstalled() ? enabled : false);
 			downloadButton.setEnabled(enabled);
 			watchButton.setEnabled(enabled);
 			shareButton.setEnabled(enabled);
 			shareUrlButton.setEnabled(enabled);
-			// TODO: castButton.setEnabled(enabled);
+		}
+		
+		/**
+		 * Call {@link ExpandableLayout#setExpanded(boolean, boolean)} with a false argument and the annimation enabled, to every {@link ExpandableLayout} in the list.
+		 */
+		public void resetExpendableLayout() {
+			for (VideoItemView holder : videoItemViews) {
+				if (holder.getExpandableLayout().isExpanded()) {
+					holder.getExpandableLayout().setExpanded(false, true);
+				}
+				
+				holder.getBindVideoItem().setExpanded(false);
+			}
+		}
+		
+		/**
+		 * 
+		 * @return
+		 */
+		public VideoItem getBindVideoItem() {
+			return bindVideoItem;
+		}
+		
+		public ExpandableLayout getExpandableLayout() {
+			return expandableLayout;
 		}
 	}
 	
-	static class VideoItem {
-		boolean expanded;
-		VideoFile videoFile;
+	/**
+	 * Information holder class
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class VideoItem {
 		
+		/* Variables */
+		private final VideoFile videoFile;
+		private boolean expanded;
+		
+		/* Constructor */
 		public VideoItem(VideoFile videoFile) {
 			this.videoFile = videoFile;
+			this.expanded = false;
+		}
+		
+		/**
+		 * @return Attached {@link VideoFile}
+		 */
+		public VideoFile getVideoFile() {
+			return videoFile;
+		}
+		
+		/**
+		 * @return The expanded state, not sync with an {@link ExpandableLayout}
+		 */
+		public boolean isExpanded() {
+			return expanded;
+		}
+		
+		/**
+		 * Set expanded state, not sync with an {@link ExpandableLayout}
+		 * 
+		 * @param expanded
+		 *            New state
+		 */
+		public void setExpanded(boolean expanded) {
+			this.expanded = expanded;
 		}
 	}
 	
-	public static final int TUTORIAL_PROGRESS_ARROW = 0, //
-			TUTORIAL_PROGRESS_WATCHING_LIST = 1, //
-			TUTORIAL_PROGRESS_SEASON_SELECTOR = 2, //
-			TUTORIAL_PROGRESS_WATCHED_SEASON = 3, //
-			TUTORIAL_PROGRESS_EPISODES = 4; //
-	
-	@SuppressWarnings("deprecation")
 	@Override
 	public TapTargetSequence getTapTargetSequence() {
-		List<TapTarget> sequences = new ArrayList<TapTarget>();
+		List<TapTarget> sequences = new ArrayList<>();
 		Display display = getWindowManager().getDefaultDisplay();
 		
 		Rect rectangle = new Rect(24, 24, 24, 24);
@@ -745,7 +841,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				.targets(sequences).listener(new TapTargetSequence.Listener() {
 					@Override
 					public void onSequenceFinish() {
-						BoxPlayApplication.getManagers().getTutorialManager().saveTutorialFinished(VideoActivity.this);
+						managers.getTutorialManager().saveTutorialFinished(VideoActivity.this);
 					}
 					
 					@Override
@@ -761,6 +857,12 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				});
 	}
 	
+	/**
+	 * Quick start a {@link VideoActivity} with a source {@link VideoGroup}
+	 * 
+	 * @param videoGroup
+	 *            Target {@link VideoGroup} to start with
+	 */
 	public static void start(VideoGroup videoGroup) {
 		BoxPlayApplication application = BoxPlayApplication.getBoxPlayApplication();
 		
@@ -771,6 +873,9 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		application.startActivity(intent);
 	}
 	
+	/**
+	 * @return {@link VideoActivity} instance if available
+	 */
 	public static VideoActivity getVideoActivity() {
 		return (VideoActivity) INSTANCE;
 	}

@@ -52,6 +52,9 @@ import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
  */
 public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationView.OnNavigationItemSelectedListener, Tutorialable {
 	
+	/* Tag */
+	public static final String TAG = BoxPlayActivity.class.getSimpleName();
+	
 	/* Bundle Keys */
 	public static final String BUNDLE_KEY_LAST_FRAGMENT_CLASS = "last_fragment_class";
 	public static final String BUNDLE_KEY_LAST_FRAGMENT_TAB_ID = "last_fragment_tab_id";
@@ -84,7 +87,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(null); // Dynamic NavigationView
+		super.onCreate(null); /* Dynamic NavigationView */
 		setContentView(R.layout.activity_boxplay);
 		INSTANCE = this;
 		

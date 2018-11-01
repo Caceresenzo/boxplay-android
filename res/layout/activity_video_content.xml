@@ -9,10 +9,16 @@
 
     <include layout="@layout/view_line_separator" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_video_recyclerview_videos"
+    <!-- <android.support.v7.widget.RecyclerView -->
+    <!-- android:id="@+id/activity_video_recyclerview_videos" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="match_parent" /> -->
+
+    <LinearLayout
+        android:id="@+id/activity_video_linearlayout_videos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 
     <include layout="@layout/view_line_separator" />
 
