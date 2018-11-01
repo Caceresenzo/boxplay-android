@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.8 BETA" changeDate="22/10/2018">
+		<changelogtext>[b]Fixed![/b] Bug causing application to crash when starting a download.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.7 BETA" changeDate="22/10/2018">
 		<changelogtext>[b]Halloween!!![/b]</changelogtext>
 		<changelogtext>[b]Added![/b] New about page.</changelogtext>
