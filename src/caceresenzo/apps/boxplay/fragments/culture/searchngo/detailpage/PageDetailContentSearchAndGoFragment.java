@@ -203,18 +203,18 @@ public class PageDetailContentSearchAndGoFragment extends Fragment {
 			boolean validType = true, hideDownload = true;
 			switch (additionalData.getType()) {
 				case ITEM_VIDEO: {
-					targetRessourceId = R.drawable.icon_video_library_light;
+					targetRessourceId = R.drawable.icon_video_library_24dp;
 					hideDownload = false;
 					break;
 				}
 				
 				case ITEM_CHAPTER: {
-					targetRessourceId = R.drawable.icon_books_library_light;
+					targetRessourceId = R.drawable.icon_library_books_24dp;
 					break;
 				}
 				
 				default: {
-					targetRessourceId = R.drawable.icon_close;
+					targetRessourceId = R.drawable.icon_close_black_24dp;
 					validType = false;
 					break;
 				}

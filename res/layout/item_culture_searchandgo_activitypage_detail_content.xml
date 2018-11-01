@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="16dp"
-                android:src="@drawable/icon_books_library_light" />
+                android:src="@drawable/icon_library_books_24dp" />
 
             <TextView
                 android:id="@+id/item_culture_searchandgo_activitypage_detail_content_textview_content"
@@ -79,7 +79,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="16dp"
-                android:src="@drawable/icon_download_light" />
+                android:src="@drawable/icon_download_white_24dp" />
         </RelativeLayout>
     </LinearLayout>
 

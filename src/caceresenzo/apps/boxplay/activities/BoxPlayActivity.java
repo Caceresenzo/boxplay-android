@@ -25,6 +25,7 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import caceresenzo.android.libs.menu.MenuTintUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -358,6 +359,8 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		
 		getMenuInflater().inflate(R.menu.main, menu);
 		optionsMenu = menu;
+		
+		MenuTintUtils.tintAllIcons(optionsMenu, R.color.colorBackground);
 		
 		initializeDebug();
 		

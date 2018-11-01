@@ -9,7 +9,7 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/drawer_boxplay_user_profile"
-                    android:icon="@drawable/icon_account_circle_light"
+                    android:icon="@drawable/icon_account_circle_white_24dp"
                     android:title="@string/boxplay_user_profile"/>
             </group>
         </menu>
@@ -19,11 +19,11 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/drawer_boxplay_store_video"
-                    android:icon="@drawable/icon_play_arrow_light"
+                    android:icon="@drawable/icon_play_arrow_white_24dp"
                     android:title="@string/boxplay_store_video"/>
                 <item
                     android:id="@+id/drawer_boxplay_store_music"
-                    android:icon="@drawable/icon_music_note_light"
+                    android:icon="@drawable/icon_audiotrack_white_24dp"
                     android:title="@string/boxplay_store_music"/>
                 <!-- <item -->
                 <!-- android:id="@+id/drawer_boxplay_store_files" -->
@@ -39,17 +39,17 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/drawer_boxplay_connect_feed"
-                    android:icon="@drawable/icon_rss_feed_light"
+                    android:icon="@drawable/icon_rss_feed_white_24dp"
                     android:title="@string/boxplay_connect_feed"
                     android:visible="true"/>
                 <item
                     android:id="@+id/drawer_boxplay_connect_friends"
-                    android:icon="@drawable/icon_people_light"
+                    android:icon="@drawable/icon_people_white_24dp"
                     android:title="@string/boxplay_connect_friends"
                     android:visible="true"/>
                 <item
                     android:id="@+id/drawer_boxplay_connect_chat"
-                    android:icon="@drawable/icon_chat_light"
+                    android:icon="@drawable/icon_chat_white_24dp"
                     android:title="@string/boxplay_connect_chat"
                     android:visible="true"/>
             </group>
@@ -62,7 +62,7 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/drawer_boxplay_culture_searchngo"
-                    android:icon="@drawable/icon_search_light"
+                    android:icon="@drawable/icon_search_white_24dp"
                     android:title="@string/boxplay_culture_searchngo"/>
             </group>
         </menu>
@@ -87,7 +87,7 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/drawer_boxplay_mylist_watchlater"
-                    android:icon="@drawable/icon_watch_later_light"
+                    android:icon="@drawable/icon_watch_later_white_24dp"
                     android:title="@string/boxplay_mylist_watchlater"/>
                 <!-- <item -->
                 <!-- android:id="@+id/drawer_boxplay_mylist_subscriptions" -->
@@ -101,11 +101,11 @@
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/drawer_boxplay_other_settings"
-                    android:icon="@drawable/icon_settings_light"
+                    android:icon="@drawable/icon_settings_white_24dp"
                     android:title="@string/boxplay_other_settings"/>
                 <item
                     android:id="@+id/drawer_boxplay_other_about"
-                    android:icon="@drawable/icon_info_light"
+                    android:icon="@drawable/icon_info_white_24dp"
                     android:title="@string/boxplay_other_about"/>
             </group>
         </menu>

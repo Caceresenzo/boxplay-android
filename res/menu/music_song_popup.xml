@@ -52,25 +52,25 @@
 
     <item
         android:id="@+id/music_song_popup_action_play"
-        android:icon="@drawable/icon_play_arrow_light"
+        android:icon="@drawable/icon_play_arrow_white_24dp"
         android:orderInCategory="100"
         android:title="@string/boxplay_store_music_menu_popup_action_play"
         app:showAsAction="never"/>
     <item
         android:id="@+id/music_song_popup_action_play_after"
-        android:icon="@drawable/icon_play_arrow_light"
+        android:icon="@drawable/icon_play_arrow_white_24dp"
         android:orderInCategory="100"
         android:title="@string/boxplay_store_music_menu_popup_action_play_after"
         app:showAsAction="never"/>
     <item
         android:id="@+id/music_song_popup_action_add_to_queue"
-        android:icon="@drawable/icon_play_arrow_light"
+        android:icon="@drawable/icon_play_arrow_white_24dp"
         android:orderInCategory="100"
         android:title="@string/boxplay_store_music_menu_popup_action_add_to_queue"
         app:showAsAction="never"/>
     <item
         android:id="@+id/music_song_popup_action_download"
-        android:icon="@drawable/icon_download_light"
+        android:icon="@drawable/icon_download_white_24dp"
         android:orderInCategory="100"
         android:title="@string/boxplay_store_music_menu_popup_action_download"
         app:showAsAction="never"/>

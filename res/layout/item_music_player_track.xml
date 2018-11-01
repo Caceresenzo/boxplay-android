@@ -20,7 +20,7 @@
             android:layout_height="64dp"
             android:layout_gravity="start|top"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_audiotrack_light" />
+            android:src="@drawable/icon_audiotrack_white_24dp" />
 
         <TextView
             android:id="@+id/item_music_player_track_textview_track_view_title"
@@ -84,7 +84,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:padding="24px"
-            android:src="@drawable/icon_reorder_light" />
+            android:src="@drawable/icon_drag_handle_white_24dp" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

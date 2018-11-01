@@ -43,7 +43,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_marginLeft="5dp"
-                    android:background="@drawable/icon_close" />
+                    android:background="@drawable/icon_close_black_24dp" />
             </LinearLayout>
 
             <TextView
@@ -71,21 +71,21 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/icon_previous" />
+                    android:background="@drawable/icon_skip_previous_white_24dp" />
 
                 <Button
                     android:id="@+id/btnPause"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/icon_pause" />
+                    android:background="@drawable/icon_pause_white_24dp" />
 
                 <Button
                     android:id="@+id/btnPlay"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/icon_play"
+                    android:background="@drawable/icon_play_arrow_white_24dp"
                     android:visibility="gone" />
 
                 <Button
@@ -93,7 +93,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/icon_next" />
+                    android:background="@drawable/icon_skip_next_white_24dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

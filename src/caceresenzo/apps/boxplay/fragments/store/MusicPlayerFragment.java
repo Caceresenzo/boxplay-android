@@ -118,8 +118,8 @@ public class MusicPlayerFragment extends Fragment {
 			notifyPlaylistUpdate(false);
 		}
 		// Drawable playPauseIcon = getResources().getDrawable(pause ? R.drawable.icon_play : R.drawable.icon_pause); // Drawable is not usable 2 times
-		playPausePanelButton.setImageDrawable(getResources().getDrawable(pause ? R.drawable.icon_play : R.drawable.icon_pause));
-		playPauseButton.setImageDrawable(getResources().getDrawable(pause ? R.drawable.icon_play : R.drawable.icon_pause));
+		playPausePanelButton.setImageDrawable(getResources().getDrawable(pause ? R.drawable.icon_play_arrow_white_24dp : R.drawable.icon_pause_white_24dp));
+		playPauseButton.setImageDrawable(getResources().getDrawable(pause ? R.drawable.icon_play_arrow_white_24dp : R.drawable.icon_pause_white_24dp));
 		
 		if (music != null && (!itemJustAdded || getPlaylist().isEmpty())) {
 			BoxPlayApplication.getViewHelper().downloadToImageView(iconImage, music.getBestImageUrl());

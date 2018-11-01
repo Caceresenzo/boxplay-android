@@ -6,20 +6,20 @@
 
     <item
         android:id="@+id/menu_main_action_update"
-        android:icon="@drawable/icon_update_dark"
+        android:icon="@drawable/icon_update_white_24dp"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/boxplay_menu_action_update"/>
     <item
         android:id="@+id/menu_main_action_logout"
-        android:icon="@drawable/icon_logout_dark"
+        android:icon="@drawable/icon_block_white_24dp"
         android:orderInCategory="101"
         android:showAsAction="never"
         android:title="@string/boxplay_menu_action_logout"
         android:visible="false"/>
     <item
         android:id="@+id/menu_main_action_search"
-        android:icon="@drawable/icon_search_light"
+        android:icon="@drawable/icon_search_white_24dp"
         android:title="@string/boxplay_menu_action_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"/>

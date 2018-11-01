@@ -19,7 +19,7 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 				.addItem(AboutItemBuilder.generateAppTitleItem(context) //
 						.setSubtitle(R.string.boxplay_other_about_about_application_author)) //
 				.addItem(AboutItemBuilder.generateAppVersionItem(context, true) //
-						.setIcon(R.drawable.icon_info_light)) //
+						.setIcon(R.drawable.icon_info_white_24dp)) //
 				.build()); //
 		
 		addCard(new AboutCard.Builder(context) //
@@ -37,7 +37,7 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 						.setIcon(R.drawable.icon_web_black_24dp)) //
 				.addItem(AboutItemBuilder.generateEmailItem(context, getString(R.string.application_email)) //
 						.setTitle(R.string.boxplay_other_about_about_author_email) //
-						.setIcon(R.drawable.icon_mail_outline_dark)) //
+						.setIcon(R.drawable.icon_mail_outline_white_24dp)) //
 				.build()); //
 		
 		addCard(new AboutCard.Builder(context) //

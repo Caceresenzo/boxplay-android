@@ -25,7 +25,7 @@
                 android:layout_width="@dimen/music_player_icon_size"
                 android:layout_height="@dimen/music_player_icon_size"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_audiotrack_light" />
+                android:src="@drawable/icon_audiotrack_white_24dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -64,7 +64,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_pause"
+                android:src="@drawable/icon_pause_white_24dp"
                 android:tint="@color/white" />
 
             <ImageButton
@@ -72,7 +72,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_next"
+                android:src="@drawable/icon_skip_next_white_24dp"
                 android:tint="@color/white" />
         </LinearLayout>
     </RelativeLayout>
@@ -116,7 +116,7 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_previous"
+                    android:src="@drawable/icon_skip_previous_white_24dp"
                     android:tint="@color/white" />
 
                 <ImageButton
@@ -124,7 +124,7 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_pause"
+                    android:src="@drawable/icon_pause_white_24dp"
                     android:tint="@color/white" />
 
                 <ImageButton
@@ -132,7 +132,7 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_next"
+                    android:src="@drawable/icon_skip_next_white_24dp"
                     android:tint="@color/white" />
             </LinearLayout>
         </LinearLayout>

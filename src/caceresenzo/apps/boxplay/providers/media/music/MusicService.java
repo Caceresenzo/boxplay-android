@@ -281,7 +281,7 @@ public class MusicService extends Service implements AudioManager.OnAudioFocusCh
 		RemoteViews expandedView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_music_player_large);
 		
 		Notification notification = new NotificationCompat.Builder(getApplicationContext()) //
-				.setSmallIcon(R.drawable.icon_audiotrack_light) //
+				.setSmallIcon(R.drawable.icon_search_white_24dp) //
 				.setContentTitle(songName) //
 				.build(); //
 		
@@ -310,9 +310,9 @@ public class MusicService extends Service implements AudioManager.OnAudioFocusCh
 		// } catch (Exception e) {
 		// e.printStackTrace();
 		// }
-		notification.contentView.setImageViewResource(R.id.imageViewAlbumArt, R.drawable.icon_audiotrack);
+		notification.contentView.setImageViewResource(R.id.imageViewAlbumArt, R.drawable.icon_audiotrack_white_24dp);
 		if (supportBigNotification) {
-			notification.bigContentView.setImageViewResource(R.id.imageViewAlbumArt, R.drawable.icon_audiotrack);
+			notification.bigContentView.setImageViewResource(R.id.imageViewAlbumArt, R.drawable.icon_audiotrack_white_24dp);
 		}
 		
 		if (controller.isSongPaused()) {
@@ -466,9 +466,9 @@ public class MusicService extends Service implements AudioManager.OnAudioFocusCh
 		
 		try {
 			// dummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.player_bg);
-			dummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.icon_audiotrack_light);
+			dummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.icon_search_white_24dp);
 			if (dummyAlbumArt == null) {
-				dummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.icon_audiotrack_light);
+				dummyAlbumArt = BitmapFactory.decodeResource(getResources(), R.drawable.icon_search_white_24dp);
 			}
 			
 			MetadataEditor metadataEditor = remoteControlClient.editMetadata(true);

@@ -59,7 +59,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	private MaterialSearchBar materialSearchBar;
 	private RelativeLayout progressContainerRelativeLayout;
 	private TextView actualProgressTextView, lastProgressTextView;
-	private ImageButton bookmarkImageButton, historyImageButton, settingsImageButton;
+	private ImageButton historyImageButton, settingsImageButton;
 	private RecyclerView searchResultRecyclerView;
 	
 	private ProgressBar loadingProgressBar;
@@ -72,6 +72,10 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	
 	/* Listeners */
 	private OnSearchActionListener onSearchActionListener;
+	
+	/* Variables */
+	private String actualQuery = "";
+	private String lastProgress = "-";
 	
 	/* Constructor */
 	public PageCultureSearchAndGoFragment() {
@@ -179,7 +183,6 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		actualProgressTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_progress_actual);
 		lastProgressTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_progress_last);
 		
-		bookmarkImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_bookmark);
 		historyImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_history);
 		settingsImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_settings);
 		
@@ -197,7 +200,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 					searchAndGoManager.getSearchSuggestionSubManager().clear();
 					return true;
 				}
-
+				
 				return false;
 			}
 		});
@@ -233,7 +236,6 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	}
 	
 	public void setSearchBarHidden(boolean hidden) {
-		bookmarkImageButton.setEnabled(!hidden);
 		historyImageButton.setEnabled(!hidden);
 		settingsImageButton.setEnabled(!hidden);
 		
@@ -265,13 +267,9 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		}
 	}
 	
-	private String actualQuery = "";
-	
 	public String getActualQuery() {
 		return actualQuery;
 	}
-	
-	private String lastProgress = "-";
 	
 	public void updateProgress(String progress) {
 		actualProgressTextView.setText(progress);

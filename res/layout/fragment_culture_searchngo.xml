@@ -43,17 +43,6 @@
                 android:orientation="horizontal" >
 
                 <ImageButton
-                    android:id="@+id/fragment_culture_searchngo_imagebutton_bookmark"
-                    style="@style/imageViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/searchngo_button_margin"
-                    android:layout_weight="0.3"
-                    android:padding="@dimen/searchngo_button_padding"
-                    android:src="@drawable/icon_bookmark_border_light"
-                    android:visibility="gone" />
-
-                <ImageButton
                     android:id="@+id/fragment_culture_searchngo_imagebutton_history"
                     style="@style/imageViewStyle"
                     android:layout_width="wrap_content"
@@ -61,7 +50,7 @@
                     android:layout_margin="@dimen/searchngo_button_margin"
                     android:layout_weight="0.3"
                     android:padding="@dimen/searchngo_button_padding"
-                    android:src="@drawable/icon_history_light" />
+                    android:src="@drawable/icon_history_white_24dp" />
 
                 <ImageButton
                     android:id="@+id/fragment_culture_searchngo_imagebutton_settings"
@@ -71,7 +60,7 @@
                     android:layout_margin="@dimen/searchngo_button_margin"
                     android:layout_weight="0.3"
                     android:padding="@dimen/searchngo_button_padding"
-                    android:src="@drawable/icon_settings_light" />
+                    android:src="@drawable/icon_settings_white_24dp" />
             </LinearLayout>
 
             <include layout="@layout/view_line_separator" />

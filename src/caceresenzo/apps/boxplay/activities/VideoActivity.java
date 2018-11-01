@@ -419,7 +419,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			int targetColorId = R.color.white;
 			
 			if (addDropdownArrow) {
-				textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_action_arrow_drop_down, 0, 0, 0);
+				textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_arrow_drop_down_black_24dp, 0, 0, 0);
 				textView.setPadding(16, 16, 0, 16);
 			} else {
 				textView.setPadding(32, 16, 0, 16);
@@ -536,7 +536,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			timeTextView.setTag(this);
 			languageTextView.setTag(this);
 			
-			expandableLayout.setExpanded(item.expanded, false);
+			expandableLayout.setExpanded(item.isExpanded(), false);
 			episodeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_title, viewHelper.enumToStringCacheTranslation(item.videoFile.getVideoType()), item.videoFile.getRawEpisodeValue()));
 			languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
 			progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
@@ -553,7 +553,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			}
 			
 			if (!iconImageViewAvailable) {
-				hostIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_cloud_off_light));
+				hostIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_cloud_off_white_24dp));
 			}
 			
 			updateVideoFileItemInformations(video);

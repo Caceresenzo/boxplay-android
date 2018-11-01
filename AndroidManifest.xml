@@ -24,11 +24,12 @@
         android:name=".application.BoxPlayApplication"
         android:allowBackup="true"
         android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
-        android:icon="@mipmap/icon_boxplay3_halloween"
+        android:icon="@mipmap/icon_launcher"
         android:isGame="false"
         android:label="@string/application_name"
         android:largeHeap="true"
         android:launchMode="singleTop"
+        android:roundIcon="@mipmap/icon_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme" >
         <activity
