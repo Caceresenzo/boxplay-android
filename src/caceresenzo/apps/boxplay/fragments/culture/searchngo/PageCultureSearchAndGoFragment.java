@@ -1,9 +1,11 @@
 package caceresenzo.apps.boxplay.fragments.culture.searchngo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.MaterialSearchBar.OnSearchActionListener;
@@ -13,9 +15,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArraySet;
+import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,22 +62,20 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	private RelativeLayout progressContainerRelativeLayout;
 	private TextView actualProgressTextView, lastProgressTextView;
 	private ImageButton historyImageButton, settingsImageButton;
-	private RecyclerView searchResultRecyclerView;
+	private LinearLayout searchResultLinearLayout;
 	
 	private ProgressBar loadingProgressBar;
 	
 	private FrameLayout informationContainerFrameLayout;
 	private TextView informationTextView;
 	
-	/* Adapters */
-	private SearchAndGoResultViewAdapter searchAdapter;
-	
 	/* Listeners */
 	private OnSearchActionListener onSearchActionListener;
 	
 	/* Variables */
-	private String actualQuery = "";
-	private String lastProgress = "-";
+	private AtomicLong searchResultIncrementer;
+	private String actualQuery;
+	private String lastProgress;
 	
 	/* Constructor */
 	public PageCultureSearchAndGoFragment() {
@@ -116,7 +116,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 					}
 				}
 				
-				searchAdapter.notifyDataSetChanged();
+				updateResultList();
 				
 				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_finished));
 				searchStop();
@@ -148,6 +148,10 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_failed, provider.getSiteName(), exception.getLocalizedMessage()));
 			}
 		});
+		
+		this.searchResultIncrementer = new AtomicLong();
+		this.actualQuery = "";
+		this.lastProgress = "-";
 	}
 	
 	@Override
@@ -166,7 +170,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 			public void onSearchStateChanged(boolean enabled) {
 				if (!enabled) {
 					results.clear();
-					searchAdapter.notifyDataSetChanged();
+					updateResultList();
 					
 					actualQuery = null;
 				}
@@ -211,11 +215,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 			}
 		});
 		
-		searchResultRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_culture_searchngo_recyclerview_search_result);
-		searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		searchResultRecyclerView.setAdapter(searchAdapter = new SearchAndGoResultViewAdapter(results));
-		searchResultRecyclerView.setHasFixedSize(true);
-		searchResultRecyclerView.setNestedScrollingEnabled(false);
+		searchResultLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_search_result);
 		
 		loadingProgressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_progressbar_loading);
 		
@@ -225,6 +225,35 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		setSearchBarHidden(false);
 		
 		return view;
+	}
+	
+	public void updateResultList() {
+		applyResultList(results);
+	}
+	
+	public void applyResultList(List<SearchAndGoResult> newResultList) {
+		searchResultLinearLayout.removeAllViews();
+		
+		if (!newResultList.isEmpty()) {
+			createNextSearchResultView(new AsyncLayoutInflater(boxPlayApplication.getAttachedActivity()), newResultList.iterator(), searchResultIncrementer.incrementAndGet());
+		}
+	}
+	
+	private void createNextSearchResultView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<SearchAndGoResult> searchAndGoResultIterator, final long sourceSearchIncrementation) {
+		if (searchAndGoResultIterator.hasNext()) {
+			asyncLayoutInflater.inflate(R.layout.item_culture_searchngo_search_element, searchResultLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+				@Override
+				public void onInflateFinished(View view, int resid, ViewGroup parent) {
+					if (sourceSearchIncrementation == searchResultIncrementer.get()) {
+						new SearchAndGoResultViewHolder(view).bind(searchAndGoResultIterator.next());
+						
+						parent.addView(view);
+						
+						createNextSearchResultView(asyncLayoutInflater, searchAndGoResultIterator, sourceSearchIncrementation);
+					}
+				}
+			});
+		}
 	}
 	
 	public void searchStart() {
@@ -241,7 +270,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		
 		progressContainerRelativeLayout.setVisibility(hidden ? View.VISIBLE : View.GONE);
 		materialSearchBar.setVisibility(hidden ? View.GONE : View.VISIBLE);
-		searchResultRecyclerView.setVisibility(hidden ? View.GONE : View.VISIBLE);
+		searchResultLinearLayout.setVisibility(hidden ? View.GONE : View.VISIBLE);
 		
 		loadingProgressBar.setVisibility(hidden ? View.VISIBLE : View.GONE);
 		
@@ -249,11 +278,11 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		
 		if (searchAndGoManager.getProviders().isEmpty() && !hidden) {
 			informationContainerFrameLayout.setVisibility(View.VISIBLE);
-			searchResultRecyclerView.setVisibility(View.GONE);
+			searchResultLinearLayout.setVisibility(View.GONE);
 			informationTextView.setText(R.string.boxplay_culture_searchngo_info_no_provider);
 		}
 		
-		if (!hidden) { // Sometimes, text is not applied
+		if (!hidden) { /* Sometimes, text is not applied */
 			materialSearchBar.setText(materialSearchBar.getText());
 		}
 	}
@@ -278,39 +307,12 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 		lastProgress = progress;
 	}
 	
-	class SearchAndGoResultViewAdapter extends RecyclerView.Adapter<SearchAndGoResultViewHolder> {
-		private List<SearchAndGoResult> list;
-		
-		public SearchAndGoResultViewAdapter(List<SearchAndGoResult> list) {
-			this.list = list;
-		}
-		
-		@Override
-		public SearchAndGoResultViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_culture_searchngo_search_element, viewGroup, false);
-			return new SearchAndGoResultViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(SearchAndGoResultViewHolder viewHolder, int position) {
-			SearchAndGoResult item = list.get(position);
-			viewHolder.bind(item);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return list.size();
-		}
-	}
-	
-	class SearchAndGoResultViewHolder extends RecyclerView.ViewHolder {
+	class SearchAndGoResultViewHolder {
 		private View view;
 		private TextView titleTextView, contentTextView, providerTextView, typeTextView;
 		private ImageView thumbnailImageView;
 		
 		public SearchAndGoResultViewHolder(View itemView) {
-			super(itemView);
-			
 			view = itemView;
 			
 			titleTextView = (TextView) itemView.findViewById(R.id.item_culture_searchngo_search_element_textview_title);

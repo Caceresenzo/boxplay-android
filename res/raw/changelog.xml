@@ -5,9 +5,11 @@
 		<changelogtext>[b]New![/b] BoxPlay Icons, and ending halloween theme.</changelogtext>
 		<changelogtext>[b]Added![/b] Prompt you if you want to set the episode as "watched" if you have watch more than 80% of the video.</changelogtext>
 		<changelogtext>[b]Upgraded![/b] Episode list system, the response time will be faster.</changelogtext>
+		<changelogtext>[b]Upgraded![/b] Search n' Go search result list system.</changelogtext>
 		<changelogtext>[b]Updated![/b] @Paradox's status to Creative Assistant.</changelogtext>
 		<changelogtext>[b]Updated![/b] Almost every icon, for a better version.</changelogtext>
 		<changelogtext>[b]Fixed![/b] Bug causing application to crash when starting a download.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug from the Adkami Search n' Go provider causing the season to be "null"</changelogtext>
 	</changelogversion>
 
 	<changelogversion versionName="3.1.7 BETA" changeDate="22/10/2018">

@@ -65,15 +65,16 @@
 
             <include layout="@layout/view_line_separator" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fragment_culture_searchngo_recyclerview_search_result"
+            <LinearLayout
+                android:id="@+id/fragment_culture_searchngo_linearlayout_search_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/main_card_margin_vertical_big"
                 android:layout_marginEnd="@dimen/main_card_margin_horizontal"
                 android:layout_marginStart="@dimen/main_card_margin_horizontal"
                 android:layout_marginTop="@dimen/main_card_margin_vertical_big"
-                android:fillViewport="true" />
+                android:fillViewport="true"
+                android:orientation="vertical" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
