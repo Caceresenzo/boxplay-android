@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.8 BETA" changeDate="22/10/2018">
+		<changelogtext>[b]OPTIMISE MOI![/b]</changelogtext>
+		<changelogtext>[b]Nouveau![/b] Icône de BoxPlay, et fini le théme d'Halloween.</changelogtext>
+		<changelogtext>[b]Nouveau![/b] Gestionnaire d'erreur, il à été completement retravaillé.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un petit dialogue qui va vous proposer de mettre un épisode en tant que "Vu" si vous avez regarder plus de 80% de la vidéo.</changelogtext>
+		<changelogtext>[b]Mis à niveau![/b] le système de liste des épisodes du store video, elle seront beaucoup plus rapide.</changelogtext>
+		<changelogtext>[b]Mis à niveau![/b] Le système de liste des résultats du Serch n' Go.</changelogtext>
+		<changelogtext>[b]Mis à niveau![/b] Le système de liste des détails pour les résultats du Serch n' Go.</changelogtext>
+		<changelogtext>[b]Mis à niveau![/b] @Paradox est maintenant considéré comme l'Assistant Créatif.</changelogtext>
+		<changelogtext>[b]Mis à niveau![/b] Presque tout les icônes pour une meilleur version.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que l'application plantait si vous essayez de télécharger un fichier dans le store.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que les saison était "null" avec le fournisseur "Adkami" du Search n' Go</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.7 BETA" changeDate="22/10/2018">
 		<changelogtext>[b]Halloween!!![/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Nouvelle page "A Propos".</changelogtext>

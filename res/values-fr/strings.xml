@@ -538,15 +538,4 @@
 
     <string name="title_activity_video">VideoActivity</string>
 
-    <!-- LIBRARIES -->
-
-    <string name="ask_for_error_log">Une erreur est apparue!\nS\'il vous plait aidez le developpeur en lui envoyant ce rapport d\'erreur.\nMerci de votre aide!</string>
-    <string name="email_welcome_note">Cher équipe de developpement,\n\nL\'Application vient juste de planter, veuillez jeter un coup d\'oeil à l\'historique d\'erreur pour plus de détails.\n\n\n</string>
-    <string name="button_view_error_log">Voir le rapport d\'erreur</string>
-    <string name="button_copy_error_log">Copier le rapport d\'erreur</string>
-    <string name="button_share_error_log">Partager le rapport d\'erreur</string>
-    <string name="button_email_error_log">Envoyer (email) le rapport d\'erreur</string>
-    <string name="button_save_error_log">Sauvegarder le rapport d\'erreur</string>
-    <string name="button_close_app">Fermer l\'application</string>
-
 </resources>

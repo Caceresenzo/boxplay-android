@@ -110,9 +110,9 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	
 	/* Variables */
 	private List<VideoItem> videoItems;
-	private List<VideoItemView> videoItemViews;
+	private List<VideoItemViewBinder> videoItemViews;
 	
-	private VideoItemView lastHolder;
+	private VideoItemViewBinder lastHolder;
 	
 	/* Constructor */
 	public VideoActivity() {
@@ -339,7 +339,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	/**
 	 * "Recursive" function to create as much view as needed one by one added to the main {@link #videosLinearLayout}.<br>
 	 * This function will not continue if the season has been changed while views are populatings.<br>
-	 * All of the information update is done by the {@link VideoItemView}.<br>
+	 * All of the information update is done by the {@link VideoItemViewBinder}.<br>
 	 * 
 	 * @param asyncLayoutInflater
 	 *            An {@link AsyncLayoutInflater} layout instance that will be constantly used
@@ -356,7 +356,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				@Override
 				public void onInflateFinished(View view, int resid, ViewGroup parent) {
 					if (sourceSeason == selectedVideoSeason) {
-						new VideoItemView(view, position).bind(videoIterator.next());
+						new VideoItemViewBinder(view, position).bind(videoIterator.next());
 						
 						parent.addView(view);
 						
@@ -451,7 +451,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class VideoItemView {
+	class VideoItemViewBinder {
 		
 		/* Views */
 		public ExpandableLayout expandableLayout;
@@ -471,7 +471,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				VideoItemView holder = (VideoItemView) view.getTag();
+				VideoItemViewBinder holder = (VideoItemViewBinder) view.getTag();
 				
 				if (videoGroup.isMovie()) {
 					holder.getExpandableLayout().setExpanded(true, false);
@@ -487,7 +487,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		};
 		
 		/* Constructor */
-		public VideoItemView(View view, int position) {
+		public VideoItemViewBinder(View view, int position) {
 			videoItemViews.add(this);
 			
 			this.position = position;
@@ -710,7 +710,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		 * Call {@link ExpandableLayout#setExpanded(boolean, boolean)} with a false argument and the annimation enabled, to every {@link ExpandableLayout} in the list.
 		 */
 		public void resetExpendableLayout() {
-			for (VideoItemView holder : videoItemViews) {
+			for (VideoItemViewBinder holder : videoItemViews) {
 				if (holder.getExpandableLayout().isExpanded()) {
 					holder.getExpandableLayout().setExpanded(false, true);
 				}

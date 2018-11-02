@@ -3,7 +3,6 @@ package caceresenzo.apps.boxplay.application;
 import java.util.Locale;
 
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
-import com.rohitss.uceh.UCEHandler;
 
 import android.app.Application;
 import android.content.Context;
@@ -16,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
+import caceresenzo.android.libs.uncaughtexceptionhandler.AndroidUncaughtExceptionHandler;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
@@ -28,10 +28,10 @@ import caceresenzo.libs.comparator.VersionType;
 public class BoxPlayApplication extends Application {
 	
 	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = true;
+	public static final boolean BUILD_DEBUG = false;
 	
 	/* Constants */
-	private static final Version VERSION = new Version("3.1.7", VersionType.BETA);
+	private static final Version VERSION = new Version("3.1.8", VersionType.BETA);
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;
@@ -57,13 +57,12 @@ public class BoxPlayApplication extends Application {
 		
 		setLocale();
 		
-		new UCEHandler.Builder(getApplicationContext()) //
-				.setUCEHEnabled(sharedPreferences.getBoolean(getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key), true)) //
+		new AndroidUncaughtExceptionHandler.Builder(getApplicationContext()) //
+				.setHandlerEnabled(sharedPreferences.getBoolean(getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key), true)) //
 				.setTrackActivitiesEnabled(true) //
 				.setBackgroundModeEnabled(true) //
 				.addCommaSeparatedEmailAddresses("caceresenzo1502@gmail.com") //
-				.build() //
-		;
+				.build();
 		
 		StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 		StrictMode.setVmPolicy(builder.build());

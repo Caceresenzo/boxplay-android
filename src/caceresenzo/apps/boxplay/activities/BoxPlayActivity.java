@@ -360,7 +360,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		getMenuInflater().inflate(R.menu.main, menu);
 		optionsMenu = menu;
 		
-		MenuTintUtils.tintAllIcons(optionsMenu, R.color.colorBackground);
+		MenuTintUtils.tintAllIcons(optionsMenu, R.color.colorBackground, R.id.menu_main_action_search);
 		
 		initializeDebug();
 		
@@ -629,7 +629,15 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			
 			/* Settings */
 			case R.id.drawer_boxplay_other_settings: {
-				showFragment(new SettingsFragment());
+				SettingsFragment settingsFragment;
+				
+				if (actualFragment instanceof SettingsFragment) {
+					settingsFragment = ((SettingsFragment) actualFragment);
+				} else {
+					settingsFragment = new SettingsFragment();
+				}
+				
+				showFragment(settingsFragment);
 				break;
 			}
 			

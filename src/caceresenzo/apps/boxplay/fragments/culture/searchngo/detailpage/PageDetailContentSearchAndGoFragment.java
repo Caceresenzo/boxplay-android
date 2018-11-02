@@ -121,7 +121,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 				@Override
 				public void onInflateFinished(View view, int resid, ViewGroup parent) {
 					if (!destroyed) {
-						new ContentViewHolder(view).bind(contentIterator.next());
+						new ContentViewBinder(view).bind(contentIterator.next());
 						
 						parent.addView(view);
 						
@@ -146,7 +146,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class ContentViewHolder {
+	class ContentViewBinder {
 		
 		/* Views */
 		private View view;
@@ -154,7 +154,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		private ImageView iconImageView, downloadImageView;
 		
 		/* Constructor */
-		public ContentViewHolder(View view) {
+		public ContentViewBinder(View view) {
 			this.view = view;
 			
 			typeTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_type);

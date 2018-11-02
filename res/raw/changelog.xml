@@ -2,7 +2,9 @@
 <changelog bulletedList="false">
 
 	<changelogversion versionName="3.1.8 BETA" changeDate="22/10/2018">
+		<changelogtext>[b]OPTIMIZE ME UPDATE![/b]</changelogtext>
 		<changelogtext>[b]New![/b] BoxPlay Icons, and ending halloween theme.</changelogtext>
+		<changelogtext>[b]New![/b] Error handler, completly reworked.</changelogtext>
 		<changelogtext>[b]Added![/b] Prompt you if you want to set the episode as "watched" if you have watch more than 80% of the video.</changelogtext>
 		<changelogtext>[b]Upgraded![/b] Episode list system, the response time will be faster.</changelogtext>
 		<changelogtext>[b]Upgraded![/b] Search n' Go search result list system.</changelogtext>

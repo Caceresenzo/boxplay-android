@@ -170,17 +170,17 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 								if (!destroyed) {
 									switch (item.getType()) {
 										case DetailListItem.TYPE_IMAGE: {
-											new ImageItemViewHolder(view).bind((ImageDetailItem) item);
+											new ImageItemViewBinder(view).bind((ImageDetailItem) item);
 											break;
 										}
 										
 										case DetailListItem.TYPE_BUTTON_ADD_TO_WATCHLIST: {
-											new AddToWatchListItemViewHolder(view).bind((AddToWatchListDetailItem) item);
+											new AddToWatchListItemViewBinder(view).bind((AddToWatchListDetailItem) item);
 											break;
 										}
 										
 										case DetailListItem.TYPE_STRING: {
-											new StringItemViewHolder(view).bind((StringDetailItem) item);
+											new StringItemViewBinder(view).bind((StringDetailItem) item);
 											break;
 										}
 										
@@ -189,7 +189,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 										}
 										
 										case DetailListItem.TYPE_RATING: {
-											new RatingItemViewHolder(view).bind((RatingDetailItem) item);
+											new RatingItemViewBinder(view).bind((RatingDetailItem) item);
 											break;
 										}
 										
@@ -211,10 +211,10 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
-	class ImageItemViewHolder {
+	class ImageItemViewBinder {
 		private ImageView contentImageView;
 		
-		public ImageItemViewHolder(View view) {
+		public ImageItemViewBinder(View view) {
 			contentImageView = (ImageView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_image_imageview_container);
 		}
 		
@@ -245,11 +245,11 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
-	class AddToWatchListItemViewHolder {
+	class AddToWatchListItemViewBinder {
 		private String addString, removeString;
 		private Button addToListButton;
 		
-		public AddToWatchListItemViewHolder(View view) {
+		public AddToWatchListItemViewBinder(View view) {
 			addString = getString(R.string.boxplay_culture_searchngo_detail_info_button_add_to_watchlist);
 			removeString = getString(R.string.boxplay_culture_searchngo_detail_info_button_remove_to_watchlist);
 			
@@ -315,10 +315,10 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
-	class StringItemViewHolder {
+	class StringItemViewBinder {
 		private TextView contentTextView;
 		
-		public StringItemViewHolder(View view) {
+		public StringItemViewBinder(View view) {
 			contentTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_string_textview_container);
 		}
 		
@@ -414,11 +414,11 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
-	class RatingItemViewHolder {
+	class RatingItemViewBinder {
 		private RatingBar starRatingBar;
 		private TextView stringTextView;
 		
-		public RatingItemViewHolder(View view) {
+		public RatingItemViewBinder(View view) {
 			starRatingBar = (RatingBar) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_rating_ratingbar_bar);
 			stringTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_rating_textview_string);
 		}
