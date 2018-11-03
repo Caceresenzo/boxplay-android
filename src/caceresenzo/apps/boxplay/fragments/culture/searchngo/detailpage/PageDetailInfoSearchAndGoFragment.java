@@ -39,7 +39,6 @@ import caceresenzo.libs.boxplay.mylist.MyListable;
  * @author Enzo CACERES
  */
 public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
-	private boolean uiReady = false;
 	
 	private List<DetailListItem> items;
 	
@@ -63,7 +62,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		progressBar.setVisibility(View.VISIBLE);
 		listLinearLayout.setVisibility(View.GONE);
 		
-		uiReady = true;
+		ready();
 		
 		return view;
 	}
@@ -117,17 +116,8 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		createNextDetailListItemView(new AsyncLayoutInflater(SearchAndGoDetailActivity.getSearchAndGoDetailActivity()), items.iterator());
 	}
 	
-	/**
-	 * Tell if the ui has been {@link View#findViewById(int)} and all view are ready to use
-	 * 
-	 * @return If the {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)} has finished
-	 */
-	public boolean isUiReady() {
-		return uiReady;
-	}
-	
 	private void createNextDetailListItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<DetailListItem> itemsIterator) {
-		if (itemsIterator.hasNext()) {
+		if (itemsIterator.hasNext() && isContextValid()) {
 			final DetailListItem item = itemsIterator.next();
 			
 			int layout = R.layout.container_item_culture_searchngo_activitypage_detail_info_holder;
@@ -138,73 +128,75 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 			asyncLayoutInflater.inflate(layout, listLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
 				@Override
 				public void onInflateFinished(View view, int resid, ViewGroup parent) {
-					TextView typeTextView = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_textview_type);
-					
-					if (item.getDataType() == null) {
-						typeTextView.setVisibility(View.GONE);
-					} else {
-						typeTextView.setText(viewHelper.enumToStringCacheTranslation(item.getDataType()));
-					}
-					
-					final View itemContainerView = view;
-					
-					if (item.getType() == DetailListItem.TYPE_CATEGORY) {
-						RecyclerView recyclerView = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_recyclerview_container);
-						FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
-						flowLayoutManager.setAutoMeasureEnabled(true);
+					if (!destroyed) {
+						TextView typeTextView = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_textview_type);
 						
-						recyclerView.setLayoutManager(flowLayoutManager);
-						recyclerView.setAdapter(new CategoryItemViewAdapter(((CategoryDetailItem) item)));
-						recyclerView.setHasFixedSize(true);
-						recyclerView.setNestedScrollingEnabled(false);
+						if (item.getDataType() == null) {
+							typeTextView.setVisibility(View.GONE);
+						} else {
+							typeTextView.setText(viewHelper.enumToStringCacheTranslation(item.getDataType()));
+						}
 						
-						parent.addView(view);
+						final View itemContainerView = view;
 						
-						createNextDetailListItemView(asyncLayoutInflater, itemsIterator);
-					} else {
-						FrameLayout containerFrameLayout = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_framelayout_container);
-						
-						asyncLayoutInflater.inflate(item.getLayout(), containerFrameLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
-							@Override
-							public void onInflateFinished(View view, int resid, ViewGroup parent) {
-								if (!destroyed) {
-									switch (item.getType()) {
-										case DetailListItem.TYPE_IMAGE: {
-											new ImageItemViewBinder(view).bind((ImageDetailItem) item);
-											break;
+						if (item.getType() == DetailListItem.TYPE_CATEGORY) {
+							RecyclerView recyclerView = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_recyclerview_container);
+							FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
+							flowLayoutManager.setAutoMeasureEnabled(true);
+							
+							recyclerView.setLayoutManager(flowLayoutManager);
+							recyclerView.setAdapter(new CategoryItemViewAdapter(((CategoryDetailItem) item)));
+							recyclerView.setHasFixedSize(true);
+							recyclerView.setNestedScrollingEnabled(false);
+							
+							parent.addView(view);
+							
+							createNextDetailListItemView(asyncLayoutInflater, itemsIterator);
+						} else {
+							FrameLayout containerFrameLayout = view.findViewById(R.id.container_item_culture_searchandgo_detail_info_holder_framelayout_container);
+							
+							asyncLayoutInflater.inflate(item.getLayout(), containerFrameLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+								@Override
+								public void onInflateFinished(View view, int resid, ViewGroup parent) {
+									if (!destroyed) {
+										switch (item.getType()) {
+											case DetailListItem.TYPE_IMAGE: {
+												new ImageItemViewBinder(view).bind((ImageDetailItem) item);
+												break;
+											}
+											
+											case DetailListItem.TYPE_BUTTON_ADD_TO_WATCHLIST: {
+												new AddToWatchListItemViewBinder(view).bind((AddToWatchListDetailItem) item);
+												break;
+											}
+											
+											case DetailListItem.TYPE_STRING: {
+												new StringItemViewBinder(view).bind((StringDetailItem) item);
+												break;
+											}
+											
+											case DetailListItem.TYPE_CATEGORY: {
+												throw new IllegalStateException("The item type for category should have already been processed before.");
+											}
+											
+											case DetailListItem.TYPE_RATING: {
+												new RatingItemViewBinder(view).bind((RatingDetailItem) item);
+												break;
+											}
+											
+											default: {
+												throw new IllegalStateException("Unhandled item type: " + item.getType());
+											}
 										}
 										
-										case DetailListItem.TYPE_BUTTON_ADD_TO_WATCHLIST: {
-											new AddToWatchListItemViewBinder(view).bind((AddToWatchListDetailItem) item);
-											break;
-										}
+										parent.addView(view);
+										listLinearLayout.addView(itemContainerView);
 										
-										case DetailListItem.TYPE_STRING: {
-											new StringItemViewBinder(view).bind((StringDetailItem) item);
-											break;
-										}
-										
-										case DetailListItem.TYPE_CATEGORY: {
-											throw new IllegalStateException("The item type for category should have already been processed before.");
-										}
-										
-										case DetailListItem.TYPE_RATING: {
-											new RatingItemViewBinder(view).bind((RatingDetailItem) item);
-											break;
-										}
-										
-										default: {
-											throw new IllegalStateException("Unhandled item type: " + item.getType());
-										}
+										createNextDetailListItemView(asyncLayoutInflater, itemsIterator);
 									}
-									
-									parent.addView(view);
-									listLinearLayout.addView(itemContainerView);
-									
-									createNextDetailListItemView(asyncLayoutInflater, itemsIterator);
 								}
-							}
-						});
+							});
+						}
 					}
 				}
 			});

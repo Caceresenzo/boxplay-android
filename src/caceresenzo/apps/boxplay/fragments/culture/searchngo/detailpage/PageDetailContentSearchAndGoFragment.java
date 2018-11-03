@@ -58,9 +58,6 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	public static final String ACTION_STREAMING = "action.streaming";
 	public static final String ACTION_DOWNLOAD = "action.download";
 	
-	/* Ui */
-	private boolean uiReady = false;
-	
 	/* Actual result */
 	private SearchAndGoResult result;
 	private List<AdditionalResultData> contents = new ArrayList<>();
@@ -98,7 +95,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		progressBar.setVisibility(View.VISIBLE);
 		listLinearLayout.setVisibility(View.GONE);
 		
-		uiReady = true;
+		ready();
 		
 		return view;
 	}
@@ -116,7 +113,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	}
 	
 	private void createNextContentItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<AdditionalResultData> contentIterator) {
-		if (contentIterator.hasNext()) {
+		if (contentIterator.hasNext() && isContextValid()) {
 			asyncLayoutInflater.inflate(R.layout.item_culture_searchandgo_activitypage_detail_content, listLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
 				@Override
 				public void onInflateFinished(View view, int resid, ViewGroup parent) {
@@ -130,15 +127,6 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 				}
 			});
 		}
-	}
-	
-	/**
-	 * Tell if the ui has been {@link View#findViewById(int)} and all view are ready to use
-	 * 
-	 * @return If the {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)} has finished
-	 */
-	public boolean isUiReady() {
-		return uiReady;
 	}
 	
 	/**

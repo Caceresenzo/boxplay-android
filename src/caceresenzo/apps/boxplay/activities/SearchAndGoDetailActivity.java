@@ -178,7 +178,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 			}
 			
 			if (additionals != null) {
-				while (infoFragment != null && !infoFragment.isUiReady()) {
+				while (infoFragment != null && !infoFragment.isReady()) {
 					ThreadUtils.sleep(20L);
 					countLoop();
 				}
@@ -195,7 +195,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 			}
 			
 			if (contents != null) {
-				while (contentFragment != null && !contentFragment.isUiReady()) {
+				while (contentFragment != null && !contentFragment.isReady()) {
 					ThreadUtils.sleep(20L);
 					countLoop();
 				}
