@@ -3,7 +3,7 @@
 
 	<changelogversion versionName="3.1.9 BETA" changeDate="03/11/2018">
 		<changelogtext>[b]Downloads &amp; Bugs Fix[/b]</changelogtext>
-		<changelogtext>[b]Added![/b] Possibility to use ADM instead of default Android downloader for way more stability (disabled by default).</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility to use ADM instead of default Android downloader for way more stability (disabled by default, available for module: Search n' Go, Store Video, Store Music).</changelogtext>
 		<changelogtext>[b]Changed![/b] Url (and name) of 2 Search n' Go providers.</changelogtext>
 		<changelogtext>[b]Fixed![/b] Bug causing VOIRFILM.pro not to work (they change their url).</changelogtext>
 		<changelogtext>[b]Fixed![/b] Bug causing application to crash if you were closing almost imediatly after opening an item in Search n' Go.</changelogtext>

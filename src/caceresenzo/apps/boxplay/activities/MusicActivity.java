@@ -25,8 +25,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.android.libs.internet.AndroidDownloader;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
@@ -44,7 +46,7 @@ import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
  * @author Enzo CACERES
  */
 @SuppressWarnings("unused")
-public class MusicActivity extends AppCompatActivity {
+public class MusicActivity extends BaseBoxPlayActivty {
 	
 	public static final String BUNDLE_KEY_MUSIC_ELEMENT_ITEM = "music_element_item";
 	
@@ -394,6 +396,7 @@ public class MusicActivity extends AppCompatActivity {
 											}
 											case R.id.music_song_popup_action_download: {
 												AndroidDownloader.askDownload(BoxPlayApplication.getBoxPlayApplication(), Uri.parse(music.getUrl()));
+												AdmAndroidDownloader.askDownload(boxPlayApplication, music.getUrl(), viewHelper.isAdmEnabled());
 												break;
 											}
 										}

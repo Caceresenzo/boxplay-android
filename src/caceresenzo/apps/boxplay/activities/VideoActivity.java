@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -45,7 +44,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import caceresenzo.android.libs.intent.CommonIntentUtils;
-import caceresenzo.android.libs.internet.AndroidDownloader;
+import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -569,7 +568,8 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			downloadButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					AndroidDownloader.askDownload(BoxPlayApplication.getBoxPlayApplication(), Uri.parse(video.getUrl()));
+					// AndroidDownloader.askDownload(BoxPlayApplication.getBoxPlayApplication(), Uri.parse(video.getUrl()));
+					AdmAndroidDownloader.askDownload(boxPlayApplication, video.getUrl(), viewHelper.isAdmEnabled());
 				}
 			});
 			
