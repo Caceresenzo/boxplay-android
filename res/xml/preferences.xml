@@ -16,6 +16,19 @@
             android:title="@string/boxplay_other_settings_store_music_pref_my_genre_title" />
     </PreferenceCategory>
 
+    <!-- Downloads -->
+
+    <PreferenceCategory android:title="@string/boxplay_other_settings_downloads_category_title" >
+
+        <!-- Downloads > Use ADM -->
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/boxplay_other_settings_downloads_pref_use_adm_key"
+            android:summary="@string/boxplay_other_settings_downloads_pref_use_adm_summary_not_installed"
+            android:title="@string/boxplay_other_settings_downloads_pref_use_adm_title" />
+    </PreferenceCategory>
+
     <!-- BoxPlay -->
 
     <PreferenceCategory android:title="@string/boxplay_other_settings_boxplay_category_title" >
@@ -30,7 +43,6 @@
             android:title="@string/boxplay_other_settings_boxplay_pref_background_service_title" />
 
         <!-- BoxPlay > Background Services > Frequency -->
->
         <ListPreference
             android:defaultValue="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_default_value"
             android:dependency="@string/boxplay_other_settings_boxplay_pref_background_service_key"

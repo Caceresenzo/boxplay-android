@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import caceresenzo.android.libs.application.ApplicationUtils;
+import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.MusicActivity;
@@ -42,9 +43,12 @@ import caceresenzo.libs.boxplay.models.store.video.enums.VideoFileType;
 import caceresenzo.libs.boxplay.models.store.video.enums.VideoType;
 
 public class ViewHelper {
+	
+	/* Managers */
 	private BoxPlayApplication boxPlayApplication;
 	private BoxPlayActivity boxPlayActivity;
 	
+	/* Cache */
 	private static Map<MenuIdItem, MenuItem> drawerMenuIds = new HashMap<MenuIdItem, MenuItem>();
 	private static Map<Object, String> enumCacheTranslation = new HashMap<Object, String>();
 	
@@ -54,9 +58,7 @@ public class ViewHelper {
 	public void setBoxPlayActivity(BoxPlayActivity boxPlayActivity) {
 		this.boxPlayActivity = boxPlayActivity;
 		
-		/*
-		 * Vlc
-		 */
+		/* Vlc */
 		checkVlc();
 		DATEFORMAT_VIDEO_DURATION.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}
@@ -193,7 +195,7 @@ public class ViewHelper {
 			return;
 		}
 		
-		// boxPlayActivity.toast(R.string.boxplay_viewhelper_recaching).show();
+		boxPlayApplication.toast(R.string.boxplay_viewhelper_recaching).show();
 		
 		drawerMenuIds.clear();
 		enumCacheTranslation.clear();
@@ -418,6 +420,32 @@ public class ViewHelper {
 		vlcInstalled = ApplicationUtils.isApplicationInstalled(boxPlayActivity, "org.videolan.vlc");
 	}
 	
+	/**
+	 * Check if ADM download is enabled to replace Android default download manager.
+	 * 
+	 * @return ADM enabled state
+	 */
+	public boolean isAdmEnabled() {
+		if (!isAdmInstalled()) {
+			return false;
+		}
+		
+		try {
+			return BoxPlayApplication.getManagers().getPreferences().getBoolean(boxPlayApplication.getString(R.string.boxplay_other_settings_downloads_pref_use_adm_key), false);
+		} catch (Exception exception) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Check if at least the normal or pro version of ADM is installed.
+	 * 
+	 * @return ADM installed state
+	 */
+	public boolean isAdmInstalled() {
+		return AdmAndroidDownloader.isAdmInstalled(boxPlayApplication) != AdmAndroidDownloader.NO_VERSION;
+	}
+	
 	/*
 	 * Time Help
 	 */
@@ -426,7 +454,6 @@ public class ViewHelper {
 	/*
 	 * Classes
 	 */
-	
 	class MenuIdItem {
 		private int id;
 		private boolean allowSearch;
@@ -458,9 +485,6 @@ public class ViewHelper {
 		return null;
 	}
 	
-	/*
-	 * 
-	 */
 	@SuppressWarnings("deprecation")
 	public static int color(@ColorRes int colorRessource) {
 		if (Build.VERSION.SDK_INT < 23) {

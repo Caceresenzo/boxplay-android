@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
@@ -20,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import caceresenzo.android.libs.dialog.DialogUtils;
-import caceresenzo.android.libs.internet.AndroidDownloader;
+import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.MangaChapterReaderActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
@@ -391,8 +390,9 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 									dialogCreator.showFileSizeDialog(filename, fileSize, new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(DialogInterface dialog, int which) {
-											Log.e(getClass().getSimpleName(), "Downloading file: " + filename);
-											AndroidDownloader.askDownload(boxPlayApplication, Uri.parse(directUrl), filename);
+											Log.e(TAG, "Downloading file: " + filename);
+											// AndroidDownloader.askDownload(boxPlayApplication, Uri.parse(directUrl), filename);
+											AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, viewHelper.isAdmEnabled());
 										}
 									});
 								}

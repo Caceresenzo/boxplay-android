@@ -13,6 +13,8 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import caceresenzo.android.libs.application.ApplicationUtils;
+import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -33,7 +35,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 	/* Variables */
 	private SharedPreferences sharedPreferences;
 	
-	private boolean firstCheck;
+	private boolean initialization;
 	
 	private String lastPreferenceKey;
 	
@@ -42,7 +44,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.viewHelper = BoxPlayApplication.getViewHelper();
 		
-		this.firstCheck = true;
+		this.initialization = true;
 	}
 	
 	@Override
@@ -51,23 +53,37 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		
 		sharedPreferences = BoxPlayApplication.getManagers().getPreferences();
 		
-		// Store > Music
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_store_music_pref_my_genre_key));
-		// BoxPlay
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_boxplay_pref_background_service_key));
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key));
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_boxplay_pref_force_factory_key));
-		// Premium
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_premium_pref_premium_key_key));
-		// Debug
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_debug_pref_extractor_show_logs_key));
-		// Menu
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_key));
-		// Application
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_application_pref_language_key));
-		onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key));
+		int[] keysStringIds = {
+				/* Store > Music */
+				R.string.boxplay_other_settings_store_music_pref_my_genre_key, //
+				
+				/* Downloads */
+				R.string.boxplay_other_settings_downloads_pref_use_adm_key, //
+				
+				/* BoxPlay */
+				R.string.boxplay_other_settings_boxplay_pref_background_service_key, //
+				R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key, //
+				R.string.boxplay_other_settings_boxplay_pref_force_factory_key, //
+				
+				/* Premium */
+				R.string.boxplay_other_settings_premium_pref_premium_key_key, //
+				
+				/* Debug */
+				R.string.boxplay_other_settings_debug_pref_extractor_show_logs_key, //
+				
+				/* Menu */
+				R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_key, //
+				
+				/* Application */
+				R.string.boxplay_other_settings_application_pref_language_key, //
+				R.string.boxplay_other_settings_application_pref_crash_reporter_key //
+		};
 		
-		firstCheck = false;
+		for (int keyStringId : keysStringIds) {
+			onSharedPreferenceChanged(sharedPreferences, getString(keyStringId));
+		}
+		
+		initialization = false;
 		
 		initializeButton();
 	}
@@ -100,7 +116,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				return false;
 			}
 		});
-		
 	}
 	
 	@Override
@@ -117,7 +132,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 			return;
 		}
 		
-		if (!firstCheck) {
+		if (!initialization) {
 			lastPreferenceKey = key;
 		}
 		
@@ -141,7 +156,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 			}
 			//
 			else if (key == getString(R.string.boxplay_other_settings_debug_pref_extractor_show_logs_key)) {
-				
 				if (switchPreference.isChecked()) {
 					preference.setSummary(R.string.boxplay_other_settings_debug_pref_extractor_show_logs_summary_enabled);
 				} else {
@@ -149,6 +163,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				}
 				
 				BoxPlayApplication.getManagers().getDebugManager().updatePreferences();
+			}
+			//
+			else if (key == getString(R.string.boxplay_other_settings_downloads_pref_use_adm_key)) {
+				if (!viewHelper.isAdmInstalled()) {
+					switchPreference.setChecked(false);
+					switchPreference.setSummary(R.string.boxplay_other_settings_downloads_pref_use_adm_summary_not_installed);
+
+					if (!initialization) {
+						ApplicationUtils.openStore(boxPlayApplication, AdmAndroidDownloader.NORMAL_VERSION_PACKAGE);
+					}
+				} else {
+					if (switchPreference.isChecked()) {
+						preference.setSummary(R.string.boxplay_other_settings_downloads_pref_use_adm_summary_enabled);
+					} else {
+						preference.setSummary(R.string.boxplay_other_settings_downloads_pref_use_adm_summary_disabled);
+					}
+				}
 			}
 		} else if (preference instanceof CheckBoxPreference) {
 			CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
@@ -183,7 +214,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 					preference.setSummary(getString(R.string.boxplay_other_settings_application_pref_language_summary, listPreference.getEntries()[prefIndex]));
 				}
 				
-				if (!firstCheck) {
+				if (!initialization) {
 					LocaleHelper.setLocale(getActivity(), sharedPreferences.getString(getString(R.string.boxplay_other_settings_application_pref_language_key), getString(R.string.boxplay_other_settings_application_pref_language_default_value)).toLowerCase());
 					viewHelper.recache();
 					
@@ -249,7 +280,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 	}
 	
 	public void reset() {
-		firstCheck = true;
+		initialization = true;
 	}
 	
 	public String getLastPreferenceKey() {

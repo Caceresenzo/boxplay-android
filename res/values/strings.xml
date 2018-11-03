@@ -461,6 +461,14 @@
         <item>SOCA</item>
     </string-array>
     <!--  -->
+    <string name="boxplay_other_settings_downloads_category_title">Downloads</string>
+    <!--  -->
+    <string name="boxplay_other_settings_downloads_pref_use_adm_title">Using ADM</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_summary_enabled">Use ADM instead of default Android downloader</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_summary_disabled">Use default Android downloader instead of ADM</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_summary_not_installed">ADM is not installed, click to open PlayStore</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_key">use_adm</string>
+    <!--  -->
     <string name="boxplay_other_settings_boxplay_category_title">BoxPlay</string>
     <!--  -->
     <string name="boxplay_other_settings_boxplay_pref_background_service_title">Allow backgrounds services</string>

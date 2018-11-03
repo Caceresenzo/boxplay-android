@@ -419,6 +419,13 @@
     <string name="boxplay_other_settings_store_music_pref_my_genre_summary_empty">*vide*</string>
     <string name="boxplay_other_settings_store_music_pref_my_genre_dialog_ok">TERMINÉ</string>
     <!--  -->
+    <string name="boxplay_other_settings_downloads_category_title">Téléchargements</string>
+    <!--  -->
+    <string name="boxplay_other_settings_downloads_pref_use_adm_title">Utilisation d\'ADM</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_summary_enabled">Utiliser ADM plutôt que le système de téléchargement par défault d\'Android</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_summary_disabled">Utiliser le système de téléchargement par défault d\'Android plutôt qu\'ADM</string>
+    <string name="boxplay_other_settings_downloads_pref_use_adm_summary_not_installed">ADM n\'est pas installé, cliquez pour aller sur PlayStore</string>
+    <!--  -->
     <string name="boxplay_other_settings_boxplay_category_title">BoxPlay</string>
     <!--  -->
     <string name="boxplay_other_settings_boxplay_pref_background_service_title">Autoriser les services en arrière-plan</string>
