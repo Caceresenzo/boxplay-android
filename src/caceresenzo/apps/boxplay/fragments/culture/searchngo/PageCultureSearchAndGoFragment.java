@@ -332,7 +332,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 			});
 			
 			titleTextView.setText(result.getName());
-			contentTextView.setText("-/-"); // TOOD: Make a description generator
+			contentTextView.setText(result.hasDescription() ? result.getDescription() : "-/-");
 			providerTextView.setText(result.getParentProvider().getSiteName().toUpperCase());
 			typeTextView.setText(result.getType().toString().toUpperCase());
 			

@@ -367,6 +367,7 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_duration">Duration</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_resume">Resume</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_rating">Rating [ average / max (votes) ]</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_simple_html">Unprocessed data</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_item_video">Video</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_item_chapter">Chapter</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_null">NULL</string>

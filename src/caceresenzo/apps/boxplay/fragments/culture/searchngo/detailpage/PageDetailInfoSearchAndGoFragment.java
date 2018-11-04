@@ -9,6 +9,8 @@ import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 import android.os.Bundle;
 import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,6 +86,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		
 		for (AdditionalResultData additionalResultData : additionals) {
 			Object data = additionalResultData.getData();
+			AdditionalDataType type = additionalResultData.getType();
 			DetailListItem item;
 			
 			if (data instanceof List && !((List<?>) data).isEmpty()) {
@@ -105,7 +108,17 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 			} else if (data instanceof RatingResultData) {
 				item = new RatingDetailItem((RatingResultData) data);
 			} else {
-				item = new StringDetailItem(additionalResultData.convert());
+				switch (type) {
+					case SIMPLE_HTML: {
+						item = new HtmlDetailItem(additionalResultData.convert());
+						break;
+					}
+					
+					default: {
+						item = new StringDetailItem(additionalResultData.convert());
+						break;
+					}
+				}
 			}
 			
 			this.items.add(item.dataType(additionalResultData.getType()));
@@ -172,6 +185,11 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 											
 											case DetailListItem.TYPE_STRING: {
 												new StringItemViewBinder(view).bind((StringDetailItem) item);
+												break;
+											}
+											
+											case DetailListItem.TYPE_HTML: {
+												new HtmlItemViewBinder(view).bind((HtmlDetailItem) item);
 												break;
 											}
 											
@@ -341,6 +359,45 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	class HtmlItemViewBinder {
+		private TextView contentTextView;
+		
+		public HtmlItemViewBinder(View view) {
+			contentTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_string_textview_container);
+		}
+		
+		public void bind(HtmlDetailItem stringItem) {
+			contentTextView.setText(stringItem.getSpanned());
+		}
+	}
+	
+	class HtmlDetailItem extends DetailListItem {
+		private Spanned spanned;
+		
+		@SuppressWarnings("deprecation")
+		public HtmlDetailItem(String html) {
+			this(Html.fromHtml(html));
+		}
+		
+		public HtmlDetailItem(Spanned spanned) {
+			this.spanned = spanned;
+		}
+		
+		public Spanned getSpanned() {
+			return spanned;
+		}
+		
+		@Override
+		public int getType() {
+			return TYPE_HTML;
+		}
+		
+		@Override
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_string;
+		}
+	}
+	
 	class CategoryItemViewAdapter extends RecyclerView.Adapter<CategoryItemViewHolder> {
 		private List<CategoryResultData> categories;
 		
@@ -455,8 +512,9 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		public static final int TYPE_IMAGE = 0;
 		public static final int TYPE_BUTTON_ADD_TO_WATCHLIST = 1;
 		public static final int TYPE_STRING = 2;
-		public static final int TYPE_CATEGORY = 3;
-		public static final int TYPE_RATING = 4;
+		public static final int TYPE_HTML = 3;
+		public static final int TYPE_CATEGORY = 4;
+		public static final int TYPE_RATING = 5;
 		
 		public abstract int getType();
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
@@ -85,8 +86,6 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_culture_searchngo_activitypage_details, container, false);
 		
-		this.progressDialog = WorkingProgressDialog.create(SearchAndGoDetailActivity.getSearchAndGoDetailActivity());
-		
 		progressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_progressbar_loading);
 		
 		listLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_linearlayout_list);
@@ -97,6 +96,13 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		ready();
 		
 		return view;
+	}
+	
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		
+		progressDialog = WorkingProgressDialog.create(SearchAndGoDetailActivity.getSearchAndGoDetailActivity());
 	}
 	
 	public void applyResult(SearchAndGoResult result, List<AdditionalResultData> additionals) {
