@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
-	<changelogversion versionName="3.1.9 BETA" changeDate="03/11/2018">
+	<changelogversion versionName="3.1.9 BETA" changeDate="04/11/2018">
 		<changelogtext>[b]Downloads &amp; Bugs Fix[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Possibility to use ADM instead of default Android downloader for way more stability (disabled by default, available for module: Search n' Go, Store Video, Store Music).</changelogtext>
 		<changelogtext>[b]Changed![/b] Url (and name) of 2 Search n' Go providers.</changelogtext>

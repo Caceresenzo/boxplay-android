@@ -22,7 +22,6 @@ import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.StringUtils;
-import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 

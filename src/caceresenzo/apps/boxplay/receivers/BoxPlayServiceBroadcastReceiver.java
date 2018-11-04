@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import caceresenzo.android.libs.task.AlarmManagerWrapper;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 
 public class BoxPlayServiceBroadcastReceiver extends BroadcastReceiver {
 	

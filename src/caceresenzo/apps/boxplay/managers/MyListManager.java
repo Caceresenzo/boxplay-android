@@ -25,7 +25,6 @@ import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
-import caceresenzo.libs.thread.AbstractWorkerThread.WorkerThreadCancelledException;
 import caceresenzo.libs.thread.ThreadUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
