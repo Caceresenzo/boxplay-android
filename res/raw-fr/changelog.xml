@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.10 BETA" changeDate="04/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 9[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Anime-Ultime en tant que fourniseur video pour le Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.9 BETA" changeDate="04/11/2018">
 		<changelogtext>[b]Téléchargements &amp; Bugs Fix[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Possibilité d'utiliser ADM plutot que le systéme de téléchargement d'Android par defaut pour une bien meilleur stabilité (désactivé par defaut, disponible pour les modules: Search n' Go, Magasin Video, Magasin Musique.</changelogtext>
