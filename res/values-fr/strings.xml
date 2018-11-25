@@ -27,6 +27,8 @@
     <string name="boxplay_menu_action_search">Recherche</string>
     <string name="boxplay_menu_action_logout">Se déconnecter</string>
     <!--  -->
+    <string name="boxplay_menu_searchandgo_details_action_open_in_browser">Ouvrir dans le navigateur</string>
+    <!--  -->
     <!--  -->
 
 
@@ -334,11 +336,22 @@
     <string name="boxplay_culture_searchngo_extractor_status_extracting_link">Extraction du lien...</string>
     <string name="boxplay_culture_searchngo_extractor_status_formatting_result">Formattage du résultat...</string>
     <string name="boxplay_culture_searchngo_extractor_dialog_possible_player">Lecteurs Possible</string>
+    <string name="boxplay_culture_searchngo_extractor_open_in_brower_invalid_url">Url non valide, veuillez ouvrir le résultat principal directement.</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_title">Taille du Fichier</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">Le fichier %s pèse %s, continuer ?</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_continue">CONTINUER</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_cancel">ANNULER</string>
     <!-- ENUMS -->
+    <string name="boxplay_culture_searchngo_search_result_type_anime">ANIME</string>
+    <string name="boxplay_culture_searchngo_search_result_type_drama">DRAMA</string>
+    <string name="boxplay_culture_searchngo_search_result_type_series">SÉRIE</string>
+    <string name="boxplay_culture_searchngo_search_result_type_video">VIDÉO</string>
+    <string name="boxplay_culture_searchngo_search_result_type_hentai">HENTAI</string>
+    <string name="boxplay_culture_searchngo_search_result_type_tokusatsu">TOKUSATSU</string>
+    <string name="boxplay_culture_searchngo_search_result_type_ost">OST</string>
+    <string name="boxplay_culture_searchngo_search_result_type_manga">MANGA</string>
+    <string name="boxplay_culture_searchngo_search_result_type_movie">FILM</string>
+    <string name="boxplay_culture_searchngo_search_result_type_default">DEFAULT</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_thumbnail">Vignette</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_name">Nom</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_original_name">Nom original</string>

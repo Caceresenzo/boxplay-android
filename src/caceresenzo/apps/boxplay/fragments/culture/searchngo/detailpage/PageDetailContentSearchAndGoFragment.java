@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import caceresenzo.android.libs.dialog.DialogUtils;
+import caceresenzo.android.libs.intent.CommonIntentUtils;
 import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.MangaChapterReaderActivity;
@@ -102,7 +103,12 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		
-		progressDialog = WorkingProgressDialog.create(SearchAndGoDetailActivity.getSearchAndGoDetailActivity());
+		Context targetContext = SearchAndGoDetailActivity.getSearchAndGoDetailActivity();
+		if (targetContext == null) {
+			targetContext = context;
+		}
+		
+		progressDialog = WorkingProgressDialog.create(targetContext);
 	}
 	
 	public void applyResult(SearchAndGoResult result, List<AdditionalResultData> additionals) {
@@ -145,6 +151,9 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		private View view;
 		private TextView typeTextView, disabledTextView, contentTextView;
 		private ImageView iconImageView, downloadImageView;
+		
+		/* Variables */
+		private String bindedDataUrl;
 		
 		/* Constructor */
 		public ContentViewBinder(View view) {
@@ -193,6 +202,8 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 				checkNeeded = true;
 			}
 			
+			this.bindedDataUrl = url;
+			
 			if (url == null && checkNeeded) {
 				view.setClickable(false);
 				disabledTextView.setVisibility(View.VISIBLE);
@@ -215,7 +226,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 							
 							switch (additionalData.getType()) {
 								case ITEM_VIDEO: {
-									videoExtractionWorker.applyData((VideoItemResultData) additionalData.getData(), action).start();
+									videoExtractionWorker.applyData((VideoItemResultData) additionalData.getData(), action, ContentViewBinder.this).start();
 									progressDialog.show();
 									break;
 								}
@@ -238,6 +249,21 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 				}
 			}
 		}
+		
+		@SuppressWarnings("deprecation")
+		public void removeDownload() {
+			downloadImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_open_in_new_white_24dp));
+			downloadImageView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					if (bindedDataUrl != null) {
+						CommonIntentUtils.openUrl(getActivity(), bindedDataUrl);
+					} else {
+						boxPlayApplication.toast(R.string.boxplay_culture_searchngo_extractor_open_in_brower_invalid_url).show();
+					}
+				}
+			});
+		}
 	}
 	
 	/**
@@ -248,6 +274,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	class VideoExtractionWorker extends WorkerThread {
 		private VideoItemResultData videoItem;
 		private String action;
+		private ContentViewBinder viewBinder;
 		
 		private IVideoContentProvider videoContentProvider;
 		private VideoContentExtractor extractor;
@@ -307,6 +334,8 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 					@Override
 					public void run() {
 						boxPlayApplication.toast(R.string.boxplay_culture_searchngo_extractor_status_no_extractor_compatible).show();
+						
+						viewBinder.removeDownload();
 					}
 				});
 			}
@@ -367,14 +396,16 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 				closeDialog();
 				
 				if (directUrl == null) {
-					if (!isCancelled()) {
-						handler.post(new Runnable() {
-							@Override
-							public void run() {
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (!isCancelled()) {
 								boxPlayApplication.toast(R.string.boxplay_culture_searchngo_extractor_status_url_not_available).show();
 							}
-						});
-					}
+							
+							viewBinder.removeDownload();
+						}
+					});
 				} else {
 					final String filename = String.format("%s %s.mp4", FileUtils.replaceIllegalChar(result.getName()), videoItem.getName());
 					
@@ -456,9 +487,10 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		 * @param action
 		 * @return Itself, now call {@link #start()}
 		 */
-		public VideoExtractionWorker applyData(VideoItemResultData videoItem, String action) {
+		public VideoExtractionWorker applyData(VideoItemResultData videoItem, String action, ContentViewBinder viewBinder) {
 			this.videoItem = videoItem;
 			this.action = action;
+			this.viewBinder = viewBinder;
 			
 			videoContentProvider = videoItem.getVideoContentProvider();
 			

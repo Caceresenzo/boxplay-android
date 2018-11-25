@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.activities.ImageViewerActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
@@ -228,8 +229,15 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 			contentImageView = (ImageView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_image_imageview_container);
 		}
 		
-		public void bind(ImageDetailItem imageItem) {
+		public void bind(final ImageDetailItem imageItem) {
 			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl());
+			
+			contentImageView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					ImageViewerActivity.start(imageItem.getUrl());
+				}
+			});
 		}
 	}
 	

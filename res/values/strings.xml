@@ -10,8 +10,7 @@
     <!--  -->
     <string name="boxplay_notification_channel_main_title">BoxPlay</string>
     <string name="boxplay_notification_channel_main_description">BoxPlay services</string>
-    
-    
+
     <!--  -->
     <!-- Service -->
     <!--  -->
@@ -33,6 +32,8 @@
     <string name="boxplay_menu_action_search">Search</string>
     <string name="boxplay_menu_action_update">Update</string>
     <string name="boxplay_menu_action_logout">Logout</string>
+    <!--  -->
+    <string name="boxplay_menu_searchandgo_details_action_open_in_browser">Open in browser</string>
 
     <!--  -->
     <!-- Drawer -->
@@ -337,11 +338,22 @@
     <string name="boxplay_culture_searchngo_extractor_status_extracting_link">Extracting link...</string>
     <string name="boxplay_culture_searchngo_extractor_status_formatting_result">Formatting result...</string>
     <string name="boxplay_culture_searchngo_extractor_dialog_possible_player">Possible Players</string>
+    <string name="boxplay_culture_searchngo_extractor_open_in_brower_invalid_url">Invalid url, please open the main result directly.</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_title">File Size</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">The file %s weight %s, continue ?</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_continue">CONTINUE</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_cancel">CANCEL</string>
     <!-- ENUMS -->
+    <string name="boxplay_culture_searchngo_search_result_type_anime">ANIME</string>
+    <string name="boxplay_culture_searchngo_search_result_type_drama">DRAMA</string>
+    <string name="boxplay_culture_searchngo_search_result_type_series">SERIES</string>
+    <string name="boxplay_culture_searchngo_search_result_type_video">VIDEO</string>
+    <string name="boxplay_culture_searchngo_search_result_type_hentai">HENTAI</string>
+    <string name="boxplay_culture_searchngo_search_result_type_tokusatsu">TOKUSATSU</string>
+    <string name="boxplay_culture_searchngo_search_result_type_ost">OST</string>
+    <string name="boxplay_culture_searchngo_search_result_type_manga">MANGA</string>
+    <string name="boxplay_culture_searchngo_search_result_type_movie">MOVIE</string>
+    <string name="boxplay_culture_searchngo_search_result_type_default">DEFAULT</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_thumbnail">Thumbnail</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_name">Name</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_original_name">Original Name</string>
@@ -616,6 +628,7 @@
 
     <string name="title_activity_video">VideoActivity</string>
     <string name="title_activity_music">MusicActivity</string>
+    <string name="title_activity_image_viewer">ImageViewerActivity</string>
     <string name="title_activity_searchandgo_detail">SearchAndGoDetailActivity</string>
     <string name="title_activity_manga_reader">MangaReaderActivity</string>
     <string name="title_activity_login">LoginActivity</string>

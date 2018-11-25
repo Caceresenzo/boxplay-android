@@ -329,6 +329,14 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			if (imageUrl != null) {
 				viewHelper.downloadToImageView(videoImageView, imageUrl);
 			}
+			final String passImageUrl = imageUrl;
+			
+			videoImageView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					ImageViewerActivity.start(passImageUrl);
+				}
+			});
 			
 			appBarLayout.setExpanded(true, true);
 			nestedScrollView.getParent().requestChildFocus(nestedScrollView, nestedScrollView);

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.11 BETA" changeDate="25/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 10[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Image Viewer to zoom on any image.</changelogtext>
+		<changelogtext>[b]Added![/b] HDSS.to as a video Search n' Go provider.</changelogtext>
+		<changelogtext>[b]Added![/b] Translation system for Search n' Go results item's type.</changelogtext>
+		<changelogtext>[b]Added![/b] Button to open in browser the Search n' Go result.</changelogtext>
+		<changelogtext>[b]Added![/b] Button to open in browser the Search n' Go result page of an item if the extraction fail.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug caused by some remaining debug test code in the ScanManga content extractor.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug caused by missing code for older device compability.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.10 BETA" changeDate="04/11/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 9[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Anime-Ultime as a video Search n' Go provider.</changelogtext>

@@ -180,7 +180,7 @@ public class SearchAndGoManager extends AbstractManager {
 	}
 	
 	private void registerCallbacks() {
-		ProviderCallback.registerSearchallback(new SearchCallback() { // Unused for now
+		ProviderCallback.registerSearchCallback(new SearchCallback() { // Unused for now
 			@Override
 			public void onSearchStarting() {
 				if (callback != null) {
@@ -230,7 +230,7 @@ public class SearchAndGoManager extends AbstractManager {
 			}
 		});
 		
-		ProviderCallback.registerProviderSearchallback(new ProviderSearchCallback() {
+		ProviderCallback.registerProviderSearchCallback(new ProviderSearchCallback() {
 			@Override
 			public void onProviderSearchStarting(final SearchAndGoProvider provider) {
 				if (callback != null) {

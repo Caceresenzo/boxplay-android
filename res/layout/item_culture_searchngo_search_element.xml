@@ -42,6 +42,7 @@
                 android:id="@+id/item_culture_searchngo_search_element_textview_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/searchngo_element_text_margin"
                 android:layout_marginLeft="@dimen/searchngo_element_text_margin"
                 android:layout_marginRight="@dimen/searchngo_element_text_margin"
                 android:layout_marginTop="@dimen/searchngo_element_text_margin_next_to_separator"
@@ -67,6 +68,7 @@
             android:layout_alignRight="@+id/item_culture_searchngo_search_element_imageview_thumbnail"
             android:background="@color/colorAccent"
             android:maxLines="1"
+            android:padding="2dp"
             android:text="PROVIDER" />
 
         <TextView
@@ -78,6 +80,7 @@
             android:layout_alignParentRight="true"
             android:background="@color/colorAccent"
             android:maxLines="1"
+            android:padding="2dp"
             android:text="TYPE" />
     </RelativeLayout>
 

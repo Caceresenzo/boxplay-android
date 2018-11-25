@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import caceresenzo.android.libs.intent.CommonIntentUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -82,6 +86,43 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 				}
 			}, 100);
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if (menu instanceof MenuBuilder) {
+			((MenuBuilder) menu).setOptionalIconsVisible(true);
+		}
+		
+		getMenuInflater().inflate(R.menu.searchandgo_details, menu);
+		
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		
+		switch (id) {
+			case android.R.id.home: {
+				/* Avoid the "Unhandled" message */
+				break;
+			}
+			
+			case R.id.menu_searchandgo_details_open_in_browser: {
+				if (searchAndGoResult != null) {
+					CommonIntentUtils.openUrl(this, searchAndGoResult.getUrl());
+				}
+				return true;
+			}
+			
+			default: {
+				boxPlayApplication.toast("[" + SearchAndGoDetailActivity.class.getSimpleName() + "]\nUnhandled onOptionsItemSelected(item.getTitle() = \"" + item.getTitle() + "\");").show();
+				break;
+			}
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.11 BETA" changeDate="25/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 10[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un visioneur d'image pour zoomer sur n'importe quel image.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] HDSS.to en tant que fourniseur video pour le Search n' Go.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un système de traduction pour les type des résultats du Search n' Go.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un bouton pour ouvrir dans le navigateur une recherche du Search n' Go.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un bouton pour ouvrir dans le navigateur un item d'une recherche du Search n' Go auquel l'extraction n'aurais pas réussie.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug causé par du code de débogage dans l'extracteur de contenu de ScanManga.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug causé par du code manquant pour la compatiblité des anciens appareils.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.10 BETA" changeDate="04/11/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 9[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Anime-Ultime en tant que fourniseur video pour le Search n' Go.</changelogtext>

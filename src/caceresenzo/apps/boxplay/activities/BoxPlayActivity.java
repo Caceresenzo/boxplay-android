@@ -396,7 +396,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 			
 			default: {
-				boxPlayApplication.toast("Unhandled onOptionsItemSelected(item.getTitle() = \"" + item.getTitle() + "\");").show();
+				boxPlayApplication.toast("[" + BoxPlayActivity.class.getSimpleName() + "]\nUnhandled onOptionsItemSelected(item.getTitle() = \"" + item.getTitle() + "\");").show();
 				break;
 			}
 		}

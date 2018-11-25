@@ -31,6 +31,7 @@ import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicStor
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoStoreSubCategory;
 import caceresenzo.libs.boxplay.api.response.ApiResponseStatus;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalDataType;
+import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderSearchCapability.SearchCapability;
 import caceresenzo.libs.boxplay.models.element.enums.ElementLanguage;
 import caceresenzo.libs.boxplay.models.element.implementations.MusicElement;
 import caceresenzo.libs.boxplay.models.store.music.MusicFile;
@@ -136,6 +137,17 @@ public class ViewHelper {
 		enumCacheTranslation.put(MusicStoreSubCategory.RELEASE, boxPlayApplication.getString(R.string.boxplay_store_music_category_release));
 		
 		// Search n' Go
+		enumCacheTranslation.put(SearchCapability.ANIME, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_anime));
+		enumCacheTranslation.put(SearchCapability.DRAMA, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_drama));
+		enumCacheTranslation.put(SearchCapability.SERIES, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_series));
+		enumCacheTranslation.put(SearchCapability.VIDEO, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_video));
+		enumCacheTranslation.put(SearchCapability.HENTAI, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_hentai));
+		enumCacheTranslation.put(SearchCapability.TOKUSATSU, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_tokusatsu));
+		enumCacheTranslation.put(SearchCapability.OST, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_ost));
+		enumCacheTranslation.put(SearchCapability.MANGA, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_manga));
+		enumCacheTranslation.put(SearchCapability.MOVIE, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_movie));
+		enumCacheTranslation.put(SearchCapability.DEFAULT, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_type_default));
+		
 		enumCacheTranslation.put(AdditionalDataType.THUMBNAIL, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_thumbnail));
 		enumCacheTranslation.put(AdditionalDataType.NAME, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_name));
 		enumCacheTranslation.put(AdditionalDataType.ORIGINAL_NAME, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_original_name));
@@ -367,7 +379,7 @@ public class ViewHelper {
 	 */
 	private static MusicElement passingMusicElement;
 	
-	public void startMusiecActivity(MusicElement element) {
+	public void startMusicActivity(MusicElement element) {
 		if (element == null) {
 			return;
 		}

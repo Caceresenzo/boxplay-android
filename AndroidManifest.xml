@@ -2,8 +2,8 @@
 <!DOCTYPE xml>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="caceresenzo.apps.boxplay"
-    android:versionCode="0030110000"
-    android:versionName="3.1.10 BETA" >
+    android:versionCode="0030111000"
+    android:versionName="3.1.11 BETA" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -57,6 +57,12 @@
             android:name=".activities.MusicActivity"
             android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
             android:label="@string/title_activity_music"
+            android:launchMode="standard" >
+        </activity>
+        <activity
+            android:name=".activities.ImageViewerActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/title_activity_image_viewer"
             android:launchMode="standard" >
         </activity>
         <activity

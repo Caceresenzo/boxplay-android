@@ -13,7 +13,6 @@ import com.mancj.materialsearchbar.MaterialSearchBar.OnSearchActionListener;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.util.ArraySet;
 import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
@@ -34,6 +33,7 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchAndGoSearchCallback;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchHistoryItem;
@@ -41,14 +41,12 @@ import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 
-public class PageCultureSearchAndGoFragment extends Fragment {
+public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	
 	/* Constants */
 	public static final int MAX_CONTENT_ITEM_DISPLAYABLE = 70;
 	
 	/* Managers */
-	private BoxPlayApplication boxPlayApplication;
-	
 	private SearchAndGoManager searchAndGoManager;
 	
 	private DialogCreator dialogCreator;
@@ -79,7 +77,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 	
 	/* Constructor */
 	public PageCultureSearchAndGoFragment() {
-		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
+		super();
 		
 		this.searchAndGoManager = BoxPlayApplication.getManagers().getSearchAndGoManager();
 		this.dialogCreator = new DialogCreator();
@@ -334,7 +332,7 @@ public class PageCultureSearchAndGoFragment extends Fragment {
 			titleTextView.setText(result.getName());
 			contentTextView.setText(result.hasDescription() ? result.getDescription() : "-/-");
 			providerTextView.setText(result.getParentProvider().getSiteName().toUpperCase());
-			typeTextView.setText(result.getType().toString().toUpperCase());
+			typeTextView.setText(viewHelper.enumToStringCacheTranslation(result.getType()));
 			
 			BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, result.getBestImageUrl(), result.getRequireHeaders());
 		}
