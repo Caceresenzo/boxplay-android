@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.11.1 BETA" changeDate="28/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 10.1[/b]</changelogtext>
+		<changelogtext>[b]Fixed![/b] New JetAnime's links secutity system was crashing the application when trying to do an extraction in the Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.11 BETA" changeDate="25/11/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 10[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Image Viewer to zoom on any image.</changelogtext>

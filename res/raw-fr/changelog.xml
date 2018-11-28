@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.11.1 BETA" changeDate="28/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 10.1[/b]</changelogtext>
+		<changelogtext>[b]Fixé![/b] Le nouveau système de sécurité des liens de JetAnime faisait planter l'application lors d'une extraction depuis le Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.11 BETA" changeDate="25/11/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 10[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un visioneur d'image pour zoomer sur n'importe quel image.</changelogtext>
