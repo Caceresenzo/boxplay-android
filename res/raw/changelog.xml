@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.11.2 BETA" changeDate="29/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 10.2[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Search n' Go caching system.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing saved item not to receive new content due to unclearable-cache.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing application to crash due to android data transaction being too large if cache were too big.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing cache to be reset at every search, making it not that useful.</changelogtext>
+		<changelogtext>[b]Changed![/b] Caching strategy to weak referencing, clearing it if android need memory.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.11.1 BETA" changeDate="28/11/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 10.1[/b]</changelogtext>
 		<changelogtext>[b]Fixed![/b] New JetAnime's links secutity system was crashing the application when trying to do an extraction in the Search n' Go.</changelogtext>

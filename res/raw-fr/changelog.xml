@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.11.2 BETA" changeDate="29/11/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 10.2[/b]</changelogtext>
+		<changelogtext>[b]Nouveau![/b] Search n' Go système de cache.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que les items sauvegardé ne recevait pas de nouveau contenu à cause d'un cache non-vidable.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait plantait l'application à cause des transactions d'android qui étaient trop grosse si le cache était trop remplie.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que le cache se vidait à chaque recerche, le rendant inutile.</changelogtext>
+		<changelogtext>[b]Changé![/b] La stratégie du cache à: référencement faible, le vidant si android à besoin de mémoire.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.11.1 BETA" changeDate="28/11/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 10.1[/b]</changelogtext>
 		<changelogtext>[b]Fixé![/b] Le nouveau système de sécurité des liens de JetAnime faisait planter l'application lors d'une extraction depuis le Search n' Go.</changelogtext>
