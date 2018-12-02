@@ -15,7 +15,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderHelper;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
 
-public class AndroidOpenloadVideoExtractor extends OpenloadVideoExtractor {
+public class AndroidOpenloadVideoExtractor extends OldAbstractOpenloadVideoExtractor {
 	
 	public static final String TAG = AndroidOpenloadVideoExtractor.class.getSimpleName();
 	

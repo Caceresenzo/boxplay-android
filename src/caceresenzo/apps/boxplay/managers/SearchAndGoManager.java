@@ -16,11 +16,7 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
-import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
-import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.video.IHentaiVideoContentProvider;
-import caceresenzo.libs.boxplay.common.extractor.video.implementations.AndroidOpenloadVideoExtractor;
-import caceresenzo.libs.boxplay.common.extractor.video.implementations.OpenloadVideoExtractor;
 import caceresenzo.libs.boxplay.culture.searchngo.callback.ProviderSearchCallback;
 import caceresenzo.libs.boxplay.culture.searchngo.callback.SearchCallback;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderCallback;
@@ -73,7 +69,7 @@ public class SearchAndGoManager extends AbstractManager {
 		
 		registerCallbacks();
 		
-		ContentExtractionManager.bindExtractor(ExtractorType.VIDEO, OpenloadVideoExtractor.class, new AndroidOpenloadVideoExtractor());
+		// ContentExtractionManager.bindExtractor(ExtractorType.VIDEO, OldAbstractOpenloadVideoExtractor.class, new AndroidOpenloadVideoExtractor());
 	}
 	
 	@Override
