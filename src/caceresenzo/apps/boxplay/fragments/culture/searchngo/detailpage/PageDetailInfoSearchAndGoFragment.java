@@ -35,6 +35,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.data.models.additional.Categor
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.additional.RatingResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 import caceresenzo.libs.boxplay.mylist.MyListable;
+import caceresenzo.libs.string.StringUtils;
 
 /**
  * Info page for {@link SearchAndGoDetailActivity}
@@ -81,7 +82,9 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 	public void applyResult(SearchAndGoResult result, List<AdditionalResultData> additionals) {
 		this.items.clear();
 		
-		this.items.add(new ImageDetailItem(result.getBestImageUrl()).dataType(AdditionalDataType.THUMBNAIL));
+		if (StringUtils.validate(result.getBestImageUrl())) {
+			this.items.add(new ImageDetailItem(result.getBestImageUrl()).dataType(AdditionalDataType.THUMBNAIL));
+		}
 		
 		this.items.add(new AddToWatchListDetailItem(result));
 		
