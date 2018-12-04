@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.13 BETA" changeDate="04/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 12[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Japscan as a manga Search n' Go provider.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.12 BETA" changeDate="02/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 11[/b]</changelogtext>
 		<changelogtext>[b]New![/b] Search n' Go's Openload Video Extractor.</changelogtext>
