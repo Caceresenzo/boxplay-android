@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.13.1 BETA" changeDate="05/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 12.1[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un sous-domaine pour Openload.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug causé par un certain sous-domaine d'Openload dans le BoxPlay+.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.13 BETA" changeDate="04/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 12[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Japscan en tant que fourniseur de manga pour le Search n' Go.</changelogtext>

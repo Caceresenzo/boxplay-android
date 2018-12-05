@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.13.1 BETA" changeDate="05/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 12.1[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] One openload sub-domain.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug caused by missing a certain openload sub-domain in Premium.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.13 BETA" changeDate="04/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 12[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Japscan as a manga Search n' Go provider.</changelogtext>
