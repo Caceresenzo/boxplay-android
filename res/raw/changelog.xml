@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.15 BETA" changeDate="09/12/2018">
+		<changelogtext>[b]Christmas!!![/b]</changelogtext>
+		<changelogtext>[b]Changed![/b] Global theme to red (same as error color).</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.14 BETA" changeDate="09/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 13[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Cloudflare security bypass [instable].</changelogtext>

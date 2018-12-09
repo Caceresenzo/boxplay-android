@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.15 BETA" changeDate="09/12/2018">
+		<changelogtext>[b]Noël!!![/b]</changelogtext>
+		<changelogtext>[b]Changé![/b] Thème global en rouge (le même que la couleur d'erreur).</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.14 BETA" changeDate="09/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 13[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Contouneur de sécurité Cloudflare [instable].</changelogtext>
