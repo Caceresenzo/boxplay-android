@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.14 BETA" changeDate="09/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 13[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Cloudflare security bypass [instable].</changelogtext>
+		<changelogtext>[b]Changed![/b] Completly reworked JapScan provider for Search n' Go.</changelogtext>
+		<changelogtext>[b]Fixed![/b] JapScan's manga extractor was not linked.</changelogtext>
+		<changelogtext>[b]Warning![/b] Weak devices will have a bad time while handling the JapScan provider.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.13.1 BETA" changeDate="05/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 12.1[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] One openload sub-domain.</changelogtext>

@@ -334,7 +334,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			providerTextView.setText(result.getParentProvider().getSiteName().toUpperCase());
 			typeTextView.setText(viewHelper.enumToStringCacheTranslation(result.getType()));
 			
-			BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, result.getBestImageUrl(), result.getRequireHeaders());
+			viewHelper.downloadToImageView(thumbnailImageView, result.getBestImageUrl(), result.getRequireHeaders());
 		}
 	}
 	

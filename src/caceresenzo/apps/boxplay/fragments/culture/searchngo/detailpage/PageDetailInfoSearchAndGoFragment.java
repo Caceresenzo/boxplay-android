@@ -44,11 +44,15 @@ import caceresenzo.libs.string.StringUtils;
  */
 public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 	
-	private List<DetailListItem> items;
-	
+	/* Views */
 	private LinearLayout listLinearLayout;
 	private ProgressBar progressBar;
 	
+	/* Variables */
+	private List<DetailListItem> items;
+	private SearchAndGoResult result;
+	
+	/* Constructor */
 	public PageDetailInfoSearchAndGoFragment() {
 		super();
 		
@@ -80,6 +84,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 	 *            New additional data
 	 */
 	public void applyResult(SearchAndGoResult result, List<AdditionalResultData> additionals) {
+		this.result = result;
 		this.items.clear();
 		
 		if (StringUtils.validate(result.getBestImageUrl())) {
@@ -233,7 +238,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 		
 		public void bind(final ImageDetailItem imageItem) {
-			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl());
+			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl(), result.getRequireHeaders());
 			
 			contentImageView.setOnClickListener(new OnClickListener() {
 				@Override

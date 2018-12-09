@@ -189,7 +189,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					managers.getTutorialManager().executeActivityTutorial(BoxPlayActivity.this);
+					managers.getTutorialManager().executeActivityTutorial(BoxPlayActivity.this);					
 				}
 			}, 1000);
 		}

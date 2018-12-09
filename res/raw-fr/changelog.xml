@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.14 BETA" changeDate="09/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 13[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Contouneur de sécurité Cloudflare [instable].</changelogtext>
+		<changelogtext>[b]Changé![/b] Le fornisseur JapScan du Search n' Go à complètement été retravaillé.</changelogtext>
+		<changelogtext>[b]Fixé![/b] L'extracteur de manga de JapScan n'était pas relié.</changelogtext>
+		<changelogtext>[b]Attention![/b] Les appareils faibles vont avoir du mal pendant que le fournisseur JapScan travaille.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.13.1 BETA" changeDate="05/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 12.1[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un sous-domaine pour Openload.</changelogtext>

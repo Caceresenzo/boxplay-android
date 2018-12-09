@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
+import caceresenzo.android.libs.javascript.AndroidJavaScriptExecutorLibrary;
 import caceresenzo.android.libs.uncaughtexceptionhandler.AndroidUncaughtExceptionHandler;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
@@ -31,7 +32,7 @@ public class BoxPlayApplication extends Application {
 	public static final boolean BUILD_DEBUG = false;
 	
 	/* Constants */
-	private static final Version VERSION = new Version("3.1.13.1", VersionType.BETA);
+	private static final Version VERSION = new Version("3.1.14", VersionType.BETA);
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;
@@ -70,11 +71,16 @@ public class BoxPlayApplication extends Application {
 		MANAGERS.initialize(this);
 		
 		// BoxPlayForegroundService.startIfNotAlready(this);
+		
+		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
 	}
 	
 	@Override
 	protected void attachBaseContext(Context base) {
 		super.attachBaseContext(LocaleHelper.onAttach(base));
+		
+		/* Just to be sure */
+		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
 	}
 	
 	public static void attachActivity(BaseBoxPlayActivty baseBoxPlayActivty) {
@@ -85,6 +91,9 @@ public class BoxPlayApplication extends Application {
 		if (ATTACHED_ACTIVITY instanceof BoxPlayActivity) {
 			getViewHelper().setBoxPlayActivity((BoxPlayActivity) ATTACHED_ACTIVITY);
 		}
+
+		/* Just to be sure */
+		AndroidJavaScriptExecutorLibrary.use(getBoxPlayApplication(), HANDLER);
 	}
 	
 	public boolean isUiReady() {
