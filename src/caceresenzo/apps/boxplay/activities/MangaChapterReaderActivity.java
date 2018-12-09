@@ -164,7 +164,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	
 	/* Initialization -> Manga */
 	private void initializeManga(boolean validRestoredData) {
-		this.chapterName = chapterItem.getName();
+		this.chapterName = chapterItem.convertToDisplayableString();
 		
 		switch (chapterItem.getChapterType()) {
 			case IMAGE_ARRAY: {
