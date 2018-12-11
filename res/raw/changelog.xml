@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.16 BETA" changeDate="11/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 14[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Manga Nelo as a manga Search n' Go provider.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Manga viewer was not displaying the right chapter's title.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.15 BETA" changeDate="09/12/2018">
 		<changelogtext>[b]Christmas!!![/b]</changelogtext>
 		<changelogtext>[b]Changed![/b] Global theme to red (same as error color).</changelogtext>
