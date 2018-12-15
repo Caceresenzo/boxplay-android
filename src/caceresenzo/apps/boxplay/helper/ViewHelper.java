@@ -167,10 +167,13 @@ public class ViewHelper {
 		enumCacheTranslation.put(AdditionalDataType.ARTISTS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_artists));
 		enumCacheTranslation.put(AdditionalDataType.STUDIOS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_studios));
 		enumCacheTranslation.put(AdditionalDataType.CHANNELS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_channels));
+		enumCacheTranslation.put(AdditionalDataType.LAST_UPDATED, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_last_updated));
 		enumCacheTranslation.put(AdditionalDataType.RELEASE_DATE, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_release_date));
+		enumCacheTranslation.put(AdditionalDataType.ANIMATION_STUDIO, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_animation_studio));
 		enumCacheTranslation.put(AdditionalDataType.PUBLISHERS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_publishers));
 		enumCacheTranslation.put(AdditionalDataType.VIEWS, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_views));
 		enumCacheTranslation.put(AdditionalDataType.DURATION, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_duration));
+		enumCacheTranslation.put(AdditionalDataType.UNDER_LICENSE, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_under_license));
 		enumCacheTranslation.put(AdditionalDataType.RESUME, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_resume));
 		enumCacheTranslation.put(AdditionalDataType.RATING, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_rating));
 		enumCacheTranslation.put(AdditionalDataType.SIMPLE_HTML, boxPlayApplication.getString(R.string.boxplay_culture_searchngo_search_result_data_type_simple_html));

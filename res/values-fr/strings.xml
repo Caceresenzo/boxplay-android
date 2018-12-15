@@ -371,11 +371,14 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_artists">Artist/e(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_studios">Studio(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_channels">Chaîne(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_last_updated">Dernière mise à jour</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_release_date">Date de parution</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_animation_studio">Studio d\'Animation</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_publishers">Editeur(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_views">Vue(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_duration">Durée</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_resume">Résumé</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_under_license">Sous Licence?</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_rating">Note [ moyenne / max (nbr de vote) ]</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_simple_html">Données non traité</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_item_video">Vidéo</string>

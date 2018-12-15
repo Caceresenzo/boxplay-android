@@ -373,10 +373,13 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_artists">Artist(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_studios">Studio(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_channels">Channel(s)</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_last_updated">Last Update</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_release_date">Release Date</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_animation_studio">Animation Studio</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_publishers">Publisher(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_views">Views</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_duration">Duration</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_under_license">Under license?</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_resume">Resume</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_rating">Rating [ average / max (votes) ]</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_simple_html">Unprocessed data</string>
