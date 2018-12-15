@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.17 BETA" changeDate="15/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 15[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] I-Animes en tant que fourniseur video pour le Search n' Go.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Support for Go Unlimited video extraction.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Support for Vidlox video extraction.</changelogtext>
+		<changelogtext>[b]Amélioré![/b] Système de gestion des données du Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.16 BETA" changeDate="11/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 14[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Manga Nelo en tant que fourniseur de manga pour le Search n' Go.</changelogtext>
