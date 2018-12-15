@@ -87,51 +87,62 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		this.result = result;
 		this.items.clear();
 		
+		List<DetailListItem> processedItems = new ArrayList<>();
+		
 		if (StringUtils.validate(result.getBestImageUrl())) {
 			this.items.add(new ImageDetailItem(result.getBestImageUrl()).dataType(AdditionalDataType.THUMBNAIL));
 		}
 		
-		this.items.add(new AddToWatchListDetailItem(result));
-		
 		for (AdditionalResultData additionalResultData : additionals) {
 			Object data = additionalResultData.getData();
 			AdditionalDataType type = additionalResultData.getType();
-			DetailListItem item;
+			DetailListItem item = null;
 			
-			if (data instanceof List && !((List<?>) data).isEmpty()) {
-				List<?> unknownList = (List<?>) data;
-				Object firstObject = unknownList.get(0);
-				
-				if (firstObject instanceof CategoryResultData) {
-					List<CategoryResultData> categories = new ArrayList<>();
-					
-					for (Object categoryResultData : unknownList) {
-						categories.add((CategoryResultData) categoryResultData);
-					}
-					
-					item = new CategoryDetailItem(categories);
-				} else {
-					// item = new StringDetailItem("#LIST/" + additionalResultData.convert());
-					item = new StringDetailItem(additionalResultData.convert());
+			switch (type) {
+				case THUMBNAIL: {
+					this.items.add(new ImageDetailItem((String) data));
+					break;
 				}
-			} else if (data instanceof RatingResultData) {
-				item = new RatingDetailItem((RatingResultData) data);
-			} else {
-				switch (type) {
-					case SIMPLE_HTML: {
-						item = new HtmlDetailItem(additionalResultData.convert());
-						break;
-					}
-					
-					default: {
+				
+				case SIMPLE_HTML: {
+					item = new HtmlDetailItem(additionalResultData.convert());
+					break;
+				}
+				
+				default: {
+					if (data instanceof List && !((List<?>) data).isEmpty()) {
+						List<?> unknownList = (List<?>) data;
+						Object firstObject = unknownList.get(0);
+						
+						if (firstObject instanceof CategoryResultData) {
+							List<CategoryResultData> categories = new ArrayList<>();
+							
+							for (Object categoryResultData : unknownList) {
+								categories.add((CategoryResultData) categoryResultData);
+							}
+							
+							item = new CategoryDetailItem(categories);
+						} else {
+							// item = new StringDetailItem("#LIST/" + additionalResultData.convert());
+							item = new StringDetailItem(additionalResultData.convert());
+						}
+					} else if (data instanceof RatingResultData) {
+						item = new RatingDetailItem((RatingResultData) data);
+					} else {
 						item = new StringDetailItem(additionalResultData.convert());
-						break;
 					}
+					break;
 				}
 			}
 			
-			this.items.add(item.dataType(additionalResultData.getType()));
+			if (item != null) {
+				processedItems.add(item.dataType(additionalResultData.getType()));
+			}
 		}
+		
+		this.items.add(new AddToWatchListDetailItem(result));
+		
+		this.items.addAll(processedItems);
 		
 		listLinearLayout.setVisibility(View.VISIBLE);
 		progressBar.setVisibility(View.GONE);
