@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v4.util.ArraySet;
 import android.util.Log;
 import caceresenzo.apps.boxplay.R;
@@ -51,7 +53,10 @@ public class SearchAndGoManager extends AbstractManager {
 	private SearchAndGoSearchCallback callback;
 	
 	/* Worker */
-	private Worker worker;
+	private SearchAndGoWorker worker;
+	
+	/* Variables */
+	private List<String> updateMessages;
 	
 	@Override
 	public void initialize() {
@@ -60,12 +65,12 @@ public class SearchAndGoManager extends AbstractManager {
 		this.searchHistorySubManager = new SearchHistorySubManager();
 		this.searchHistorySubManager.load();
 		
-		this.worker = new Worker();
+		this.worker = new SearchAndGoWorker();
 		
 		this.providers = new ArrayList<>();
-		readProviders();
+		this.updateMessages = new ArrayList<>();
 		
-		// ContentExtractionManager.bindExtractor(ExtractorType.VIDEO, OldAbstractOpenloadVideoExtractor.class, new AndroidOpenloadVideoExtractor());
+		readProviders();
 	}
 	
 	@Override
@@ -73,10 +78,35 @@ public class SearchAndGoManager extends AbstractManager {
 		this.searchHistorySubManager.save();
 	}
 	
-	public void bindCallback(SearchAndGoSearchCallback callback) {
+	/**
+	 * Attach a callback to the manager to easily communicate.
+	 * 
+	 * @param callback
+	 *            Target callback.
+	 * @return If a search is actually running, if true, you must resume it.
+	 */
+	public boolean bindCallback(SearchAndGoSearchCallback callback) {
 		this.callback = callback;
+		
+		return worker.isInSearch();
 	}
 	
+	/**
+	 * Force to send all already sended message as raw string to be able to resume a search.<br>
+	 * All message with be send with {@link SearchAndGoSearchCallback#onForcedResumeMessage(String)}.
+	 */
+	public void forceSendAllMessage() {
+		for (String message : new ArrayList<>(updateMessages)) {
+			callback.onForcedResumeMessage(message);
+		}
+	}
+	
+	/**
+	 * Start a {@link SearchAndGoWorker} and do a search.
+	 * 
+	 * @param query
+	 *            Target query.
+	 */
 	public void search(String query) {
 		if (worker.isRunning()) {
 			boxPlayApplication.toast("Worker not available").show();
@@ -85,9 +115,7 @@ public class SearchAndGoManager extends AbstractManager {
 		
 		worker.updateLocal(query).start();
 		
-		/**
-		 * Updating search history
-		 */
+		/* Updating search history */
 		SearchHistoryItem searchHistoryItem = null;
 		for (SearchHistoryItem historyItem : getSearchHistory()) {
 			if (historyItem.getQuery().equals(query)) {
@@ -106,10 +134,18 @@ public class SearchAndGoManager extends AbstractManager {
 		getSearchSuggestionSubManager().save();
 	}
 	
+	/**
+	 * @return A {@link List} of actual enabled {@link SearchAndGoProvider} instanced.
+	 */
 	public List<SearchAndGoProvider> getProviders() {
 		return providers;
 	}
 	
+	/**
+	 * Same as {@link #getProviders()}, but this time get only classes.
+	 * 
+	 * @return A {@link List} of class.
+	 */
 	public List<Class<? extends SearchAndGoProvider>> getProvidersAsClasses() {
 		List<Class<? extends SearchAndGoProvider>> classes = new ArrayList<>();
 		
@@ -120,6 +156,11 @@ public class SearchAndGoManager extends AbstractManager {
 		return classes;
 	}
 	
+	/**
+	 * Read and store in a {@link List} {@link SearchAndGoProvider} that the user has chose.
+	 * 
+	 * @return A {@link List} of instanced {@link SearchAndGoProvider}.
+	 */
 	public List<SearchAndGoProvider> readProviders() {
 		providers.clear();
 		
@@ -134,6 +175,11 @@ public class SearchAndGoManager extends AbstractManager {
 		return providers;
 	}
 	
+	/**
+	 * Create a {@link Set} of {@link ProviderManager} values containing all values.
+	 * 
+	 * @return A {@link Set} to use as a default value when getting it from a {@link SharedPreferences}.
+	 */
 	public Set<String> createDefaultProviderSet() {
 		ProviderManager[] creatableProviders = ProviderManager.values();
 		
@@ -145,16 +191,42 @@ public class SearchAndGoManager extends AbstractManager {
 		return defaultValue;
 	}
 	
+	/**
+	 * @return A {@link List} of {@link #MAX_SEARCH_QUERY_COUNT} sized history item.
+	 */
 	public List<SearchHistoryItem> getSearchHistory() {
 		return queryHistory;
 	}
 	
-	private class Worker extends WorkerThread {
-		private String localSearchQuery = "";
-		private List<SearchAndGoProvider> localProviders = new ArrayList<>();
+	/**
+	 * @return A {@link List} of already sended message for the actual search.
+	 */
+	public List<String> getUpdateMessages() {
+		return updateMessages;
+	}
+	
+	/**
+	 * Working thread that will be calling {@link SearchAndGoProvider#provide(List, String, boolean, CallbackDelegate)}.
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class SearchAndGoWorker extends WorkerThread {
+		
+		/* Variables */
+		private boolean inSearch;
+		private String localSearchQuery;
+		private List<SearchAndGoProvider> localProviders;
+		
+		/* Constructor */
+		public SearchAndGoWorker() {
+			super();
+			
+			localProviders = new ArrayList<>();
+		}
 		
 		@Override
 		protected void execute() {
+			inSearch = true;
 			try {
 				boolean hentaiAllowed = premiumManager != null && premiumManager.isPremiumKeyValid();
 				
@@ -164,29 +236,51 @@ public class SearchAndGoManager extends AbstractManager {
 					}
 				}
 				
-				SearchAndGoProvider.provide(localProviders, localSearchQuery, true, createCallback());
+				SearchAndGoProvider.provide(localProviders, localSearchQuery, true, createCallbackDelegate());
 			} catch (Exception exception) {
 				; /* Handled by callbacks */
 			}
+			inSearch = false;
 		}
 		
-		private Worker updateLocal(String query) {
+		/**
+		 * Update Worker thread settings.
+		 * 
+		 * @param query
+		 *            Target search query
+		 * @return Itself
+		 */
+		protected SearchAndGoWorker updateLocal(String query) {
 			this.localSearchQuery = query;
 			
 			this.localProviders.clear();
 			this.localProviders.addAll(providers);
+			
+			getUpdateMessages().clear();
 			
 			return this;
 		}
 		
 		@Override
 		protected void done() {
-			worker = new Worker(); // New instance, this one will be forgot
+			worker = new SearchAndGoWorker(); /* New instance, this one will be forgot */
+		}
+		
+		/**
+		 * @return Searching state
+		 */
+		public boolean isInSearch() {
+			return inSearch;
 		}
 	}
 	
-	private CallbackDelegate createCallback() {
-		return new CallbackDelegate() { // Unused for now
+	/**
+	 * Create a {@link CallbackDelegate} for the BoxPlay Search n' Go Library and convert it to be used with {@link Handler}.
+	 * 
+	 * @return
+	 */
+	private CallbackDelegate createCallbackDelegate() {
+		return new CallbackDelegate() {
 			@Override
 			public void onSearchStarting() {
 				if (callback != null) {
@@ -440,6 +534,8 @@ public class SearchAndGoManager extends AbstractManager {
 		void onProviderFinished(SearchAndGoProvider provider, Map<String, SearchAndGoResult> workmap);
 		
 		void onProviderSearchFail(SearchAndGoProvider provider, Exception exception);
+		
+		void onForcedResumeMessage(String rawMessage);
 		
 	}
 	

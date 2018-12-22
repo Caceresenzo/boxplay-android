@@ -92,68 +92,6 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		
 		this.results = new ArrayList<>();
 		
-		this.searchAndGoManager.bindCallback(new SearchAndGoSearchCallback() {
-			private String getString(int ressourceId, Object... formatArgs) { /* Avoid un-contextualized fragments */
-				return boxPlayApplication.getString(ressourceId, formatArgs);
-			}
-			
-			@Override
-			public void onSearchStart() {
-				searchStart();
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_started));
-			}
-			
-			@Override
-			public void onSearchSorting() {
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_sorting));
-			}
-			
-			@Override
-			public void onSearchFinish(Map<String, SearchAndGoResult> workmap) {
-				results.clear();
-				results.addAll(workmap.values());
-				
-				if (results.size() > MAX_CONTENT_ITEM_DISPLAYABLE) {
-					boxPlayApplication.toast(R.string.boxplay_culture_searchngo_content_limit_reached, results.size(), MAX_CONTENT_ITEM_DISPLAYABLE).show();
-					
-					while (results.size() > MAX_CONTENT_ITEM_DISPLAYABLE) {
-						results.remove(results.size() - 1);
-					}
-				}
-				
-				updateResultList();
-				
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_finished));
-				searchStop();
-			}
-			
-			@Override
-			public void onSearchFail(Exception exception) {
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_failed));
-				searchStop();
-			}
-			
-			@Override
-			public void onProviderStarted(SearchAndGoProvider provider) {
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_started, provider.getSiteName()));
-			}
-			
-			@Override
-			public void onProviderSorting(SearchAndGoProvider provider) {
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_sorting, provider.getSiteName()));
-			}
-			
-			@Override
-			public void onProviderFinished(SearchAndGoProvider provider, Map<String, SearchAndGoResult> workmap) {
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_finished, provider.getSiteName()));
-			}
-			
-			@Override
-			public void onProviderSearchFail(SearchAndGoProvider provider, Exception exception) {
-				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_failed, provider.getSiteName(), exception.getLocalizedMessage()));
-			}
-		});
-		
 		this.searchResultIncrementer = new AtomicLong();
 		this.actualQuery = "";
 		this.lastProgress = "-";
@@ -314,7 +252,77 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			}
 		});
 		
-		setSearchBarHidden(false);
+		boolean inSearch = this.searchAndGoManager.bindCallback(new SearchAndGoSearchCallback() {
+			private String getString(int ressourceId, Object... formatArgs) { /* Avoid un-contextualized fragments */
+				return boxPlayApplication.getString(ressourceId, formatArgs);
+			}
+			
+			@Override
+			public void onSearchStart() {
+				searchStart();
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_started));
+			}
+			
+			@Override
+			public void onSearchSorting() {
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_sorting));
+			}
+			
+			@Override
+			public void onSearchFinish(Map<String, SearchAndGoResult> workmap) {
+				results.clear();
+				results.addAll(workmap.values());
+				
+				if (results.size() > MAX_CONTENT_ITEM_DISPLAYABLE) {
+					boxPlayApplication.toast(R.string.boxplay_culture_searchngo_content_limit_reached, results.size(), MAX_CONTENT_ITEM_DISPLAYABLE).show();
+					
+					while (results.size() > MAX_CONTENT_ITEM_DISPLAYABLE) {
+						results.remove(results.size() - 1);
+					}
+				}
+				
+				updateResultList();
+				
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_finished));
+				searchStop();
+			}
+			
+			@Override
+			public void onSearchFail(Exception exception) {
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_global_failed));
+				searchStop();
+			}
+			
+			@Override
+			public void onProviderStarted(SearchAndGoProvider provider) {
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_started, provider.getSiteName()));
+			}
+			
+			@Override
+			public void onProviderSorting(SearchAndGoProvider provider) {
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_sorting, provider.getSiteName()));
+			}
+			
+			@Override
+			public void onProviderFinished(SearchAndGoProvider provider, Map<String, SearchAndGoResult> workmap) {
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_finished, provider.getSiteName()));
+			}
+			
+			@Override
+			public void onProviderSearchFail(SearchAndGoProvider provider, Exception exception) {
+				updateProgress(getString(R.string.boxplay_culture_searchngo_search_status_provider_failed, provider.getSiteName(), exception.getLocalizedMessage()));
+			}
+			
+			@Override
+			public void onForcedResumeMessage(String rawMessage) {
+				updateProgress(rawMessage);
+			}
+		});
+		setSearchBarHidden(inSearch);
+		
+		if (inSearch) {
+			searchAndGoManager.forceSendAllMessage();
+		}
 		
 		return view;
 	}
@@ -462,6 +470,8 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	 *            New progress string.
 	 */
 	public void updateProgress(String progress) {
+		searchAndGoManager.getUpdateMessages().add(progress);
+		
 		actualProgressTextView.setText(progress);
 		lastProgressTextView.setText(lastProgress);
 		
