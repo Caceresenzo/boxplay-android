@@ -39,11 +39,13 @@
                     android:fillViewport="true"
                     android:layoutMode="clipBounds" >
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/activity_searchandgo_history_recyclerview_list"
+                    <LinearLayout
+                        android:id="@+id/activity_searchandgo_history_linearlayout_list"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:nestedScrollingEnabled="false"
-                        android:layout_height="match_parent" />
+                        android:orientation="vertical" >
+                    </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>
             </RelativeLayout>
         </android.support.design.widget.CoordinatorLayout>

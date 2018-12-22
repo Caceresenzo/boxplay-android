@@ -1,19 +1,18 @@
 package caceresenzo.apps.boxplay.activities;
 
-import java.util.List;
+import java.util.Iterator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
@@ -21,6 +20,7 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.culture.CultureFragment;
 import caceresenzo.apps.boxplay.fragments.culture.searchngo.PageCultureSearchAndGoFragment;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
+import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchHistoryItem;
 
 public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 	
@@ -31,7 +31,7 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 	/* Views */
 	private Toolbar toolbar;
 	private ActionBar actionBar;
-	private RecyclerView recyclerView;
+	private LinearLayout listLinearLayout;
 	
 	/* Constructor */
 	public SearchAndGoHistoryActivity() {
@@ -57,6 +57,8 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 		}
 		
 		initializeViews();
+		
+		createNextContentItemView(new AsyncLayoutInflater(this), searchAndGoManager.getSearchHistory().iterator());
 	}
 	
 	/**
@@ -71,12 +73,34 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(getString(R.string.boxplay_culture_searchngo_history_activity_title));
 		
-		coordinatorLayout = findViewById(R.id.activity_searchandgo_history_coordinatorlayout_container);
+		coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_searchandgo_history_coordinatorlayout_container);
 		
-		recyclerView = (RecyclerView) findViewById(R.id.activity_searchandgo_history_recyclerview_list);
-		
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		recyclerView.setAdapter(new HistoryItemViewAdapter(searchAndGoManager.getSearchHistory()));
+		listLinearLayout = (LinearLayout) findViewById(R.id.activity_searchandgo_history_linearlayout_list);
+	}
+	
+	/**
+	 * Create {@link View} recursively.
+	 * 
+	 * @param asyncLayoutInflater
+	 *            Global {@link AsyncLayoutInflater} used to inflate all {@link View}.
+	 * @param contentIterator
+	 *            Content {@link Iterator} from history list.
+	 */
+	private void createNextContentItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<SearchAndGoManager.SearchHistoryItem> contentIterator) {
+		if (contentIterator.hasNext() && !isDestroyed()) {
+			asyncLayoutInflater.inflate(R.layout.item_searchandgo_history, listLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
+				@Override
+				public void onInflateFinished(View view, int resid, ViewGroup parent) {
+					if (!isDestroyed()) {
+						new HistoryItemViewBinder(view).bind(contentIterator.next());
+						
+						parent.addView(view);
+						
+						createNextContentItemView(asyncLayoutInflater, contentIterator);
+					}
+				}
+			});
+		}
 	}
 	
 	/**
@@ -93,53 +117,18 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * {@link RecyclerView}'s view adapter for {@link HistoryItemViewHolder}.
+	 * View binder for {@link SearchHistoryItem}
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class HistoryItemViewAdapter extends RecyclerView.Adapter<HistoryItemViewHolder> {
-		
-		/* Variables */
-		private List<SearchAndGoManager.SearchHistoryItem> list;
-		
-		/* Constructor */
-		public HistoryItemViewAdapter(List<SearchAndGoManager.SearchHistoryItem> list) {
-			this.list = list;
-		}
-		
-		@Override
-		public HistoryItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int itemType) {
-			View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_searchandgo_history, viewGroup, false);
-			return new HistoryItemViewHolder(view);
-		}
-		
-		@Override
-		public void onBindViewHolder(HistoryItemViewHolder viewHolder, int position) {
-			SearchAndGoManager.SearchHistoryItem item = list.get(position);
-			viewHolder.bind(item);
-		}
-		
-		@Override
-		public int getItemCount() {
-			return list.size();
-		}
-	}
-	
-	/**
-	 * {@link ViewHolder} for the {@link HistoryItemViewAdapter}.
-	 * 
-	 * @author Enzo CACERES
-	 */
-	class HistoryItemViewHolder extends RecyclerView.ViewHolder {
+	class HistoryItemViewBinder {
 		
 		/* Views */
 		private View view;
 		private TextView dateTextView, queryTextView;
 		
 		/* Constructor */
-		public HistoryItemViewHolder(View itemView) {
-			super(itemView);
-			
+		public HistoryItemViewBinder(View itemView) {
 			view = itemView;
 			
 			dateTextView = (TextView) itemView.findViewById(R.id.item_searchandgo_history_textview_date);
