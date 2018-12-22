@@ -47,6 +47,22 @@
                         android:orientation="vertical" >
                     </LinearLayout>
                 </android.support.v4.widget.NestedScrollView>
+
+                <FrameLayout
+                    android:id="@+id/activity_searchandgo_history_framelayout_info_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" >
+
+                    <TextView
+                        style="@style/textViewTitleStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:padding="16dp"
+                        android:text="@string/boxplay_culture_searchngo_history_already_empty" />
+                </FrameLayout>
             </RelativeLayout>
         </android.support.design.widget.CoordinatorLayout>
     </RelativeLayout>

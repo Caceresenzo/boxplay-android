@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.ActionBar;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
@@ -32,6 +36,7 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 	private Toolbar toolbar;
 	private ActionBar actionBar;
 	private LinearLayout listLinearLayout;
+	private FrameLayout informationContainerFrameLayout;
 	
 	/* Constructor */
 	public SearchAndGoHistoryActivity() {
@@ -61,6 +66,49 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 		createNextContentItemView(new AsyncLayoutInflater(this), searchAndGoManager.getSearchHistory().iterator());
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if (menu instanceof MenuBuilder) {
+			((MenuBuilder) menu).setOptionalIconsVisible(true);
+		}
+		
+		getMenuInflater().inflate(R.menu.searchandgo_history, menu);
+		
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		
+		switch (id) {
+			case android.R.id.home: {
+				/* Avoid the "Unhandled" message */
+				break;
+			}
+			
+			case R.id.menu_searchandgo_history_clear_history: {
+				if (!searchAndGoManager.getSearchHistory().isEmpty()) {
+					boxPlayApplication.toast(R.string.boxplay_culture_searchngo_history_clear).show();
+					searchAndGoManager.getSearchSuggestionSubManager().clear();
+					
+					finish();
+					return true;
+				}
+
+				finish();
+				return false;
+			}
+			
+			default: {
+				boxPlayApplication.toast("[" + SearchAndGoHistoryActivity.class.getSimpleName() + "]\nUnhandled onOptionsItemSelected(item.getTitle() = \"" + item.getTitle() + "\");").show();
+				break;
+			}
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
 	/**
 	 * Initialize views
 	 */
@@ -76,6 +124,12 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 		coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_searchandgo_history_coordinatorlayout_container);
 		
 		listLinearLayout = (LinearLayout) findViewById(R.id.activity_searchandgo_history_linearlayout_list);
+		
+		informationContainerFrameLayout = (FrameLayout) findViewById(R.id.activity_searchandgo_history_framelayout_info_container);
+		
+		if (!searchAndGoManager.getSearchHistory().isEmpty()) {
+			informationContainerFrameLayout.setVisibility(View.GONE);
+		}
 	}
 	
 	/**

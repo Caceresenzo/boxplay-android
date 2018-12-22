@@ -20,7 +20,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -136,18 +135,6 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 				SearchAndGoHistoryActivity.start();
 			}
 		});
-		historyImageButton.setOnLongClickListener(new OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View view) {
-				if (!searchAndGoManager.getSearchHistory().isEmpty() && historyImageButton.isEnabled()) {
-					boxPlayApplication.toast(R.string.boxplay_culture_searchngo_history_clear).show();
-					searchAndGoManager.getSearchSuggestionSubManager().clear();
-					return true;
-				}
-				
-				return false;
-			}
-		});
 		
 		expandRelativeLayout.setOnClickListener(new OnClickListener() {
 			@Override
@@ -159,6 +146,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 				}
 			}
 		});
+		
 		settingsExpandableLayout.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
 			int oldArrowRessource = -1;
 			

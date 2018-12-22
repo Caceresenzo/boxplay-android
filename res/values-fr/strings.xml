@@ -29,6 +29,8 @@
     <!--  -->
     <string name="boxplay_menu_searchandgo_details_action_open_in_browser">Ouvrir dans le navigateur</string>
     <!--  -->
+    <string name="boxplay_menu_searchandgo_history_action_clear_history">Vider l\'historique</string>
+    <!--  -->
     <!--  -->
 
 
@@ -307,6 +309,7 @@
     <string name="boxplay_culture_searchngo_searchbar_hint">Rechercher...</string>
     <string name="boxplay_culture_searchngo_history_clear">Historique supprimé!</string>
     <string name="boxplay_culture_searchngo_history_activity_title">Historique</string>
+    <string name="boxplay_culture_searchngo_history_already_empty">Historique vide</string>
     <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
     <string name="boxplay_culture_searchngo_detail_tab_content">CONTENU</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Ajouter à votre liste</string>
