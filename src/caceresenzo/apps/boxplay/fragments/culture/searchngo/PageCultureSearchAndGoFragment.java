@@ -9,16 +9,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.nex3z.flowlayout.FlowLayout;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.util.ArraySet;
 import android.support.v4.view.AsyncLayoutInflater;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
@@ -39,17 +37,18 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher.ViewFactory;
 import caceresenzo.android.libs.input.InputMethodUtils;
 import caceresenzo.apps.boxplay.R;
-import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
+import caceresenzo.apps.boxplay.activities.SearchAndGoHistoryActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchAndGoSearchCallback;
-import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchHistoryItem;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
+import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderWeakCache;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
+import caceresenzo.libs.bytes.ByteFormat;
 import caceresenzo.libs.string.StringUtils;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -61,11 +60,8 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	/* Managers */
 	private SearchAndGoManager searchAndGoManager;
 	
-	private DialogCreator dialogCreator;
-	
 	/* Local lists */
 	private List<SearchAndGoResult> results;
-	private List<SearchHistoryItem> searchQueryHistory;
 	
 	/* Views */
 	private TextInputEditText searchBarTextInputEditText;
@@ -74,14 +70,12 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	private TextView actualProgressTextView, lastProgressTextView;
 	private ImageButton historyImageButton;
 	private LinearLayout searchResultLinearLayout;
-	
 	private LinearLayout providerFlowingListContainerLinearLayout;
 	private RelativeLayout expandRelativeLayout;
 	private ImageSwitcher arrowImageSwitcher;
 	private ExpandableLayout settingsExpandableLayout;
-	
+	private Button clearCacheButton;
 	private ProgressBar loadingProgressBar;
-	
 	private FrameLayout informationContainerFrameLayout;
 	private TextView informationTextView;
 	
@@ -95,10 +89,8 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		super();
 		
 		this.searchAndGoManager = BoxPlayApplication.getManagers().getSearchAndGoManager();
-		this.dialogCreator = new DialogCreator();
 		
 		this.results = new ArrayList<>();
-		this.searchQueryHistory = searchAndGoManager.getSearchHistory();
 		
 		this.searchAndGoManager.bindCallback(new SearchAndGoSearchCallback() {
 			private String getString(int ressourceId, Object... formatArgs) { /* Avoid un-contextualized fragments */
@@ -182,6 +174,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		providerFlowingListContainerLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_provider_flowing_list_container);
 		expandRelativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_culture_searchngo_relativelayout_expand_button);
 		arrowImageSwitcher = (ImageSwitcher) view.findViewById(R.id.fragment_culture_searchngo_imageswitcher_expand_arrow);
+		clearCacheButton = (Button) view.findViewById(R.id.fragment_culture_searchngo_flowlayout_memory_clear_cache);
 		loadingProgressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_progressbar_loading);
 		informationContainerFrameLayout = (FrameLayout) view.findViewById(R.id.fragment_culture_searchngo_framelayout_info_container);
 		informationTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_info_text);
@@ -202,7 +195,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		historyImageButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				dialogCreator.showHistoryDialog();
+				SearchAndGoHistoryActivity.start();
 			}
 		});
 		historyImageButton.setOnLongClickListener(new OnLongClickListener() {
@@ -284,7 +277,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 				View itemView = LayoutInflater.from(context).inflate(R.layout.item_culture_searchandgo_provider, flowLayout, false);
 				
 				final int providerIndex = i;
-				new SearchAndGoProviderItemViewHolder(itemView).bind(provider, enabled, new SearchAndGoProviderItemListener() {
+				new SearchAndGoProviderItemViewBinder(itemView).bind(provider, enabled, new SearchAndGoProviderItemListener() {
 					@Override
 					public void onClick(View view, boolean nowEnabled) {
 						enabledStates[providerIndex] = nowEnabled;
@@ -311,11 +304,26 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			}
 		}
 		
+		clearCacheButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				int memorySize = ProviderWeakCache.computeMemorySizeAndDestroy();
+				
+				boxPlayApplication.toast(R.string.boxplay_culture_searchngo_settings_memory_clear_cache_cleared, ByteFormat.toHumanBytes(memorySize, 1)).show();
+				;
+			}
+		});
+		
 		setSearchBarHidden(false);
 		
 		return view;
 	}
 	
+	/**
+	 * Confirm a search.<br>
+	 * This will check the actual query and call {@link SearchAndGoManager#search(String)} to start the full search.<br>
+	 * This will also call {@link InputMethodUtils#hideKeyboard(Activity)}.
+	 */
 	public void searchConfirm() {
 		actualQuery = searchBarTextInputEditText.getText().toString();
 		
@@ -327,10 +335,19 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		InputMethodUtils.hideKeyboard(boxPlayApplication.getAttachedActivity());
 	}
 	
+	/**
+	 * Refresh actual result list by applying the same list with {@link #applyResultList(List)}.
+	 */
 	public void updateResultList() {
 		applyResultList(results);
 	}
 	
+	/**
+	 * Apply a new list and start {@link View} creation by recursively calling {@link #createNextSearchResultView(AsyncLayoutInflater, Iterator, long)}.
+	 * 
+	 * @param newResultList
+	 *            New result list from the query.
+	 */
 	public void applyResultList(List<SearchAndGoResult> newResultList) {
 		searchResultLinearLayout.removeAllViews();
 		
@@ -339,13 +356,23 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	/**
+	 * Create {@link View} recursively.
+	 * 
+	 * @param asyncLayoutInflater
+	 *            Global {@link AsyncLayoutInflater} inflating {@link View}s.
+	 * @param searchAndGoResultIterator
+	 *            Actual {@link Iterator} of the result {@link List}.
+	 * @param sourceSearchIncrementation
+	 *            Source id used when creating the first {@link View} just to be sure that were are not overlapping 2 different search results.
+	 */
 	private void createNextSearchResultView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<SearchAndGoResult> searchAndGoResultIterator, final long sourceSearchIncrementation) {
 		if (searchAndGoResultIterator.hasNext()) {
 			asyncLayoutInflater.inflate(R.layout.item_culture_searchngo_search_element, searchResultLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
 				@Override
 				public void onInflateFinished(View view, int resid, ViewGroup parent) {
 					if (sourceSearchIncrementation == searchResultIncrementer.get()) {
-						new SearchAndGoResultViewHolder(view).bind(searchAndGoResultIterator.next());
+						new SearchAndGoResultViewBinder(view).bind(searchAndGoResultIterator.next());
 						
 						parent.addView(view);
 						
@@ -356,14 +383,26 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	/**
+	 * Call when the search has started, this will hide unwanted elements.
+	 */
 	public void searchStart() {
 		setSearchBarHidden(true);
 	}
 	
+	/**
+	 * Call when the search has finish, this will show wanted elements.
+	 */
 	public void searchStop() {
 		setSearchBarHidden(false);
 	}
 	
+	/**
+	 * From 2 possible state, in search or not, hide or display elements.
+	 * 
+	 * @param hidden
+	 *            State.
+	 */
 	public void setSearchBarHidden(boolean hidden) {
 		historyImageButton.setEnabled(!hidden);
 		
@@ -385,6 +424,12 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	/**
+	 * Apply custom query to the search bar.
+	 * 
+	 * @param query
+	 *            Target query.
+	 */
 	public void applyQuery(String query) {
 		if (!StringUtils.validate(query)) {
 			return;
@@ -398,10 +443,24 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	/**
+	 * @return Actual query.
+	 */
 	public String getActualQuery() {
+		if (searchBarTextInputEditText != null) {
+			actualQuery = searchBarTextInputEditText.getText().toString();
+		}
+		
 		return actualQuery;
 	}
 	
+	/**
+	 * Change actual progress information.<br>
+	 * This will set a new progress to the main {@link TextView}, and set actual (before new) progress to the little {@link TextView}.
+	 * 
+	 * @param progress
+	 *            New progress string.
+	 */
 	public void updateProgress(String progress) {
 		actualProgressTextView.setText(progress);
 		lastProgressTextView.setText(lastProgress);
@@ -409,12 +468,20 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		lastProgress = progress;
 	}
 	
-	class SearchAndGoResultViewHolder {
+	/**
+	 * View binder to quicly bind layout to item.
+	 * 
+	 * @author Enzo CACERES
+	 */
+	class SearchAndGoResultViewBinder {
+		
+		/* Views */
 		private View view;
 		private TextView titleTextView, contentTextView, providerTextView, typeTextView;
 		private ImageView thumbnailImageView;
 		
-		public SearchAndGoResultViewHolder(View itemView) {
+		/* Constructor */
+		public SearchAndGoResultViewBinder(View itemView) {
 			view = itemView;
 			
 			titleTextView = (TextView) itemView.findViewById(R.id.item_culture_searchngo_search_element_textview_title);
@@ -425,6 +492,12 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			thumbnailImageView = (ImageView) itemView.findViewById(R.id.item_culture_searchngo_search_element_imageview_thumbnail);
 		}
 		
+		/**
+		 * Bind loaded view with this item.
+		 * 
+		 * @param result
+		 *            Target result.
+		 */
 		public void bind(final SearchAndGoResult result) {
 			view.setOnClickListener(new OnClickListener() {
 				@Override
@@ -443,61 +516,32 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	}
 	
 	/**
-	 * Class to quickly create dialog used by the Search n' Go fragment
-	 * 
-	 * Help: https://stackoverflow.com/questions/15762905/how-can-i-display-a-list-view-in-an-android-alert-dialog
-	 * 
-	 * TODO: Make a better settings system
+	 * Advanced view binder to bind SearchAndGoProvider item to layout and allow real-time saving and usability for the {@link SearchAndGoManager}.
 	 * 
 	 * @author Enzo CACERES
 	 */
-	class DialogCreator {
-		private AlertDialog searchHistoryDialog;
+	class SearchAndGoProviderItemViewBinder {
 		
-		private AlertDialog.Builder createBuilder() {
-			return new AlertDialog.Builder(BoxPlayActivity.getBoxPlayActivity());
-		}
-		
-		public void showHistoryDialog() {
-			AlertDialog.Builder builder = createBuilder();
-			builder.setTitle(getString(R.string.boxplay_culture_searchngo_dialog_search_history));
-			
-			String[] queryArray = new String[searchQueryHistory.size()];
-			
-			for (int i = 0; i < searchQueryHistory.size(); i++) {
-				queryArray[i] = searchQueryHistory.get(i).getQuery();
-			}
-			
-			builder.setItems(queryArray, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					try {
-						SearchHistoryItem historyItem = searchQueryHistory.get(which);
-						
-						historyItem.updateDate();
-						applyQuery(historyItem.getQuery());
-					} catch (Exception exception) {
-						Log.wtf("Error when applying query history", exception);
-					}
-				}
-			});
-			
-			searchHistoryDialog = builder.create();
-			searchHistoryDialog.show();
-		}
-	}
-	
-	class SearchAndGoProviderItemViewHolder extends RecyclerView.ViewHolder {
+		/* Views */
 		private CardView containerCardView;
 		private TextView contentTextView;
 		
-		public SearchAndGoProviderItemViewHolder(View itemView) {
-			super(itemView);
-			
+		/* Constructor */
+		public SearchAndGoProviderItemViewBinder(View itemView) {
 			containerCardView = (CardView) itemView.findViewById(R.id.item_culture_searchandgo_provider_cardview_container);
 			contentTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_provider_textview_container);
 		}
 		
+		/**
+		 * Bind the item to the loaded view.
+		 * 
+		 * @param provider
+		 *            Target provider instance.
+		 * @param enabled
+		 *            If the provider is already enabled.
+		 * @param searchAndGoProviderItemListener
+		 *            Callback.
+		 */
 		public void bind(final SearchAndGoProvider provider, boolean enabled, final SearchAndGoProviderItemListener searchAndGoProviderItemListener) {
 			contentTextView.setText(provider.getSiteName());
 			
@@ -514,6 +558,12 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			changeCardColor(enabled);
 		}
 		
+		/**
+		 * Change {@link CardView} color to "disable the outline" and make it fully colored.
+		 * 
+		 * @param selected
+		 *            If the {@link SearchAndGoProvider} is now selected.
+		 */
 		private void changeCardColor(boolean selected) {
 			int colorRessource = R.color.colorBackground;
 			
@@ -525,8 +575,21 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
+	/**
+	 * Simple Callback.
+	 * 
+	 * @author Enzo CACERES
+	 */
 	interface SearchAndGoProviderItemListener {
 		
+		/**
+		 * Called when the provider's view has been clicked.
+		 * 
+		 * @param view
+		 *            Original view.
+		 * @param nowEnabled
+		 *            New enabled state.
+		 */
 		void onClick(View view, boolean nowEnabled);
 		
 	}

@@ -308,6 +308,7 @@
     <string name="boxplay_culture_searchngo_title">Search n\' Go</string>
     <string name="boxplay_culture_searchngo_searchbar_hint">Search...</string>
     <string name="boxplay_culture_searchngo_history_clear">Cleared history!</string>
+    <string name="boxplay_culture_searchngo_history_activity_title">History</string>
     <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
     <string name="boxplay_culture_searchngo_detail_tab_content">CONTENT</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Add to Watch List</string>
@@ -317,6 +318,10 @@
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">An error append when extracting: %s \n\nGo to settings and choose to open logs at the extraction end for more details!</string>
     <string name="boxplay_culture_searchngo_searchbar_hint">Search</string>
     <string name="boxplay_culture_searchngo_settings_expandablelayout">Settings</string>
+    <string name="boxplay_culture_searchngo_settings_section_providers">Providers</string>
+    <string name="boxplay_culture_searchngo_settings_section_memory">Memory</string>
+    <string name="boxplay_culture_searchngo_settings_memory_clear_cache">Clear Cache</string>
+    <string name="boxplay_culture_searchngo_settings_memory_clear_cache_cleared">Cache Cleared (%s)</string>
     <!-- DIALOGS -->
     <string name="boxplay_culture_searchngo_dialog_search_history">Search history (10 last)</string>
     <string name="boxplay_culture_searchngo_dialog_settings">Settings</string>
@@ -635,6 +640,7 @@
     <string name="title_activity_music">MusicActivity</string>
     <string name="title_activity_image_viewer">ImageViewerActivity</string>
     <string name="title_activity_searchandgo_detail">SearchAndGoDetailActivity</string>
+    <string name="title_activity_searchandgo_history">SearchAndGoHistoryActivity</string>
     <string name="title_activity_manga_reader">MangaReaderActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>

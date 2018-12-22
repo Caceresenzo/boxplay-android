@@ -306,6 +306,7 @@
     <string name="boxplay_culture_searchngo_title">Search n\' Go</string>
     <string name="boxplay_culture_searchngo_searchbar_hint">Rechercher...</string>
     <string name="boxplay_culture_searchngo_history_clear">Historique supprimé!</string>
+    <string name="boxplay_culture_searchngo_history_activity_title">Historique</string>
     <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
     <string name="boxplay_culture_searchngo_detail_tab_content">CONTENU</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Ajouter à votre liste</string>
@@ -315,6 +316,10 @@
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">Une erreur est apparu lors de l\'extraction: %s \n\nAllez dans les paramètres, et choissisez d\'ouvrir les logs d\'extraction pour plus de details!</string>
     <string name="boxplay_culture_searchngo_searchbar_hint">Recherche</string>
     <string name="boxplay_culture_searchngo_settings_expandablelayout">Paramètres</string>
+    <string name="boxplay_culture_searchngo_settings_section_providers">Fournisseurs</string>
+    <string name="boxplay_culture_searchngo_settings_section_memory">Mémoire</string>
+    <string name="boxplay_culture_searchngo_settings_memory_clear_cache">Vider le Cache</string>
+    <string name="boxplay_culture_searchngo_settings_memory_clear_cache_cleared">Cache vidé (%s)</string>
     <!-- DIALOGS -->
     <string name="boxplay_culture_searchngo_dialog_search_history">Historique de recherche (10 derniers)</string>
     <string name="boxplay_culture_searchngo_dialog_settings">Paramètres</string>

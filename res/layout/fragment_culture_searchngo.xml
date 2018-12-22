@@ -119,14 +119,40 @@
                             app:el_duration="450"
                             app:el_expanded="true" >
 
-                            <com.nex3z.flowlayout.FlowLayout
-                                android:id="@+id/fragment_culture_searchngo_flowlayout_provider_container"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:gravity="center_horizontal"
-                                android:padding="3dp" >
-                            </com.nex3z.flowlayout.FlowLayout>
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    style="@style/textViewSimpleStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/boxplay_culture_searchngo_settings_section_providers" />
+
+                                <com.nex3z.flowlayout.FlowLayout
+                                    android:id="@+id/fragment_culture_searchngo_flowlayout_provider_container"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center_horizontal"
+                                    android:padding="3dp" >
+                                </com.nex3z.flowlayout.FlowLayout>
+
+                                <TextView
+                                    style="@style/textViewSimpleStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:text="@string/boxplay_culture_searchngo_settings_section_memory" />
+
+                                <Button
+                                    android:id="@+id/fragment_culture_searchngo_flowlayout_memory_clear_cache"
+                                    style="@style/buttonStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/boxplay_culture_searchngo_settings_memory_clear_cache" />
+                            </LinearLayout>
                         </net.cachapa.expandablelayout.ExpandableLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -172,6 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center_horizontal"
+                android:padding="16dp"
                 android:text="INFO" />
         </FrameLayout>
     </RelativeLayout>

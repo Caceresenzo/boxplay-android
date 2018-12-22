@@ -76,6 +76,16 @@
                 android:value="caceresenzo.apps.boxplay.activities.BoxPlayActivity" />
         </activity>
         <activity
+            android:name=".activities.SearchAndGoHistoryActivity"
+            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
+            android:label="@string/title_activity_searchandgo_history"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.BoxPlayActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="caceresenzo.apps.boxplay.activities.BoxPlayActivity" />
+        </activity>
+        <activity
             android:name=".activities.MangaChapterReaderActivity"
             android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
             android:label="@string/title_activity_manga_reader"
