@@ -17,9 +17,7 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
 import caceresenzo.libs.boxplay.common.extractor.video.IHentaiVideoContentProvider;
-import caceresenzo.libs.boxplay.culture.searchngo.callback.ProviderSearchCallback;
-import caceresenzo.libs.boxplay.culture.searchngo.callback.SearchCallback;
-import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderCallback;
+import caceresenzo.libs.boxplay.culture.searchngo.callback.delegate.CallbackDelegate;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
@@ -67,8 +65,6 @@ public class SearchAndGoManager extends AbstractManager {
 		this.providers = new ArrayList<>();
 		readProviders();
 		
-		registerCallbacks();
-		
 		// ContentExtractionManager.bindExtractor(ExtractorType.VIDEO, OldAbstractOpenloadVideoExtractor.class, new AndroidOpenloadVideoExtractor());
 	}
 	
@@ -114,7 +110,19 @@ public class SearchAndGoManager extends AbstractManager {
 		return providers;
 	}
 	
-	public void readProviders() {
+	public List<Class<? extends SearchAndGoProvider>> getProvidersAsClasses() {
+		List<Class<? extends SearchAndGoProvider>> classes = new ArrayList<>();
+		
+		for (SearchAndGoProvider provider : getProviders()) {
+			classes.add(provider.getClass());
+		}
+		
+		return classes;
+	}
+	
+	public List<SearchAndGoProvider> readProviders() {
+		providers.clear();
+		
 		Set<String> enabledProvidersSet = getManagers().getPreferences().getStringSet(getString(R.string.boxplay_other_settings_culture_searchngo_pref_enabled_providers_key), createDefaultProviderSet());
 		
 		for (ProviderManager creatableProvider : ProviderManager.values()) {
@@ -122,6 +130,8 @@ public class SearchAndGoManager extends AbstractManager {
 				providers.add(creatableProvider.create());
 			}
 		}
+		
+		return providers;
 	}
 	
 	public Set<String> createDefaultProviderSet() {
@@ -154,9 +164,9 @@ public class SearchAndGoManager extends AbstractManager {
 					}
 				}
 				
-				SearchAndGoProvider.provide(localProviders, localSearchQuery, true);
+				SearchAndGoProvider.provide(localProviders, localSearchQuery, true, createCallback());
 			} catch (Exception exception) {
-				; // Handled by callbacks
+				; /* Handled by callbacks */
 			}
 		}
 		
@@ -175,8 +185,8 @@ public class SearchAndGoManager extends AbstractManager {
 		}
 	}
 	
-	private void registerCallbacks() {
-		ProviderCallback.registerSearchCallback(new SearchCallback() { // Unused for now
+	private CallbackDelegate createCallback() {
+		return new CallbackDelegate() { // Unused for now
 			@Override
 			public void onSearchStarting() {
 				if (callback != null) {
@@ -224,9 +234,7 @@ public class SearchAndGoManager extends AbstractManager {
 					});
 				}
 			}
-		});
-		
-		ProviderCallback.registerProviderSearchCallback(new ProviderSearchCallback() {
+			
 			@Override
 			public void onProviderSearchStarting(final SearchAndGoProvider provider) {
 				if (callback != null) {
@@ -274,7 +282,8 @@ public class SearchAndGoManager extends AbstractManager {
 					});
 				}
 			}
-		});
+			
+		};
 	}
 	
 	public SearchHistorySubManager getSearchSuggestionSubManager() {

@@ -49,8 +49,8 @@
     <dimen name="item_error_text_separation_padding">6dp</dimen>
 
     <!-- SEARCH N' GO (element) -->
-    <dimen name="searchngo_button_margin">8dp</dimen>
-    <dimen name="searchngo_button_padding">6dp</dimen>
+    <dimen name="searchngo_button_margin">2dp</dimen>
+    <dimen name="searchngo_button_padding">12dp</dimen>
     <dimen name="searchngo_element_text_margin">14dp</dimen>
     <dimen name="searchngo_element_text_margin_next_to_separator">8dp</dimen>
     <dimen name="searchngo_element_seperator_margin">8dp</dimen>

@@ -7,39 +7,51 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.mancj.materialsearchbar.MaterialSearchBar;
-import com.mancj.materialsearchbar.MaterialSearchBar.OnSearchActionListener;
+import com.nex3z.flowlayout.FlowLayout;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.util.ArraySet;
 import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewSwitcher.ViewFactory;
+import caceresenzo.android.libs.input.InputMethodUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
+import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchAndGoSearchCallback;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchHistoryItem;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
+import caceresenzo.libs.string.StringUtils;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	
@@ -56,19 +68,22 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	private List<SearchHistoryItem> searchQueryHistory;
 	
 	/* Views */
-	private MaterialSearchBar materialSearchBar;
+	private TextInputEditText searchBarTextInputEditText;
+	private TextInputLayout searchBarContainerTextInputLayout;
 	private RelativeLayout progressContainerRelativeLayout;
 	private TextView actualProgressTextView, lastProgressTextView;
-	private ImageButton historyImageButton, settingsImageButton;
+	private ImageButton historyImageButton;
 	private LinearLayout searchResultLinearLayout;
+	
+	private LinearLayout providerFlowingListContainerLinearLayout;
+	private RelativeLayout expandRelativeLayout;
+	private ImageSwitcher arrowImageSwitcher;
+	private ExpandableLayout settingsExpandableLayout;
 	
 	private ProgressBar loadingProgressBar;
 	
 	private FrameLayout informationContainerFrameLayout;
 	private TextView informationTextView;
-	
-	/* Listeners */
-	private OnSearchActionListener onSearchActionListener;
 	
 	/* Variables */
 	private AtomicLong searchResultIncrementer;
@@ -156,37 +171,33 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_culture_searchngo, container, false);
 		
-		materialSearchBar = (MaterialSearchBar) view.findViewById(R.id.fragment_culture_searchngo_materialsearchbar_searchbar);
-		
-		materialSearchBar.setOnSearchActionListener(onSearchActionListener = new OnSearchActionListener() {
-			@Override
-			public void onSearchConfirmed(CharSequence text) {
-				searchAndGoManager.search(actualQuery = text.toString());
-			}
-			
-			@Override
-			public void onSearchStateChanged(boolean enabled) {
-				if (!enabled) {
-					results.clear();
-					updateResultList();
-					
-					actualQuery = null;
-				}
-			}
-			
-			@Override
-			public void onButtonClicked(int buttonCode) {
-				materialSearchBar.hideSuggestionsList();
-			}
-		});
-		
+		searchBarContainerTextInputLayout = (TextInputLayout) view.findViewById(R.id.fragment_culture_searchngo_textinputlayout_searchbar_container);
+		searchBarTextInputEditText = (TextInputEditText) view.findViewById(R.id.fragment_culture_searchngo_textinputedittext_searchbar);
 		progressContainerRelativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_culture_searchngo_relativelayout_progress_container);
-		
 		actualProgressTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_progress_actual);
 		lastProgressTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_progress_last);
-		
 		historyImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_history);
-		settingsImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_settings);
+		searchResultLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_search_result);
+		settingsExpandableLayout = (ExpandableLayout) view.findViewById(R.id.fragment_culture_searchngo_expandablelayout_container);
+		providerFlowingListContainerLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_provider_flowing_list_container);
+		expandRelativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_culture_searchngo_relativelayout_expand_button);
+		arrowImageSwitcher = (ImageSwitcher) view.findViewById(R.id.fragment_culture_searchngo_imageswitcher_expand_arrow);
+		loadingProgressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_progressbar_loading);
+		informationContainerFrameLayout = (FrameLayout) view.findViewById(R.id.fragment_culture_searchngo_framelayout_info_container);
+		informationTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_info_text);
+		
+		searchBarTextInputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_GO) {
+					searchConfirm();
+					
+					return true;
+				}
+				
+				return false;
+			}
+		});
 		
 		historyImageButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -206,23 +217,114 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 				return false;
 			}
 		});
-		settingsImageButton.setOnClickListener(new OnClickListener() {
+		
+		expandRelativeLayout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				dialogCreator.showSettingsDialog();
+				if (settingsExpandableLayout.isExpanded()) {
+					settingsExpandableLayout.collapse();
+				} else {
+					settingsExpandableLayout.expand();
+				}
+			}
+		});
+		settingsExpandableLayout.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+			int oldArrowRessource = -1;
+			
+			@Override
+			public void onExpansionUpdate(float expansionFraction, int state) {
+				int arrowRessource = -1;
+				
+				switch (state) {
+					case ExpandableLayout.State.COLLAPSING: {
+						arrowRessource = R.drawable.icon_keyboard_arrow_down_white_24dp;
+						break;
+					}
+					
+					case ExpandableLayout.State.EXPANDING: {
+						arrowRessource = R.drawable.icon_keyboard_arrow_up_white_24dp;
+						break;
+					}
+				}
+				
+				if (arrowRessource != -1 && oldArrowRessource != arrowRessource) {
+					oldArrowRessource = arrowRessource;
+					
+					arrowImageSwitcher.setImageResource(arrowRessource);
+				}
 			}
 		});
 		
-		searchResultLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_search_result);
+		Animation in = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+		Animation out = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+		arrowImageSwitcher.setInAnimation(in);
+		arrowImageSwitcher.setOutAnimation(out);
+		arrowImageSwitcher.setFactory(new ViewFactory() {
+			public View makeView() {
+				return new ImageView(context);
+			}
+		});
+		expandRelativeLayout.callOnClick();
 		
-		loadingProgressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_progressbar_loading);
-		
-		informationContainerFrameLayout = (FrameLayout) view.findViewById(R.id.fragment_culture_searchngo_framelayout_info_container);
-		informationTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_info_text);
+		/* Flowing-list of Providers */
+		{
+			final ProviderManager[] creatableProviders = ProviderManager.values();
+			Set<String> enabledProvidersSet = boxPlayApplication.getPreferences().getStringSet(getString(R.string.boxplay_other_settings_culture_searchngo_pref_enabled_providers_key), searchAndGoManager.createDefaultProviderSet());
+			
+			final SearchAndGoProvider[] instancedSearchAndGoProviders = new SearchAndGoProvider[creatableProviders.length];
+			final boolean[] enabledStates = new boolean[creatableProviders.length];
+			
+			FlowLayout flowLayout = view.findViewById(R.id.fragment_culture_searchngo_flowlayout_provider_container);
+			for (int i = 0; i < creatableProviders.length; i++) {
+				ProviderManager manager = creatableProviders[i];
+				SearchAndGoProvider provider = instancedSearchAndGoProviders[i] = manager.create();
+				
+				boolean enabled = enabledStates[i] = enabledProvidersSet.contains(manager.toString());
+				
+				View itemView = LayoutInflater.from(context).inflate(R.layout.item_culture_searchandgo_provider, flowLayout, false);
+				
+				final int providerIndex = i;
+				new SearchAndGoProviderItemViewHolder(itemView).bind(provider, enabled, new SearchAndGoProviderItemListener() {
+					@Override
+					public void onClick(View view, boolean nowEnabled) {
+						enabledStates[providerIndex] = nowEnabled;
+						
+						/* Saving everything */
+						Set<String> newEnabledProviders = new ArraySet<>();
+						List<SearchAndGoProvider> actualProviders = searchAndGoManager.getProviders();
+						
+						actualProviders.clear();
+						
+						for (int i = 0; i < creatableProviders.length; i++) {
+							if (enabledStates[i]) {
+								actualProviders.add(instancedSearchAndGoProviders[i]);
+								
+								newEnabledProviders.add(creatableProviders[i].toString());
+							}
+						}
+						
+						boxPlayApplication.getPreferences().edit().putStringSet(getString(R.string.boxplay_other_settings_culture_searchngo_pref_enabled_providers_key), newEnabledProviders).commit();
+					}
+				});
+				
+				flowLayout.addView(itemView);
+			}
+		}
 		
 		setSearchBarHidden(false);
 		
 		return view;
+	}
+	
+	public void searchConfirm() {
+		actualQuery = searchBarTextInputEditText.getText().toString();
+		
+		if (!StringUtils.validate(actualQuery)) {
+			return;
+		}
+		
+		searchAndGoManager.search(actualQuery);
+		InputMethodUtils.hideKeyboard(boxPlayApplication.getAttachedActivity());
 	}
 	
 	public void updateResultList() {
@@ -264,10 +366,12 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	
 	public void setSearchBarHidden(boolean hidden) {
 		historyImageButton.setEnabled(!hidden);
-		settingsImageButton.setEnabled(!hidden);
 		
 		progressContainerRelativeLayout.setVisibility(hidden ? View.VISIBLE : View.GONE);
-		materialSearchBar.setVisibility(hidden ? View.GONE : View.VISIBLE);
+		searchBarTextInputEditText.setVisibility(hidden ? View.GONE : View.VISIBLE);
+		searchBarContainerTextInputLayout.setVisibility(searchBarTextInputEditText.getVisibility());
+		historyImageButton.setVisibility(searchBarTextInputEditText.getVisibility());
+		providerFlowingListContainerLinearLayout.setVisibility(searchBarTextInputEditText.getVisibility());
 		searchResultLinearLayout.setVisibility(hidden ? View.GONE : View.VISIBLE);
 		
 		loadingProgressBar.setVisibility(hidden ? View.VISIBLE : View.GONE);
@@ -279,16 +383,16 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			searchResultLinearLayout.setVisibility(View.GONE);
 			informationTextView.setText(R.string.boxplay_culture_searchngo_info_no_provider);
 		}
-		
-		if (!hidden) { /* Sometimes, text is not applied */
-			materialSearchBar.setText(materialSearchBar.getText());
-		}
 	}
 	
 	public void applyQuery(String query) {
-		if (materialSearchBar != null && onSearchActionListener != null) {
-			materialSearchBar.setText(query);
-			onSearchActionListener.onSearchConfirmed(query);
+		if (!StringUtils.validate(query)) {
+			return;
+		}
+		
+		if (searchBarTextInputEditText != null) {
+			searchBarTextInputEditText.setText(query);
+			searchConfirm();
 			
 			actualQuery = query;
 		}
@@ -348,11 +452,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	 * @author Enzo CACERES
 	 */
 	class DialogCreator {
-		private final int SETTINGS_DIALOG_SELECTION_PROVIDERS = 0;
-		
-		private SharedPreferences preferences = boxPlayApplication.getPreferences();
-		
-		private AlertDialog searchHistoryDialog, settingsDialog, providersSettingsDialog;
+		private AlertDialog searchHistoryDialog;
 		
 		private AlertDialog.Builder createBuilder() {
 			return new AlertDialog.Builder(BoxPlayActivity.getBoxPlayActivity());
@@ -385,103 +485,50 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			searchHistoryDialog = builder.create();
 			searchHistoryDialog.show();
 		}
+	}
+	
+	class SearchAndGoProviderItemViewHolder extends RecyclerView.ViewHolder {
+		private CardView containerCardView;
+		private TextView contentTextView;
 		
-		public void showSettingsDialog() {
-			if (settingsDialog != null) {
-				settingsDialog.show();
-				return;
-			}
+		public SearchAndGoProviderItemViewHolder(View itemView) {
+			super(itemView);
 			
-			AlertDialog.Builder builder = createBuilder();
-			builder.setTitle(getString(R.string.boxplay_culture_searchngo_dialog_settings));
-			
-			String[] settings = new String[] { getString(R.string.boxplay_culture_searchngo_dialog_settings_item_provider) };
-			
-			builder.setItems(settings, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					switch (which) {
-						case SETTINGS_DIALOG_SELECTION_PROVIDERS: {
-							showProvidersSettingsDialog();
-							break;
-						}
-						
-						default: {
-							break;
-						}
-					}
-				}
-			});
-			
-			settingsDialog = builder.create();
-			settingsDialog.show();
+			containerCardView = (CardView) itemView.findViewById(R.id.item_culture_searchandgo_provider_cardview_container);
+			contentTextView = (TextView) itemView.findViewById(R.id.item_culture_searchandgo_provider_textview_container);
 		}
 		
-		public void showProvidersSettingsDialog() {
-			if (providersSettingsDialog != null) {
-				providersSettingsDialog.show();
-				return;
-			}
+		public void bind(final SearchAndGoProvider provider, boolean enabled, final SearchAndGoProviderItemListener searchAndGoProviderItemListener) {
+			contentTextView.setText(provider.getSiteName());
 			
-			AlertDialog.Builder builder = createBuilder();
-			builder.setTitle(R.string.boxplay_culture_searchngo_dialog_settings_item_provider);
-			
-			final ProviderManager[] creatableProviders = ProviderManager.values();
-			Set<String> enabledProvidersSet = preferences.getStringSet(getString(R.string.boxplay_other_settings_culture_searchngo_pref_enabled_providers_key), searchAndGoManager.createDefaultProviderSet());
-			
-			final SearchAndGoProvider[] instancedSearchAndGoProviders = new SearchAndGoProvider[creatableProviders.length];
-			final String[] providerSites = new String[creatableProviders.length];
-			final boolean[] checkedItems = new boolean[creatableProviders.length];
-			
-			for (int i = 0; i < creatableProviders.length; i++) {
-				SearchAndGoProvider provider = creatableProviders[i].create();
-				
-				instancedSearchAndGoProviders[i] = provider;
-				
-				providerSites[i] = provider.getSiteName();
-				
-				checkedItems[i] = enabledProvidersSet.contains(creatableProviders[i].toString());
-			}
-			
-			builder.setMultiChoiceItems(providerSites, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+			containerCardView.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					checkedItems[which] = isChecked;
+				public void onClick(View view) {
+					boolean contain = searchAndGoManager.getProvidersAsClasses().contains(provider.getClass());
+					
+					changeCardColor(!contain);
+					searchAndGoProviderItemListener.onClick(view, !contain);
 				}
 			});
 			
-			builder.setPositiveButton(getString(R.string.boxplay_culture_searchngo_dialog_settings_item_provider_button_validate), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Set<String> newEnabledProviders = new ArraySet<>();
-					List<SearchAndGoProvider> actualProviders = searchAndGoManager.getProviders();
-					
-					actualProviders.clear();
-					
-					for (int i = 0; i < creatableProviders.length; i++) {
-						if (checkedItems[i]) {
-							actualProviders.add(instancedSearchAndGoProviders[i]);
-							
-							newEnabledProviders.add(creatableProviders[i].toString());
-						}
-					}
-					
-					preferences.edit().putStringSet(getString(R.string.boxplay_other_settings_culture_searchngo_pref_enabled_providers_key), newEnabledProviders).commit();
-					
-					setSearchBarHidden(false);
-				}
-			});
-			
-			builder.setNegativeButton(getString(R.string.boxplay_culture_searchngo_dialog_settings_item_provider_button_cancel), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					providersSettingsDialog = null; // Nullify it so everything will be recreated with before values
-				}
-			});
-			
-			providersSettingsDialog = builder.create();
-			providersSettingsDialog.show();
+			changeCardColor(enabled);
 		}
+		
+		private void changeCardColor(boolean selected) {
+			int colorRessource = R.color.colorBackground;
+			
+			if (selected) {
+				colorRessource = R.color.colorAccent;
+			}
+			
+			containerCardView.setBackgroundColor(ViewHelper.color(colorRessource));
+		}
+	}
+	
+	interface SearchAndGoProviderItemListener {
+		
+		void onClick(View view, boolean nowEnabled);
+		
 	}
 	
 }

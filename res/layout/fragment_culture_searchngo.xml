@@ -5,6 +5,7 @@
     android:layout_height="match_parent" >
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/fragment_culture_searchngo_nestedscrollview_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -17,51 +18,119 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/main_card_margin_vertical_big"
-                android:layout_marginEnd="@dimen/main_card_margin_horizontal"
-                android:layout_marginStart="@dimen/main_card_margin_horizontal"
-                android:layout_marginTop="@dimen/main_card_margin_vertical_big" >
-
-                <com.mancj.materialsearchbar.MaterialSearchBar
-                    android:id="@+id/fragment_culture_searchngo_materialsearchbar_searchbar"
-                    style="@style/customMaterialSearchBarStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include layout="@layout/fragment_culture_searchngo_progress" />
-            </FrameLayout>
-
-            <include layout="@layout/view_line_separator" />
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/cardViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal" >
+                android:layout_margin="@dimen/main_card_margin" >
 
-                <ImageButton
-                    android:id="@+id/fragment_culture_searchngo_imagebutton_history"
-                    style="@style/imageViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/searchngo_button_margin"
-                    android:layout_weight="0.3"
-                    android:padding="@dimen/searchngo_button_padding"
-                    android:src="@drawable/icon_history_white_24dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
-                <ImageButton
-                    android:id="@+id/fragment_culture_searchngo_imagebutton_settings"
-                    style="@style/imageViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/searchngo_button_margin"
-                    android:layout_weight="0.3"
-                    android:padding="@dimen/searchngo_button_padding"
-                    android:src="@drawable/icon_settings_white_24dp" />
-            </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/main_card_margin_horizontal"
+                        android:layout_marginStart="@dimen/main_card_margin_horizontal"
+                        android:layout_marginTop="@dimen/main_card_margin_vertical_big" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/fragment_culture_searchngo_textinputlayout_searchbar_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.9" >
+
+                                <android.support.design.widget.TextInputEditText
+                                    android:id="@+id/fragment_culture_searchngo_textinputedittext_searchbar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableStart="@drawable/icon_search_white_24dp"
+                                    android:hint="@string/boxplay_culture_searchngo_searchbar_hint"
+                                    android:imeOptions="actionGo"
+                                    android:inputType="text"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@color/colorAccent" />
+
+                                <requestFocus />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <ImageButton
+                                android:id="@+id/fragment_culture_searchngo_imagebutton_history"
+                                style="@style/imageViewStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/searchngo_button_margin"
+                                android:layout_weight="0.1"
+                                android:background="@color/colorCard"
+                                android:padding="@dimen/searchngo_button_padding"
+                                android:src="@drawable/icon_history_white_24dp" />
+                        </LinearLayout>
+
+                        <include layout="@layout/fragment_culture_searchngo_progress" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_culture_searchngo_linearlayout_provider_flowing_list_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/fragment_culture_searchngo_relativelayout_expand_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:windowBackground"
+                            android:backgroundTint="@color/colorCard"
+                            android:foreground="?selectableItemBackground" >
+
+                            <!-- android:elevation="6dp" -->
+
+                            <ImageSwitcher
+                                android:id="@+id/fragment_culture_searchngo_imageswitcher_expand_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:padding="8dp" />
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/fragment_culture_searchngo_imageswitcher_expand_arrow"
+                                android:gravity="center_vertical"
+                                android:paddingVertical="16dp"
+                                android:text="@string/boxplay_culture_searchngo_settings_expandablelayout" />
+                        </RelativeLayout>
+
+                        <net.cachapa.expandablelayout.ExpandableLayout
+                            android:id="@+id/fragment_culture_searchngo_expandablelayout_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            app:el_duration="450"
+                            app:el_expanded="true" >
+
+                            <com.nex3z.flowlayout.FlowLayout
+                                android:id="@+id/fragment_culture_searchngo_flowlayout_provider_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_horizontal"
+                                android:padding="3dp" >
+                            </com.nex3z.flowlayout.FlowLayout>
+                        </net.cachapa.expandablelayout.ExpandableLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
             <include layout="@layout/view_line_separator" />
 
@@ -78,26 +147,33 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/fragment_culture_searchngo_progressbar_loading"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/fragment_culture_searchngo_nestedscrollview_container" >
 
-    <FrameLayout
-        android:id="@+id/fragment_culture_searchngo_framelayout_info_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
-
-        <TextView
-            android:id="@+id/fragment_culture_searchngo_textview_info_text"
-            style="@style/textViewTitleStyle"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/fragment_culture_searchngo_progressbar_loading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="INFO" />
-    </FrameLayout>
+            android:layout_centerInParent="true" />
+
+        <FrameLayout
+            android:id="@+id/fragment_culture_searchngo_framelayout_info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+            <TextView
+                android:id="@+id/fragment_culture_searchngo_textview_info_text"
+                style="@style/textViewTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:text="INFO" />
+        </FrameLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
