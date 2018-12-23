@@ -56,6 +56,9 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	/* Constants */
 	public static final int MAX_CONTENT_ITEM_DISPLAYABLE = 70;
 	
+	/* Instance */
+	private static PageCultureSearchAndGoFragment INSTANCE;
+	
 	/* Managers */
 	private SearchAndGoManager searchAndGoManager;
 	
@@ -98,6 +101,8 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		INSTANCE = this;
+		
 		View view = inflater.inflate(R.layout.fragment_culture_searchngo, container, false);
 		
 		searchBarContainerTextInputLayout = (TextInputLayout) view.findViewById(R.id.fragment_culture_searchngo_textinputlayout_searchbar_container);
@@ -314,6 +319,13 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		return view;
 	}
 	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		
+		INSTANCE = null;
+	}
+	
 	/**
 	 * Confirm a search.<br>
 	 * This will check the actual query and call {@link SearchAndGoManager#search(String)} to start the full search.<br>
@@ -463,6 +475,13 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		lastProgressTextView.setText(lastProgress);
 		
 		lastProgress = progress;
+	}
+	
+	/**
+	 * @return Actual instance of the {@link PageCultureSearchAndGoFragment}.
+	 */
+	public static PageCultureSearchAndGoFragment getSearchAndGoFragment() {
+		return INSTANCE;
 	}
 	
 	/**

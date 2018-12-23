@@ -41,14 +41,9 @@ public class SearchAndGoHistoryActivity extends BaseBoxPlayActivty {
 	/* Constructor */
 	public SearchAndGoHistoryActivity() {
 		super();
-		
+
+		this.searchAndGoFragment = PageCultureSearchAndGoFragment.getSearchAndGoFragment();
 		this.searchAndGoManager = managers.getSearchAndGoManager();
-		
-		try {
-			this.searchAndGoFragment = (PageCultureSearchAndGoFragment) CultureFragment.getCultureFragment().withSearchAndGo().getActualFragment();
-		} catch (Exception exception) {
-			/* NullPointerException */
-		}
 	}
 	
 	@Override
