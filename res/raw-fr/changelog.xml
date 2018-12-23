@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.18 BETA" changeDate="22/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 16 - Designe &amp; Ressenti[/b]</changelogtext>
+		<changelogtext>[b]Nouveau![/b] Designe d'interface pour le Search n' Go.</changelogtext>
+		<changelogtext>[b]Nouveau![/b] Page d'historique pour le Search n' Go.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] La possibilité de reprendre une recherche en cours si vous quittiez le fragment avant la fin.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bag qui faisait que les providers ne marchait pas si le cache était vidé a cause de la limite de mémoire du périphérique.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug causé par une mauvaise gestion des callbacks.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que la bar de progression allait au dessus d'autre élements.</changelogtext>
+		<changelogtext>[b]Désactivé![/b] Fournisseur cassé: I-Animes (le contourneur de protection cloudflare ne marche pas).</changelogtext>
+		<changelogtext>[b]Désactivé![/b] Fournisseur cassé: HDSS.to (pas d'extracteur disponible).</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Du vieu code non utilisé.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Une ancienne, buggé, barre de recherche en material design du Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.17 BETA" changeDate="15/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 15[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] I-Animes en tant que fourniseur video pour le Search n' Go.</changelogtext>

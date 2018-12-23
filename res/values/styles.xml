@@ -100,19 +100,4 @@
         <item name="length">SHORT</item>
     </style>
 
-    <style name="customMaterialSearchBarStyle" parent="@style/MaterialSearchBarDark">
-        <item name="mt_dividerColor">@color/colorAccent</item>
-        <item name="mt_hint">@string/boxplay_culture_searchngo_searchbar_hint</item>
-        <item name="mt_maxSuggestionsCount">0</item>
-        <item name="mt_roundedSearchBarEnabled">false</item>
-        <item name="mt_navIconTint">@color/white</item>
-        <item name="mt_searchIconTint">@color/white</item>
-        <item name="mt_clearIconTint">@color/white</item>
-        <item name="mt_menuIconTint">@color/white</item>
-        <item name="mt_backIconTint">@color/white</item>
-        <item name="mt_textCursorTint">@color/colorAccent</item>
-        <item name="mt_textColor">@color/white</item>
-        <item name="mt_hintColor">@color/white</item>
-    </style>
-
 </resources>

@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.18 BETA" changeDate="22/12/2018">
+		<changelogtext>[b]Search n' Go Update PREVIEW 16 - Look &amp; Feel[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Search n' Go interface design.</changelogtext>
+		<changelogtext>[b]New![/b] Search n' Go history page.</changelogtext>
+		<changelogtext>[b]Added![/b] Possibility to resume a search if you were leaving the fragment before its end.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing provider not working if the cache were cleared due to device memory limit reach.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug caused by bad callbacks management.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing progress-bar to overlap other elements.</changelogtext>
+		<changelogtext>[b]Disabled![/b] Broken provider: I-Animes (cloudflare protection bypass not working).</changelogtext>
+		<changelogtext>[b]Disabled![/b] Broken provider: HDSS.to (no extractor available).</changelogtext>
+		<changelogtext>[b]Removed![/b] Old unused code.</changelogtext>
+		<changelogtext>[b]Removed![/b] Old, bugged, material search bar from the Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.17 BETA" changeDate="15/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 15[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] I-Animes as a Search n' Go video provider.</changelogtext>

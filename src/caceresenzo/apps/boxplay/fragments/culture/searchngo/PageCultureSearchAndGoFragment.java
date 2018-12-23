@@ -236,7 +236,6 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 				int memorySize = ProviderWeakCache.computeMemorySizeAndDestroy();
 				
 				boxPlayApplication.toast(R.string.boxplay_culture_searchngo_settings_memory_clear_cache_cleared, ByteFormat.toHumanBytes(memorySize, 1)).show();
-				;
 			}
 		});
 		
