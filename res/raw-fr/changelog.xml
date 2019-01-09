@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.19 BETA" changeDate="09/01/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 17[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un selecteur de qualité pour les vidéos de certain lecteurs.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un bouton pour appliquer la recherche dans le Search n' Go.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Le thème rouge de Noël.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Mauvaise url pour le fournisseur Full-Stream.co dans le Search n' Go.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que Adkami n'utilisais pas certain lecteur de vidéos.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.18 BETA" changeDate="22/12/2018">
 		<changelogtext>[b]Search n' Go Update PREVIEW 16 - Designe &amp; Ressenti[/b]</changelogtext>
 		<changelogtext>[b]Nouveau![/b] Designe d'interface pour le Search n' Go.</changelogtext>
