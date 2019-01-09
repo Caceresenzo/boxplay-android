@@ -46,13 +46,12 @@
                                 android:id="@+id/fragment_culture_searchngo_textinputlayout_searchbar_container"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.9" >
+                                android:layout_weight="0.8" >
 
                                 <android.support.design.widget.TextInputEditText
                                     android:id="@+id/fragment_culture_searchngo_textinputedittext_searchbar"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:drawableStart="@drawable/icon_search_white_24dp"
                                     android:hint="@string/boxplay_culture_searchngo_searchbar_hint"
                                     android:imeOptions="actionGo"
                                     android:inputType="text"
@@ -61,6 +60,23 @@
 
                                 <requestFocus />
                             </android.support.design.widget.TextInputLayout>
+
+                            <!-- <EditText -->
+                            <!-- android:id="@+id/fragment_culture_searchngo_textinputedittext_searchbar" -->
+                            <!-- android:layout_width="match_parent" -->
+                            <!-- android:layout_height="wrap_content" -->
+                            <!-- android:layout_weight="0.8" /> -->
+
+                            <ImageButton
+                                android:id="@+id/fragment_culture_searchngo_imagebutton_search"
+                                style="@style/imageViewStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/searchngo_button_margin"
+                                android:layout_weight="0.1"
+                                android:background="@color/colorCard"
+                                android:padding="@dimen/searchngo_button_padding"
+                                android:src="@drawable/icon_search_white_24dp" />
 
                             <ImageButton
                                 android:id="@+id/fragment_culture_searchngo_imagebutton_history"

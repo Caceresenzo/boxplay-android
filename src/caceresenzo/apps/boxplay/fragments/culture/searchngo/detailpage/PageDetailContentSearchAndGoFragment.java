@@ -31,7 +31,10 @@ import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor;
-import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor.VideoContentExtractorProgressCallback;
+import caceresenzo.libs.boxplay.common.extractor.video.VideoQualityContentExtractor;
+import caceresenzo.libs.boxplay.common.extractor.video.base.BaseVideoContentExtractor;
+import caceresenzo.libs.boxplay.common.extractor.video.base.BaseVideoContentExtractor.VideoContentExtractorProgressCallback;
+import caceresenzo.libs.boxplay.common.extractor.video.model.VideoQuality;
 import caceresenzo.libs.boxplay.culture.searchngo.content.video.IVideoContentProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleUrlData;
@@ -277,7 +280,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		private ContentViewBinder viewBinder;
 		
 		private IVideoContentProvider videoContentProvider;
-		private VideoContentExtractor extractor;
+		private BaseVideoContentExtractor extractor;
 		
 		private String directUrl;
 		
@@ -343,13 +346,13 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		
 		public void processUrl(String videoPageUrl) {
 			try {
-				extractor = (VideoContentExtractor) ContentExtractionManager.getExtractorFromBaseUrl(ExtractorType.VIDEO, videoPageUrl);
+				extractor = (BaseVideoContentExtractor) ContentExtractionManager.getExtractorFromBaseUrl(ExtractorType.VIDEO, videoPageUrl);
 				
 				if (extractor == null) {
 					throw new NullPointerException(String.format("ContentExtractor is null, site not supported? (page url: %s)", videoPageUrl));
 				}
 				
-				directUrl = extractor.extractDirectVideoUrl(videoPageUrl, new VideoContentExtractorProgressCallback() {
+				VideoContentExtractorProgressCallback callback = new VideoContentExtractorProgressCallback() {
 					@Override
 					public void onDownloadingUrl(final String targetUrl) {
 						handler.post(new Runnable() {
@@ -391,7 +394,54 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 							}
 						});
 					}
-				});
+				};
+				
+				if (extractor instanceof VideoContentExtractor) {
+					directUrl = ((VideoContentExtractor) extractor).extractDirectVideoUrl(videoPageUrl, callback);
+				} else if (extractor instanceof VideoQualityContentExtractor) {
+					final List<VideoQuality> qualities = ((VideoQualityContentExtractor) extractor).extractVideoQualities(videoPageUrl, callback);
+					
+					if (qualities != null && !qualities.isEmpty()) {
+						VideoQuality targetVideoQuality;
+						
+						if (qualities.size() == 1) {
+							targetVideoQuality = qualities.get(0);
+						} else {
+							lock();
+							
+							final ObjectWrapper<VideoQuality> videoQualityObjectWrapper = new ObjectWrapper<VideoQuality>(null);
+							
+							handler.post(new Runnable() {
+								@Override
+								public void run() {
+									dialogCreator.showAvailableVideoQualitiesDialog(qualities, new VideoQualityDialogCallback() {
+										@Override
+										public void onClick(final int which) {
+											videoQualityObjectWrapper.setValue(qualities.get(which));
+											unlock();
+										}
+									}, new OnCancelListener() {
+										@Override
+										public void onCancel(DialogInterface dialog) {
+											closeDialog();
+											terminate();
+										}
+									});
+								}
+							});
+							
+							waitUntilUnlock();
+							
+							targetVideoQuality = videoQualityObjectWrapper.getValue();
+						}
+						
+						if (targetVideoQuality != null) {
+							directUrl = targetVideoQuality.getVideoUrl();
+						}
+					}
+				} else {
+					throw new IllegalStateException("Unhandled extractor type: " + extractor.getClass().getSimpleName());
+				}
 				
 				closeDialog();
 				
@@ -411,7 +461,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 					
 					switch (action) {
 						case ACTION_STREAMING: {
-							BoxPlayApplication.getManagers().getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
+							managers.getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
 							break;
 						}
 						
@@ -451,7 +501,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 					Log.e(TAG, "Can't print in the extractor's logger (null)", exception);
 				}
 				
-				BoxPlayApplication.getBoxPlayApplication().toast(R.string.boxplay_culture_searchngo_extractor_error_failed_to_extract, exception.getLocalizedMessage());
+				boxPlayApplication.toast(R.string.boxplay_culture_searchngo_extractor_error_failed_to_extract, exception.getLocalizedMessage());
 			}
 			
 			if (managers.getDebugManager().openLogsAtExtractorEnd() && extractor != null) {
@@ -525,6 +575,28 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 			builder.create().show();
 		}
 		
+		public void showAvailableVideoQualitiesDialog(List<VideoQuality> qualities, final VideoQualityDialogCallback callback, OnCancelListener onCancelListener) {
+			AlertDialog.Builder builder = createBuilder();
+			builder.setTitle(getString(R.string.boxplay_culture_searchngo_extractor_dialog_available_video_qualities));
+			
+			String[] itemArray = new String[qualities.size()];
+			
+			for (int i = 0; i < qualities.size(); i++) {
+				itemArray[i] = qualities.get(i).getResolution();
+			}
+			
+			builder.setItems(itemArray, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					callback.onClick(which);
+				}
+			});
+			
+			builder.setOnCancelListener(onCancelListener);
+			
+			builder.create().show();
+		}
+		
 		public void showFileSizeDialog(String file, String size, DialogInterface.OnClickListener onContinueListener) {
 			AlertDialog.Builder builder = createBuilder();
 			
@@ -539,6 +611,10 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	}
 	
 	interface PossiblePlayerDialogCallback {
+		void onClick(int which);
+	}
+	
+	interface VideoQualityDialogCallback {
 		void onClick(int which);
 	}
 	

@@ -348,6 +348,7 @@
     <string name="boxplay_culture_searchngo_extractor_status_extracting_link">Extracting link...</string>
     <string name="boxplay_culture_searchngo_extractor_status_formatting_result">Formatting result...</string>
     <string name="boxplay_culture_searchngo_extractor_dialog_possible_player">Possible Players</string>
+    <string name="boxplay_culture_searchngo_extractor_dialog_available_video_qualities">Available Video Qualities</string>
     <string name="boxplay_culture_searchngo_extractor_open_in_brower_invalid_url">Invalid url, please open the main result directly.</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_title">File Size</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">The file %s weight %s, continue ?</string>

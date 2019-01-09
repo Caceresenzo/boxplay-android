@@ -70,7 +70,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	private TextInputLayout searchBarContainerTextInputLayout;
 	private RelativeLayout progressContainerRelativeLayout;
 	private TextView actualProgressTextView, lastProgressTextView;
-	private ImageButton historyImageButton;
+	private ImageButton historyImageButton, searchImageButton;
 	private LinearLayout searchResultLinearLayout;
 	private LinearLayout providerFlowingListContainerLinearLayout;
 	private RelativeLayout expandRelativeLayout;
@@ -111,6 +111,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		actualProgressTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_progress_actual);
 		lastProgressTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_textview_progress_last);
 		historyImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_history);
+		searchImageButton = (ImageButton) view.findViewById(R.id.fragment_culture_searchngo_imagebutton_search);
 		searchResultLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_search_result);
 		settingsExpandableLayout = (ExpandableLayout) view.findViewById(R.id.fragment_culture_searchngo_expandablelayout_container);
 		providerFlowingListContainerLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_linearlayout_provider_flowing_list_container);
@@ -138,6 +139,13 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			@Override
 			public void onClick(View view) {
 				SearchAndGoHistoryActivity.start();
+			}
+		});
+		
+		searchImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				searchConfirm();
 			}
 		});
 		
@@ -417,6 +425,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		searchBarTextInputEditText.setVisibility(hidden ? View.GONE : View.VISIBLE);
 		searchBarContainerTextInputLayout.setVisibility(searchBarTextInputEditText.getVisibility());
 		historyImageButton.setVisibility(searchBarTextInputEditText.getVisibility());
+		searchImageButton.setVisibility(searchBarTextInputEditText.getVisibility());
 		providerFlowingListContainerLinearLayout.setVisibility(searchBarTextInputEditText.getVisibility());
 		searchResultLinearLayout.setVisibility(hidden ? View.GONE : View.VISIBLE);
 		

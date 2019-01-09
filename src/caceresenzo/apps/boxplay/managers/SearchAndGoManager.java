@@ -18,7 +18,7 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
-import caceresenzo.libs.boxplay.common.extractor.video.IHentaiVideoContentProvider;
+import caceresenzo.libs.boxplay.common.extractor.video.modifiers.IHentaiVideoContentProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.callback.delegate.CallbackDelegate;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;

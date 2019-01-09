@@ -23,7 +23,7 @@ import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager;
 import caceresenzo.libs.boxplay.common.extractor.ContentExtractionManager.ExtractorType;
 import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor;
-import caceresenzo.libs.boxplay.common.extractor.video.VideoContentExtractor.VideoContentExtractorProgressCallback;
+import caceresenzo.libs.boxplay.common.extractor.video.base.BaseVideoContentExtractor.VideoContentExtractorProgressCallback;
 import caceresenzo.libs.boxplay.factory.AdultFactory;
 import caceresenzo.libs.boxplay.factory.AdultFactory.AdultFactoryListener;
 import caceresenzo.libs.boxplay.factory.AdultFactory.VideoOrigin;
