@@ -123,7 +123,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		listLinearLayout.setVisibility(View.VISIBLE);
 		progressBar.setVisibility(View.GONE);
 		
-		createNextContentItemView(new AsyncLayoutInflater(SearchAndGoDetailActivity.getSearchAndGoDetailActivity()), additionals.iterator());
+		createNextContentItemView(new AsyncLayoutInflater(context), additionals.iterator());
 	}
 	
 	private void createNextContentItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<AdditionalResultData> contentIterator) {
@@ -466,26 +466,60 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 						}
 						
 						case ACTION_DOWNLOAD: {
-							final String fileSize = ByteFormat.toHumanBytes(Downloader.getFileSize(directUrl));
 							
-							lock();
 							handler.post(new Runnable() {
 								@Override
 								public void run() {
-									unlock();
-									
-									dialogCreator.showFileSizeDialog(filename, fileSize, new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											Log.e(TAG, "Downloading file: " + filename);
-											// AndroidDownloader.askDownload(boxPlayApplication, Uri.parse(directUrl), filename);
-											AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, viewHelper.isAdmEnabled());
-										}
-									});
+									boxPlayApplication.toast("isContextValid(): " + isContextValid()).show();
 								}
 							});
 							
-							waitUntilUnlock();
+							if (isContextValid()) {
+								final AlertDialog.Builder builder = dialogCreator.createBuilder();
+								
+								builder.setTitle(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_title));
+								builder.setMessage(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_message_loading, filename));
+								
+								builder.setPositiveButton(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_button_continue), new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, viewHelper.isAdmEnabled());
+									}
+								});
+								builder.setNegativeButton(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_button_cancel), null);
+								
+								final ObjectWrapper<AlertDialog> fileSizeAlertDialogObjectWrapper = new ObjectWrapper<AlertDialog>(null);
+								
+								lock();
+								handler.post(new Runnable() {
+									@Override
+									public void run() {
+										fileSizeAlertDialogObjectWrapper.setValue(builder.create());
+										unlock();
+									}
+								});
+								waitUntilUnlock();
+								
+								final AlertDialog fileSizeAlertDialog = fileSizeAlertDialogObjectWrapper.getValue();
+								
+								handler.post(new Runnable() {
+									@Override
+									public void run() {
+										boxPlayApplication.toast("showing").show();
+										fileSizeAlertDialog.show();
+									}
+								});
+								
+								final String fileSize = ByteFormat.toHumanBytes(Downloader.getFileSize(directUrl));
+								handler.post(new Runnable() {
+									@Override
+									public void run() {
+										if (fileSizeAlertDialog.isShowing()) {
+											fileSizeAlertDialog.setMessage(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_message, filename, fileSize));
+										}
+									}
+								});
+							}
 							break;
 						}
 						
@@ -593,18 +627,6 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 			});
 			
 			builder.setOnCancelListener(onCancelListener);
-			
-			builder.create().show();
-		}
-		
-		public void showFileSizeDialog(String file, String size, DialogInterface.OnClickListener onContinueListener) {
-			AlertDialog.Builder builder = createBuilder();
-			
-			builder.setTitle(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_title));
-			builder.setMessage(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_message, file, size));
-			
-			builder.setPositiveButton(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_button_continue), onContinueListener);
-			builder.setNegativeButton(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_button_cancel), null);
 			
 			builder.create().show();
 		}

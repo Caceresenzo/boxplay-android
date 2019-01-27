@@ -351,6 +351,7 @@
     <string name="boxplay_culture_searchngo_extractor_dialog_available_video_qualities">Available Video Qualities</string>
     <string name="boxplay_culture_searchngo_extractor_open_in_brower_invalid_url">Invalid url, please open the main result directly.</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_title">File Size</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_message_loading" formatted="false">The file %s weight *loading*, continue ?</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">The file %s weight %s, continue ?</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_continue">CONTINUE</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_cancel">CANCEL</string>

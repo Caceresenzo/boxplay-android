@@ -146,7 +146,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		
 		listLinearLayout.setVisibility(View.VISIBLE);
 		progressBar.setVisibility(View.GONE);
-		createNextDetailListItemView(new AsyncLayoutInflater(SearchAndGoDetailActivity.getSearchAndGoDetailActivity()), items.iterator());
+		createNextDetailListItemView(new AsyncLayoutInflater(context), items.iterator());
 	}
 	
 	private void createNextDetailListItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<DetailListItem> itemsIterator) {
