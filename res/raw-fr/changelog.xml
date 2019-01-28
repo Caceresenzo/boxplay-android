@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
-	<changelogversion versionName="3.1.20 BETA" changeDate="27/01/2019">
+	<changelogversion versionName="3.1.20 BETA" changeDate="28/01/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18[/b]</changelogtext>
+		<changelogtext>[b]Nouveau![/b] Un dialogue de confirmation de téléchargement pour les items du Search n' Go.</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un extracteur vidéo pour la plateform de streaming Streamango.</changelogtext>
 		<changelogtext>[b]Fixé![/b] Bug qui faisait que l'application plantait si un item était fermé des qu'il souvrait.</changelogtext>
 		<changelogtext>[b]Fixé![/b] L'éxecuteur de l'extracteur était bloqué et forcais l'utilisation à attendre le temps que la taille du fichier soie reçu.</changelogtext>

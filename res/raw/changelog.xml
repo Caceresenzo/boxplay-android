@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
-	<changelogversion versionName="3.1.20 BETA" changeDate="27/01/2019">
+	<changelogversion versionName="3.1.20 BETA" changeDate="28/01/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18[/b]</changelogtext>
+		<changelogtext>[b]New![/b] Download confirmation dialog for items in Search n' Go.</changelogtext>
 		<changelogtext>[b]Added![/b] A video extractor for the Streamango plateform.</changelogtext>
 		<changelogtext>[b]Fixed![/b] Bug causing application to crash if an item were closed as soon as he open.</changelogtext>
 		<changelogtext>[b]Fixed![/b] Extractor thread was locked and forced the user to wait until he get the file size.</changelogtext>

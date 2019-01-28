@@ -348,9 +348,9 @@
     <string name="boxplay_culture_searchngo_extractor_dialog_possible_player">Lecteurs Possible</string>
     <string name="boxplay_culture_searchngo_extractor_dialog_available_video_qualities">Qualités de vidéo disponible</string>
     <string name="boxplay_culture_searchngo_extractor_open_in_brower_invalid_url">Url non valide, veuillez ouvrir le résultat principal directement.</string>
-    <string name="boxplay_culture_searchngo_download_dialog_file_size_title">Taille du Fichier</string>
-    <string name="boxplay_culture_searchngo_download_dialog_file_size_message_loading" formatted="false">Le fichier %s pèse *chargement*, continuer ?</string>
-    <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">Le fichier %s pèse %s, continuer ?</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_title">Télécharger un fichier</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_message_loading" formatted="false">Chargement de la taille du fichier \"%s\"...</string>
+    <string name="boxplay_culture_searchngo_download_dialog_file_size_message" formatted="false">Voulez vous télécharger le fichier %s (%s) ?</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_continue">CONTINUER</string>
     <string name="boxplay_culture_searchngo_download_dialog_file_size_button_cancel">ANNULER</string>
     <!-- ENUMS -->
