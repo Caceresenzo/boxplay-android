@@ -403,7 +403,8 @@
     <!-- MANGA VIEWER -->
     <string name="boxplay_manga_chapter_reader_format_info" formatted="false">%s\nPage %s/%s</string>
     <string name="boxplay_manga_chapter_reader_format_error" formatted="false">- ERROR -\n%s\n\n- Stacktrace -\n%s\n\nPlease send me a screenshot if you see this!</string>
-    <string name="boxplay_manga_chapter_reader_controller_coming_soon">Coming Soon !</string>
+    <string name="boxplay_manga_chapter_reader_control_coming_soon">Coming Soon!</string>
+    <string name="boxplay_manga_chapter_reader_control_reload_actual_page">Reload actual page</string>
 
     <!--  -->
     <!-- Premium > Adult -->

@@ -16,8 +16,8 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
  */
 public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	
-	private final List<Fragment> fragmentList = new ArrayList<>();
-	private final List<String> fragmentTitleList = new ArrayList<>();
+	private final List<Fragment> fragments = new ArrayList<>();
+	private final List<String> titles = new ArrayList<>();
 	
 	private boolean clearing = false;
 	
@@ -40,7 +40,7 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public Fragment getItem(int position) {
-		return fragmentList.get(position);
+		return fragments.get(position);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public int getCount() {
-		return fragmentList.size();
+		return fragments.size();
 	}
 	
 	/**
@@ -76,8 +76,8 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	 *            New title from {@link R.string}
 	 */
 	public void addFragment(Fragment fragment, int titleStringRessourceId) {
-		fragmentList.add(fragment);
-		fragmentTitleList.add(BoxPlayApplication.getBoxPlayApplication().getString(titleStringRessourceId));
+		fragments.add(fragment);
+		titles.add(BoxPlayApplication.getBoxPlayApplication().getString(titleStringRessourceId));
 	}
 	
 	/**
@@ -89,13 +89,19 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	 *            New title
 	 */
 	public void addFragment(Fragment fragment, String title) {
-		fragmentList.add(fragment);
-		fragmentTitleList.add(title);
+		fragments.add(fragment);
+		titles.add(title);
+	}
+	
+	public void updateFragment(int index, Fragment newFragment) {
+		if (newFragment != null && (index >= 0 && index <= fragments.size())) {
+			fragments.set(index, newFragment);
+		}
 	}
 	
 	@Override
 	public CharSequence getPageTitle(int position) {
-		return fragmentTitleList.get(position);
+		return titles.get(position);
 	}
 	
 	/**
@@ -107,12 +113,12 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	public void clearFragments(ViewPager viewPager) {
 		clearing = true;
 		
-		for (Fragment fragment : fragmentList) {
+		for (Fragment fragment : fragments) {
 			viewPager.removeView(fragment.getView());
 		}
 		
-		fragmentList.clear();
-		fragmentTitleList.clear();
+		fragments.clear();
+		titles.clear();
 		
 		notifyDataSetChanged();
 		

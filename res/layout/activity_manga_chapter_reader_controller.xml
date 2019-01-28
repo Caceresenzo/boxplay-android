@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_boxplay_framelayout_container_music_player"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/manga_chapter_reader_panel_max_height" >
+    android:layout_height="wrap_content" >
 
     <RelativeLayout
         android:id="@+id/activity_manga_chapter_reader_relativelayout_info_container"
@@ -44,17 +44,30 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/activity_manga_chapter_reader_relativelayout_info_container" >
 
         <include layout="@layout/view_line_separator" />
 
-        <Button
-            android:id="@+id/activity_manga_chapter_reader_button_controller"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/colorPanel"
-            android:text="@string/boxplay_manga_chapter_reader_controller_coming_soon" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/activity_manga_chapter_reader_button_control_coming_soon"
+                style="@style/buttonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/boxplay_manga_chapter_reader_control_coming_soon" />
+
+            <Button
+                android:id="@+id/activity_manga_chapter_reader_button_control_reload_actual_page"
+                style="@style/buttonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/boxplay_manga_chapter_reader_control_reload_actual_page" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

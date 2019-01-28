@@ -401,7 +401,8 @@
     <!-- MANGA VIEWER -->
     <string name="boxplay_manga_chapter_reader_format_info" formatted="false">%s\nPage %s/%s</string>
     <string name="boxplay_manga_chapter_reader_format_error" formatted="false">- ERREUR -\n%s\n\n- Stacktrace -\n%s\n\nS\'il vous plait, envoyez moi une capture d\'écren si vous voyez ceci!</string>
-    <string name="boxplay_manga_chapter_reader_controller_coming_soon">À Venir !</string>
+    <string name="boxplay_manga_chapter_reader_control_coming_soon">Bientôt!</string>
+    <string name="boxplay_manga_chapter_reader_control_reload_actual_page">Recharger la page actuelle</string>
 
     <!--  -->
     <!-- Premium > Adult -->

@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
@@ -40,21 +41,26 @@ import caceresenzo.libs.string.StringUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
 /**
- * Activity to read Manga
- * 
- * The bundle need {@link #BUNDLE_KEY_CHAPTER_ITEM} ({@value #BUNDLE_KEY_CHAPTER_ITEM}) as a {@link ChapterItemResultData} to be started
+ * Activity to read Manga.<br>
+ * The bundle need {@link #BUNDLE_KEY_CHAPTER_ITEM} ({@value #BUNDLE_KEY_CHAPTER_ITEM}) as a {@link ChapterItemResultData} to be started.
  * 
  * @author Enzo CACERES
  */
 public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	
 	/* Bundle Keys */
+	public static final String BUNDLE_KEY_CONTENT_TYPE = "content_type";
 	public static final String BUNDLE_KEY_CHAPTER_ITEM = "chapter_item";
 	public static final String BUNDLE_KEY_ACTUAL_PAGE = "actual_page";
 	
 	/* Offset values */
 	public static final int OFFSET_NEXT_PAGE = +1;
 	public static final int OFFSET_PREVIOUS_PAGE = -1;
+	
+	/* Content Type */
+	public static final int CONTENT_TYPE_UNKNOWN = -1;
+	public static final int CONTENT_TYPE_IMAGE_ARRAY = 0;
+	public static final int CONTENT_TYPE_TEXT = 1;
 	
 	/* Instance */
 	private static MangaChapterReaderActivity INSTANCE;
@@ -70,6 +76,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	
 	private ImageButton previousControlImageButton, nextControlImageButton;
 	private TextView infoTextView;
+	private Button comingSoonControlButton, reloadActualPageControlButton;
 	
 	private TextView errorTextView;
 	private ProgressBar loadingProgressBar;
@@ -81,7 +88,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	/* Local data */
 	private String chapterName;
 	private List<String> imageUrls;
-	private int chapterSize, actualPage = NO_VALUE;
+	private int contentType, chapterSize, actualPage = NO_VALUE;
 	
 	/* Constructor */
 	public MangaChapterReaderActivity() {
@@ -112,10 +119,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		}
 		
 		initializeViews();
-		
 		initializeManga(validData);
-		
-		// ready();
+		initializeControls();
 	}
 	
 	@Override
@@ -132,7 +137,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		
 		INSTANCE = null;
 		
-		mangaExtractionWorker.terminate();
+		mangaExtractionWorker.forceDestroy();
+		novelExtractionWorker.forceDestroy();
 	}
 	
 	/* Initialization -> Views */
@@ -163,6 +169,9 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		infoTextView = (TextView) findViewById(R.id.activity_manga_chapter_reader_textview_info);
 		nextControlImageButton = (ImageButton) findViewById(R.id.activity_manga_chapter_reader_button_control_next);
 		
+		comingSoonControlButton = (Button) findViewById(R.id.activity_manga_chapter_reader_button_control_coming_soon);
+		reloadActualPageControlButton = (Button) findViewById(R.id.activity_manga_chapter_reader_button_control_reload_actual_page);
+		
 		previousControlImageButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -177,6 +186,13 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			}
 		});
 		
+		reloadActualPageControlButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				reloadActualPage();
+			}
+		});
+		
 		errorTextView = (TextView) findViewById(R.id.activity_manga_chapter_reader_textview_error);
 		loadingProgressBar = (ProgressBar) findViewById(R.id.activity_manga_chapter_reader_progressbar_loading);
 	}
@@ -187,6 +203,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		
 		switch (chapterItem.getChapterType()) {
 			case IMAGE_ARRAY: {
+				contentType = CONTENT_TYPE_IMAGE_ARRAY;
+				
 				if (validRestoredData) {
 					reloadImages();
 				} else {
@@ -203,6 +221,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			}
 			
 			case TEXT: {
+				contentType = CONTENT_TYPE_TEXT;
+				
 				if (novelExtractionWorker.isRunning()) {
 					boxPlayApplication.toast("ExtractionWorker is busy").show();
 					return;
@@ -215,14 +235,35 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			}
 			
 			default: {
+				contentType = CONTENT_TYPE_UNKNOWN;
+				
 				displayError(new IllegalStateException("Unhandled chapter type: " + chapterItem.getChapterType()));
 				break;
 			}
 		}
 	}
 	
+	/* Initialization -> Controls */
+	private void initializeControls() {
+		switch (contentType) {
+			case CONTENT_TYPE_IMAGE_ARRAY: {
+				comingSoonControlButton.setVisibility(View.GONE);
+				reloadActualPageControlButton.setVisibility(View.VISIBLE);
+				break;
+			}
+			
+			case CONTENT_TYPE_UNKNOWN:
+			case CONTENT_TYPE_TEXT:
+			default: {
+				comingSoonControlButton.setVisibility(View.VISIBLE);
+				reloadActualPageControlButton.setVisibility(View.GONE);
+				break;
+			}
+		}
+	}
+	
 	/**
-	 * Call this function when image need to be reloaded, like when the activity is being restored
+	 * Call this function when image need to be reloaded, like when the activity is being restored.
 	 */
 	public void reloadImages() {
 		handler.postDelayed(new Runnable() {
@@ -234,35 +275,25 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Fill the {@link ViewPager} with some imageUrls
+	 * Fill the {@link ViewPager} with some image urls.
 	 * 
 	 * @param imageUrls
+	 *            Target image urls.
 	 */
-	@SuppressWarnings("unchecked")
 	private void showPages(List<String> imageUrls) {
 		this.imageUrls = imageUrls;
 		this.chapterSize = imageUrls.size();
 		
 		mangaViewPager.setAdapter(pagerAdapter = new BaseViewPagerAdapter(getSupportFragmentManager()));
 		
-		Map<String, Object> requireHttpHeaders = null;
-		if (chapterItem.hasInitializedComplements()) {
-			requireHttpHeaders = (Map<String, Object>) chapterItem.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT);
-		}
+		Map<String, Object> requireHttpHeaders = getRequireHttpHeaders();
 		
 		for (String imageUrl : imageUrls) {
-			PhotoView imageView = new PhotoView(this);
-			
-			imageView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					setPageByOffset(OFFSET_NEXT_PAGE);
-				}
-			});
+			PhotoView imageView = createImageView();
 			
 			pagerAdapter.addFragment(new ViewFragment(imageView, false), "");
 			
-			BoxPlayApplication.getViewHelper().downloadToImageView(this, imageView, imageUrl, requireHttpHeaders);
+			viewHelper.downloadToImageView(this, imageView, imageUrl, requireHttpHeaders);
 			
 			pagerAdapter.notifyDataSetChanged(); /* Need to be called everytime */
 		}
@@ -280,9 +311,26 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Fill the {@link ViewPager} with a text
+	 * @return An {@link ImageView} with a {@link View.OnClickListener} attached to it.
+	 */
+	private PhotoView createImageView() {
+		PhotoView imageView = new PhotoView(this);
+		
+		imageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				setPageByOffset(OFFSET_NEXT_PAGE);
+			}
+		});
+		
+		return imageView;
+	}
+	
+	/**
+	 * Fill the {@link ViewPager} with a text.
 	 * 
-	 * @param imageUrls
+	 * @param spannedText
+	 *            {@link Spanned} version of the text for the novel.
 	 */
 	private void showNovelPage(Spanned spannedText) {
 		this.imageUrls = null;
@@ -306,12 +354,49 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Hide or show the main viewer
+	 * Reload the actually selected page.<br>
+	 * It means re-call the download function on the {@link ImageView}.
+	 */
+	public void reloadActualPage() {
+		switch (contentType) {
+			case CONTENT_TYPE_IMAGE_ARRAY: {
+				int actualPageIndex = actualPage - 1;
+				
+				ViewFragment pageFragment = (ViewFragment) pagerAdapter.getItem(actualPageIndex);
+				PhotoView imageView = (PhotoView) pageFragment.getTargetView();
+				
+				Map<String, Object> requireHttpHeaders = getRequireHttpHeaders();
+				
+				viewHelper.downloadToImageView(this, imageView, imageUrls.get(actualPageIndex), requireHttpHeaders);
+				break;
+			}
+			
+			default: {
+				throw new IllegalStateException("Page reloading not supported for this content type.");
+			}
+		}
+	}
+	
+	/**
+	 * Get the http headers needed to download the image correctly, return false if it dosen't.
 	 * 
-	 * If hidden, the loading bar will be visible, if show, loading bar will disapear
+	 * @return <code>chapterItem.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT);</code>
+	 */
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> getRequireHttpHeaders() {
+		if (chapterItem.hasInitializedComplements()) {
+			return (Map<String, Object>) chapterItem.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Hide or show the main viewer.<br>
+	 * If hidden, the loading bar will be visible, if show, loading bar will disapear.
 	 * 
 	 * @param hidden
-	 *            True or false
+	 *            New hidden state.
 	 */
 	private void setViewerHidden(boolean hidden) {
 		slidingUpPanelLayout.setVisibility(hidden ? View.GONE : View.VISIBLE);
@@ -321,10 +406,10 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Diaplay an error in the center of the viewer
+	 * Diaplay an error in the center of the viewer.
 	 * 
 	 * @param exception
-	 *            Occured exception
+	 *            Occured exception.
 	 */
 	private void displayError(final Exception exception) {
 		handler.post(new Runnable() {
@@ -340,10 +425,10 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Go to a page by current offset (actual page + offset)
+	 * Go to a page by current offset (actual page + offset).
 	 * 
 	 * @param offset
-	 *            Target offset
+	 *            Target offset.
 	 */
 	private void setPageByOffset(int offset) {
 		if (mangaViewPager.getCurrentItem() <= pagerAdapter.getCount()) {
@@ -356,10 +441,10 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Update the selected page panel
+	 * Update the selected page panel.
 	 * 
 	 * @param selectedPage
-	 *            Actual position + 1 to remove the offset
+	 *            Actual position + 1 to remove the offset.
 	 */
 	private void updateSelectedPage(int selectedPage) {
 		actualPage = selectedPage;
@@ -370,10 +455,10 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Start a new MangaChapterReaderActivity
+	 * Start a new {@link MangaChapterReaderActivity}.
 	 * 
 	 * @param result
-	 *            {@link ChapterItemResultData} item that you want to start with
+	 *            {@link ChapterItemResultData} item that you want to start with.
 	 */
 	public static void start(ChapterItemResultData result) {
 		BoxPlayApplication application = BoxPlayApplication.getBoxPlayApplication();
@@ -386,11 +471,12 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	/**
-	 * Extraction thread linked to the UI to fetch data like image urls
+	 * Extraction thread linked to the UI to fetch data like image urls.
 	 * 
 	 * @author Enzo CACERES
 	 */
 	class MangaExtractionWorker extends ExtractionWorker<MangaChapterContentExtractor> {
+		
 		/* Local list of imageUrls, not initialized */
 		private List<String> imageUrls;
 		
@@ -420,6 +506,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	 * @author Enzo CACERES
 	 */
 	class NovelExtractionWorker extends ExtractionWorker<NovelChapterContentExtractor> {
+		
 		/* Text Format */
 		private TextFormat extractedNovelTextFormat;
 		
@@ -463,6 +550,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	}
 	
 	abstract class ExtractionWorker<E extends ContentExtractor> extends WorkerThread {
+		
 		/* Parent Activity set when creating new Instance */
 		protected final MangaChapterReaderActivity parentActivity;
 		/* Actual result to fetch */
@@ -513,11 +601,11 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		}
 		
 		/**
-		 * Apply data to the thread, and call {@link #start()} after this function
+		 * Apply data to the thread, and call {@link #start()} after this function.
 		 * 
 		 * @param result
-		 *            Target result
-		 * @return Itself
+		 *            Target result.
+		 * @return Itself.
 		 */
 		@SuppressWarnings("unchecked")
 		public ExtractionWorker<E> applyData(ChapterItemResultData result) {
@@ -536,7 +624,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		}
 		
 		/**
-		 * Function to override if necessary, called when {@link #applyData(ChapterItemResultData)} has been called
+		 * Function to override if necessary, called when {@link #applyData(ChapterItemResultData)} has been called.
 		 */
 		public void onAppliedData(ChapterItemResultData result) {
 			;
