@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
@@ -51,7 +53,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	public static final String BUNDLE_KEY_ACTUAL_PAGE = "actual_page";
 	
 	/* Offset values */
-	public static final int OFFSET_NEXT_PAGE = 1;
+	public static final int OFFSET_NEXT_PAGE = +1;
 	public static final int OFFSET_PREVIOUS_PAGE = -1;
 	
 	/* Instance */
@@ -66,6 +68,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	private ViewPager mangaViewPager;
 	private BaseViewPagerAdapter pagerAdapter;
 	
+	private ImageButton previousControlImageButton, nextControlImageButton;
 	private TextView infoTextView;
 	
 	private TextView errorTextView;
@@ -156,7 +159,23 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			}
 		});
 		
+		previousControlImageButton = (ImageButton) findViewById(R.id.activity_manga_chapter_reader_imagebutton_control_previous);
 		infoTextView = (TextView) findViewById(R.id.activity_manga_chapter_reader_textview_info);
+		nextControlImageButton = (ImageButton) findViewById(R.id.activity_manga_chapter_reader_button_control_next);
+		
+		previousControlImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				setPageByOffset(OFFSET_PREVIOUS_PAGE);
+			}
+		});
+		
+		nextControlImageButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				setPageByOffset(OFFSET_NEXT_PAGE);
+			}
+		});
 		
 		errorTextView = (TextView) findViewById(R.id.activity_manga_chapter_reader_textview_error);
 		loadingProgressBar = (ProgressBar) findViewById(R.id.activity_manga_chapter_reader_progressbar_loading);
@@ -245,11 +264,11 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			
 			BoxPlayApplication.getViewHelper().downloadToImageView(this, imageView, imageUrl, requireHttpHeaders);
 			
-			pagerAdapter.notifyDataSetChanged(); // Need to be called everytime
+			pagerAdapter.notifyDataSetChanged(); /* Need to be called everytime */
 		}
 		
 		mangaViewPager.setOffscreenPageLimit(chapterSize);
-		pagerAdapter.notifyDataSetChanged(); // Just to be sure
+		pagerAdapter.notifyDataSetChanged(); /* Just to be sure */
 		
 		if (actualPage != NO_VALUE) {
 			mangaViewPager.setCurrentItem(actualPage - 1);
@@ -268,6 +287,10 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	private void showNovelPage(Spanned spannedText) {
 		this.imageUrls = null;
 		this.chapterSize = 1;
+		
+		for (ImageButton imageButton : new ImageButton[] { previousControlImageButton, nextControlImageButton }) {
+			imageButton.setVisibility(View.GONE);
+		}
 		
 		mangaViewPager.setAdapter(pagerAdapter = new BaseViewPagerAdapter(getSupportFragmentManager()));
 		
@@ -323,12 +346,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	 *            Target offset
 	 */
 	private void setPageByOffset(int offset) {
-		if (offset < 0) {
-			return;
-		}
-		
 		if (mangaViewPager.getCurrentItem() <= pagerAdapter.getCount()) {
-			mangaViewPager.setCurrentItem(mangaViewPager.getCurrentItem() + 1);
+			mangaViewPager.setCurrentItem(mangaViewPager.getCurrentItem() + offset);
 		} else {
 			// TODO: Notify user that chapter has ended
 		}
@@ -345,6 +364,9 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 	private void updateSelectedPage(int selectedPage) {
 		actualPage = selectedPage;
 		infoTextView.setText(getString(R.string.boxplay_manga_chapter_reader_format_info, chapterName, actualPage, chapterSize));
+		
+		previousControlImageButton.setVisibility(selectedPage > 1 ? View.VISIBLE : View.INVISIBLE);
+		nextControlImageButton.setVisibility(selectedPage < chapterSize ? View.VISIBLE : View.INVISIBLE);
 	}
 	
 	/**

@@ -24,7 +24,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="@dimen/heading_title_padding"
-        android:src="@drawable/icon_chevron_right_24dp"
+        android:src="@drawable/icon_chevron_right_white_24dp"
         android:visibility="gone" />
 
 </RelativeLayout>

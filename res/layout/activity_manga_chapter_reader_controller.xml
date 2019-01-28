@@ -11,12 +11,35 @@
 
         <include layout="@layout/view_line_separator" />
 
-        <TextView
-            android:id="@+id/activity_manga_chapter_reader_textview_info"
-            style="@style/textViewSimpleStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Chapter 0\nPage 01/25" />
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/activity_manga_chapter_reader_imagebutton_control_previous"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:src="@drawable/icon_chevron_left_white_24dp" />
+
+            <TextView
+                android:id="@+id/activity_manga_chapter_reader_textview_info"
+                style="@style/textViewSimpleStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:text="Chapter 0\nPage 00/00" />
+
+            <ImageButton
+                android:id="@+id/activity_manga_chapter_reader_button_control_next"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:src="@drawable/icon_chevron_right_white_24dp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
