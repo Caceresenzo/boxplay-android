@@ -249,7 +249,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 		
 		public void bind(final ImageDetailItem imageItem) {
-			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl(), result.getRequireHeaders());
+			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl(), result.getRequireHeaders2());
 			
 			contentImageView.setOnClickListener(new OnClickListener() {
 				@Override
