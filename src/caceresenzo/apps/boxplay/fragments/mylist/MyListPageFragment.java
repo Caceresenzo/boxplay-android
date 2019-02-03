@@ -19,8 +19,11 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.activities.VideoActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.MyListManager;
+import caceresenzo.apps.boxplay.managers.MyListManager;
+import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleData;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
@@ -28,12 +31,9 @@ import caceresenzo.libs.boxplay.mylist.MyListable;
 import caceresenzo.libs.string.StringUtils;
 
 @SuppressWarnings("unused")
-public abstract class MyListPageFragment extends Fragment implements MyListManager.FetchCallback {
+public abstract class MyListPageFragment extends BaseBoxPlayFragment implements MyListManager.FetchCallback {
 	
 	/* Managers */
-	private BoxPlayApplication boxPlayApplication;
-	private ViewHelper viewHelper;
-	
 	protected MyListManager myListManager;
 	
 	/* Content */
@@ -48,8 +48,7 @@ public abstract class MyListPageFragment extends Fragment implements MyListManag
 	
 	/* Constructor */
 	public MyListPageFragment() {
-		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
-		this.viewHelper = BoxPlayApplication.getViewHelper();
+		super();
 		
 		this.myListManager = BoxPlayApplication.getManagers().getMyListManager();
 		
@@ -78,12 +77,17 @@ public abstract class MyListPageFragment extends Fragment implements MyListManag
 		callFetch();
 	}
 	
-	public abstract void callFetch();
+	public void callFetch() {
+		getMyListInstance().fetch(this);
+	}
+	
+	public abstract MyList getMyListInstance();
 	
 	@Override
 	public void onFetchFinished(List<MyListable> myListables) {
 		if (myListables == null || myListables.isEmpty()) {
 			updateInfoText("List is: " + (myListables == null ? "null" : "empty"));
+			setListHidden(false);
 			return;
 		}
 		

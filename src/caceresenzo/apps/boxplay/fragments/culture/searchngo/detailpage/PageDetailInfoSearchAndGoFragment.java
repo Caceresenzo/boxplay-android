@@ -28,8 +28,7 @@ import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.managers.MyListManager;
-import caceresenzo.apps.boxplay.managers.MyListManager2;
-import caceresenzo.apps.boxplay.managers.MyListManager2.MyList;
+import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalDataType;
 import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.additional.CategoryResultData;
@@ -318,7 +317,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 	}
 	
 	class AddToWatchListDetailItem extends DetailListItem {
-		private MyListManager2 myListManager = BoxPlayApplication.getManagers().myListManager2;
+		private MyListManager myListManager = BoxPlayApplication.getManagers().getMyListManager();
 		private MyList watchLaterList = myListManager.getWatchLaterMyList();
 		private MyListable myListable;
 		

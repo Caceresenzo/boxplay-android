@@ -36,7 +36,6 @@ public class XManagers {
 	protected PremiumManager premiumManager;
 	protected SearchAndGoManager searchAndGoManager;
 	protected MyListManager myListManager;
-	public MyListManager2 myListManager2;
 	protected DebugManager debugManager;
 	protected BackgroundServiceManager backgroundServiceManager;
 	
@@ -49,6 +48,7 @@ public class XManagers {
 	/* List */
 	private List<AbstractManager> managers;
 	
+	/* Constructor */
 	public XManagers() {
 		;
 	}
@@ -89,7 +89,6 @@ public class XManagers {
 		managers.add(searchAndGoManager = new SearchAndGoManager());
 		
 		managers.add(myListManager = new MyListManager());
-		managers.add(myListManager2 = new MyListManager2());
 		
 		managers.add(debugManager = new DebugManager());
 		

@@ -129,7 +129,7 @@ public class VideoManager extends AbstractManager {
 		
 		prepareConfigurator();
 		
-		MyListManager.videoManagerFinished(true);
+		// MyListManager.videoManagerFinished(true);
 		// }
 	}
 	

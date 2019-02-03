@@ -1,11 +1,12 @@
 package caceresenzo.apps.boxplay.fragments.mylist;
 
-public class PageSubscriptionsListFragment extends MyListPageFragment {
+import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
 
+public class PageSubscriptionsListFragment extends MyListPageFragment {
+	
 	@Override
-	public void callFetch() {
-		// TODO Auto-generated method stub
-		
+	public MyList getMyListInstance() {
+		return myListManager.getSubscriptionsMyList();
 	}
 	
 }

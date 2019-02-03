@@ -1,10 +1,12 @@
 package caceresenzo.apps.boxplay.fragments.mylist;
 
+import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
+
 public class PageWatchLaterListFragment extends MyListPageFragment {
 	
 	@Override
-	public void callFetch() {
-		myListManager.getWatchLaterList().fetch(this);
+	public MyList getMyListInstance() {
+		return myListManager.getWatchLaterMyList();
 	}
 	
 }
