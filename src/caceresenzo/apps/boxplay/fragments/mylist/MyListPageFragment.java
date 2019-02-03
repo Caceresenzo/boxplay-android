@@ -85,13 +85,12 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 	
 	@Override
 	public void onFetchFinished(List<MyListable> myListables) {
+		myListItems.clear();
+		
 		if (myListables == null || myListables.isEmpty()) {
-			updateInfoText("List is: " + (myListables == null ? "null" : "empty"));
-			setListHidden(false);
+			updateInfoText(getString(R.string.boxplay_mylist_list_empty));
 			return;
 		}
-		
-		myListItems.clear();
 		
 		for (MyListable myListable : myListables) {
 			if (myListable instanceof VideoGroup) {
@@ -128,6 +127,8 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 	}
 	
 	private void updateInfoText(String text) {
+		setListHidden(false);
+		
 		infoTextView.setVisibility(View.VISIBLE);
 		infoTextView.setText(text);
 	}

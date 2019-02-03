@@ -427,6 +427,7 @@
 
     <string name="boxplay_mylist_source_store_video">Magasin - Vidéo</string>
     <string name="boxplay_mylist_source_culture_searchngo">Culture - Search n\' Go</string>
+    <string name="boxplay_mylist_list_empty">Cette liste est vide</string>
 
     <!--  -->
     <!-- My Lists > Watch Later -->

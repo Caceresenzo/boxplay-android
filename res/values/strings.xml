@@ -430,6 +430,7 @@
 
     <string name="boxplay_mylist_source_store_video">Store - Video</string>
     <string name="boxplay_mylist_source_culture_searchngo">Culture - Search n\' Go</string>
+    <string name="boxplay_mylist_list_empty">This list is empty</string>
 
     <!--  -->
     <!-- My Lists > Watch Later -->

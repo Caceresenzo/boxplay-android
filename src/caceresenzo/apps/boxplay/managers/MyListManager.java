@@ -282,6 +282,10 @@ public class MyListManager extends AbstractManager {
 				contentValues.put(DATABASE_COLUMN_TYPE, entry.getType());
 				contentValues.put(DATABASE_COLUMN_BINDER, entry.getBinderClassName());
 				contentValues.put(DATABASE_COLUMN_CONTENT, entry.getContent());
+				
+				long lastRowId = database.insert(myList.getName(), null, contentValues);
+				
+				Log.d(TAG, String.format("Inserted: %s, last row %s", entry.getContent(), lastRowId));
 			}
 			
 			database.close();
