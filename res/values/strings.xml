@@ -314,8 +314,11 @@
     <string name="boxplay_culture_searchngo_history_already_empty">History is empty</string>
     <string name="boxplay_culture_searchngo_detail_tab_info">INFO</string>
     <string name="boxplay_culture_searchngo_detail_tab_content">CONTENT</string>
-    <string name="boxplay_culture_searchngo_detail_info_button_add_to_watchlist">Add to Watch List</string>
-    <string name="boxplay_culture_searchngo_detail_info_button_remove_to_watchlist">Remove from your Watch List</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_add_to_list">ADD_TO_LIST</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_add_to_list_watch_later">Add to Watch Later List</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_remove_to_list_watch_later">Remove from your Watch Later List</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_add_to_list_subscriptions">Subscribe</string>
+    <string name="boxplay_culture_searchngo_detail_info_button_remove_to_list_subscriptions">Unsubscribe</string>
     <string name="boxplay_culture_searchngo_content_limit_reached" formatted="false">Display limit reached, reducing from %s to %s results.</string>
     <string name="boxplay_culture_searchngo_info_no_provider">No provider selected.\nExpand Settings, and select at least one provider.</string>
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">An error append when extracting: %s \n\nGo to settings and choose to open logs at the extraction end for more details!</string>

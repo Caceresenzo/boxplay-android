@@ -25,7 +25,6 @@ import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.ImageViewerActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.managers.MyListManager;
 import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
@@ -34,6 +33,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.data.AdditionalResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.additional.CategoryResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.additional.RatingResultData;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
+import caceresenzo.libs.boxplay.culture.searchngo.subscription.Subscribable;
 import caceresenzo.libs.boxplay.mylist.MyListable;
 import caceresenzo.libs.string.StringUtils;
 
@@ -43,6 +43,9 @@ import caceresenzo.libs.string.StringUtils;
  * @author Enzo CACERES
  */
 public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
+	
+	/* Manager */
+	private MyListManager myListManager;
 	
 	/* Views */
 	private LinearLayout listLinearLayout;
@@ -55,6 +58,8 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 	/* Constructor */
 	public PageDetailInfoSearchAndGoFragment() {
 		super();
+		
+		this.myListManager = managers.getMyListManager();
 		
 		this.items = new ArrayList<>();
 	}
@@ -140,7 +145,11 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 			}
 		}
 		
-		this.items.add(new AddToWatchListDetailItem(result));
+		this.items.add(new AddToWatchLaterListDetailItem(result));
+		
+		if (result.getParentProvider() instanceof Subscribable) {
+			this.items.add(new AddToSubscriptionsListDetailItem(result));
+		}
 		
 		this.items.addAll(processedItems);
 		
@@ -198,8 +207,13 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 												break;
 											}
 											
-											case DetailListItem.TYPE_BUTTON_ADD_TO_WATCHLIST: {
-												new AddToWatchListItemViewBinder(view).bind((AddToWatchListDetailItem) item);
+											case DetailListItem.TYPE_BUTTON_ADD_TO_WATCH_LATER_LIST: {
+												new AddToWatchLaterListItemViewBinder(view).bind((AddToWatchLaterListDetailItem) item);
+												break;
+											}
+											
+											case DetailListItem.TYPE_BUTTON_ADD_TO_SUBSCRIPTIONS_LIST: {
+												new AddToSubscriptionsListItemViewBinder(view).bind((AddToSubscriptionsListDetailItem) item);
 												break;
 											}
 											
@@ -282,18 +296,21 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
-	class AddToWatchListItemViewBinder {
+	class AddToListItemViewBinder<T extends AddToListDetailItem> {
+		
+		/* Variables */
 		private String addString, removeString;
 		private Button addToListButton;
 		
-		public AddToWatchListItemViewBinder(View view) {
-			addString = getString(R.string.boxplay_culture_searchngo_detail_info_button_add_to_watchlist);
-			removeString = getString(R.string.boxplay_culture_searchngo_detail_info_button_remove_to_watchlist);
+		/* Constructor */
+		public AddToListItemViewBinder(View view, int addStringId, int removeStringId) {
+			addString = getString(addStringId);
+			removeString = getString(removeStringId);
 			
-			addToListButton = (Button) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_add_to_watchlist_button_add_to_list);
+			addToListButton = (Button) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_info_add_to_list_button_add);
 		}
 		
-		public void bind(final AddToWatchListDetailItem item) {
+		public void bind(final T item) {
 			updateButtonText(item);
 			
 			addToListButton.setOnClickListener(new OnClickListener() {
@@ -305,7 +322,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 			});
 		}
 		
-		public void updateButtonText(AddToWatchListDetailItem item) {
+		public void updateButtonText(T item) {
 			String text = addString;
 			
 			if (item.isInList()) {
@@ -316,40 +333,85 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 	}
 	
-	class AddToWatchListDetailItem extends DetailListItem {
-		private MyListManager myListManager = BoxPlayApplication.getManagers().getMyListManager();
-		private MyList watchLaterList = myListManager.getWatchLaterMyList();
+	abstract class AddToListDetailItem extends DetailListItem {
+		
+		/* Variables */
+		private MyList myList;
 		private MyListable myListable;
 		
-		public AddToWatchListDetailItem(MyListable myListable) {
+		/* Constructor */
+		public AddToListDetailItem(MyList myList, MyListable myListable) {
+			this.myList = myList;
 			this.myListable = myListable;
+		}
+		
+		public boolean isInList() {
+			return myList.contains(myListable);
+		}
+		
+		public void updateState() {
+			if (myList.contains(myListable)) {
+				myList.remove(myListable);
+			} else {
+				myList.add(myListable);
+			}
+		}
+		
+		@Override
+		public int getLayout() {
+			return R.layout.item_culture_searchandgo_activitypage_detail_info_add_to_list;
 		}
 		
 		public MyListable getMyListable() {
 			return myListable;
 		}
 		
-		public boolean isInList() {
-			return watchLaterList.contains(myListable);
+	}
+	
+	class AddToWatchLaterListItemViewBinder extends AddToListItemViewBinder<AddToWatchLaterListDetailItem> {
+
+		/* Constructor */
+		public AddToWatchLaterListItemViewBinder(View view) {
+			super(view, R.string.boxplay_culture_searchngo_detail_info_button_add_to_list_watch_later, R.string.boxplay_culture_searchngo_detail_info_button_remove_to_list_watch_later);
 		}
 		
-		public void updateState() {
-			if (watchLaterList.contains(myListable)) {
-				watchLaterList.remove(myListable);
-			} else {
-				watchLaterList.add(myListable);
-			}
+	}
+	
+	class AddToWatchLaterListDetailItem extends AddToListDetailItem {
+
+		/* Constructor */
+		public AddToWatchLaterListDetailItem(MyListable myListable) {
+			super(myListManager.getWatchLaterMyList(), myListable);
 		}
 		
 		@Override
 		public int getType() {
-			return TYPE_BUTTON_ADD_TO_WATCHLIST;
+			return TYPE_BUTTON_ADD_TO_WATCH_LATER_LIST;
+		}
+		
+	}
+	
+	class AddToSubscriptionsListItemViewBinder extends AddToListItemViewBinder<AddToSubscriptionsListDetailItem> {
+
+		/* Constructor */
+		public AddToSubscriptionsListItemViewBinder(View view) {
+			super(view, R.string.boxplay_culture_searchngo_detail_info_button_add_to_list_subscriptions, R.string.boxplay_culture_searchngo_detail_info_button_remove_to_list_subscriptions);
+		}
+		
+	}
+	
+	class AddToSubscriptionsListDetailItem extends AddToListDetailItem {
+
+		/* Constructor */
+		public AddToSubscriptionsListDetailItem(MyListable myListable) {
+			super(myListManager.getSubscriptionsMyList(), myListable);
 		}
 		
 		@Override
-		public int getLayout() {
-			return R.layout.item_culture_searchandgo_activitypage_detail_info_add_to_wachlist;
+		public int getType() {
+			return TYPE_BUTTON_ADD_TO_SUBSCRIPTIONS_LIST;
 		}
+		
 	}
 	
 	class StringItemViewBinder {
@@ -537,11 +599,12 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		private AdditionalDataType dataType;
 		
 		public static final int TYPE_IMAGE = 0;
-		public static final int TYPE_BUTTON_ADD_TO_WATCHLIST = 1;
-		public static final int TYPE_STRING = 2;
-		public static final int TYPE_HTML = 3;
-		public static final int TYPE_CATEGORY = 4;
-		public static final int TYPE_RATING = 5;
+		public static final int TYPE_BUTTON_ADD_TO_WATCH_LATER_LIST = 1;
+		public static final int TYPE_BUTTON_ADD_TO_SUBSCRIPTIONS_LIST = 2;
+		public static final int TYPE_STRING = 3;
+		public static final int TYPE_HTML = 4;
+		public static final int TYPE_CATEGORY = 5;
+		public static final int TYPE_RATING = 6;
 		
 		public abstract int getType();
 		
