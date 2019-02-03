@@ -10,6 +10,7 @@ public class MyListFragment extends BaseTabLayoutFragment {
 	
 	@Override
 	protected void initialize() {
+		addFragment(new MyList2PageFragment(), "watch list");
 		addFragment(new PageWatchLaterListFragment(), R.string.boxplay_mylist_watchlater_title);
 		// addFragment(new PageSubscriptionsListFragment(), R.string.boxplay_mylist_subscriptions_title);
 	}

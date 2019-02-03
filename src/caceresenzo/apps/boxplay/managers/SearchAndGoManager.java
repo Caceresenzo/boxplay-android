@@ -389,7 +389,7 @@ public class SearchAndGoManager extends AbstractManager {
 		private final String JSON_KEY_HISTORY_QUERY = "query";
 		private final String JSON_KEY_HISTORY_DATE = "date";
 		
-		private File suggestionFile = new File(getManagers().getBaseDataDirectory(), "search_history.json");
+		private File suggestionFile = new File(getManagers().getBaseDataDirectory(), "culture/searchandgo/search_history.json");
 		
 		private final Comparator<SearchHistoryItem> QUERY_COMPARATOR = new Comparator<SearchHistoryItem>() {
 			@Override

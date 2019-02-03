@@ -36,12 +36,12 @@ public class XManagers {
 	protected PremiumManager premiumManager;
 	protected SearchAndGoManager searchAndGoManager;
 	protected MyListManager myListManager;
+	public MyListManager2 myListManager2;
 	protected DebugManager debugManager;
 	protected BackgroundServiceManager backgroundServiceManager;
 	
 	/* Files */
-	protected final File baseApplicationDirectory;
-	protected final File baseDataDirectory;
+	private File baseApplicationDirectory, baseDataDirectory;
 	
 	/* Preferences */
 	protected SharedPreferences preferences;
@@ -50,12 +50,14 @@ public class XManagers {
 	private List<AbstractManager> managers;
 	
 	public XManagers() {
-		baseApplicationDirectory = new File("/sdcard" + "/" + "BoxPlay" + "/"); // TODO: getString(R.string.application_name) and Environment.getExternalStorageDirectory()
-		baseDataDirectory = new File(baseApplicationDirectory, "data/");
+		;
 	}
 	
 	public XManagers initialize(final BoxPlayApplication boxPlayApplication) {
 		this.boxPlayApplication = boxPlayApplication;
+		
+		baseApplicationDirectory = boxPlayApplication.getDataDir();
+		baseDataDirectory = new File(baseApplicationDirectory, "data" + File.separator);
 		
 		managers = new ArrayList<AbstractManager>() {
 			@Override
@@ -68,61 +70,30 @@ public class XManagers {
 		// Config
 		preferences = PreferenceManager.getDefaultSharedPreferences(BoxPlayApplication.getBoxPlayApplication());
 		
-		// if (identificationManager == null) {
 		// managers.add(identificationManager = new IdentificationManager());
-		// }
-		
-		// if (userManager == null) {
 		// managers.add(userManager = new UserManager());
-		// }
 		
-		if (permissionManager == null) {
-			managers.add(permissionManager = new PermissionManager());
-		}
+		managers.add(permissionManager = new PermissionManager());
 		
-		if (dataManager == null) {
-			managers.add(dataManager = new DataManager());
-		}
+		managers.add(dataManager = new DataManager());
+		managers.add(videoManager = new VideoManager());
+		managers.add(musicManager = new MusicManager());
+		managers.add(serverManager = new ServerManager());
 		
-		if (videoManager == null) {
-			managers.add(videoManager = new VideoManager());
-		}
+		managers.add(updateManager = new UpdateManager());
 		
-		if (musicManager == null) {
-			managers.add(musicManager = new MusicManager());
-		}
+		managers.add(tutorialManager = new TutorialManager());
 		
-		if (serverManager == null) {
-			managers.add(serverManager = new ServerManager());
-		}
+		managers.add(premiumManager = new PremiumManager());
 		
-		if (updateManager == null) {
-			managers.add(updateManager = new UpdateManager());
-		}
+		managers.add(searchAndGoManager = new SearchAndGoManager());
 		
-		if (tutorialManager == null) {
-			managers.add(tutorialManager = new TutorialManager());
-		}
+		managers.add(myListManager = new MyListManager());
+		managers.add(myListManager2 = new MyListManager2());
 		
-		if (premiumManager == null) {
-			managers.add(premiumManager = new PremiumManager());
-		}
+		managers.add(debugManager = new DebugManager());
 		
-		if (searchAndGoManager == null) {
-			managers.add(searchAndGoManager = new SearchAndGoManager());
-		}
-		
-		if (myListManager == null) {
-			managers.add(myListManager = new MyListManager());
-		}
-		
-		if (debugManager == null) {
-			managers.add(debugManager = new DebugManager());
-		}
-		
-		if (backgroundServiceManager == null) {
-			managers.add(backgroundServiceManager = new BackgroundServiceManager());
-		}
+		managers.add(backgroundServiceManager = new BackgroundServiceManager());
 		
 		for (AbstractManager manager : managers) {
 			manager.initialize();
@@ -147,14 +118,6 @@ public class XManagers {
 	public void destroy() {
 		for (AbstractManager manager : managers) {
 			manager.destroy();
-		}
-	}
-	
-	public void checkAndRecreate() {
-		if (managers == null) {
-			if (BoxPlayApplication.getBoxPlayApplication() != null) {
-				initialize(BoxPlayApplication.getBoxPlayApplication());
-			}
 		}
 	}
 	
@@ -183,62 +146,50 @@ public class XManagers {
 	}
 	
 	public PermissionManager getPermissionManager() {
-		checkAndRecreate();
 		return permissionManager;
 	}
 	
 	public DataManager getDataManager() {
-		checkAndRecreate();
 		return dataManager;
 	}
 	
 	public VideoManager getVideoManager() {
-		checkAndRecreate();
 		return videoManager;
 	}
 	
 	public MusicManager getMusicManager() {
-		checkAndRecreate();
 		return musicManager;
 	}
 	
 	public ServerManager getServerManager() {
-		checkAndRecreate();
 		return serverManager;
 	}
 	
 	public UpdateManager getUpdateManager() {
-		checkAndRecreate();
 		return updateManager;
 	}
 	
 	public TutorialManager getTutorialManager() {
-		checkAndRecreate();
 		return tutorialManager;
 	}
 	
 	public PremiumManager getPremiumManager() {
-		checkAndRecreate();
 		return premiumManager;
 	}
 	
 	public SearchAndGoManager getSearchAndGoManager() {
-		checkAndRecreate();
 		return searchAndGoManager;
 	}
 	
 	public MyListManager getMyListManager() {
-		checkAndRecreate();
 		return myListManager;
 	}
 	
 	public DebugManager getDebugManager() {
-		checkAndRecreate();
 		return debugManager;
 	}
 	
 	public BackgroundServiceManager getBackgroundServiceManager() {
-		checkAndRecreate();
 		return backgroundServiceManager;
 	}
 	

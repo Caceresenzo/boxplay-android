@@ -51,7 +51,7 @@ public class MyListManager extends AbstractManager {
 	
 	@Override
 	public void initialize() {
-		this.listFolder = new File(getManagers().getBaseApplicationDirectory() + "/list/");
+		this.listFolder = new File(getManagers().getBaseDataDirectory() + "/list/");
 		
 		this.myLists = new ArrayList<>();
 		

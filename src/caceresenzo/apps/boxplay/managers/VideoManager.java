@@ -44,7 +44,7 @@ public class VideoManager extends AbstractManager {
 	
 	/* Configutation */
 	private HashMap<Object, Object> mapJsonUserData = new HashMap<>();
-	private final File videoStoreDotJsonFile = new File(getManagers().baseDataDirectory, "videoStore.json");
+	private final File videoStoreDotJsonFile = new File(getManagers().getBaseDataDirectory(), "store/video.json");
 	
 	/* Factory */
 	private VideoFactory videoFactory = new VideoFactory();
