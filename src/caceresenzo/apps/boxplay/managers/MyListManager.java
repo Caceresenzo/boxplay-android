@@ -52,13 +52,19 @@ public class MyListManager extends AbstractManager {
 	
 	public static final int ENTRY_NO_ID = -1;
 	
+	/* Managers */
+	private SubscriptionManager subscriptionManager;
+	
 	/* My Lists */
 	private MyListSqliteBridge sqliteBridge;
 	private List<MyList> myLists;
 	private MyList watchLaterMyList, subscriptionsMyList;
+	private MyListCallback myListCallback;
 	
 	@Override
 	public void initialize() {
+		this.subscriptionManager = getManagers().getSubscriptionManager();
+		
 		this.sqliteBridge = new MyListSqliteBridge(boxPlayApplication);
 		this.myLists = new ArrayList<>();
 		
@@ -66,6 +72,19 @@ public class MyListManager extends AbstractManager {
 		this.subscriptionsMyList = create(MYLIST_SUBSCRIPTIONS);
 		
 		sqliteBridge.initialize(myLists);
+		
+		myListCallback = new MyListCallback() {
+			@Override
+			public void onItemRemoved(MyList myList, MyListable myListable) {
+				if (myList.equals(subscriptionsMyList)) {
+					if (myListable instanceof SearchAndGoResult) {
+					subscriptionManager.unsubscribe((SearchAndGoResult) myListable);
+					} else {
+						Log.w(TAG, "Trying to unsubscribe from a non-search and go result object.");
+					}
+				}
+			}
+		};
 		
 		loadAll();
 	}
@@ -80,7 +99,7 @@ public class MyListManager extends AbstractManager {
 	 * @return Created {@link MyList} instance.
 	 */
 	private MyList create(String name) {
-		MyList myList = new MyList(name);
+		MyList myList = new MyList(name, myListCallback);
 		myLists.add(myList);
 		return myList;
 	}
@@ -412,11 +431,14 @@ public class MyListManager extends AbstractManager {
 		
 		/* Variables */
 		private String name;
+		private MyListCallback callback;
 		private Map<String, MyListable> myListables;
 		
 		/* Constructor */
-		public MyList(String name) {
+		public MyList(String name, MyListCallback myListCallback) {
 			this.name = name;
+			this.callback = myListCallback;
+			
 			this.myListables = new HashMap<String, MyListable>() { /* Use MD5 encoding for key identification */
 				@Override
 				public MyListable put(String key, MyListable value) {
@@ -505,13 +527,24 @@ public class MyListManager extends AbstractManager {
 		}
 		
 		/**
-		 * Fetch item in this list and use the {@link MyListManager} to send back the {@link List} of {@link MyListable}.
+		 * Asynchronously fetch item in this list and use the {@link MyListManager} to send back the {@link List} of {@link MyListable}.
 		 * 
 		 * @param callback
 		 *            Target callback.
 		 */
-		public void fetch(MyListManager.FetchCallback callback) {
+		public void fetchAsync(MyListManager.FetchCallback callback) {
 			callback.onFetchFinished(new ArrayList<MyListable>(myListables.values()));
+		}
+		
+		/**
+		 * Fetch item in this list and use the {@link MyListManager} to send back the {@link List} of {@link MyListable}.
+		 * 
+		 * @param callback
+		 *            Target callback.
+		 * @return A {@link List} of {@link MyListable}.
+		 */
+		public List<MyListable> fetch() {
+			return new ArrayList<>(myListables.values());
 		}
 		
 		/**
@@ -543,6 +576,10 @@ public class MyListManager extends AbstractManager {
 				myListables.remove(myListable.toUniqueString());
 				
 				save(BoxPlayApplication.getManagers().getMyListManager().getSqliteBridge());
+				
+				if (callback != null) {
+					callback.onItemRemoved(this, myListable);
+				}
 			} else {
 				Log.d(TAG, "Trying to remove item that are not in the list.");
 			}
@@ -596,6 +633,10 @@ public class MyListManager extends AbstractManager {
 		void onFetchFinished(List<MyListable> myListables);
 		
 		void onException(Exception exception);
+	}
+	
+	public static interface MyListCallback {
+		void onItemRemoved(MyList myList, MyListable myListable);
 	}
 	
 }

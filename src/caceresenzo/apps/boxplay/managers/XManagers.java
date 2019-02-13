@@ -35,6 +35,7 @@ public class XManagers {
 	protected TutorialManager tutorialManager;
 	protected PremiumManager premiumManager;
 	protected SearchAndGoManager searchAndGoManager;
+	protected SubscriptionManager subscriptionManager;
 	protected MyListManager myListManager;
 	protected DebugManager debugManager;
 	protected BackgroundServiceManager backgroundServiceManager;
@@ -85,8 +86,9 @@ public class XManagers {
 		managers.add(tutorialManager = new TutorialManager());
 		
 		managers.add(premiumManager = new PremiumManager());
-		
+
 		managers.add(searchAndGoManager = new SearchAndGoManager());
+		managers.add(subscriptionManager = new SubscriptionManager());
 		
 		managers.add(myListManager = new MyListManager());
 		
@@ -178,6 +180,10 @@ public class XManagers {
 	
 	public SearchAndGoManager getSearchAndGoManager() {
 		return searchAndGoManager;
+	}
+	
+	public SubscriptionManager getSubscriptionManager() {
+		return subscriptionManager;
 	}
 	
 	public MyListManager getMyListManager() {

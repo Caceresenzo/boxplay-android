@@ -7,8 +7,6 @@ import android.os.Handler;
 import android.util.Log;
 import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.apps.boxplay.services.tasks.implementations.SearchAndGoUpdateCheckerTask;
-import caceresenzo.apps.boxplay.services.tasks.implementations.SearchAndGoUpdateCheckerTask2;
-import caceresenzo.apps.boxplay.services.tasks.implementations.UpdateCheckerTask;
 import caceresenzo.libs.math.MathUtils;
 import caceresenzo.libs.thread.ThreadUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
@@ -22,10 +20,9 @@ public class ForegroundTaskExecutor extends WorkerThread {
 	private static List<Class<? extends ForegroundTask>> taskClasses;
 	static {
 		taskClasses = new ArrayList<>();
-
+		
+		// taskClasses.add(UpdateCheckerTask.class);
 		taskClasses.add(SearchAndGoUpdateCheckerTask.class);
-		taskClasses.add(SearchAndGoUpdateCheckerTask2.class);
-		taskClasses.add(UpdateCheckerTask.class);
 	}
 	
 	/* Managers */

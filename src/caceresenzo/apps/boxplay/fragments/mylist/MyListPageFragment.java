@@ -78,7 +78,7 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 	}
 	
 	public void callFetch() {
-		getMyListInstance().fetch(this);
+		getMyListInstance().fetchAsync(this);
 	}
 	
 	public abstract MyList getMyListInstance();

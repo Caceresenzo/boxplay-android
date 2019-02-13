@@ -53,4 +53,11 @@ public abstract class ForegroundTask extends WorkerThread {
 	@StringRes
 	public abstract int getTaskDescription();
 	
+	/**
+	 * @return Weather or not the task need an internet connection to work. (<code>true</code> by default)
+	 */
+	public boolean requireNetwork() {
+		return true;
+	}
+	
 }
