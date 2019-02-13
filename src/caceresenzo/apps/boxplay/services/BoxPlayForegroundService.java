@@ -1,6 +1,7 @@
 package caceresenzo.apps.boxplay.services;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -9,16 +10,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.StringRes;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 import caceresenzo.android.libs.service.ServiceUtils;
+import caceresenzo.android.libs.toast.ToastUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.Constants;
-import caceresenzo.libs.math.MathUtils;
-import caceresenzo.libs.thread.ThreadUtils;
-import caceresenzo.libs.thread.implementations.WorkerThread;
+import caceresenzo.apps.boxplay.services.tasks.ForegroundTask;
+import caceresenzo.apps.boxplay.services.tasks.ForegroundTaskExecutor;
 
 public class BoxPlayForegroundService extends Service {
 	
@@ -38,7 +39,7 @@ public class BoxPlayForegroundService extends Service {
 	public static final String ACTION_CANCEL = "ACTION_CANCEL";
 	
 	/* Variables */
-	private ForegroundTask actualForegroundTask;
+	private ForegroundTaskExecutor executorWorker;
 	
 	@Override
 	public void onCreate() {
@@ -85,9 +86,22 @@ public class BoxPlayForegroundService extends Service {
 	 */
 	private void startForegroundService() {
 		Log.d(TAG, "Start foreground service.");
-		ServiceUtils.createNotificationChannel(this, NOTIFICATION_CHANNEL, R.string.boxplay_notification_channel_main_title, R.string.boxplay_notification_channel_main_description);
 		
-		startForeground(NOTIFICATION_ID, createNotification(INDETERMINATE_PROGRESS));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationManager notificationManager = getSystemService(NotificationManager.class);
+			
+			if (notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL) != null) {
+				notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL);
+			}
+			
+			NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, getString(R.string.boxplay_notification_channel_main_title), NotificationManager.IMPORTANCE_DEFAULT);
+			channel.setDescription(getString(R.string.boxplay_notification_channel_main_description));
+			channel.setImportance(NotificationManager.IMPORTANCE_LOW);
+			
+			notificationManager.createNotificationChannel(channel);
+		}
+		
+		startForeground(NOTIFICATION_ID, createNotification(null, INDETERMINATE_PROGRESS));
 		
 		execute();
 	}
@@ -98,33 +112,39 @@ public class BoxPlayForegroundService extends Service {
 	private void stopForegroundService() {
 		Log.d(TAG, "Stop foreground service.");
 		
+		ToastUtils.makeLong(this, "Stopping foreground service:: " + executorWorker).show();
+		
+		if (executorWorker != null) {
+			executorWorker.shouldStop();
+		}
+		
 		stopForeground(true);
 		
 		stopSelf();
 	}
 	
 	@SuppressWarnings("deprecation")
-	private Notification createNotification(int progress) {
+	private Notification createNotification(ForegroundTask task, int progress) {
 		Intent intent = new Intent();
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 		
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL);
 		
-		if (actualForegroundTask != null) {
+		if (task != null) {
 			NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-			bigTextStyle.setBigContentTitle(getString(R.string.boxplay_service_foreground_task_actual, getString(actualForegroundTask.getTaskName())));
-			bigTextStyle.bigText(getString(actualForegroundTask.getTaskDescription()));
+			bigTextStyle.setBigContentTitle(getString(R.string.boxplay_service_foreground_task_actual, getString(task.getTaskName())));
+			bigTextStyle.bigText(getString(task.getTaskDescription()));
 			builder.setStyle(bigTextStyle);
 		}
 		
-		builder.setContentTitle(getString(R.string.boxplay_service_foreground_notification_title));
-		builder.setContentText(getString(R.string.boxplay_service_foreground_notification_eta));
-		builder.setProgress(100, progress, progress == INDETERMINATE_PROGRESS);
-		builder.setOnlyAlertOnce(true);
-		builder.setWhen(System.currentTimeMillis());
-		builder.setSmallIcon(R.mipmap.icon_launcher);
-		builder.setPriority(NotificationCompat.PRIORITY_MAX);
-		builder.setFullScreenIntent(pendingIntent, true);
+		builder.setContentTitle(getString(R.string.boxplay_service_foreground_notification_title)) //
+				.setContentText(getString(R.string.boxplay_service_foreground_notification_eta)) //
+				.setProgress(100, progress, progress == INDETERMINATE_PROGRESS) //
+				.setOnlyAlertOnce(true) //
+				.setWhen(System.currentTimeMillis()) //
+				.setSmallIcon(R.mipmap.icon_launcher) //
+				.setPriority(NotificationCompat.PRIORITY_DEFAULT) //
+				.setFullScreenIntent(pendingIntent, true); //
 		
 		Intent cancelIntent = new Intent(this, BoxPlayForegroundService.class);
 		cancelIntent.setAction(ACTION_CANCEL);
@@ -142,8 +162,8 @@ public class BoxPlayForegroundService extends Service {
 		return notification;
 	}
 	
-	private void updateNotification(int progress) {
-		Notification notification = createNotification(progress);
+	public void updateNotification(ForegroundTask task, int progress) {
+		Notification notification = createNotification(task, progress);
 		
 		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(NOTIFICATION_ID, notification);
@@ -153,142 +173,24 @@ public class BoxPlayForegroundService extends Service {
 	 * Execute tasks
 	 */
 	public void execute() {
-		final ForegroundTask[] tasks = { new UpdateCheckerTask(), new SearchAndGoUpdateCheckerTask(), new SearchAndGoUpdateCheckerTask2(), new SearchAndGoUpdateCheckerTask() };
-		
-		new WorkerThread() {
-			private Handler handler;
-			
-			@Override
-			protected void initialize() {
-				this.handler = new Handler(getMainLooper());
-				
-				publishUpdate(INDETERMINATE_PROGRESS);
-			}
-			
-			@Override
-			public void execute() {
-				for (int i = 0; i < tasks.length; i++) {
-					ForegroundTask task = actualForegroundTask = tasks[i];
-					
-					if (task != null) { /* Security... */
-						Log.i(TAG, "Executing: " + task.getClass());
-						
-						publishUpdate(INDETERMINATE_PROGRESS);
-						
-						task.observe(new WorkerThread.ProgressObserver() {
-							@Override
-							public void onProgress(WorkerThread worker, int max, int value) {
-								publishUpdate((int) MathUtils.pourcent(value, max));
-							}
-						});
-						
-						task.start();
-						
-						try {
-							task.join();
-						} catch (InterruptedException exception) {
-							Log.i(TAG, "Failed to join thread.", exception);
-						}
-						
-						task.removeObserver();
-						
-						if (i != tasks.length) { /* Not the last */
-							publishUpdate(INDETERMINATE_PROGRESS);
-							
-							ThreadUtils.sleep(1000L);
-						}
-					}
-				}
-			}
-			
-			public void publishUpdate(final int progress) {
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						updateNotification(progress);
-					}
-				});
-			}
-			
+		executorWorker = new ForegroundTaskExecutor(this, new Handler(Looper.getMainLooper())) {
 			@Override
 			protected void done() {
+				super.done();
+				
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
 						stopForegroundService();
 					}
 				});
-			};
+				
+				executorWorker = null;
+			}
 			
-		}.start();
-	}
-	
-	class UpdateCheckerTask extends ForegroundTask {
-		@Override
-		protected void execute() {
-			ThreadUtils.sleep(5000L);
-		}
+		};
 		
-		@Override
-		public int getTaskName() {
-			return R.string.boxplay_service_foreground_task_application_update_title;
-		}
-		
-		@Override
-		public int getTaskDescription() {
-			return R.string.boxplay_service_foreground_task_application_update_description;
-		}
-	}
-	
-	class SearchAndGoUpdateCheckerTask extends ForegroundTask {
-		private int maxSecond = 5;
-		
-		@Override
-		protected void execute() {
-			for (int second = 0; second < maxSecond; second++) {
-				publishProgress(maxSecond, second + 1);
-				
-				ThreadUtils.sleep(1000L);
-			}
-		}
-		
-		@Override
-		public int getTaskName() {
-			return R.string.boxplay_service_foreground_task_searchngo_subscriptions_title;
-		}
-		
-		@Override
-		public int getTaskDescription() {
-			return R.string.boxplay_service_foreground_task_searchngo_subscriptions_description;
-		}
-	}
-	
-	class SearchAndGoUpdateCheckerTask2 extends SearchAndGoUpdateCheckerTask {
-		private int maxSecond = 5;
-		
-		@Override
-		protected void execute() {
-			for (int second = 0; second < maxSecond; second++) {
-				publishProgress(maxSecond, second + 1);
-				
-				ThreadUtils.sleep(1000L);
-			}
-		}
-		
-		@Override
-		public int getTaskName() {
-			return R.string.boxplay_service_foreground_task_searchngo_subscriptions2_title;
-		}
-	}
-	
-	abstract class ForegroundTask extends WorkerThread {
-		
-		@StringRes
-		public abstract int getTaskName();
-		
-		@StringRes
-		public abstract int getTaskDescription();
-		
+		executorWorker.start();
 	}
 	
 	public static Intent getServiceIntent(Context context) {

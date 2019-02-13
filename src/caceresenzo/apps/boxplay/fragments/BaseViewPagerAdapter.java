@@ -24,8 +24,8 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	/**
 	 * Constructor, create a new instance from {@link BoxPlayApplication}'s default {@link FragmentManager}
 	 */
-	public BaseViewPagerAdapter() {
-		super(BoxPlayApplication.getBoxPlayApplication().getSupportFragmentManager());
+	public BaseViewPagerAdapter(BaseBoxPlayFragment boxPlayFragment) {
+		super(boxPlayFragment.getChildFragmentManager());
 	}
 	
 	/**

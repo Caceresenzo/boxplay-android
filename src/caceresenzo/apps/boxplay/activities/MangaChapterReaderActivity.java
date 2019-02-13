@@ -137,8 +137,8 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 		
 		INSTANCE = null;
 		
-		mangaExtractionWorker.forceDestroy();
-		novelExtractionWorker.forceDestroy();
+		mangaExtractionWorker.shouldStop();
+		novelExtractionWorker.shouldStop();
 	}
 	
 	/* Initialization -> Views */

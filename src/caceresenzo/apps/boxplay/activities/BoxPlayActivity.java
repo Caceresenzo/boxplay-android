@@ -88,7 +88,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(null); /* Dynamic NavigationView */
+		super.onCreate(savedInstanceState); /* Dynamic NavigationView */
 		setContentView(R.layout.activity_boxplay);
 		INSTANCE = this;
 		
@@ -174,8 +174,14 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		
-		onNavigationItemSelected(navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video));
-		navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video).setChecked(true);
+		/* Bug with dynamic NavigationView, doing task later solve the problem. */
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				onNavigationItemSelected(navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video));
+				navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video).setChecked(true);
+			}
+		}, 150);
 		
 		if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
 			handler.postDelayed(new Runnable() {
@@ -220,13 +226,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				}
 			}
 		}
-	}
-	
-	@Override
-	protected void onStop() {
-		// MANAGERS.getMusicManager().saveDatabase();
-		
-		super.onStop();
 	}
 	
 	@Override
@@ -684,8 +683,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 					.beginTransaction() //
 					.replace(R.id.activity_boxplay_framelayout_container_main, fragment) //
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN) //
-					.commit() //
-			;
+					.commit();
 			
 			viewHelper.setLastFragment(fragment);
 		} catch (Exception exception) {

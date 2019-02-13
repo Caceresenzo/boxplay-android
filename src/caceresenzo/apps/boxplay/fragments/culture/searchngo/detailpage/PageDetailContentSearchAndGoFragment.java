@@ -477,7 +477,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 											@Override
 											public void onClick(BottomDialog dialog) {
 												AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, viewHelper.isAdmEnabled());
-												forceDestroy();
+												forceStop();
 											}
 										}) //
 										.setNegativeText(R.string.boxplay_culture_searchngo_download_dialog_file_size_button_cancel); //
