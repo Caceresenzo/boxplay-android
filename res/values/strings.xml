@@ -518,6 +518,7 @@
     <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_default_value">1800000</string>
 
     <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_entries">
+        <item>Every 20 seconds [Test only]</item>
         <item>Every 30 minutes</item>
         <item>Every 1 hour</item>
         <item>Every 2 hours</item>
@@ -526,6 +527,7 @@
         <item>Every day</item>
     </string-array>
     <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_values" translatable="false">
+        <item>20</item>
         <item>1800000</item>
         <item>3600000</item>
         <item>7200000</item>

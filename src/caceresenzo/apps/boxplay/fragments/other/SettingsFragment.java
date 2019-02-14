@@ -145,6 +145,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				} else {
 					preference.setSummary(R.string.boxplay_other_settings_boxplay_pref_background_service_summary_disabled);
 				}
+				
+				if (!initialization) {
+					BoxPlayApplication.getManagers().getBackgroundServiceManager().updateEnabledState(switchPreference.isChecked(), true);
+				}
 			}
 			//
 			else if (key == getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key)) {
@@ -169,7 +173,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				if (!viewHelper.isAdmInstalled()) {
 					switchPreference.setChecked(false);
 					switchPreference.setSummary(R.string.boxplay_other_settings_downloads_pref_use_adm_summary_not_installed);
-
+					
 					if (!initialization) {
 						ApplicationUtils.openStore(boxPlayApplication, AdmAndroidDownloader.NORMAL_VERSION_PACKAGE);
 					}
@@ -206,7 +210,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 			if (key == getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key)) {
 				preference.setSummary(getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_summary, listPreference.getEntries()[prefIndex]));
 				
-				BoxPlayApplication.getManagers().getBackgroundServiceManager().updateExecutionFrequency((String) listPreference.getEntryValues()[prefIndex]);
+				if (!initialization) {
+					BoxPlayApplication.getManagers().getBackgroundServiceManager().updateExecutionFrequency((String) listPreference.getEntryValues()[prefIndex], true);
+				}
 			}
 			//
 			else if (key == getString(R.string.boxplay_other_settings_application_pref_language_key)) {

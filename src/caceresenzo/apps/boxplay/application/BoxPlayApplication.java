@@ -71,7 +71,7 @@ public class BoxPlayApplication extends Application {
 		
 		MANAGERS.initialize(this);
 		
-		 BoxPlayForegroundService.startIfNotAlready(this);
+		// BoxPlayForegroundService.startIfNotAlready(this);
 		
 		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
 	}
@@ -92,7 +92,7 @@ public class BoxPlayApplication extends Application {
 		if (ATTACHED_ACTIVITY instanceof BoxPlayActivity) {
 			getViewHelper().setBoxPlayActivity((BoxPlayActivity) ATTACHED_ACTIVITY);
 		}
-
+		
 		/* Just to be sure */
 		AndroidJavaScriptExecutorLibrary.use(getBoxPlayApplication(), HANDLER);
 	}
