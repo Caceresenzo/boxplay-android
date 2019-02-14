@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
@@ -57,7 +58,13 @@ public class XManagers {
 	public XManagers initialize(final BoxPlayApplication boxPlayApplication) {
 		this.boxPlayApplication = boxPlayApplication;
 		
-		baseApplicationDirectory = boxPlayApplication.getDataDir();
+
+		if (Build.VERSION.SDK_INT <= 24) {
+			baseApplicationDirectory = boxPlayApplication.getFilesDir();
+		} else {
+			baseApplicationDirectory = boxPlayApplication.getDataDir();
+		}
+		Log.d(TAG, "BASE APPLICATION DIRECTORY : " + baseApplicationDirectory.getAbsolutePath());
 		baseDataDirectory = new File(baseApplicationDirectory, "data" + File.separator);
 		
 		managers = new ArrayList<AbstractManager>() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
@@ -73,7 +74,7 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 											.setAutoCancel(true) //
 											.setContentIntent(PendingIntent.getActivity(boxPlayApplication, androidNotificationFakeId, SearchAndGoDetailActivity.createStartIntent(boxPlayApplication, searchAndGoResult), PendingIntent.FLAG_IMMUTABLE));
 									
-									NotificationManager notificationManager = boxPlayApplication.getSystemService(NotificationManager.class);
+									NotificationManager notificationManager = (NotificationManager) boxPlayApplication.getSystemService(Context.NOTIFICATION_SERVICE);
 									notificationManager.notify(androidNotificationFakeId, builder.build());
 								}
 							});

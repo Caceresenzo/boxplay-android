@@ -78,7 +78,7 @@ public class MyListManager extends AbstractManager {
 			public void onItemRemoved(MyList myList, MyListable myListable) {
 				if (myList.equals(subscriptionsMyList)) {
 					if (myListable instanceof SearchAndGoResult) {
-					subscriptionManager.unsubscribe((SearchAndGoResult) myListable);
+						subscriptionManager.unsubscribe((SearchAndGoResult) myListable);
 					} else {
 						Log.w(TAG, "Trying to unsubscribe from a non-search and go result object.");
 					}
@@ -190,15 +190,14 @@ public class MyListManager extends AbstractManager {
 			SQLiteDatabase database = getWritableDatabase();
 			
 			for (MyList myList : myLists) {
-				database.execSQL(String.format(String.join("\n", //
-						"CREATE TABLE IF NOT EXISTS `%s` (", //
-						"	" + DATABASE_COLUMN_ID + " INTEGER PRIMARY KEY,", //
-						"	" + DATABASE_COLUMN_POSITION + " INTEGER,", //
-						"  	" + DATABASE_COLUMN_TYPE + " INTEGER,", //
-						"  	" + DATABASE_COLUMN_BINDER + " TEXT NOT NULL,", //
-						"  	" + DATABASE_COLUMN_CONTENT + " TEXT NOT NULL", //
-						");" //
-				), myList.getName()));
+				database.execSQL(String.format("" + //
+						"CREATE TABLE IF NOT EXISTS `%s` (" + //
+						"	" + DATABASE_COLUMN_ID + " INTEGER PRIMARY KEY," + //
+						"	" + DATABASE_COLUMN_POSITION + " INTEGER," + //
+						"  	" + DATABASE_COLUMN_TYPE + " INTEGER," + //
+						"  	" + DATABASE_COLUMN_BINDER + " TEXT NOT NULL," + //
+						"  	" + DATABASE_COLUMN_CONTENT + " TEXT NOT NULL" + //
+						");", myList.getName()));
 			}
 			
 			database.close();
