@@ -6,6 +6,8 @@
     <!--  -->
     <string name="boxplay_notification_channel_main_title">BoxPlay</string>
     <string name="boxplay_notification_channel_main_description">Services BoxPlay</string>
+    <string name="boxplay_notification_channel_search_and_go_update_title">Mise à jour du Search n\' Go</string>
+    <string name="boxplay_notification_channel_search_and_go_update_description">Nouveaux items fournis par le the Search n\' Go</string>
 
     <!--  -->
     <!-- Service -->
@@ -17,8 +19,8 @@
     <string name="boxplay_service_foreground_task_application_update_title">Vérification des mise à jours...</string>
     <string name="boxplay_service_foreground_task_application_update_description">Vérifie si une nouvelle version de BoxPlay est disponible.</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_title">Search n\' Go Abonnement</string>
-    <string name="boxplay_service_foreground_task_searchngo_subscriptions2_title">Search n\' Go Abonnemenet 2</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Va voir sur les site si il y du nouveau contenu sur les items auquels vous vous êtes abonné.</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions_update_new_item">Nouveau contenu disponible</string>
 
     <!--  -->
     <string name="boxplay_viewhelper_recaching">Remise en cache...\nVeuillez redémarrer l\'appli. pour appliquer le nouveau langage de partout!</string>

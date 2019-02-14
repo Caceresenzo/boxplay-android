@@ -2,12 +2,27 @@ package caceresenzo.apps.boxplay.services.tasks;
 
 import android.support.annotation.StringRes;
 import android.util.Log;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.managers.XManagers;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public abstract class ForegroundTask extends WorkerThread {
 	
 	/* Tag */
 	public static final String TAG = ForegroundTask.class.getSimpleName();
+	
+	/* Managers */
+	protected BoxPlayApplication boxPlayApplication;
+	protected XManagers managers;
+	
+	protected ForegroundTaskExecutor foregroundTaskExecutor;
+	
+	public ForegroundTask() {
+		super();
+		
+		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
+		this.managers = BoxPlayApplication.getManagers();
+	}
 	
 	@Override
 	protected void execute() {
@@ -39,6 +54,21 @@ public abstract class ForegroundTask extends WorkerThread {
 		if (threadShouldStop()) {
 			throw new ThreadDeath();
 		}
+	}
+	
+	/**
+	 * Start the {@link ForegroundTask} with a {@link ForegroundTaskExecutor} attached to it.
+	 * 
+	 * @param executor
+	 *            Target executor.
+	 * @return Itself
+	 */
+	public ForegroundTask start(ForegroundTaskExecutor executor) {
+		this.foregroundTaskExecutor = executor;
+		
+		start();
+		
+		return this;
 	}
 	
 	/**

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import caceresenzo.android.libs.service.ServiceUtils;
 import caceresenzo.android.libs.toast.ToastUtils;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.services.tasks.ForegroundTask;
 import caceresenzo.apps.boxplay.services.tasks.ForegroundTaskExecutor;
@@ -28,7 +29,8 @@ public class BoxPlayForegroundService extends Service {
 	
 	/* Constants Shotcuts */
 	public static final int NOTIFICATION_ID = Constants.NOTIFICATION_ID.BOXPLAY_FOREGROUND_SERVICE;
-	public static final String NOTIFICATION_CHANNEL = Constants.NOTIFICATION_CHANNEL.ANDROID_CHANNEL_ID;
+	public static final String MAIN_NOTIFICATION_CHANNEL = Constants.NOTIFICATION_CHANNEL.MAIN;
+	public static final String SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL = Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE;
 	
 	/* Constants */
 	public static final int INDETERMINATE_PROGRESS = -1;
@@ -90,15 +92,25 @@ public class BoxPlayForegroundService extends Service {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			NotificationManager notificationManager = getSystemService(NotificationManager.class);
 			
-			if (notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL) != null) {
-				notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL);
+			if (BoxPlayApplication.BUILD_DEBUG) {
+				for (String channel : new String[] { MAIN_NOTIFICATION_CHANNEL, SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL }) {
+					if (notificationManager.getNotificationChannel(channel) != null) {
+						notificationManager.deleteNotificationChannel(channel);
+					}
+				}
 			}
 			
-			NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, getString(R.string.boxplay_notification_channel_main_title), NotificationManager.IMPORTANCE_DEFAULT);
-			channel.setDescription(getString(R.string.boxplay_notification_channel_main_description));
-			channel.setImportance(NotificationManager.IMPORTANCE_LOW);
+			NotificationChannel mainChannel = new NotificationChannel(MAIN_NOTIFICATION_CHANNEL, getString(R.string.boxplay_notification_channel_main_title), NotificationManager.IMPORTANCE_DEFAULT);
+			mainChannel.setDescription(getString(R.string.boxplay_notification_channel_main_description));
+			mainChannel.setImportance(NotificationManager.IMPORTANCE_LOW);
 			
-			notificationManager.createNotificationChannel(channel);
+			notificationManager.createNotificationChannel(mainChannel);
+			
+			NotificationChannel searchAndGoUpdateChannel = new NotificationChannel(SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL, getString(R.string.boxplay_notification_channel_search_and_go_update_title), NotificationManager.IMPORTANCE_DEFAULT);
+			searchAndGoUpdateChannel.setDescription(getString(R.string.boxplay_notification_channel_search_and_go_update_description));
+			searchAndGoUpdateChannel.setImportance(NotificationManager.IMPORTANCE_MAX);
+			
+			notificationManager.createNotificationChannel(searchAndGoUpdateChannel);
 		}
 		
 		startForeground(NOTIFICATION_ID, createNotification(null, INDETERMINATE_PROGRESS));
@@ -128,7 +140,7 @@ public class BoxPlayForegroundService extends Service {
 		Intent intent = new Intent();
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 		
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL);
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MAIN_NOTIFICATION_CHANNEL);
 		
 		if (task != null) {
 			NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();

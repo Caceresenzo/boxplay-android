@@ -3,12 +3,13 @@ package caceresenzo.apps.boxplay.services.tasks.implementations;
 import java.util.List;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import caceresenzo.android.libs.toast.ToastUtils;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.MyListManager;
 import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
@@ -20,7 +21,6 @@ import caceresenzo.libs.boxplay.culture.searchngo.subscription.item.Subscription
 import caceresenzo.libs.boxplay.culture.searchngo.subscription.subscriber.Subscriber;
 import caceresenzo.libs.boxplay.culture.searchngo.subscription.subscriber.SubscriberStorageSolution;
 import caceresenzo.libs.boxplay.mylist.MyListable;
-import caceresenzo.libs.random.Randomizer;
 
 public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 	
@@ -37,8 +37,8 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 	public SearchAndGoUpdateCheckerTask() {
 		super();
 		
-		this.myListManager = BoxPlayApplication.getManagers().getMyListManager();
-		this.subscriptionManager = BoxPlayApplication.getManagers().getSubscriptionManager();
+		this.myListManager = managers.getMyListManager();
+		this.subscriptionManager = managers.getSubscriptionManager();
 		
 		this.subscriptionMyList = myListManager.getSubscriptionsMyList();
 	}
@@ -47,14 +47,12 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 	protected void task() {
 		List<MyListable> myListables = subscriptionMyList.fetch();
 		
-		for (MyListable myListable : myListables) {
-			final SearchAndGoResult searchAndGoResult = (SearchAndGoResult) myListable;
+		for (int i = 0; i < myListables.size(); i++) {
+			final SearchAndGoResult searchAndGoResult = (SearchAndGoResult) myListables.get(i);
 			
-			Log.i(TAG, "Fetching item: " + searchAndGoResult.getName());
+			foregroundTaskExecutor.publishUpdate(this, i + 1, myListables.size());
 			
 			Subscriber subscriber = subscriptionManager.getSubscriberFromResult(searchAndGoResult);
-			
-			Log.i(TAG, "Subscriber: " + subscriber.getClass().getSimpleName());
 			
 			if (subscriber != null) {
 				try {
@@ -64,16 +62,19 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 							new Handler(Looper.getMainLooper()).post(new Runnable() {
 								@Override
 								public void run() {
-									ToastUtils.makeLong(BoxPlayApplication.getBoxPlayApplication(), "New item: " + item.getContent()).show();
-									Log.i(TAG, "NEW EPISODE: " + item.getContent());
+									int androidNotificationFakeId = (int) System.currentTimeMillis();
 									
-									NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(BoxPlayApplication.getBoxPlayApplication());
-									mBuilder.setChannelId(BoxPlayForegroundService.NOTIFICATION_CHANNEL) //
+									@SuppressWarnings("deprecation")
+									NotificationCompat.Builder builder = new NotificationCompat.Builder(boxPlayApplication);
+									builder.setChannelId(BoxPlayForegroundService.SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL) //
 											.setSmallIcon(R.mipmap.icon_launcher) //
-											.setContentTitle("New item available — Search n' Go") //
-											.setContentText(searchAndGoResult.getName() + " — " + item.getContent()); //
-									NotificationManager notificationManager = BoxPlayApplication.getBoxPlayApplication().getSystemService(NotificationManager.class);
-									notificationManager.notify(Randomizer.randomInt(0, 99999), mBuilder.build());
+											.setContentTitle(boxPlayApplication.getString(R.string.boxplay_service_foreground_task_searchngo_subscriptions_update_new_item)) //
+											.setContentText(boxPlayApplication.getString(R.string.boxplay_service_foreground_task_searchngo_subscriptions_update_new_item_content, searchAndGoResult.getName(), item.getContent())) //
+											.setAutoCancel(true) //
+											.setContentIntent(PendingIntent.getActivity(boxPlayApplication, androidNotificationFakeId, SearchAndGoDetailActivity.createStartIntent(boxPlayApplication, searchAndGoResult), PendingIntent.FLAG_IMMUTABLE));
+									
+									NotificationManager notificationManager = boxPlayApplication.getSystemService(NotificationManager.class);
+									notificationManager.notify(androidNotificationFakeId, builder.build());
 								}
 							});
 						}
@@ -84,27 +85,32 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 						}
 					});
 					
-					SubscriberStorageSolution storageSolution = subscriptionManager.getStorageSolution();
-					List<SubscriptionItem> localItems = storageSolution.getLocalStorageItems(searchAndGoResult);
-					
-					for (SubscriptionItem subscriptionItem : localItems) {
-						Log.i(TAG, "-> ITEM : " + subscriptionItem.getContent());
+					if (BoxPlayApplication.BUILD_DEBUG) {
+						SubscriberStorageSolution storageSolution = subscriptionManager.getStorageSolution();
+						List<SubscriptionItem> localItems = storageSolution.getLocalStorageItems(searchAndGoResult);
+						
+						for (SubscriptionItem subscriptionItem : localItems) {
+							Log.i(TAG, "-> ITEM : " + subscriptionItem.getContent());
+						}
+						
+						int countToRemove = Math.min(localItems.size(), 3);
+						for (int j = 0; j < countToRemove; j++) {
+							localItems.remove(0);
+						}
+						
+						for (SubscriptionItem subscriptionItem : localItems) {
+							Log.i(TAG, "-> NOW ITEM : " + subscriptionItem.getContent());
+						}
+						
+						storageSolution.updateLocalStorageItems(searchAndGoResult, localItems);
 					}
-					
-					int countToRemove = Math.min(localItems.size(), 3);
-					for (int i = 0; i < countToRemove; i++) {
-						localItems.remove(0);
-					}
-					
-					for (SubscriptionItem subscriptionItem : localItems) {
-						Log.i(TAG, "-> NOW ITEM : " + subscriptionItem.getContent());
-					}
-					
-					storageSolution.updateLocalStorageItems(searchAndGoResult, localItems);
 				} catch (Exception exception) {
 					Log.e(TAG, "Failed to fetch item.", exception);
 				}
 			}
+			
+			checkThread();
+			
 		}
 	}
 	

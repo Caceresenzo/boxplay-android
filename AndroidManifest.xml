@@ -69,7 +69,7 @@
             android:name=".activities.SearchAndGoDetailActivity"
             android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
             android:label="@string/title_activity_searchandgo_detail"
-            android:launchMode="singleTop"
+            android:launchMode="standard"
             android:parentActivityName=".activities.BoxPlayActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

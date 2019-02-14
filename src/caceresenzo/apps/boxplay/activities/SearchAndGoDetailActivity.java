@@ -3,6 +3,7 @@ package caceresenzo.apps.boxplay.activities;
 import java.io.Serializable;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -105,7 +106,7 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 		
 		switch (id) {
 			case android.R.id.home: {
-				/* Avoid the "Unhandled" message */
+				onBackPressed();
 				break;
 			}
 			
@@ -186,11 +187,15 @@ public class SearchAndGoDetailActivity extends BaseBoxPlayActivty {
 	public static void start(SearchAndGoResult result) {
 		BoxPlayApplication application = BoxPlayApplication.getBoxPlayApplication();
 		
-		Intent intent = new Intent(application, SearchAndGoDetailActivity.class);
+		application.startActivity(createStartIntent(application, result));
+	}
+	
+	public static Intent createStartIntent(Context context, SearchAndGoResult result) {		
+		Intent intent = new Intent(context, SearchAndGoDetailActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra(BUNDLE_KEY_SEARCH_RESULT_ITEM, (Serializable) result);
 		
-		application.startActivity(intent);
+		return intent;
 	}
 	
 	class FetchingWorker extends WorkerThread {

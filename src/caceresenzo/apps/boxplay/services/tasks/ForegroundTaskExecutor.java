@@ -8,7 +8,6 @@ import android.util.Log;
 import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.apps.boxplay.services.tasks.implementations.SearchAndGoUpdateCheckerTask;
 import caceresenzo.libs.math.MathUtils;
-import caceresenzo.libs.thread.ThreadUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public class ForegroundTaskExecutor extends WorkerThread {
@@ -66,10 +65,8 @@ public class ForegroundTaskExecutor extends WorkerThread {
 					}
 				});
 				
-				task.start();
-				
 				try {
-					task.join();
+					task.start(this).join();
 				} catch (InterruptedException exception) {
 					Log.i(TAG, "Failed to join thread.", exception);
 				}
@@ -79,16 +76,12 @@ public class ForegroundTaskExecutor extends WorkerThread {
 				if (threadShouldStop()) {
 					break;
 				}
-				
-				if (i != tasks.size()) { /* Not the last */
-					publishUpdate(null, BoxPlayForegroundService.INDETERMINATE_PROGRESS);
-					
-					ThreadUtils.sleep(1000L);
-				}
 			}
-			
-			actualForegroundTask = null;
 		}
+	}
+	
+	public void publishUpdate(final ForegroundTask task, int progress, int max) {
+		publishUpdate(task, (int) MathUtils.pourcent(progress, max));
 	}
 	
 	public void publishUpdate(final ForegroundTask task, final int progress) {

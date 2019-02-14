@@ -152,17 +152,22 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 					showFragment(FRAGMENT_TO_OPEN);
 					
 					FRAGMENT_TO_OPEN = null;
-				}
-				
-				if (MENUITEM_ID_TO_SELECT != NO_VALUE) {
-					updateDrawerSelection(getMenuItemById(MENUITEM_ID_TO_SELECT));
 					
-					MENUITEM_ID_TO_SELECT = NO_VALUE;
+					if (MENUITEM_ID_TO_SELECT != NO_VALUE) {
+						updateDrawerSelection(getMenuItemById(MENUITEM_ID_TO_SELECT));
+						
+						MENUITEM_ID_TO_SELECT = NO_VALUE;
+					}
+				} else {
+					onNavigationItemSelected(navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video));
+					navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video).setChecked(true);
 				}
 			}
 		}, 200);
 		
 		managers.getMusicManager().registerMusicSlidingPanel(slidingUpPanelLayout);
+		
+		viewHelper.refreshMenuIdCache();
 	}
 	
 	@Override
@@ -173,15 +178,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		
-		/* Bug with dynamic NavigationView, doing task later solve the problem. */
-		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				onNavigationItemSelected(navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video));
-				navigationView.getMenu().findItem(R.id.drawer_boxplay_store_video).setChecked(true);
-			}
-		}, 150);
 		
 		if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
 			handler.postDelayed(new Runnable() {
