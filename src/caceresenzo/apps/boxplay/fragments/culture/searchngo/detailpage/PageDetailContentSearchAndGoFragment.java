@@ -477,7 +477,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 											@Override
 											public void onClick(BottomDialog dialog) {
 												AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, viewHelper.isAdmEnabled());
-												forceStop();
+												shouldStop();
 											}
 										}) //
 										.setNegativeText(R.string.boxplay_culture_searchngo_download_dialog_file_size_button_cancel); //
@@ -503,15 +503,20 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 									}
 								});
 								
-								final String fileSize = ByteFormat.toHumanBytes(Downloader.getFileSize(directUrl));
-								handler.post(new Runnable() {
-									@Override
-									public void run() {
-										if (fileSizeBottomDialog.getBuilder().getBaseDialog().isShowing()) {
-											fileSizeBottomDialog.getContentTextView().setText(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_message, filename, fileSize));
+								try {
+									final String fileSize = ByteFormat.toHumanBytes(Downloader.getFileSize(directUrl));
+									
+									handler.post(new Runnable() {
+										@Override
+										public void run() {
+											if (fileSizeBottomDialog.getBuilder().getBaseDialog().isShowing()) {
+												fileSizeBottomDialog.getContentTextView().setText(getString(R.string.boxplay_culture_searchngo_download_dialog_file_size_message, filename, fileSize));
+											}
 										}
-									}
-								});
+									});
+								} catch (ThreadDeath exception) {
+									;
+								}
 							}
 							break;
 						}
