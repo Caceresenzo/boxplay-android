@@ -21,6 +21,7 @@
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_title">Search n\' Go Abonnement</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Va voir sur les site si il y du nouveau contenu sur les items auquels vous vous êtes abonné.</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_update_new_item">Nouveau contenu disponible</string>
+    <string name="boxplay_service_foreground_notification_cancel_message">Interruption demandé\nArrêt dés que possible</string>
 
     <!--  -->
     <string name="boxplay_viewhelper_recaching">Remise en cache...\nVeuillez redémarrer l\'appli. pour appliquer le nouveau langage de partout!</string>
@@ -471,7 +472,8 @@
     <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_summary">%s</string>
 
     <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_entries">
-        <item>Toutes les 20 secondes [Test seulement]</item>
+
+        <!-- <item>Toutes les 20 secondes [Test seulement]</item> -->
         <item>Toutes les 30 minutes</item>
         <item>Toutes les heures</item>
         <item>Toutes les 2 heures</item>

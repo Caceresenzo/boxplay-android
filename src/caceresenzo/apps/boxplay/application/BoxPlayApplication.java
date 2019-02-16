@@ -23,17 +23,16 @@ import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.helper.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
-import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.libs.comparator.Version;
 import caceresenzo.libs.comparator.VersionType;
 
 public class BoxPlayApplication extends Application {
 	
 	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = true;
+	public static final boolean BUILD_DEBUG = false;
 	
 	/* Constants */
-	private static final Version VERSION = new Version("3.1.19", VersionType.BETA);
+	private static final Version VERSION = new Version("3.1.20", VersionType.BETA);
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;

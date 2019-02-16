@@ -217,7 +217,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 					OnClickListener onClickListener = new OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							if (videoExtractionWorker.isRunning()) {
+							if (videoExtractionWorker != null && videoExtractionWorker.isRunning()) {
 								boxPlayApplication.toast("ExtractionWorker is busy").show();
 								return;
 							}
@@ -559,6 +559,13 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 					progressDialog.hide();
 				}
 			});
+		}
+		
+		@Override
+		public void shouldStop() {
+			super.shouldStop();
+			
+			videoExtractionWorker = null;
 		}
 		
 		/**

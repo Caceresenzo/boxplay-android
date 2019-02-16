@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
-	<changelogversion versionName="3.1.20 BETA" changeDate="28/01/2019">
+	<changelogversion versionName="3.1.20 BETA" changeDate="16/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18[/b]</changelogtext>
 		<changelogtext>[b]New![/b] Download confirmation dialog for items in Search n' Go.</changelogtext>
 		<changelogtext>[b]Added![/b] A video extractor for the Streamango plateform.</changelogtext>
+		<changelogtext>[b]Added![/b] Navigation buttons in the Manga Reader.</changelogtext>
+		<changelogtext>[b]Added![/b] Reload image button in the Manga Reader.</changelogtext>
+		<changelogtext>[b]Added![/b] A new Subscription list.</changelogtext>
+		<changelogtext>[b]Added![/b] BoxPlay Service settings in the Settings section.</changelogtext>
+		<changelogtext>[b]Changed![/b] MyList data management system, you will not lose anymore your list content.</changelogtext>
 		<changelogtext>[b]Fixed![/b] Bug causing application to crash if an item were closed as soon as he open.</changelogtext>
-		<changelogtext>[b]Fixed![/b] Extractor thread was locked and forced the user to wait until he get the file size.</changelogtext>
+		<changelogtext>[b]Fixed! (maybe)[/b] Extractor thread was locked and forced the user to wait until he get the file size.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Missing "http:" prefix for the Streamango video provider.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Encoding problem in some provider causing some information to not be displayed.</changelogtext>
 	</changelogversion>
 
 	<changelogversion versionName="3.1.19 BETA" changeDate="09/01/2019">

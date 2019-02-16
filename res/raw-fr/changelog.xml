@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<changelog bulletedList="false">
+<changelog bulletedList="false">	
 
-	<changelogversion versionName="3.1.20 BETA" changeDate="28/01/2019">
+	<changelogversion versionName="3.1.20 BETA" changeDate="16/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18[/b]</changelogtext>
 		<changelogtext>[b]Nouveau![/b] Un dialogue de confirmation de téléchargement pour les items du Search n' Go.</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un extracteur vidéo pour la plateform de streaming Streamango.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Une nouvelle liste d'Abonnements.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Des boutons de navigation dans le lecteur de Manga.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un bouton pour recharger l'image dans le lecteur de Manga.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Les paramètres pour les Service BoxPlay dans la section des Paramètres.</changelogtext>
+		<changelogtext>[b]Changé![/b] Un nouveau système de gestion de données pour Mes Listes, vous ne perdrez plus votre contenu.</changelogtext>
 		<changelogtext>[b]Fixé![/b] Bug qui faisait que l'application plantait si un item était fermé des qu'il souvrait.</changelogtext>
-		<changelogtext>[b]Fixé![/b] L'éxecuteur de l'extracteur était bloqué et forcais l'utilisation à attendre le temps que la taille du fichier soie reçu.</changelogtext>
+		<changelogtext>[b]Fixé! (peut-être)[/b] L'éxecuteur de l'extracteur était bloqué et forcais l'utilisation à attendre le temps que la taille du fichier soie reçu.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Le préfix "http:" était manquant pour le fournisseur de video Streamango.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un problème d'encodage dans certain fournisseur qui affectais certaine information, ne les rendant pas affiché.</changelogtext>
 	</changelogversion>
 
 	<changelogversion versionName="3.1.19 BETA" changeDate="09/01/2019">

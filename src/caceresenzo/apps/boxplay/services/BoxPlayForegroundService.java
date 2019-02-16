@@ -57,14 +57,24 @@ public class BoxPlayForegroundService extends Service {
 			switch (action) {
 				case ACTION_START_FOREGROUND_SERVICE: {
 					startForegroundService();
-					Toast.makeText(getApplicationContext(), "Foreground service is started.", Toast.LENGTH_LONG).show();
+					
+					if (BoxPlayApplication.BUILD_DEBUG) {
+						Toast.makeText(getApplicationContext(), "Foreground service is started.", Toast.LENGTH_LONG).show();
+					}
 					break;
 				}
 				
 				case ACTION_CANCEL:
 				case ACTION_STOP_FOREGROUND_SERVICE: {
 					stopForegroundService();
-					Toast.makeText(getApplicationContext(), action.equals(ACTION_CANCEL) ? "You click cancel button." : "Foreground service is stopped.", Toast.LENGTH_LONG).show();
+					
+					if (BoxPlayApplication.BUILD_DEBUG) {
+						Toast.makeText(getApplicationContext(), action.equals(ACTION_CANCEL) ? "You click cancel button." : "Foreground service is stopped.", Toast.LENGTH_LONG).show();
+					} else {
+						if (action.equals(ACTION_CANCEL)) {
+							BoxPlayApplication.getBoxPlayApplication().toast(R.string.boxplay_service_foreground_notification_cancel_message).show();
+						}
+					}
 					break;
 				}
 				
@@ -124,7 +134,9 @@ public class BoxPlayForegroundService extends Service {
 	private void stopForegroundService() {
 		Log.d(TAG, "Stop foreground service.");
 		
-		ToastUtils.makeLong(this, "Stopping foreground service:: " + executorWorker).show();
+		if (BoxPlayApplication.BUILD_DEBUG) {
+			ToastUtils.makeLong(this, "Stopping foreground service:: " + executorWorker).show();
+		}
 		
 		if (executorWorker != null) {
 			executorWorker.shouldStop();

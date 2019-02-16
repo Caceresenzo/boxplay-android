@@ -26,6 +26,7 @@
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Fetch site and check if there is any update/new content for the item you have subscribe.</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_update_new_item">New content available</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_update_new_item_content" formatted="false">%s — %s</string>
+    <string name="boxplay_service_foreground_notification_cancel_message">Cancelling asked\nStopping as soon as possible</string>
 
     <!--  -->
     <string name="transition_view_reveal">view_reveal</string>
@@ -508,7 +509,7 @@
     <string name="boxplay_other_settings_boxplay_category_title">BoxPlay</string>
     <!--  -->
     <string name="boxplay_other_settings_boxplay_pref_background_service_title">Allow backgrounds services</string>
-    <string name="boxplay_other_settings_boxplay_pref_background_service_summary_enabled">Yes (nothing for the moment)</string>
+    <string name="boxplay_other_settings_boxplay_pref_background_service_summary_enabled">Yes</string>
     <string name="boxplay_other_settings_boxplay_pref_background_service_summary_disabled">No</string>
     <string name="boxplay_other_settings_boxplay_pref_background_service_key">boxplay_background_service</string>
     <!--  -->
@@ -518,7 +519,8 @@
     <string name="boxplay_other_settings_boxplay_pref_background_service_frequency_default_value">1800000</string>
 
     <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_entries">
-        <item>Every 20 seconds [Test only]</item>
+
+        <!-- <item>Every 20 seconds [Test only]</item> -->
         <item>Every 30 minutes</item>
         <item>Every 1 hour</item>
         <item>Every 2 hours</item>
@@ -527,7 +529,8 @@
         <item>Every day</item>
     </string-array>
     <string-array name="boxplay_other_settings_boxplay_pref_background_service_frequency_values" translatable="false">
-        <item>20</item>
+
+        <!-- <item>20</item> -->
         <item>1800000</item>
         <item>3600000</item>
         <item>7200000</item>
