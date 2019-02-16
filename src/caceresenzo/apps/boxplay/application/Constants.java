@@ -16,6 +16,10 @@ public class Constants {
 		public static int BOXPLAY_FOREGROUND_SERVICE = 101;
 	}
 	
+	public interface BROADCAST_ID {
+		public static int BOXPLAY_ALARM_SERVICE = 1;
+	}
+	
 	public interface REQUEST_ID {
 		public static final int REQUEST_ID_UPDATE = 20;
 		public static final int REQUEST_ID_VLC_VIDEO = 40;
