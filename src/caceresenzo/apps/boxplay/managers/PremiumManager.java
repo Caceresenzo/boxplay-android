@@ -343,7 +343,9 @@ public class PremiumManager extends AbstractManager {
 					/* Downloading video page url */
 					callback.onStatusUpdate(R.string.boxplay_premium_adult_status_downloading_data);
 					
-					String html = Downloader.getUrlContent(AdultFactory.formatWebToMobileUrl(videoPageUrl));
+					String mobileUrl = AdultFactory.formatWebToMobileUrl(videoPageUrl);
+					
+					String html = Downloader.getUrlContent(mobileUrl);
 					if (!StringUtils.validate(html)) {
 						throw new NullPointerException("Downloaded html is not valid");
 					}
@@ -359,7 +361,9 @@ public class PremiumManager extends AbstractManager {
 					/* Get openload iframe */
 					Map<String, String> parameters = new HashMap<>();
 					parameters.put("X-Requested-With", "XMLHttpRequest");
+					parameters.put("Referer", mobileUrl);
 					
+					Log.d(TAG, "Target AJAX URL: " + targetAjaxUrl);
 					String openloadIframeHtml = Downloader.webget(targetAjaxUrl, parameters, Charset.defaultCharset());
 					
 					/* Getting a valid video extractor */
