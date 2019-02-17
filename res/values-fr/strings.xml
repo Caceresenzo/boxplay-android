@@ -27,6 +27,7 @@
     <string name="boxplay_viewhelper_recaching">Remise en cache...\nVeuillez redémarrer l\'appli. pour appliquer le nouveau langage de partout!</string>
     <!--  -->
     <string name="boxplay_menu_action_update">Mise à jour</string>
+    <string name="boxplay_menu_action_force_service_call">Forcer l\'appel du Service</string>
     <string name="boxplay_menu_action_search">Recherche</string>
     <string name="boxplay_menu_action_logout">Se déconnecter</string>
     <!--  -->

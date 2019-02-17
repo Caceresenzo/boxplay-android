@@ -35,6 +35,7 @@ import caceresenzo.libs.thread.AbstractWorkerThread;
 import caceresenzo.libs.thread.ThreadUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
+@SuppressWarnings("deprecation")
 public class PremiumManager extends AbstractManager {
 	
 	/* Tag */

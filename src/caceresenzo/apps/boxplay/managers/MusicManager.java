@@ -29,6 +29,7 @@ import caceresenzo.libs.boxplay.models.store.music.MusicFile;
 import caceresenzo.libs.boxplay.models.store.music.MusicGroup;
 import caceresenzo.libs.boxplay.models.store.music.MusicPlaylist;
 
+@SuppressWarnings("deprecation")
 public class MusicManager extends AbstractManager {
 	
 	public static final String PREF_MUSIC_PLAYING_SONG_INDEX = "music_playing_song_index";

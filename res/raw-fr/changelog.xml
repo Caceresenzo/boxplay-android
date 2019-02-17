@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">	
 
+	<changelogversion versionName="3.1.20.1 BETA" changeDate="17/02/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 18.1[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un bouton pour forcer l'appel du Service afin d'éxécuter les tâches de fonds.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Le Premium ne marchais plus à cause de la nouvelle sécurité du site.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que de mauvais item s'affichais comme nouveau contenu pour le Search n' Go a cause d'un mauvais triage.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que le change-log s'ouvrai plusieurs fois si l'application était détruire puis reconstruite sans avoir été redémarré.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] @thegostisdead de la page A Propos.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.20 BETA" changeDate="16/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18[/b]</changelogtext>
 		<changelogtext>[b]Nouveau![/b] Un dialogue de confirmation de téléchargement pour les items du Search n' Go.</changelogtext>

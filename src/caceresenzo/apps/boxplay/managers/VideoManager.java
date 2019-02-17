@@ -31,7 +31,7 @@ import caceresenzo.libs.json.JsonObject;
 import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.parse.ParseUtils;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({ "deprecation", "unused" })
 public class VideoManager extends AbstractManager {
 	
 	/* Tag */

@@ -46,7 +46,7 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 	
 	@Override
 	protected void task() {
-		List<MyListable> myListables = subscriptionMyList.fetch();
+		List<MyListable> myListables = subscriptionMyList.reload(myListManager.getSqliteBridge()).fetch();
 		
 		for (int i = 0; i < myListables.size(); i++) {
 			final SearchAndGoResult searchAndGoResult = (SearchAndGoResult) myListables.get(i);

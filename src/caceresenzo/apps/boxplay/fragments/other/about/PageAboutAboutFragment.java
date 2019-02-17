@@ -76,13 +76,6 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 								.toString()) //
 						.setIcon(R.drawable.profile_thewhoosher) //
 						.build()) //
-				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/thegostisdead") //
-						.setTitle("@thegostisdead") //
-						.setSubtitle(new StringBuilder() //
-								.append(typeHosting) //
-								.toString()) //
-						.setIcon(R.drawable.profile_thegostisdead) //
-						.build()) //
 				.addItem(new PersonAboutItem.Builder(context) //
 						.setTitle("@valgrebon") //
 						.setSubtitle(new StringBuilder() //

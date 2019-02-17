@@ -438,27 +438,7 @@ public class MyListManager extends AbstractManager {
 			this.name = name;
 			this.callback = myListCallback;
 			
-			this.myListables = new HashMap<String, MyListable>() { /* Use MD5 encoding for key identification */
-				@Override
-				public MyListable put(String key, MyListable value) {
-					return super.put(MD5.silentMd5(key), value);
-				}
-				
-				@Override
-				public MyListable remove(Object key) {
-					return super.remove(MD5.silentMd5((String) key));
-				}
-				
-				@Override
-				public MyListable get(Object key) {
-					return super.get(MD5.silentMd5((String) key));
-				}
-				
-				@Override
-				public boolean containsKey(Object key) {
-					return super.containsKey(MD5.silentMd5((String) key));
-				}
-			};
+			this.myListables = createMap();
 		}
 		
 		/**
@@ -468,7 +448,7 @@ public class MyListManager extends AbstractManager {
 		 *            Database communication bridge.
 		 * @see MyListSqliteBridge#getEntries(MyList)
 		 */
-		public void load(MyListSqliteBridge sqliteBridge) {
+		public synchronized void load(MyListSqliteBridge sqliteBridge) {
 			List<MyListEntry> entries = sqliteBridge.getEntries(this);
 			
 			for (MyListEntry entry : entries) {
@@ -507,7 +487,7 @@ public class MyListManager extends AbstractManager {
 		 *            Database communication bridge.
 		 * @see MyListSqliteBridge#push(MyList, List)
 		 */
-		public void save(MyListSqliteBridge sqliteBridge) {
+		public synchronized void save(MyListSqliteBridge sqliteBridge) {
 			List<MyListEntry> entries = new ArrayList<>();
 			
 			for (MyListable myListable : myListables.values()) {
@@ -523,6 +503,28 @@ public class MyListManager extends AbstractManager {
 			}
 			
 			sqliteBridge.push(this, entries);
+		}
+		
+		/**
+		 * This will do a full reload of this {@link MyList}.<br>
+		 * It will start by clearing the {@link #myListables} {@link Map} then will finish by loading the content again with {@link #load(MyListSqliteBridge) load()}. <br>
+		 * Be aware that it will not {@link #save(MyListSqliteBridge) save()} the content to avoid conflict between different part of the program using the database at the same time without being synchronized.
+		 * 
+		 * @param sqliteBridge
+		 *            Database communication bridge.
+		 * @return Itself.
+		 * @see #load(MyListSqliteBridge) load()
+		 */
+		public MyList reload(MyListSqliteBridge sqliteBridge) {
+			Log.i(TAG, "Reload call on MyList: " + name);
+			
+			save(sqliteBridge);
+			
+			myListables.clear();
+			
+			load(sqliteBridge);
+			
+			return this;
 		}
 		
 		/**
@@ -601,6 +603,45 @@ public class MyListManager extends AbstractManager {
 		 */
 		public String getName() {
 			return name;
+		}
+		
+		/**
+		 * Create a new {@link Map} for storing a local cache of the entry of this list.<br>
+		 * All the keys will be encrypted as {@link MD5} using the {@link MyListable#toUniqueString()} values to be unique identifier.<br>
+		 * <br>
+		 * Here is the list of the supported function:
+		 * <ul>
+		 * <li>{@link Map#put(Object, Object)}</li>
+		 * <li>{@link Map#remove(Object)}</li>
+		 * <li>{@link Map#get(Object)}</li>
+		 * <li>{@link Map#containsKey(Object)}</li>
+		 * </ul>
+		 * Any other function using a key will not have their key encrypted to {@link MD5}.
+		 * 
+		 * @return A custom {@link HashMap} instance.
+		 */
+		public static Map<String, MyListable> createMap() {
+			return new HashMap<String, MyListable>() {
+				@Override
+				public MyListable put(String key, MyListable value) {
+					return super.put(MD5.silentMd5(key), value);
+				}
+				
+				@Override
+				public MyListable remove(Object key) {
+					return super.remove(MD5.silentMd5((String) key));
+				}
+				
+				@Override
+				public MyListable get(Object key) {
+					return super.get(MD5.silentMd5((String) key));
+				}
+				
+				@Override
+				public boolean containsKey(Object key) {
+					return super.containsKey(MD5.silentMd5((String) key));
+				}
+			};
 		}
 		
 	}

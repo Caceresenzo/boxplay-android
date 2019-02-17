@@ -119,12 +119,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 	}
 	
 	@Override
-	public void onResume() {
-		super.onResume();
-		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-	}
-	
-	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		Preference preference = findPreference(key);
 		
@@ -277,6 +271,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				preference.setSummary(exception.getLocalizedMessage());
 			}
 		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
 	
 	@Override

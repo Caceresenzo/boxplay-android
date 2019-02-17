@@ -35,6 +35,7 @@
     <!--  -->
     <string name="boxplay_menu_action_search">Search</string>
     <string name="boxplay_menu_action_update">Update</string>
+    <string name="boxplay_menu_action_force_service_call">Force Service Call</string>
     <string name="boxplay_menu_action_logout">Logout</string>
     <!--  -->
     <string name="boxplay_menu_searchandgo_details_action_open_in_browser">Open in browser</string>

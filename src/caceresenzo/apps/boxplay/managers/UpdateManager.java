@@ -50,7 +50,7 @@ public class UpdateManager extends AbstractManager {
 	
 	private static boolean alreadyInformedUser = false, firstTimeInstalled;
 	
-	private int lastVersionCode, currentVersionCode;
+	private int currentVersionCode;
 	// private String currentVersionName;
 	
 	public void initialize() {
@@ -58,13 +58,10 @@ public class UpdateManager extends AbstractManager {
 		rawUpdateMessageFormat = getString(R.string.boxplay_update_available_message_format);
 		lastVersionSize = getString(R.string.boxplay_update_available_message_format_size_searching);
 		
-		lastVersionCode = getManagers().getPreferences().getInt(VERSION_KEY, NO_VERSION);
-		
 		try {
 			PackageInfo packageInfo = boxPlayApplication.getPackageManager().getPackageInfo(boxPlayApplication.getPackageName(), 0);
 			
 			currentVersionCode = packageInfo.versionCode;
-			// currentVersionName = packageInfo.versionName;
 		} catch (NameNotFoundException exception) {
 			currentVersionCode = NO_VERSION;
 			Log.e(TAG, "Could not get version information from manifest!", exception);
@@ -78,7 +75,7 @@ public class UpdateManager extends AbstractManager {
 	}
 	
 	public boolean isFirstRunOnThisUpdate() {
-		return lastVersionCode < currentVersionCode;
+		return getManagers().getPreferences().getInt(VERSION_KEY, NO_VERSION) < currentVersionCode;
 	}
 	
 	public void debugForceFirstTimeInstalled() {

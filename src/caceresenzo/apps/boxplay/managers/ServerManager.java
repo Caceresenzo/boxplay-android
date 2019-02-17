@@ -12,6 +12,7 @@ import caceresenzo.libs.boxplay.factory.ServerFactory;
 import caceresenzo.libs.boxplay.factory.ServerFactory.ServerFactoryListener;
 import caceresenzo.libs.boxplay.models.server.ServerHosting;
 
+@SuppressWarnings("deprecation")
 public class ServerManager extends AbstractManager {
 	
 	private ServerFactory musicFactory = new ServerFactory();

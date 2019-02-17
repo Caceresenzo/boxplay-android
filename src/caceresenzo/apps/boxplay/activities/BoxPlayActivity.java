@@ -43,6 +43,7 @@ import caceresenzo.apps.boxplay.fragments.store.StorePageFragment;
 import caceresenzo.apps.boxplay.fragments.user.UserFragment;
 import caceresenzo.apps.boxplay.helper.LocaleHelper;
 import caceresenzo.apps.boxplay.managers.TutorialManager.Tutorialable;
+import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 
@@ -379,6 +380,11 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		switch (id) {
 			case R.id.menu_main_action_update: {
 				managers.getUpdateManager().showDialog();
+				return true;
+			}
+			
+			case R.id.menu_main_action_force_service_call: {
+				BoxPlayForegroundService.startIfNotAlready(this);
 				return true;
 			}
 			

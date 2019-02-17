@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.20.1 BETA" changeDate="17/02/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 18.1[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] A button to force a service call to execute background tasks.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Premium was not working anymore due to the new site security.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing wrong item to show up as new content in Search n' Go due to wrong sorting.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing to display multiple times the change-log if the application was destroyed then reconstructed without being restarted.</changelogtext>
+		<changelogtext>[b]Removed![/b] @thegostisdead from the About page.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.20 BETA" changeDate="16/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18[/b]</changelogtext>
 		<changelogtext>[b]New![/b] Download confirmation dialog for items in Search n' Go.</changelogtext>
