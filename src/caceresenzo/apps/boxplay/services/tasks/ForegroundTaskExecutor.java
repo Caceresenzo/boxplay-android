@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.os.Handler;
 import android.util.Log;
+import caceresenzo.android.libs.internet.NetworkUtils;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.apps.boxplay.services.tasks.implementations.SearchAndGoUpdateCheckerTask;
 import caceresenzo.libs.math.MathUtils;
@@ -54,7 +56,12 @@ public class ForegroundTaskExecutor extends WorkerThread {
 			final ForegroundTask task = actualForegroundTask = tasks.get(i);
 			
 			if (task != null) { /* Security... */
-				Log.i(TAG, "Executing: " + task.getClass());
+				Log.i(TAG, "Executing: " + task.getClass().getName());
+				
+				if (task.requireNetwork() && !NetworkUtils.isConnected(BoxPlayApplication.getBoxPlayApplication())) {
+					Log.i(TAG, "Cancelled due to missing network.");
+					continue;
+				}
 				
 				publishUpdate(task, BoxPlayForegroundService.INDETERMINATE_PROGRESS);
 				
@@ -72,10 +79,10 @@ public class ForegroundTaskExecutor extends WorkerThread {
 				}
 				
 				task.removeObserver();
-				
-				if (threadShouldStop()) {
-					break;
-				}
+			}
+			
+			if (threadShouldStop()) {
+				break;
 			}
 		}
 	}
