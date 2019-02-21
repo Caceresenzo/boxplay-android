@@ -1,9 +1,14 @@
 package caceresenzo.apps.boxplay.services.tasks;
 
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.StringRes;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers;
+import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
 public abstract class ForegroundTask extends WorkerThread {
@@ -11,17 +16,27 @@ public abstract class ForegroundTask extends WorkerThread {
 	/* Tag */
 	public static final String TAG = ForegroundTask.class.getSimpleName();
 	
+	/* Constants */
+	public static final int RANDOM_ID = -100;
+	
 	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
+	protected Handler handler;
 	protected XManagers managers;
 	
 	protected ForegroundTaskExecutor foregroundTaskExecutor;
 	
+	protected NotificationManager notificationManager;
+	
+	/* Constructor */
 	public ForegroundTask() {
 		super();
 		
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
+		this.handler = BoxPlayApplication.getHandler();
 		this.managers = BoxPlayApplication.getManagers();
+		
+		this.notificationManager = (NotificationManager) boxPlayApplication.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 	
 	@Override
@@ -69,6 +84,21 @@ public abstract class ForegroundTask extends WorkerThread {
 		start();
 		
 		return this;
+	}
+	
+	/**
+	 * @return A new instance of the {@link NotificationCompat.Builder}.
+	 */
+	protected NotificationCompat.Builder createNotificationBuilder() {
+		return new NotificationCompat.Builder(boxPlayApplication, BoxPlayForegroundService.SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL);
+	}
+	
+	protected void notificate(int id, NotificationCompat.Builder builder) {
+		if (id == RANDOM_ID) {
+			id = (int) System.currentTimeMillis();
+		}
+
+		notificationManager.notify(id, builder.build());
 	}
 	
 	/**

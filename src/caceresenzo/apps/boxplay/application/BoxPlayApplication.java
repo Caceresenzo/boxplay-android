@@ -51,8 +51,9 @@ public class BoxPlayApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		APPLICATION = this;
+		
+		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		HELPER.prepareCache(this);
 		
@@ -69,8 +70,6 @@ public class BoxPlayApplication extends Application {
 		StrictMode.setVmPolicy(builder.build());
 		
 		MANAGERS.initialize(this);
-		
-		// BoxPlayForegroundService.startIfNotAlready(this);
 		
 		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
 	}
@@ -167,37 +166,27 @@ public class BoxPlayApplication extends Application {
 		return getAttachedActivity().getSupportFragmentManager();
 	}
 	
-	/**
-	 * Get the {@link ViewHelper} instance
-	 */
+	/** @return The {@link ViewHelper} instance. */
 	public static ViewHelper getViewHelper() {
 		return HELPER;
 	}
 	
-	/**
-	 * Get the {@link XManagers} instance
-	 */
+	/** @return The {@link XManagers} instance. */
 	public static XManagers getManagers() {
 		return MANAGERS;
 	}
 	
-	/**
-	 * Get the main {@link Handler} instance
-	 */
+	/** @return The main {@link Handler} instance. */
 	public static Handler getHandler() {
 		return HANDLER;
 	}
 	
-	/**
-	 * Get BoxPlay version
-	 */
+	/** @return BoxPlay {@link Version}. */
 	public static Version getVersion() {
 		return VERSION;
 	}
 	
-	/**
-	 * Get main application instance
-	 */
+	/** @return Main {@link Application} instance. */
 	public static BoxPlayApplication getBoxPlayApplication() {
 		return APPLICATION;
 	}
