@@ -16,6 +16,8 @@ import caceresenzo.apps.boxplay.helper.HelperManager;
 
 /**
  * Manages setting of the app's locale.
+ * 
+ * @TODO Change everything.
  */
 public class LocaleHelper extends AbstractHelper {
 	
@@ -29,7 +31,7 @@ public class LocaleHelper extends AbstractHelper {
 		
 		setLocale();
 	}
-
+	
 	public static Context onAttach(Context context) {
 		String locale = getPersistedLocale(context);
 		return setLocale(context, locale);

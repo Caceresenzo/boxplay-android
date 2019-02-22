@@ -150,7 +150,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 		}, 200);
 		
-		menuHelper.refreshMenuIdCache();
+		menuHelper.recacheIds();
 	}
 	
 	@Override

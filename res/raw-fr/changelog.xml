@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">	
 
+	<changelogversion versionName="3.1.21 BETA" changeDate="22/02/2019">
+		<changelogtext>[b]Le Grand Nettoyage![/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Une vérification du réseau pour les taches de fonds.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Une limite pour le cache des images (actuellement de 50 Mo).</changelogtext>
+		<changelogtext>[b]Changé![/b] Le comportement du système des Abonnements (maintenant: vide le cache avant l'execution, ne fait rien si le réseau est absent, ne sauvegarde pas la progression si les nouveau items ne sont pas valide).</changelogtext>
+		<changelogtext>[b]Changé![/b] Le système de mise en cache, il est maintenant beaucoup plus rapide.</changelogtext>
+		<changelogtext>[b]Réduit![/b] Le temps de démarrage de l'application.</changelogtext>
+		<changelogtext>[b]Réduit![/b] La taille de l'application.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Le store de Musique.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Le lecteur de Musique.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Tous les tutoriels.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] La section des hebergeurs et les icône d'hébergement.</changelogtext>
+		<changelogtext>[b]Fixé![/b] (peut-être) Un bug qui faisait que plusieur notification apparaissait.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.20.1 BETA" changeDate="17/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18.1[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un bouton pour forcer l'appel du Service afin d'éxécuter les tâches de fonds.</changelogtext>

@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.21 BETA" changeDate="22/02/2019">
+		<changelogtext>[b]The Big Clean Up![/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Network requirement verification for the background tasks.</changelogtext>
+		<changelogtext>[b]Added![/b] A limit for image cache (currently 50 MB).</changelogtext>
+		<changelogtext>[b]Changed![/b] Behavior of the Subscription system (now: clear cache before executing, don't do anything if network is absent, don't save to local if fetch failed).</changelogtext>
+		<changelogtext>[b]Changed![/b] Caching system, now much faster.</changelogtext>
+		<changelogtext>[b]Reduced![/b] Application's starting time.</changelogtext>
+		<changelogtext>[b]Reduced![/b] Application's size.</changelogtext>
+		<changelogtext>[b]Removed![/b] The Music Store.</changelogtext>
+		<changelogtext>[b]Removed![/b] The Music Player.</changelogtext>
+		<changelogtext>[b]Removed![/b] All Tutorials.</changelogtext>
+		<changelogtext>[b]Removed![/b] Server hosting icon and hosting section.</changelogtext>
+		<changelogtext>[b]Fixed![/b] (maybe) Bug causing multiple notification to appear.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.20.1 BETA" changeDate="17/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 18.1[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] A button to force a service call to execute background tasks.</changelogtext>
