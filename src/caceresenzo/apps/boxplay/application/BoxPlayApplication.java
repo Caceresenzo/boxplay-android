@@ -1,14 +1,10 @@
 package caceresenzo.apps.boxplay.application;
 
-import java.util.Locale;
-
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -18,10 +14,14 @@ import android.widget.Toast;
 import caceresenzo.android.libs.javascript.AndroidJavaScriptExecutorLibrary;
 import caceresenzo.android.libs.uncaughtexceptionhandler.AndroidUncaughtExceptionHandler;
 import caceresenzo.apps.boxplay.R;
-import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
-import caceresenzo.apps.boxplay.helper.LocaleHelper;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.helper.HelperManager;
+import caceresenzo.apps.boxplay.helper.implementations.ApplicationHelper;
+import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ImageHelper;
+import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
+import caceresenzo.apps.boxplay.helper.implementations.MenuHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
 import caceresenzo.libs.comparator.Version;
 import caceresenzo.libs.comparator.VersionType;
@@ -42,11 +42,21 @@ public class BoxPlayApplication extends Application {
 	
 	/* Managers */
 	private static Handler HANDLER = new Handler();
-	private static XManagers MANAGERS = new XManagers();
-	private static ViewHelper HELPER = new ViewHelper();
+	
+	private HelperManager helperManager;
+	private XManagers managers;
 	
 	/* Preferences */
 	private SharedPreferences sharedPreferences;
+	
+	public BoxPlayApplication() {
+		super();
+		
+		this.helperManager = new HelperManager(this);
+		this.managers = new XManagers(this);
+		
+		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
+	}
 	
 	@Override
 	public void onCreate() {
@@ -54,10 +64,6 @@ public class BoxPlayApplication extends Application {
 		APPLICATION = this;
 		
 		this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		HELPER.prepareCache(this);
-		
-		setLocale();
 		
 		new AndroidUncaughtExceptionHandler.Builder(getApplicationContext()) //
 				.setHandlerEnabled(sharedPreferences.getBoolean(getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key), true)) //
@@ -69,7 +75,8 @@ public class BoxPlayApplication extends Application {
 		StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 		StrictMode.setVmPolicy(builder.build());
 		
-		MANAGERS.initialize(this);
+		helperManager.initialize();
+		managers.initialize();
 		
 		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
 	}
@@ -77,22 +84,12 @@ public class BoxPlayApplication extends Application {
 	@Override
 	protected void attachBaseContext(Context base) {
 		super.attachBaseContext(LocaleHelper.onAttach(base));
-		
-		/* Just to be sure */
-		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
 	}
 	
 	public static void attachActivity(BaseBoxPlayActivty baseBoxPlayActivty) {
 		BoxPlayApplication.ATTACHED_ACTIVITY = baseBoxPlayActivty;
 		
-		MANAGERS.onUiReady(ATTACHED_ACTIVITY);
-		
-		if (ATTACHED_ACTIVITY instanceof BoxPlayActivity) {
-			getViewHelper().setBoxPlayActivity((BoxPlayActivity) ATTACHED_ACTIVITY);
-		}
-		
-		/* Just to be sure */
-		AndroidJavaScriptExecutorLibrary.use(getBoxPlayApplication(), HANDLER);
+		getBoxPlayApplication().getManagers().onUiReady(baseBoxPlayActivty);
 	}
 	
 	public boolean isUiReady() {
@@ -119,41 +116,6 @@ public class BoxPlayApplication extends Application {
 		return StyleableToast.makeText(this, getString(ressourceId, args), Toast.LENGTH_LONG, R.style.customStylableToastStyle);
 	}
 	
-	public void setLocale() {
-		setLocale(false);
-	}
-	
-	@SuppressWarnings("deprecation")
-	public void setLocale(boolean autoReCache) {
-		final Resources resources = getResources();
-		final Configuration configuration = resources.getConfiguration();
-		final Locale locale = getLocale();
-		if (!configuration.locale.equals(locale)) {
-			configuration.setLocale(locale);
-			resources.updateConfiguration(configuration, null);
-			
-			try {
-				Configuration config = getBaseContext().getResources().getConfiguration();
-				config.setLocale(locale);
-				createConfigurationContext(config);
-			} catch (Exception exception) {
-				; // Unavailable in old API
-			}
-			
-			if (autoReCache) {
-				getViewHelper().recache();
-			}
-		}
-	}
-	
-	public String getLocaleString() {
-		return sharedPreferences.getString(getString(R.string.boxplay_other_settings_application_pref_language_key), getString(R.string.boxplay_other_settings_application_pref_language_default_value)).toLowerCase();
-	}
-	
-	public Locale getLocale() {
-		return new Locale(getLocaleString());
-	}
-	
 	public SharedPreferences getPreferences() {
 		return sharedPreferences;
 	}
@@ -166,14 +128,39 @@ public class BoxPlayApplication extends Application {
 		return getAttachedActivity().getSupportFragmentManager();
 	}
 	
+	/** @return The {@link ApplicationHelper} instance. */
+	public ApplicationHelper getApplicationHelper() {
+		return helperManager.getApplicationHelper();
+	}
+	
+	/** @return The {@link CacheHelper} instance. */
+	public CacheHelper getCacheHelper() {
+		return helperManager.getCacheHelper();
+	}
+	
+	/** @return The {@link ImageHelper} instance. */
+	public ImageHelper getImageHelper() {
+		return helperManager.getImageHelper();
+	}
+	
+	/** @return The {@link LocaleHelper} instance. */
+	public LocaleHelper getLocaleHelper() {
+		return helperManager.getLocaleHelper();
+	}
+	
+	/** @return The {@link MenuHelper} instance. */
+	public MenuHelper getMenuHelper() {
+		return helperManager.getMenuHelper();
+	}
+	
 	/** @return The {@link ViewHelper} instance. */
-	public static ViewHelper getViewHelper() {
-		return HELPER;
+	public ViewHelper getViewHelper() {
+		return helperManager.getViewHelper();
 	}
 	
 	/** @return The {@link XManagers} instance. */
-	public static XManagers getManagers() {
-		return MANAGERS;
+	public XManagers getManagers() {
+		return managers;
 	}
 	
 	/** @return The main {@link Handler} instance. */

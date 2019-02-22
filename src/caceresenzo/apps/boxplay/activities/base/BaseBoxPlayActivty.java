@@ -6,8 +6,12 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.helper.LocaleHelper;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ApplicationHelper;
+import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ImageHelper;
+import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
+import caceresenzo.apps.boxplay.helper.implementations.MenuHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
 
 /**
@@ -27,6 +31,10 @@ public abstract class BaseBoxPlayActivty extends AppCompatActivity {
 	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
 	protected Handler handler;
+	protected ApplicationHelper applicationHelper;
+	protected CacheHelper cacheHelper;
+	protected ImageHelper imageHelper;
+	protected MenuHelper menuHelper;
 	protected ViewHelper viewHelper;
 	protected XManagers managers;
 	
@@ -40,8 +48,12 @@ public abstract class BaseBoxPlayActivty extends AppCompatActivity {
 	public BaseBoxPlayActivty() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.handler = BoxPlayApplication.getHandler();
-		this.viewHelper = BoxPlayApplication.getViewHelper();
-		this.managers = BoxPlayApplication.getManagers();
+		this.applicationHelper = boxPlayApplication.getApplicationHelper();
+		this.cacheHelper = boxPlayApplication.getCacheHelper();
+		this.imageHelper = boxPlayApplication.getImageHelper();
+		this.menuHelper = boxPlayApplication.getMenuHelper();
+		this.viewHelper = boxPlayApplication.getViewHelper();
+		this.managers = boxPlayApplication.getManagers();
 		
 		initialize();
 	}

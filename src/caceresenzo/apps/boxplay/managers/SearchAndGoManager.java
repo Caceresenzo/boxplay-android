@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.support.v4.util.ArraySet;
 import android.util.Log;
 import caceresenzo.apps.boxplay.R;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.apps.boxplay.managers.XManagers.SubManager;
 import caceresenzo.libs.boxplay.common.extractor.video.modifiers.IHentaiVideoContentProvider;
@@ -60,7 +59,7 @@ public class SearchAndGoManager extends AbstractManager {
 	
 	@Override
 	public void initialize() {
-		this.premiumManager = BoxPlayApplication.getManagers().getPremiumManager();
+		this.premiumManager = getManagers().getPremiumManager();
 		
 		this.searchHistorySubManager = new SearchHistorySubManager();
 		this.searchHistorySubManager.load();

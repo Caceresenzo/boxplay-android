@@ -122,7 +122,7 @@ public class VideoManager extends AbstractManager {
 			public void onVideoGroupCreated(VideoGroup videoGroup) {
 				groups.add(videoGroup);
 			}
-		}, BoxPlayApplication.getManagers().getDataManager().getJsonData());
+		}, getManagers().getDataManager().getJsonData());
 		
 		Collections.sort(groups, VideoGroup.COMPARATOR);
 		Collections.shuffle(groups);
@@ -279,7 +279,7 @@ public class VideoManager extends AbstractManager {
 			vlcIntent.setPackage("org.videolan.vlc");
 			vlcIntent.setDataAndTypeAndNormalize(uri, "video/*");
 			vlcIntent.putExtra("position", savedTime > 1 ? savedTime : 1);
-			vlcIntent.putExtra("title", BoxPlayApplication.getViewHelper().formatVideoFile(videoFile));
+			vlcIntent.putExtra("title", formatVideoFile(videoFile));
 			vlcIntent.setComponent(new ComponentName("org.videolan.vlc", "org.videolan.vlc.gui.video.VideoPlayerActivity"));
 			
 			Activity context;
@@ -290,7 +290,8 @@ public class VideoManager extends AbstractManager {
 			}
 			context.startActivityForResult(vlcIntent, Constants.REQUEST_ID.REQUEST_ID_VLC_VIDEO);
 		} catch (Exception exception) {
-			// BoxPlayApplication.getBoxPlayApplication().appendError("Error when starting VLC. \n\nIs VLC installed? \n\nException: " + exception.getLocalizedMessage());
+			BoxPlayApplication.getBoxPlayApplication().toast("Error when starting VLC. \n\nIs VLC installed? \n\nException: " + exception.getLocalizedMessage()).show();
+			Log.e(TAG, "Failed to open VLC.", exception);
 		}
 		
 		lastVideoFileOpen = videoFile;
@@ -314,7 +315,33 @@ public class VideoManager extends AbstractManager {
 			}
 			context.startActivityForResult(vlcIntent, Constants.REQUEST_ID.REQUEST_ID_VLC_VIDEO_URL);
 		} catch (Exception exception) {
-			// BoxPlayApplication.getBoxPlayApplication().appendError("Error when starting VLC. \n\nIs VLC installed? \n\nException: " + exception.getLocalizedMessage());
+			BoxPlayApplication.getBoxPlayApplication().toast("Error when starting VLC. \n\nIs VLC installed? \n\nException: " + exception.getLocalizedMessage()).show();
+			Log.e(TAG, "Failed to open VLC.", exception);
+		}
+	}
+	
+	public String formatVideoFile(VideoFile video) {
+		VideoSeason season = video.getParentSeason();
+		VideoGroup group = season.getParentGroup();
+		
+		String raw;
+		if (group.hasSeason()) {
+			raw = getString(R.string.boxplay_store_video_activity_vlc_title);
+			
+			return String.format(raw, //
+					cacheHelper.translate(video.getFileType()).toUpperCase(), //
+					group.getTitle(), //
+					season.getSeasonValue(), //
+					cacheHelper.translate(video.getVideoType()).toLowerCase(), //
+					video.getRawEpisodeValue() //
+			);
+		} else {
+			raw = getString(R.string.boxplay_store_video_activity_vlc_title_movie);
+			
+			return String.format(raw, //
+					cacheHelper.translate(video.getFileType()).toUpperCase(), //
+					group.getTitle() //
+			);
 		}
 	}
 	

@@ -12,11 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.managers.MyListManager.MyListSqliteBridge.MyListEntry;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
-import caceresenzo.libs.boxplay.models.store.music.MusicGroup;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
 import caceresenzo.libs.boxplay.mylist.binder.ListItemBinder;
@@ -47,7 +45,6 @@ public class MyListManager extends AbstractManager {
 	
 	public static final int ENTRY_TYPE_UNKNOWN = -10;
 	public static final int ENTRY_TYPE_STORE_VIDEO = 0;
-	public static final int ENTRY_TYPE_STORE_MUSIC = 1;
 	public static final int ENTRY_TYPE_CULTURE_SEARCH_AND_GO = 10;
 	
 	public static final int ENTRY_NO_ID = -1;
@@ -99,7 +96,7 @@ public class MyListManager extends AbstractManager {
 	 * @return Created {@link MyList} instance.
 	 */
 	private MyList create(String name) {
-		MyList myList = new MyList(name, myListCallback);
+		MyList myList = new MyList(name, sqliteBridge, myListCallback);
 		myLists.add(myList);
 		return myList;
 	}
@@ -116,7 +113,7 @@ public class MyListManager extends AbstractManager {
 		for (MyList myList : myLists) {
 			Log.i(TAG, String.format("Loading list \"%s\"...", myList.getName()));
 			
-			myList.load(sqliteBridge);
+			myList.load();
 		}
 	}
 	
@@ -127,7 +124,7 @@ public class MyListManager extends AbstractManager {
 		for (MyList myList : myLists) {
 			Log.i(TAG, String.format("Saving list \"%s\"...", myList.getName()));
 			
-			myList.save(sqliteBridge);
+			myList.save();
 		}
 	}
 	
@@ -431,11 +428,13 @@ public class MyListManager extends AbstractManager {
 		/* Variables */
 		private String name;
 		private MyListCallback callback;
+		private MyListSqliteBridge sqliteBridge;
 		private Map<String, MyListable> myListables;
 		
 		/* Constructor */
-		public MyList(String name, MyListCallback myListCallback) {
+		public MyList(String name, MyListSqliteBridge sqliteBridge, MyListCallback myListCallback) {
 			this.name = name;
+			this.sqliteBridge = sqliteBridge;
 			this.callback = myListCallback;
 			
 			this.myListables = createMap();
@@ -444,11 +443,9 @@ public class MyListManager extends AbstractManager {
 		/**
 		 * Load entries from the database and store them in the list for quicker access.
 		 * 
-		 * @param sqliteBridge
-		 *            Database communication bridge.
 		 * @see MyListSqliteBridge#getEntries(MyList)
 		 */
-		public synchronized void load(MyListSqliteBridge sqliteBridge) {
+		public synchronized void load() {
 			List<MyListEntry> entries = sqliteBridge.getEntries(this);
 			
 			for (MyListEntry entry : entries) {
@@ -463,7 +460,6 @@ public class MyListManager extends AbstractManager {
 						}
 						
 						case ENTRY_TYPE_STORE_VIDEO:
-						case ENTRY_TYPE_STORE_MUSIC:
 						default: {
 							throw new UnsupportedOperationException("This type is not supported.");
 						}
@@ -483,11 +479,9 @@ public class MyListManager extends AbstractManager {
 		/**
 		 * Save entries list to the database.
 		 * 
-		 * @param sqliteBridge
-		 *            Database communication bridge.
 		 * @see MyListSqliteBridge#push(MyList, List)
 		 */
-		public synchronized void save(MyListSqliteBridge sqliteBridge) {
+		public synchronized void save() {
 			List<MyListEntry> entries = new ArrayList<>();
 			
 			for (MyListable myListable : myListables.values()) {
@@ -510,19 +504,17 @@ public class MyListManager extends AbstractManager {
 		 * It will start by clearing the {@link #myListables} {@link Map} then will finish by loading the content again with {@link #load(MyListSqliteBridge) load()}. <br>
 		 * Be aware that it will not {@link #save(MyListSqliteBridge) save()} the content to avoid conflict between different part of the program using the database at the same time without being synchronized.
 		 * 
-		 * @param sqliteBridge
-		 *            Database communication bridge.
 		 * @return Itself.
 		 * @see #load(MyListSqliteBridge) load()
 		 */
-		public MyList reload(MyListSqliteBridge sqliteBridge) {
+		public MyList reload() {
 			Log.i(TAG, "Reload call on MyList: " + name);
 			
-			save(sqliteBridge);
+			save();
 			
 			myListables.clear();
 			
-			load(sqliteBridge);
+			load();
 			
 			return this;
 		}
@@ -559,7 +551,7 @@ public class MyListManager extends AbstractManager {
 			if (!contains(myListable)) {
 				myListables.put(myListable.toUniqueString(), myListable);
 				
-				save(BoxPlayApplication.getManagers().getMyListManager().getSqliteBridge());
+				save();
 			} else {
 				Log.d(TAG, "Trying to add item already in the list.");
 			}
@@ -576,7 +568,7 @@ public class MyListManager extends AbstractManager {
 			if (contains(myListable)) {
 				myListables.remove(myListable.toUniqueString());
 				
-				save(BoxPlayApplication.getManagers().getMyListManager().getSqliteBridge());
+				save();
 				
 				if (callback != null) {
 					callback.onItemRemoved(this, myListable);
@@ -654,14 +646,11 @@ public class MyListManager extends AbstractManager {
 	 * @return The entry type id if any or {@link #ENTRY_TYPE_UNKNOWN} if failed to find.
 	 * @see MyListManager#ENTRY_TYPE_UNKNOWN
 	 * @see MyListManager#ENTRY_TYPE_STORE_VIDEO
-	 * @see MyListManager#ENTRY_TYPE_STORE_MUSIC
 	 * @see MyListManager#ENTRY_TYPE_CULTURE_SEARCH_AND_GO
 	 */
 	public static int objectToType(MyListable myListable) {
 		if (myListable instanceof VideoGroup) {
 			return ENTRY_TYPE_STORE_VIDEO;
-		} else if (myListable instanceof MusicGroup) {
-			return ENTRY_TYPE_STORE_MUSIC;
 		} else if (myListable instanceof SearchAndGoResult) {
 			return ENTRY_TYPE_CULTURE_SEARCH_AND_GO;
 		}

@@ -48,7 +48,7 @@ public class ImageViewerActivity extends BaseBoxPlayActivty {
 	private void initializeViews() {
 		viewerPhotoView = (PhotoView) findViewById(R.id.activity_image_viewer_photoview_viewer);
 		
-		viewHelper.downloadToImageView(viewerPhotoView, imageUrl);
+		imageHelper.download(viewerPhotoView, imageUrl).validate();
 	}
 	
 	/**

@@ -27,7 +27,7 @@ import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
 import caceresenzo.apps.boxplay.R;
-import caceresenzo.apps.boxplay.helper.LocaleHelper;
+import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
 
 public class YoutubeDownloadActivity extends Activity {
 	

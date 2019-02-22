@@ -1,15 +1,7 @@
 package caceresenzo.apps.boxplay.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -21,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -41,8 +32,7 @@ import caceresenzo.apps.boxplay.fragments.social.SocialFragment;
 import caceresenzo.apps.boxplay.fragments.store.StoreFragment;
 import caceresenzo.apps.boxplay.fragments.store.StorePageFragment;
 import caceresenzo.apps.boxplay.fragments.user.UserFragment;
-import caceresenzo.apps.boxplay.helper.LocaleHelper;
-import caceresenzo.apps.boxplay.managers.TutorialManager.Tutorialable;
+import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
 import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
@@ -52,7 +42,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
  * 
  * @author Enzo CACERES
  */
-public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationView.OnNavigationItemSelectedListener, Tutorialable {
+public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationView.OnNavigationItemSelectedListener {
 	
 	/* Tag */
 	public static final String TAG = BoxPlayActivity.class.getSimpleName();
@@ -81,8 +71,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	private NavigationView navigationView;
 	private Menu optionsMenu;
 	
-	private SlidingUpPanelLayout slidingUpPanelLayout;
-	
 	/* Variables */
 	private String lastOpenFragment, extraFragmentCultureSearchAndGoLastQuery;
 	private int lastOpenTab, lastDrawerSelectedItemId;
@@ -94,7 +82,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		INSTANCE = this;
 		
 		initializeViews();
-		initializeSystems();
 		
 		if (savedInstanceState != null) {
 			lastOpenFragment = savedInstanceState.getString(BUNDLE_KEY_LAST_FRAGMENT_CLASS);
@@ -163,9 +150,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 		}, 200);
 		
-		managers.getMusicManager().registerMusicSlidingPanel(slidingUpPanelLayout);
-		
-		viewHelper.refreshMenuIdCache();
+		menuHelper.refreshMenuIdCache();
 	}
 	
 	@Override
@@ -177,6 +162,12 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		
+		if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
+			
+			menuHelper.updateSeachMenu(R.id.drawer_boxplay_other_about);
+			FRAGMENT_TO_OPEN = new AboutFragment().withChangeLog();
+		}
+		
 		if (FRAGMENT_TO_OPEN == null) {
 			handler.postDelayed(new Runnable() {
 				@Override
@@ -187,25 +178,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}, 20);
 		}
 		
-		if (managers.getUpdateManager().isFirstRunOnThisUpdate()) {
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					viewHelper.updateSeachMenu(R.id.drawer_boxplay_other_about);
-					showFragment(new AboutFragment().withChangeLog());
-				}
-			}, 3000);
-		} else {
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					managers.getTutorialManager().executeActivityTutorial(BoxPlayActivity.this);
-				}
-			}, 1000);
-		}
-		
 		managers.getUpdateManager().saveUpdateVersion();
-		
 	}
 	
 	@Override
@@ -237,8 +210,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		if (managers.getUpdateManager().isFirstTimeInstalled()) {
 			managers.getUpdateManager().updateFirstTimeInstalled();
 		}
-		
-		managers.getMusicManager().saveDatabase();
 		
 		managers.destroy();
 		
@@ -278,15 +249,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		navigationView.getMenu().getItem(0).setChecked(true);
 		
 		coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_boxplay_coordinatorlayout_container);
-		
-		slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.activity_boxplay_slidinglayout_container);
-	}
-	
-	/**
-	 * Function to initialize sub-systems, like cache
-	 */
-	private void initializeSystems() {
-		viewHelper.prepareCache(boxPlayApplication);
 	}
 	
 	/**
@@ -426,14 +388,10 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
 			drawer.closeDrawer(GravityCompat.START);
 		} else {
-			if (slidingUpPanelLayout.getPanelState().equals(SlidingUpPanelLayout.PanelState.EXPANDED) && !slidingUpPanelLayout.getPanelState().equals(SlidingUpPanelLayout.PanelState.HIDDEN)) {
-				slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+			if (BoxPlayApplication.getBoxPlayApplication().getPreferences().getBoolean(getString(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_key), true)) {
+				drawer.openDrawer(GravityCompat.START);
 			} else {
-				if (BoxPlayApplication.getBoxPlayApplication().getPreferences().getBoolean(getString(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_key), true)) {
-					drawer.openDrawer(GravityCompat.START);
-				} else {
-					super.onBackPressed();
-				}
+				super.onBackPressed();
 			}
 		}
 	}
@@ -471,12 +429,12 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		int id = item.getItemId();
 		
 		if (item.isCheckable()) {
-			viewHelper.unselectAllMenu();
+			menuHelper.unselectAllMenu();
 			
 			item.setChecked(true);
 		}
 		
-		viewHelper.updateSeachMenu(id);
+		menuHelper.updateSeachMenu(id);
 	}
 	
 	/**
@@ -514,8 +472,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 			
 			/* Store */
-			case R.id.drawer_boxplay_store_video:
-			case R.id.drawer_boxplay_store_music: {
+			case R.id.drawer_boxplay_store_video: {
 				StoreFragment storeFragment;
 				
 				if (actualFragment instanceof StoreFragment) {
@@ -528,10 +485,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 					default:
 					case R.id.drawer_boxplay_store_video: {
 						storeFragment.withVideo();
-						break;
-					}
-					case R.id.drawer_boxplay_store_music: {
-						storeFragment.withMusic();
 						break;
 					}
 				}
@@ -698,121 +651,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		} catch (Exception exception) {
 			FRAGMENT_TO_OPEN = fragment;
 		}
-	}
-	
-	/**
-	 * Tutorialable, used to create the tutorial path
-	 */
-	@SuppressWarnings("deprecation")
-	@Override
-	public TapTargetSequence getTapTargetSequence() {
-		List<TapTarget> sequences = new ArrayList<TapTarget>();
-		Display display = getWindowManager().getDefaultDisplay();
-		
-		Rect storeRectangle = new Rect(24, 24, 24, 24);
-		storeRectangle.offsetTo(display.getWidth() / 2, display.getHeight() / 2);
-		
-		sequences.add(applyTutorialObjectTheme( //
-				TapTarget.forToolbarNavigationIcon(toolbar, getString(R.string.boxplay_tutorial_main_drawer_title), getString(R.string.boxplay_tutorial_main_drawer_description)) //
-						.id(TUTORIAL_PROGRESS_DRAWER) //
-		)); //
-		
-		sequences.add(applyTutorialObjectTheme( //
-				TapTarget.forToolbarMenuItem(toolbar, R.id.menu_main_action_search, getString(R.string.boxplay_tutorial_main_search_title), getString(R.string.boxplay_tutorial_main_search_description)) //
-						.id(TUTORIAL_PROGRESS_SEARCH) //
-		)); //
-		
-		sequences.add(applyTutorialObjectTheme( //
-				TapTarget.forToolbarOverflow(toolbar, getString(R.string.boxplay_tutorial_main_options_title), getString(R.string.boxplay_tutorial_main_options_description)) //
-						.id(TUTORIAL_PROGRESS_MENU))); //
-		
-		sequences.add(applyTutorialObjectTheme(TapTarget.forBounds(storeRectangle, getString(R.string.boxplay_tutorial_main_swipe_title), getString(R.string.boxplay_tutorial_main_swipe_description)) //
-				.id(TUTORIAL_PROGRESS_SWIPE) //
-				.icon(getResources().getDrawable(R.mipmap.image_hand_swipe)) //
-		)); //
-		
-		Fragment lastFragment = viewHelper.getLastFragment();
-		if (lastFragment instanceof StoreFragment) {
-			sequences.add(applyTutorialObjectTheme( //
-					TapTarget.forBounds(storeRectangle, getString(R.string.boxplay_tutorial_main_video_title), getString(R.string.boxplay_tutorial_main_video_description)) //
-							.id(TUTORIAL_PROGRESS_VIDEO) //
-							.outerCircleAlpha(0.8F) //
-			) //
-					.dimColor(android.R.color.transparent) //
-					.targetCircleColor(android.R.color.transparent) //
-			); //
-			
-			sequences.add(applyTutorialObjectTheme( //
-					TapTarget.forBounds(storeRectangle, getString(R.string.boxplay_tutorial_main_music_title), getString(R.string.boxplay_tutorial_main_music_description)) //
-							.id(TUTORIAL_PROGRESS_MUSIC) //
-							.outerCircleAlpha(0.8F) //
-			) //
-					.dimColor(android.R.color.transparent) //
-					.targetCircleColor(android.R.color.transparent) //
-			); //
-		}
-		
-		return new TapTargetSequence(this) //
-				.targets(sequences).listener(new TapTargetSequence.Listener() {
-					@Override
-					public void onSequenceFinish() {
-						Fragment lastFragment = viewHelper.getLastFragment();
-						if (lastFragment instanceof StoreFragment) {
-							((StoreFragment) lastFragment).withVideo();
-						}
-						
-						managers.getTutorialManager().saveTutorialFinished(BoxPlayActivity.this);
-					}
-					
-					@Override
-					public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-						int id = lastTarget.id() + 1;
-						
-						switch (id) {
-							case TUTORIAL_PROGRESS_VIDEO:
-							case TUTORIAL_PROGRESS_MUSIC: {
-								Fragment lastFragment = viewHelper.getLastFragment();
-								
-								if (lastFragment instanceof StoreFragment) {
-									switch (id) {
-										case TUTORIAL_PROGRESS_VIDEO: {
-											((StoreFragment) lastFragment).withVideo();
-											break;
-										}
-										
-										case TUTORIAL_PROGRESS_MUSIC: {
-											((StoreFragment) lastFragment).withMusic();
-											break;
-										}
-									}
-								}
-								
-								break;
-							}
-						}
-					}
-					
-					@Override
-					public void onSequenceCanceled(TapTarget lastTarget) {
-						; // Impossible
-					}
-				});
-	}
-	
-	/**
-	 * Quick function to apply tutorial common theme, reduce code
-	 * 
-	 * @param tapTarget
-	 *            Actual sequence
-	 * @return The actual sequence, but with common theme applied
-	 */
-	private TapTarget applyTutorialObjectTheme(TapTarget tapTarget) {
-		return tapTarget.dimColor(android.R.color.black) // Background
-				.outerCircleColor(R.color.colorAccent) // Big circle
-				.targetCircleColor(R.color.colorPrimary) // Moving circle color (animation)
-				.textColor(android.R.color.black) //
-				.transparentTarget(true) //
-				.cancelable(false); //
 	}
 	
 	public Toolbar getToolbar() {

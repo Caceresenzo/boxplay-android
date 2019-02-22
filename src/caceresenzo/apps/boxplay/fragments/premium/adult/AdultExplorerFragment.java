@@ -3,8 +3,6 @@ package caceresenzo.apps.boxplay.fragments.premium.adult;
 import java.util.List;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,21 +17,18 @@ import caceresenzo.android.libs.list.EndlessRecyclerViewScrollListener;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.dialog.WorkingProgressDialog;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.managers.PremiumManager.AdultPremiumSubManager;
 import caceresenzo.apps.boxplay.managers.PremiumManager.AdultSubModuleCallback;
-import caceresenzo.apps.boxplay.managers.XManagers;
 import caceresenzo.libs.boxplay.models.premium.adult.AdultVideo;
 
-public class AdultExplorerFragment extends Fragment {
-	/* Managers */
-	private BoxPlayApplication boxPlayApplication;
-	private Handler handler;
-	private ViewHelper viewHelper;
-	private XManagers managers;
+public class AdultExplorerFragment extends BaseBoxPlayFragment {
+	
+	/* Tag */
+	public static final String TAG = AdultExplorerFragment.class.getSimpleName();
 	
 	/* Sub-Managers */
-	private AdultPremiumSubManager adultSubManager = BoxPlayApplication.getManagers().getPremiumManager().getAdultSubManager();
+	private AdultPremiumSubManager adultSubManager;
 	
 	/* Views */
 	private SwipeRefreshLayout swipeRefreshLayout;
@@ -47,10 +42,9 @@ public class AdultExplorerFragment extends Fragment {
 	
 	/* Constructor */
 	public AdultExplorerFragment() {
-		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
-		this.handler = BoxPlayApplication.getHandler();
-		this.viewHelper = BoxPlayApplication.getViewHelper();
-		this.managers = BoxPlayApplication.getManagers();
+		super();
+		
+		this.adultSubManager = managers.getPremiumManager().getAdultSubManager();
 		
 		adultSubManager.attachCallback(new AdultSubModuleCallback() {
 			@Override
@@ -65,10 +59,10 @@ public class AdultExplorerFragment extends Fragment {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						if (viewHelper.isVlcInstalled()) {
+						if (applicationHelper.isVlcInstalled()) {
 							managers.getVideoManager().openVLC(url, null);
 						} else {
-							boxPlayApplication.toast(R.string.boxplay_premium_adult_status_error_vlc_not_installed).show();
+							boxPlayApplication.toast(R.string.boxplay_error_vlc_not_installed).show();
 						}
 						
 						swipeRefreshLayout.setRefreshing(false);
@@ -209,7 +203,7 @@ public class AdultExplorerFragment extends Fragment {
 				}
 			});
 			
-			viewHelper.downloadToImageView(thumbnailImageView, adultVideo.getImageUrl());
+			imageHelper.download(thumbnailImageView, adultVideo.getImageUrl()).validate();
 			
 			titleTextView.setText(adultVideo.getTitle());
 			

@@ -14,7 +14,7 @@ public class BoxPlayServiceBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-			BoxPlayApplication.getManagers().getBackgroundServiceManager().scheduleService();
+			BoxPlayApplication.getBoxPlayApplication().getManagers().getBackgroundServiceManager().scheduleService();
 		}
 		
 		BoxPlayForegroundService.startIfNotAlready(context);

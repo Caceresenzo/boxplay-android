@@ -6,7 +6,6 @@ import java.util.List;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.CardView;
@@ -27,19 +26,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicElementRowItem;
-import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicElementRowViewAdapter;
-import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicListRowItem;
-import caceresenzo.apps.boxplay.fragments.store.PageMusicStoreFragment.MusicListRowViewAdapter;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoElementRowItem;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoElementRowViewAdapter;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoListRowItem;
 import caceresenzo.apps.boxplay.fragments.store.PageVideoStoreFragment.VideoListRowViewAdapter;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.apps.boxplay.managers.DataManager;
 import caceresenzo.apps.boxplay.managers.VideoManager;
 
-public abstract class StorePageFragment extends Fragment {
+public abstract class StorePageFragment extends BaseBoxPlayFragment {
 	
 	/* Tag */
 	public static final String TAG = StorePageFragment.class.getSimpleName();
@@ -71,13 +68,11 @@ public abstract class StorePageFragment extends Fragment {
 	protected StoreSearchHandler<?> storeSearchHandler;
 	
 	/* Constructor */
-	public StorePageFragment() {
-		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
-		this.handler = BoxPlayApplication.getHandler();
-		this.viewHelper = BoxPlayApplication.getViewHelper();
+	public StorePageFragment() {		
+		super();
 		
-		this.dataManager = BoxPlayApplication.getManagers().getDataManager();
-		this.videoManager = BoxPlayApplication.getManagers().getVideoManager();
+		this.dataManager = managers.getDataManager();
+		this.videoManager = managers.getVideoManager();
 		
 		// INSTANCE = this;
 		
@@ -370,22 +365,17 @@ public abstract class StorePageFragment extends Fragment {
 					recyclerView.setAdapter(new VideoListRowViewAdapter(((VideoListRowItem) item).getVideoElements()));
 					break;
 				}
+				
 				case RowListItem.TYPE_VIDEO_ELEMENT: { // 1
 					recyclerView.setAdapter(new VideoElementRowViewAdapter(((VideoElementRowItem) item).getVideoFile()));
 					break;
 				}
-				case RowListItem.TYPE_MUSIC_LIST: { // 100
-					recyclerView.setAdapter(new MusicListRowViewAdapter(((MusicListRowItem) item).getMusicElements()));
-					break;
-				}
-				case RowListItem.TYPE_MUSIC_ELEMENT: { // 101
-					recyclerView.setAdapter(new MusicElementRowViewAdapter(((MusicElementRowItem) item).getMusicFile()));
-					break;
-				}
+				
 				case RowListItem.TYPE_ELEMENT_TITLE: { // 1000
 					recyclerView.setAdapter(new TitleRowViewAdapter((TitleRowItem) item));
 					break;
 				}
+				
 				case RowListItem.TYPE_ELEMENT_ERROR: { // 1001
 					recyclerView.setAdapter(new ErrorRowViewAdapter((ErrorRowItem) item));
 					break;
@@ -442,7 +432,10 @@ public abstract class StorePageFragment extends Fragment {
 		
 		public TitleRowItem(Object title) {
 			super();
-			this.title = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(title);
+			
+			CacheHelper cacheHelper = BoxPlayApplication.getBoxPlayApplication().getCacheHelper();
+			
+			this.title = cacheHelper.translate(title);
 		}
 		
 		public String getTitle() {
@@ -547,10 +540,13 @@ public abstract class StorePageFragment extends Fragment {
 		
 		public ErrorRowItem(Object title, Object error, Object button1, Object button2, OnClickListener onClickListener1, OnClickListener onClickListener2) {
 			super();
-			this.title = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(title);
-			this.error = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(error);
-			this.button1 = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(button1);
-			this.button2 = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(button2);
+			
+			CacheHelper cacheHelper = BoxPlayApplication.getBoxPlayApplication().getCacheHelper();
+			
+			this.title = cacheHelper.translate(title);
+			this.error = cacheHelper.translate(error);
+			this.button1 = cacheHelper.translate(button1);
+			this.button2 = cacheHelper.translate(button2);
 			this.onClickListener1 = onClickListener1;
 			this.onClickListener2 = onClickListener2;
 		}

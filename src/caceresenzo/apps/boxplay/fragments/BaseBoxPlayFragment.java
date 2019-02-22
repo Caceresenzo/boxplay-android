@@ -4,7 +4,11 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ApplicationHelper;
+import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ImageHelper;
+import caceresenzo.apps.boxplay.helper.implementations.MenuHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
 
 /**
@@ -20,6 +24,10 @@ public class BaseBoxPlayFragment extends Fragment {
 	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
 	protected Handler handler;
+	protected ApplicationHelper applicationHelper;
+	protected CacheHelper cacheHelper;
+	protected ImageHelper imageHelper;
+	protected MenuHelper menuHelper;
 	protected ViewHelper viewHelper;
 	protected XManagers managers;
 	
@@ -31,8 +39,12 @@ public class BaseBoxPlayFragment extends Fragment {
 	public BaseBoxPlayFragment() {
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.handler = BoxPlayApplication.getHandler();
-		this.viewHelper = BoxPlayApplication.getViewHelper();
-		this.managers = BoxPlayApplication.getManagers();
+		this.applicationHelper = boxPlayApplication.getApplicationHelper();
+		this.cacheHelper = boxPlayApplication.getCacheHelper();
+		this.imageHelper = boxPlayApplication.getImageHelper();
+		this.menuHelper = boxPlayApplication.getMenuHelper();
+		this.viewHelper = boxPlayApplication.getViewHelper();
+		this.managers = boxPlayApplication.getManagers();
 
 		this.ready = false;
 		this.destroyed = false;

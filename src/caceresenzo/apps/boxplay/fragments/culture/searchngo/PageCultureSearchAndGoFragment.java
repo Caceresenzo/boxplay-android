@@ -38,9 +38,8 @@ import caceresenzo.android.libs.input.InputMethodUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.activities.SearchAndGoHistoryActivity;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager;
 import caceresenzo.apps.boxplay.managers.SearchAndGoManager.SearchAndGoSearchCallback;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
@@ -90,7 +89,7 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	public PageCultureSearchAndGoFragment() {
 		super();
 		
-		this.searchAndGoManager = BoxPlayApplication.getManagers().getSearchAndGoManager();
+		this.searchAndGoManager = managers.getSearchAndGoManager();
 		
 		this.results = new ArrayList<>();
 		
@@ -534,9 +533,9 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 			titleTextView.setText(result.getName());
 			contentTextView.setText(result.hasDescription() ? result.getDescription() : "-/-");
 			providerTextView.setText(result.getParentProvider().getSiteName().toUpperCase());
-			typeTextView.setText(viewHelper.enumToStringCacheTranslation(result.getType()));
-			
-			viewHelper.downloadToImageView(thumbnailImageView, result.getBestImageUrl(), result.getRequireHeaders2());
+			typeTextView.setText(cacheHelper.translate(result.getType()));
+
+			imageHelper.download(thumbnailImageView, result.getBestImageUrl()).headers(result.getRequireHeaders2()).validate();
 		}
 	}
 	

@@ -176,7 +176,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 						if (item.getDataType() == null) {
 							typeTextView.setVisibility(View.GONE);
 						} else {
-							typeTextView.setText(viewHelper.enumToStringCacheTranslation(item.getDataType()));
+							typeTextView.setText(cacheHelper.translate(item.getDataType()));
 						}
 						
 						final View itemContainerView = view;
@@ -263,7 +263,7 @@ public class PageDetailInfoSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 		
 		public void bind(final ImageDetailItem imageItem) {
-			viewHelper.downloadToImageView(contentImageView, imageItem.getUrl(), result.getRequireHeaders2());
+			imageHelper.download(contentImageView, imageItem.getUrl()).headers(result.getRequireHeaders2()).validate();
 			
 			contentImageView.setOnClickListener(new OnClickListener() {
 				@Override

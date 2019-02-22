@@ -13,7 +13,8 @@ import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
+import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
+import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.libs.boxplay.api.BoxPlayApi;
 import caceresenzo.libs.boxplay.users.User;
 
@@ -30,10 +31,7 @@ public class XManagers {
 	protected PermissionManager permissionManager;
 	protected DataManager dataManager;
 	protected VideoManager videoManager;
-	protected MusicManager musicManager;
-	protected ServerManager serverManager;
 	protected UpdateManager updateManager;
-	protected TutorialManager tutorialManager;
 	protected PremiumManager premiumManager;
 	protected SearchAndGoManager searchAndGoManager;
 	protected SubscriptionManager subscriptionManager;
@@ -51,14 +49,11 @@ public class XManagers {
 	private List<AbstractManager> managers;
 	
 	/* Constructor */
-	public XManagers() {
-		;
+	public XManagers(BoxPlayApplication boxPlayApplication) {
+		this.boxPlayApplication = boxPlayApplication;
 	}
 	
-	public XManagers initialize(final BoxPlayApplication boxPlayApplication) {
-		this.boxPlayApplication = boxPlayApplication;
-		
-
+	public XManagers initialize() {
 		if (Build.VERSION.SDK_INT <= 24) {
 			baseApplicationDirectory = boxPlayApplication.getFilesDir();
 		} else {
@@ -68,6 +63,8 @@ public class XManagers {
 		baseDataDirectory = new File(baseApplicationDirectory, "data" + File.separator);
 		
 		managers = new ArrayList<AbstractManager>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean add(AbstractManager manager) {
 				Log.d(TAG, "Registering manager: " + manager.getClass().getSimpleName() + " (size=" + (size() + 1) + ")");
@@ -85,12 +82,8 @@ public class XManagers {
 		
 		managers.add(dataManager = new DataManager());
 		managers.add(videoManager = new VideoManager());
-		managers.add(musicManager = new MusicManager());
-		managers.add(serverManager = new ServerManager());
 		
 		managers.add(updateManager = new UpdateManager());
-		
-		managers.add(tutorialManager = new TutorialManager());
 		
 		managers.add(premiumManager = new PremiumManager());
 
@@ -142,14 +135,10 @@ public class XManagers {
 	}
 	
 	public IdentificationManager getIdentificationManager() {
-		// checkAndRecreate();
-		// return identificationManager;
 		throw new IllegalStateException("Disabled.");
 	}
 	
 	public UserManager getUserManager() {
-		// checkAndRecreate();
-		// return userManager;
 		throw new IllegalStateException("Disabled.");
 	}
 	
@@ -165,20 +154,8 @@ public class XManagers {
 		return videoManager;
 	}
 	
-	public MusicManager getMusicManager() {
-		return musicManager;
-	}
-	
-	public ServerManager getServerManager() {
-		return serverManager;
-	}
-	
 	public UpdateManager getUpdateManager() {
 		return updateManager;
-	}
-	
-	public TutorialManager getTutorialManager() {
-		return tutorialManager;
 	}
 	
 	public PremiumManager getPremiumManager() {
@@ -208,7 +185,9 @@ public class XManagers {
 	protected abstract static class AbstractManager {
 		protected BoxPlayApplication boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		protected Handler handler = BoxPlayApplication.getHandler();
-		protected ViewHelper viewHelper = BoxPlayApplication.getViewHelper();
+
+		protected CacheHelper cacheHelper = boxPlayApplication.getCacheHelper();
+		protected ViewHelper viewHelper = boxPlayApplication.getViewHelper();
 		
 		protected void initialize() {
 			;
@@ -227,7 +206,11 @@ public class XManagers {
 		}
 		
 		protected XManagers getManagers() {
-			return BoxPlayApplication.getManagers();
+			return BoxPlayApplication.getBoxPlayApplication().getManagers();
+		}
+		
+		protected String getString(int ressourceId) {
+			return BoxPlayApplication.getBoxPlayApplication().getString(ressourceId);
 		}
 		
 		protected String getString(int ressourceId, Object... args) {
@@ -237,6 +220,10 @@ public class XManagers {
 	
 	protected abstract static class SubManager extends AbstractManager {
 		;
+	}
+	
+	protected String getString(int ressourceId) {
+		return boxPlayApplication.getString(ressourceId);
 	}
 	
 	protected String getString(int ressourceId, Object... args) {

@@ -58,7 +58,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 	
 	@Override
 	public void onUserRefresh() {
-		BoxPlayApplication.getManagers().getDataManager().fetchData(true);
+		managers.getDataManager().fetchData(true);
 	}
 	
 	@Override
@@ -88,7 +88,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				query = query.toLowerCase();
 				
 				final List<VideoElement> filteredGroupList = new ArrayList<>();
-				for (VideoGroup group : BoxPlayApplication.getManagers().getVideoManager().getGroups()) {
+				for (VideoGroup group : managers.getVideoManager().getGroups()) {
 					boolean stringContains = false;
 					
 					if (group.getTitle().toLowerCase().contains(query)) {
@@ -125,25 +125,31 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				population.put(category, new ArrayList<VideoElement>());
 			}
 			
-			for (VideoGroup videoGroup : BoxPlayApplication.getManagers().getVideoManager().getGroups()) {
+			for (VideoGroup videoGroup : managers.getVideoManager().getGroups()) {
 				if (videoGroup == null) {
 					continue;
 				}
+				
 				if (videoGroup.isWatching()) {
 					yourWatchingList.add(videoGroup);
 				}
+				
 				if (videoGroup.isRecommended()) {
 					populate(RECOMMENDED, videoGroup);
 				}
+				
 				if (videoGroup.getVideoFileType().equals(VideoFileType.ANIME) || videoGroup.getVideoFileType().equals(VideoFileType.ANIMEMOVIE)) {
 					populate(ANIMES, videoGroup);
 				}
+				
 				if (videoGroup.getVideoFileType().equals(VideoFileType.ANIMEMOVIE) || videoGroup.getVideoFileType().equals(VideoFileType.MOVIE)) {
 					populate(MOVIES, videoGroup);
 				}
+				
 				if (videoGroup.getVideoFileType().equals(VideoFileType.SERIE)) {
 					populate(SERIES, videoGroup);
 				}
+				
 				if (Randomizer.nextRangeInt(0, 10) == 5) {
 					populate(RANDOM, videoGroup);
 				}
@@ -152,7 +158,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 			if (!yourWatchingList.isEmpty()) {
 				// rowListItems.add(new TitleRowItem(YOURLIST));
 				
-				String headingTitle = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(YOURLIST);
+				String headingTitle = cacheHelper.translate(YOURLIST);
 				RowListItemConfig rowListItemConfig = new RowListItemConfig().title(headingTitle);
 				
 				if (yourWatchingList.size() == 1) {
@@ -168,7 +174,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				if (!population.get(category).isEmpty()) {
 					// rowListItems.add(new TitleRowItem(category));
 					
-					String headingTitle = BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(category);
+					String headingTitle = cacheHelper.translate(category);
 					RowListItemConfig rowListItemConfig = new RowListItemConfig().title(headingTitle);
 					
 					if (category.equals(RANDOM) || population.get(category).size() < 2) {
@@ -239,18 +245,17 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				if (group.hasSeason()) {
 					subtitleTextView.setText(BoxPlayApplication.getBoxPlayApplication().getString(R.string.boxplay_store_video_season_view, group.getSeasons().size(), group.getSeasons().size() > 1 ? "s" : ""));
 				} else {
-					subtitleTextView.setText(BoxPlayApplication.getViewHelper().enumToStringCacheTranslation(group.getVideoFileType()));
+					subtitleTextView.setText(BoxPlayApplication.getBoxPlayApplication().getCacheHelper().translate(group.getVideoFileType()));
 				}
 				
 				if (group.getGroupImageUrl() != null) {
-					BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, group.getGroupImageUrl());
+					BoxPlayApplication.getBoxPlayApplication().getImageHelper().download(thumbnailImageView, group.getGroupImageUrl()).validate();
 				}
 				
 				view.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						// BoxPlayApplication.getViewHelper().startVideoActivity(view, group); TODO
-						// BoxPlayApplication.getViewHelper().startVideoActivity(view, group);
 						VideoActivity.start(group);
 					}
 				});
@@ -332,7 +337,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 				titleTextView.setText(group.getTitle());
 				
 				if (group.getGroupImageUrl() != null) {
-					BoxPlayApplication.getViewHelper().downloadToImageView(thumbnailImageView, group.getGroupImageUrl());
+					BoxPlayApplication.getBoxPlayApplication().getImageHelper().download(thumbnailImageView, group.getGroupImageUrl()).validate();
 				}
 				
 				view.setOnClickListener(new OnClickListener() {

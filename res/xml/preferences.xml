@@ -1,21 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- Store > Music -->
-
-    <PreferenceCategory android:title="@string/boxplay_other_settings_store_music_category_title" >
-
-        <!-- Store > Music > Music Preferences -->
-        <MultiSelectListPreference
-            android:defaultValue="@array/empty_array"
-            android:entries="@array/boxplay_other_settings_store_music_pref_my_genre_entries"
-            android:entryValues="@array/boxplay_other_settings_store_music_pref_my_genre_values"
-            android:key="@string/boxplay_other_settings_store_music_pref_my_genre_key"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@string/boxplay_other_settings_store_music_pref_my_genre_dialog_ok"
-            android:summary=""
-            android:title="@string/boxplay_other_settings_store_music_pref_my_genre_title" />
-    </PreferenceCategory>
-
     <!-- Downloads -->
 
     <PreferenceCategory android:title="@string/boxplay_other_settings_downloads_category_title" >
@@ -60,13 +44,6 @@
             android:key="@string/boxplay_other_settings_boxplay_pref_force_factory_key"
             android:summary=""
             android:title="@string/boxplay_other_settings_boxplay_pref_force_factory_title" />
-
-        <!-- BoxPlay > Processing > Reset tutorial stats -->
-
-        <Preference
-            android:key="@string/boxplay_other_settings_boxplay_pref_reset_tutorials_key"
-            android:summary=""
-            android:title="@string/boxplay_other_settings_boxplay_pref_reset_tutorials_title" />
     </PreferenceCategory>
 
     <!-- Premium -->

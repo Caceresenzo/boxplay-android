@@ -21,14 +21,6 @@
                     android:id="@+id/drawer_boxplay_store_video"
                     android:icon="@drawable/icon_play_arrow_white_24dp"
                     android:title="@string/boxplay_store_video"/>
-                <item
-                    android:id="@+id/drawer_boxplay_store_music"
-                    android:icon="@drawable/icon_audiotrack_white_24dp"
-                    android:title="@string/boxplay_store_music"/>
-                <!-- <item -->
-                <!-- android:id="@+id/drawer_boxplay_store_files" -->
-                <!-- android:icon="@drawable/icon_file_96px" -->
-                <!-- android:title="@string/boxplay_store_files"/> -->
             </group>
         </menu>
     </item>

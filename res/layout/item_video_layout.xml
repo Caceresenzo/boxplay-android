@@ -34,14 +34,6 @@
                     android:text="Episode ???*"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <ImageView
-                    android:id="@+id/item_video_layout_imageview_host_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignRight="@+id/item_video_layout_seekbar_saved_progress"
-                    android:src="@drawable/host_boxplay" />
-
                 <TextView
                     android:id="@+id/item_video_layout_textview_saved_time"
                     android:layout_width="wrap_content"
@@ -55,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/item_video_layout_textview_episode_title"
-                    android:layout_below="@+id/item_video_layout_imageview_host_icon"
+                    android:layout_below="@+id/item_video_layout_textview_episode_title"
                     android:clickable="false"
                     android:focusable="false"
                     android:thumb="@null" />

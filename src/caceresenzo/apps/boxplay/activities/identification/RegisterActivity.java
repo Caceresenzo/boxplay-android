@@ -141,7 +141,7 @@ public class RegisterActivity extends BaseBoxPlayActivty {
 	private void onRegisterFailed(ApiResponse<?> sourceRequest) {
 		registerButton.setEnabled(true);
 		
-		boxPlayApplication.toast(viewHelper.enumToStringCacheTranslation(sourceRequest.getStatus())).show();
+		boxPlayApplication.toast(cacheHelper.translate(sourceRequest.getStatus())).show();
 	}
 	
 	/**

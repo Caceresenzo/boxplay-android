@@ -173,7 +173,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 		
 		public void bind(final AdditionalResultData additionalData) {
-			typeTextView.setText(viewHelper.enumToStringCacheTranslation(additionalData.getType()));
+			typeTextView.setText(cacheHelper.translate(additionalData.getType()));
 			
 			int targetRessourceId;
 			boolean validType = true, hideDownload = true;
@@ -463,7 +463,11 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 					
 					switch (action) {
 						case ACTION_STREAMING: {
-							managers.getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
+							if (applicationHelper.isVlcInstalled()) {
+								managers.getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
+							} else {
+								boxPlayApplication.toast(R.string.boxplay_error_vlc_not_installed).show();
+							}
 							break;
 						}
 						
@@ -476,7 +480,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 										.onPositive(new BottomDialog.ButtonCallback() {
 											@Override
 											public void onClick(BottomDialog dialog) {
-												AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, viewHelper.isAdmEnabled());
+												AdmAndroidDownloader.askDownload(boxPlayApplication, directUrl, filename, applicationHelper.isAdmEnabled());
 												shouldStop();
 											}
 										}) //

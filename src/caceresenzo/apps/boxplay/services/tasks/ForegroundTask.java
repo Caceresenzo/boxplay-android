@@ -34,7 +34,7 @@ public abstract class ForegroundTask extends WorkerThread {
 		
 		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
 		this.handler = BoxPlayApplication.getHandler();
-		this.managers = BoxPlayApplication.getManagers();
+		this.managers = boxPlayApplication.getManagers();
 		
 		this.notificationManager = (NotificationManager) boxPlayApplication.getSystemService(Context.NOTIFICATION_SERVICE);
 	}

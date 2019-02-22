@@ -293,7 +293,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 			
 			pagerAdapter.addFragment(new ViewFragment(imageView, false), "");
 			
-			viewHelper.downloadToImageView(this, imageView, imageUrl, requireHttpHeaders);
+			imageHelper.download(imageView, imageUrl).headers(requireHttpHeaders).validate();
 			
 			pagerAdapter.notifyDataSetChanged(); /* Need to be called everytime */
 		}
@@ -367,7 +367,7 @@ public class MangaChapterReaderActivity extends BaseBoxPlayActivty {
 				
 				Map<String, Object> requireHttpHeaders = getRequireHttpHeaders();
 				
-				viewHelper.downloadToImageView(this, imageView, imageUrls.get(actualPageIndex), requireHttpHeaders);
+				imageHelper.download(imageView, imageUrls.get(actualPageIndex)).headers(requireHttpHeaders).validate();
 				break;
 			}
 			

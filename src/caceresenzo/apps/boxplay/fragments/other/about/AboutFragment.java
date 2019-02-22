@@ -12,14 +12,12 @@ public class AboutFragment extends BaseTabLayoutFragment {
 	
 	/* Constants */
 	public static final int PAGE_ABOUT = 0;
-	public static final int PAGE_HOSTING = 1;
 	public static final int PAGE_CHANGELOG = 2;
 	public static final int PAGE_LIBRARIES = 3;
 	
 	@Override
 	protected void initialize() {
 		addFragment(new PageAboutAboutFragment(), R.string.boxplay_other_about_about);
-		addFragment(new PageAboutHostingFragment(), R.string.boxplay_other_about_hosting);
 		addFragment(new PageAboutChangeLogFragment(), R.string.boxplay_other_about_changelog);
 		// addFragment(new PageAboutLibrariesFragment(), R.string.boxplay_other_about_libraries);
 		
@@ -38,15 +36,6 @@ public class AboutFragment extends BaseTabLayoutFragment {
 	 */
 	public AboutFragment withAbout() {
 		return (AboutFragment) withPage(PAGE_ABOUT);
-	}
-	
-	/**
-	 * Change the page to the {@link PageAboutHostingFragment} page
-	 * 
-	 * @return Itself
-	 */
-	public AboutFragment withHosting() {
-		return (AboutFragment) withPage(PAGE_HOSTING);
 	}
 	
 	/**

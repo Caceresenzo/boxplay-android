@@ -28,20 +28,7 @@
     <!-- <dimen name="video_height">230dp</dimen> -->
     <dimen name="video_height">184dp</dimen>
     <dimen name="video_text_size">12dp</dimen>
-
-    <!-- MUSIC (element / activity / player) -->
-    <dimen name="music_width">128dp</dimen>
-    <dimen name="music_data_separation">8dp</dimen>
-    <dimen name="music_data_section_margin">4dp</dimen>
-    <dimen name="music_data_margin">12dp</dimen>
-    <dimen name="music_genre_margin">8dp</dimen>
-    <dimen name="music_genre_card_recycler_corner_radius">16dp</dimen>
-    <dimen name="music_title_margin">8dp</dimen>
-    <dimen name="music_song_element_margin">6dp</dimen>
-    <dimen name="music_player_panel_height">68dp</dimen>
-    <dimen name="music_player_panel_content_margin">4dp</dimen>
-    <dimen name="music_player_panel_content_image_margin">8dp</dimen>
-    <dimen name="music_player_icon_size">48dp</dimen>
+    
     <!-- GLOBAL -->
     <dimen name="title_margin">8dp</dimen>
     <dimen name="heading_title_padding">12dp</dimen>

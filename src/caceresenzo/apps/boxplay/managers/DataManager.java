@@ -11,7 +11,6 @@ import android.util.Log;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
-import caceresenzo.apps.boxplay.fragments.other.about.PageAboutHostingFragment;
 import caceresenzo.apps.boxplay.fragments.store.StorePageFragment;
 import caceresenzo.apps.boxplay.managers.XManagers.AbstractManager;
 import caceresenzo.libs.cryptography.MD5;
@@ -151,8 +150,6 @@ public class DataManager extends AbstractManager {
 					
 					if ((newContent || force) || isRunningOnCacheVersion()) {
 						getManagers().getVideoManager().callFactory();
-						getManagers().getMusicManager().callFactory();
-						getManagers().getServerManager().callFactory();
 						getManagers().getUpdateManager().prepareDialogBuild();
 					}
 					
@@ -160,10 +157,6 @@ public class DataManager extends AbstractManager {
 						if (storePageFragment != null) {
 							storePageFragment.callDataUpdater(newContent);
 						}
-					}
-					
-					if (PageAboutHostingFragment.getPageAboutPageFragment() != null) {
-						PageAboutHostingFragment.getPageAboutPageFragment().updateServers();
 					}
 				}
 			});

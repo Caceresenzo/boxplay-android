@@ -54,12 +54,6 @@
                 android:value="caceresenzo.apps.boxplay.activities.BoxPlayActivity" />
         </activity>
         <activity
-            android:name=".activities.MusicActivity"
-            android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
-            android:label="@string/title_activity_music"
-            android:launchMode="standard" >
-        </activity>
-        <activity
             android:name=".activities.ImageViewerActivity"
             android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"
             android:label="@string/title_activity_image_viewer"
@@ -112,22 +106,6 @@
                 android:value="caceresenzo.apps.boxplay.activities.identification.LoginActivity" />
         </activity>
 
-        <service
-            android:name=".providers.media.music.MusicService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
-
-        <receiver android:name="caceresenzo.apps.boxplay.receivers.MusicNotificationBroadcast" >
-            <intent-filter>
-                <action android:name="caceresenzo.apps.boxplay.DELETE" />
-                <action android:name="caceresenzo.apps.boxplay.PAUSE" />
-                <action android:name="caceresenzo.apps.boxplay.NEXT" />
-                <action android:name="caceresenzo.apps.boxplay.PLAY" />
-                <action android:name="caceresenzo.apps.boxplay.PREVIOUS" />
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
-            </intent-filter>
-        </receiver>
         <receiver
             android:name=".receivers.BoxPlayServiceBroadcastReceiver"
             android:enabled="true"
@@ -155,12 +133,6 @@
         </provider>
 
         <!-- Libraries -->
-
-
-        <!-- <activity -->
-        <!-- android:name="com.rohitss.uceh.UCEDefaultActivity" -->
-        <!-- android:process=":error_activity" -->
-        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".activities.YoutubeDownloadActivity"
             android:configChanges="keyboardHidden|screenLayout|orientation|screenSize|locale"

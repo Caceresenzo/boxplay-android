@@ -1,20 +1,19 @@
 package caceresenzo.apps.boxplay.activities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.kyo.expandablelayout.ExpandableLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -26,7 +25,6 @@ import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,25 +47,27 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.application.Constants;
-import caceresenzo.apps.boxplay.helper.LocaleHelper;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
-import caceresenzo.apps.boxplay.managers.ServerManager;
-import caceresenzo.apps.boxplay.managers.TutorialManager.Tutorialable;
+import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
 import caceresenzo.apps.boxplay.managers.VideoManager;
 import caceresenzo.libs.boxplay.models.element.BoxPlayElement;
-import caceresenzo.libs.boxplay.models.server.ServerHosting;
 import caceresenzo.libs.boxplay.models.store.video.VideoFile;
 import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.models.store.video.VideoSeason;
 
 @SuppressWarnings("deprecation")
-public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
+public class VideoActivity extends BaseBoxPlayActivty {
 	
 	/* Tag */
 	public static final String TAG = VideoActivity.class.getSimpleName();
 	
 	/* Constants */
 	public static final int SNACKBAR_DURATION_DONE_WATCHING_PROMPT = 15000;
+	public static final SimpleDateFormat DATEFORMAT_VIDEO_DURATION = new SimpleDateFormat("HH:mm:ss");
+	
+	/* Static */
+	static {
+		DATEFORMAT_VIDEO_DURATION.setTimeZone(TimeZone.getTimeZone("GMT"));
+	}
 	
 	/* Bundle Keys */
 	public static final String BUNDLE_KEY_VIDEO_GROUP_ITEM = "video_group_item";
@@ -75,19 +75,11 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 	public static final String BUNDLE_KEY_VLC_EXTRA_POSITION = "extra_position";
 	public static final String BUNDLE_KEY_VLC_EXTRA_DURATION = "extra_duration";
 	
-	/* Tutorial Path Ids */
-	public static final int TUTORIAL_PROGRESS_ARROW = 0;
-	public static final int TUTORIAL_PROGRESS_WATCHING_LIST = 1;
-	public static final int TUTORIAL_PROGRESS_SEASON_SELECTOR = 2;
-	public static final int TUTORIAL_PROGRESS_WATCHED_SEASON = 3;
-	public static final int TUTORIAL_PROGRESS_EPISODES = 4;
-	
 	/* Instance */
 	private static VideoActivity INSTANCE;
 	
 	/* Managers */
 	private VideoManager videoManager;
-	private ServerManager serverManager;
 	
 	/* Element */
 	private VideoGroup videoGroup;
@@ -118,7 +110,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		super();
 		
 		this.videoManager = managers.getVideoManager();
-		this.serverManager = managers.getServerManager();
 		
 		this.videoItems = new ArrayList<>();
 		this.videoItemViews = new ArrayList<>();
@@ -147,8 +138,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		initializeViews();
 		
 		changeSeason(videoGroup.getSeasons().get(0));
-		
-		managers.getTutorialManager().executeActivityTutorial(this);
 	}
 	
 	@Override
@@ -177,8 +166,8 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				long position = data.getExtras().getLong(BUNDLE_KEY_VLC_EXTRA_POSITION);
 				long duration = data.getExtras().getLong(BUNDLE_KEY_VLC_EXTRA_DURATION);
 				
-				boolean extraPositionValid = !ViewHelper.DATEFORMAT_VIDEO_DURATION.format(new Date(position)).equals("23:59:59");
-				boolean extraDurationValid = !ViewHelper.DATEFORMAT_VIDEO_DURATION.format(new Date(duration)).equals("00:00:00");
+				boolean extraPositionValid = !DATEFORMAT_VIDEO_DURATION.format(new Date(position)).equals("23:59:59");
+				boolean extraDurationValid = !DATEFORMAT_VIDEO_DURATION.format(new Date(duration)).equals("00:00:00");
 				
 				if (!extraPositionValid || !extraDurationValid) {
 					Snackbar.make(coordinatorLayout, R.string.boxplay_error_video_activity_invalid_time, Snackbar.LENGTH_LONG).show();
@@ -266,7 +255,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		});
 		floatingActionButton.setImageResource(videoGroup.isWatching() ? R.drawable.icon_eye_close_96px : R.drawable.icon_eye_open_96px);
 		
-		viewHelper.downloadToImageView(videoImageView, videoGroup.getGroupImageUrl());
+		imageHelper.download(videoImageView, videoGroup.getGroupImageUrl()).validate();
 		
 		seasonCheckBox.setOnClickListener(new OnClickListener() {
 			@Override
@@ -327,7 +316,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			}
 			
 			if (imageUrl != null) {
-				viewHelper.downloadToImageView(videoImageView, imageUrl);
+				imageHelper.download(videoImageView, imageUrl).validate();
 			}
 			final String passImageUrl = imageUrl;
 			
@@ -464,7 +453,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		public ExpandableLayout expandableLayout;
 		public View relativeLayout;
 		public TextView episodeTextView, timeTextView, languageTextView;
-		public ImageView hostIconImageView;
 		public SeekBar progressSeekBar;
 		public Button playButton, downloadButton, watchButton, shareButton, shareUrlButton;
 		
@@ -506,7 +494,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			this.progressSeekBar = (SeekBar) view.findViewById(R.id.item_video_layout_seekbar_saved_progress);
 			this.timeTextView = (TextView) view.findViewById(R.id.item_video_layout_textview_saved_time);
 			this.languageTextView = (TextView) view.findViewById(R.id.item_video_layout_textview_language);
-			this.hostIconImageView = (ImageView) view.findViewById(R.id.item_video_layout_imageview_host_icon);
 			
 			/* Child */
 			this.playButton = (Button) view.findViewById(R.id.item_video_layout_item_button_play);
@@ -544,24 +531,9 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			languageTextView.setTag(this);
 			
 			expandableLayout.setExpanded(item.isExpanded(), false);
-			episodeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_title, viewHelper.enumToStringCacheTranslation(item.videoFile.getVideoType()), item.videoFile.getRawEpisodeValue()));
-			languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
+			episodeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_title, cacheHelper.translate(item.videoFile.getVideoType()), item.videoFile.getRawEpisodeValue()));
+			languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, cacheHelper.translate(item.videoFile.getLanguage())));
 			progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorCard), PorterDuff.Mode.MULTIPLY);
-			
-			boolean iconImageViewAvailable = false;
-			if (!serverManager.getServerHostings().isEmpty()) {
-				for (ServerHosting hosting : serverManager.getServerHostings()) {
-					if (video.getUrl() != null && video.getUrl().startsWith(hosting.getStartingStringUrl()) && hosting.getIconUrl() != null && video.isAvailable()) {
-						iconImageViewAvailable = true;
-						viewHelper.downloadToImageView(hostIconImageView, hosting.getIconUrl());
-						break;
-					}
-				}
-			}
-			
-			if (!iconImageViewAvailable) {
-				hostIconImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_cloud_off_white_24dp));
-			}
 			
 			updateVideoFileItemInformations(video);
 			
@@ -577,7 +549,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 				@Override
 				public void onClick(View view) {
 					// AndroidDownloader.askDownload(BoxPlayApplication.getBoxPlayApplication(), Uri.parse(video.getUrl()));
-					AdmAndroidDownloader.askDownload(boxPlayApplication, video.getUrl(), viewHelper.isAdmEnabled());
+					AdmAndroidDownloader.askDownload(boxPlayApplication, video.getUrl(), applicationHelper.isAdmEnabled());
 				}
 			});
 			
@@ -611,9 +583,9 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			
 			/* Movie */
 			if (videoGroup.isMovie()) {
-				episodeTextView.setText(getString(R.string.boxplay_store_video_activity_movie_title, viewHelper.enumToStringCacheTranslation(item.videoFile.getFileType()), viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
+				episodeTextView.setText(getString(R.string.boxplay_store_video_activity_movie_title, cacheHelper.translate(item.videoFile.getFileType()), cacheHelper.translate(item.videoFile.getLanguage())));
 				episodeTextView.setVisibility(View.GONE);
-				languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, viewHelper.enumToStringCacheTranslation(item.videoFile.getLanguage())));
+				languageTextView.setText(getString(R.string.boxplay_store_video_activity_episode_language, cacheHelper.translate(item.videoFile.getLanguage())));
 				
 				bindVideoItem.setExpanded(true);
 				expandableLayout.setExpanded(true, false);
@@ -683,7 +655,7 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			/* Not finished, but saved progress */
 			progressSeekBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
 			progressSeekBar.setProgress((int) ((video.getSavedTime() * 100) / video.getDuration()));
-			timeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_time, ViewHelper.DATEFORMAT_VIDEO_DURATION.format(new Date(video.getSavedTime())), ViewHelper.DATEFORMAT_VIDEO_DURATION.format(new Date(video.getDuration()))));
+			timeTextView.setText(getString(R.string.boxplay_store_video_activity_episode_time, DATEFORMAT_VIDEO_DURATION.format(new Date(video.getSavedTime())), DATEFORMAT_VIDEO_DURATION.format(new Date(video.getDuration()))));
 			
 			if (!disableSnackbarConfirm) {
 				if (video.getSavedTime() > video.getDuration() * 0.80) {
@@ -704,10 +676,10 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		 * The {@link #playButton} will only be able to change his state if VLC is installed.
 		 * 
 		 * @param enabled
-		 *            New state
+		 *            New state.
 		 */
 		private void setGlobalButtonEnabled(boolean enabled) {
-			playButton.setEnabled(viewHelper.isVlcInstalled() ? enabled : false);
+			playButton.setEnabled(applicationHelper.isVlcInstalled() ? enabled : false);
 			downloadButton.setEnabled(enabled);
 			watchButton.setEnabled(enabled);
 			shareButton.setEnabled(enabled);
@@ -727,10 +699,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 			}
 		}
 		
-		/**
-		 * 
-		 * @return
-		 */
 		public VideoItem getBindVideoItem() {
 			return bindVideoItem;
 		}
@@ -780,89 +748,6 @@ public class VideoActivity extends BaseBoxPlayActivty implements Tutorialable {
 		public void setExpanded(boolean expanded) {
 			this.expanded = expanded;
 		}
-	}
-	
-	@Override
-	public TapTargetSequence getTapTargetSequence() {
-		List<TapTarget> sequences = new ArrayList<>();
-		Display display = getWindowManager().getDefaultDisplay();
-		
-		Rect rectangle = new Rect(24, 24, 24, 24);
-		rectangle.offsetTo(display.getWidth() / 2, display.getHeight() / 2);
-		
-		sequences.add( //
-				TapTarget.forToolbarNavigationIcon(toolbar, getString(R.string.boxplay_tutorial_video_back_title), getString(R.string.boxplay_tutorial_video_back_description)) //
-						.id(TUTORIAL_PROGRESS_ARROW) //
-						.dimColor(android.R.color.black) // Background
-						.outerCircleColor(R.color.colorAccent) // Big circle
-						.targetCircleColor(R.color.colorPrimary) // Moving circle color (animation)
-						.textColor(android.R.color.black) //
-						.transparentTarget(true) //
-						.cancelable(false) //
-		); //
-		
-		sequences.add( //
-				TapTarget.forView(floatingActionButton, getString(R.string.boxplay_tutorial_video_watch_list_title), getString(R.string.boxplay_tutorial_video_watch_list_description)) //
-						.id(TUTORIAL_PROGRESS_WATCHING_LIST) //
-						.dimColor(android.R.color.black) //
-						.outerCircleColor(R.color.colorAccent) //
-						.targetCircleColor(R.color.colorPrimary) //
-						.textColor(android.R.color.black) //
-						.transparentTarget(true) //
-						.cancelable(false) //
-		); //
-		
-		sequences.add( //
-				TapTarget.forView(seasonSpinner, getString(R.string.boxplay_tutorial_video_season_selector_title), getString(R.string.boxplay_tutorial_video_season_selector_description)) //
-						.id(TUTORIAL_PROGRESS_SEASON_SELECTOR) //
-						.dimColor(android.R.color.black) //
-						.outerCircleColor(R.color.colorAccent) //
-						.targetCircleColor(R.color.colorPrimary) //
-						.textColor(android.R.color.black) //
-						.transparentTarget(true) //
-						.cancelable(false) //
-		); //
-		
-		sequences.add( //
-				TapTarget.forView(seasonCheckBox, getString(R.string.boxplay_tutorial_video_season_watched_title), getString(R.string.boxplay_tutorial_video_season_watched_description)) //
-						.id(TUTORIAL_PROGRESS_WATCHED_SEASON) //
-						.dimColor(android.R.color.black) //
-						.outerCircleColor(R.color.colorAccent) //
-						.targetCircleColor(R.color.colorPrimary) //
-						.textColor(android.R.color.black) //
-						.transparentTarget(true) //
-						.cancelable(false) //
-		); //
-		
-		sequences.add( //
-				TapTarget.forBounds(rectangle, getString(R.string.boxplay_tutorial_video_episodes_title), getString(R.string.boxplay_tutorial_video_episodes_description)) //
-						.id(TUTORIAL_PROGRESS_EPISODES) //
-						.dimColor(android.R.color.black) //
-						.outerCircleColor(R.color.colorAccent) //
-						.targetCircleColor(R.color.colorPrimary) //
-						.textColor(android.R.color.black) //
-						.transparentTarget(true) //
-						.cancelable(false) //
-		); //
-		
-		return new TapTargetSequence(this) //
-				.targets(sequences).listener(new TapTargetSequence.Listener() {
-					@Override
-					public void onSequenceFinish() {
-						managers.getTutorialManager().saveTutorialFinished(VideoActivity.this);
-					}
-					
-					@Override
-					public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-						;
-					}
-					
-					@Override
-					public void onSequenceCanceled(TapTarget lastTarget) {
-						; // Impossible
-					}
-					
-				});
 	}
 	
 	/**

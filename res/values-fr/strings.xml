@@ -49,13 +49,11 @@
     <string name="boxplay_navigation_version">BoxPlay 3</string>
     <string name="boxplay_navigation_author">par Enzo CACERES</string>
     <!--  -->
-    <string name="boxplay_user">-- user --</string>
+    <string name="boxplay_user">Utilisateur</string>
     <string name="boxplay_user_profile">Profil</string>
     <!--  -->
     <string name="boxplay_store">Magasin</string>
     <string name="boxplay_store_video">Video</string>
-    <string name="boxplay_store_music">Musique</string>
-    <string name="boxplay_store_files">Fichiers</string>
     <!--  -->
     <string name="boxplay_connect">Social</string>
     <string name="boxplay_connect_feed">Actualitées</string>
@@ -138,37 +136,6 @@
     <string name="boxplay_identification_response_unknown">Inconnu.</string>
 
     <!--  -->
-    <!-- Tutorial > BoxPlayActivity -->
-    <!--  -->
-
-    <string name="boxplay_tutorial_main_drawer_title">Tirroir</string>
-    <string name="boxplay_tutorial_main_drawer_description">Vous pourrez accéder aux autres pages depuis celui-ci!</string>
-    <string name="boxplay_tutorial_main_search_title">Recherche</string>
-    <string name="boxplay_tutorial_main_search_description">Relié à tous les éléments du magasin, vous serez capable de rechercher n\'importe quoi par son nom!</string>
-    <string name="boxplay_tutorial_main_options_title">Menu d\'Accés Rapide</string>
-    <string name="boxplay_tutorial_main_options_description">Contients des actions, comme pouvoir mettre à jour l\'application...</string>
-    <string name="boxplay_tutorial_main_swipe_title">Glissable</string>
-    <string name="boxplay_tutorial_main_swipe_description">Glisser de droite à gauche pour accéder à tous les fichiers!</string>
-    <string name="boxplay_tutorial_main_video_title">Magasin Video BoxPlay</string>
-    <string name="boxplay_tutorial_main_video_description">Contient toutes les vidéos dispo sur le magasin!</string>
-    <string name="boxplay_tutorial_main_music_title">Magasin Musique BoxPlay</string>
-    <string name="boxplay_tutorial_main_music_description">Contient toutes les musiques dispo sur le magasin!</string>
-
-    <!--  -->
-    <!-- Tutorial > VideoActivity -->
-    <!--  -->
-    <string name="boxplay_tutorial_video_back_title">Quitter ce menu</string>
-    <string name="boxplay_tutorial_video_back_description">Retourner à l\'application principale avec la flèche ou le bouton retour!</string>
-    <string name="boxplay_tutorial_video_watch_list_title">Ma Liste</string>
-    <string name="boxplay_tutorial_video_watch_list_description">Ajouter cette serie/film dans votre list pour pouvoir y accéder plus rapidement!</string>
-    <string name="boxplay_tutorial_video_season_selector_title">Selecteur de saison</string>
-    <string name="boxplay_tutorial_video_season_selector_description">Selectionner une saison avec ce selecteur!</string>
-    <string name="boxplay_tutorial_video_season_watched_title">Marquer comme vu</string>
-    <string name="boxplay_tutorial_video_season_watched_description">Marquer cette saison en tant que vu quand vous avez fini de voir tous les épisodes!</string>
-    <string name="boxplay_tutorial_video_episodes_title">Voir les épisodes</string>
-    <string name="boxplay_tutorial_video_episodes_description">Tous les episodes dispo sont dans cette liste, regardez s\'en un en ouvrant son menu déroulant!</string>
-
-    <!--  -->
     <!-- User > Profile -->
     <!--  -->
 
@@ -230,80 +197,6 @@
     <string name="boxplay_store_video_button_unwatch">DE-VOIR</string>
     <string name="boxplay_store_video_button_share">PARTAGER</string>
     <string name="boxplay_store_video_button_share_url">LIEN</string>
-
-    <!--  -->
-    <!-- Store > Music -->
-    <!--  -->
-
-    <string name="boxplay_store_music_music">Musique</string>
-    <!-- Translation -->
-    <string name="boxplay_store_music_author_type_author">Auteur</string>
-    <string name="boxplay_store_music_author_type_band">Groupe</string>
-    <string name="boxplay_store_music_type_african">Africain</string>
-    <string name="boxplay_store_music_type_asian">Asiatique</string>
-    <string name="boxplay_store_music_type_comedy">Comédie</string>
-    <string name="boxplay_store_music_type_country">Country</string>
-    <string name="boxplay_store_music_type_easy_listening">Facile d\'écoute</string>
-    <string name="boxplay_store_music_type_electronic">Electro</string>
-    <string name="boxplay_store_music_type_folk">Folk</string>
-    <string name="boxplay_store_music_type_hip_hop">Hip Hop</string>
-    <string name="boxplay_store_music_type_jazz">Jazz</string>
-    <string name="boxplay_store_music_type_latin">Latin</string>
-    <string name="boxplay_store_music_type_pop">Pop</string>
-    <string name="boxplay_store_music_type_rap">RAP</string>
-    <string name="boxplay_store_music_type_rock">Rock</string>
-    <string name="boxplay_store_music_type_soca">Soca</string>
-    <string name="boxplay_store_music_type_unknown">*inconnu*</string>
-    <string name="boxplay_store_music_category_your_list">Votre liste d\'écoute</string>
-    <string name="boxplay_store_music_category_recommended">Recommandé*</string>
-    <string name="boxplay_store_music_category_albums">Albums</string>
-    <string name="boxplay_store_music_category_random">Aléatoire</string>
-    <string name="boxplay_store_music_category_release">Sortie</string>
-    <!-- Strings -->
-    <string name="boxplay_store_music_fragment_error_no_genre_selected_title">Oups!</string>
-    <string name="boxplay_store_music_fragment_error_no_genre_selected_content">On dirait que vous n\'avez pas encore choisi un style de musique qui vous plait!</string>
-    <string name="boxplay_store_music_fragment_error_no_genre_selected_button_settings">PARAMÈTRES</string>
-    <string name="boxplay_store_music_fragment_error_no_genre_selected_button_selector">SELECTEUR</string>
-    <string name="boxplay_store_music_fragment_error_genre_selector_content">Changer vos préférences musicales</string>
-    <string name="boxplay_store_music_fragment_error_genre_selector_button_change">CHANGER</string>
-    <string name="boxplay_store_music_activity_album_title" formatted="false">%s (par %s)</string>
-    <string name="boxplay_store_music_activity_head_group_title_name">Nom</string>
-    <string name="boxplay_store_music_activity_head_group_title_type">Type</string>
-    <string name="boxplay_store_music_activity_head_group_title_downloadable">Téléchargeable?</string>
-    <string name="boxplay_store_music_activity_head_group_content_downloadable_yes">Oui</string>
-    <string name="boxplay_store_music_activity_head_group_content_downloadable_no">Non</string>
-    <string name="boxplay_store_music_activity_head_album_title_album">Album</string>
-    <string name="boxplay_store_music_activity_head_album_title_artist">Artiste%s</string>
-    <string name="boxplay_store_music_activity_head_album_title_release">Dernière sortie</string>
-    <string name="boxplay_store_music_activity_neck_album_genre_title">Genre%s</string>
-    <string name="boxplay_store_music_activity_body_album_song_title">Piste%s</string>
-    <string name="boxplay_store_music_activity_feet_album_title">Album%s</string>
-    <string name="boxplay_store_music_activity_feet_album_other_title">Autre Album%s</string>
-    <string name="boxplay_store_music_activity_body_song_item_title" formatted="false">%s - %s</string>
-    <string name="boxplay_store_music_activity_body_song_item_time_hour">h</string>
-    <string name="boxplay_store_music_activity_body_song_item_time_minute">m</string>
-    <string name="boxplay_store_music_activity_body_song_item_time_seconde">s</string>
-    <string name="boxplay_store_music_activity_body_song_badge">n°%s</string>
-    <string name="boxplay_store_music_card_info" formatted="false">%s album%s, %s piste%s</string>
-    <string name="boxplay_store_music_menu_popup_action_play">Lire</string>
-    <string name="boxplay_store_music_menu_popup_action_play_after">Lire après</string>
-    <string name="boxplay_store_music_menu_popup_action_add_to_queue">Ajouter à la liste</string>
-    <string name="boxplay_store_music_menu_popup_action_download">Télécharger</string>
-    <!--  -->
-    <!-- Music Player -->
-    <!--  -->
-    <string name="boxplay_player_music_button_play">Lire</string>
-    <string name="boxplay_player_music_button_pause">Pause</string>
-    <string name="boxplay_player_music_button_back">Retour</string>
-    <string name="boxplay_player_music_button_next">Suivant</string>
-    <string name="boxplay_player_music_name">Lecteur de musique</string>
-    <string name="boxplay_player_music_track_description" formatted="false">[ %s ] par %s</string>
-
-    <!--  -->
-    <!-- Store > Files -->
-    <!--  -->
-
-    <string name="boxplay_store_files_files">Fichiers</string>
 
     <!--  -->
     <!-- Culture > Search n' Go -->
@@ -378,6 +271,7 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_type">Type</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_quality">Qualité</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_version">Version</string>
+    <string name="boxplay_culture_searchngo_search_result_data_type_rank">Rang</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_traduction_team">Équipe de Traduction</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_genders">Genre(s)</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_last_chapter">Dernier chapitre</string>
@@ -425,7 +319,6 @@
     <string name="boxplay_premium_adult_status_error_file_not_found">Fichier non disponible.</string>
     <string name="boxplay_premium_adult_status_error_error_occured">Une erreur est apparu:\n\n%s\n\nOuvrer les logs pour plus d\'information.</string>
     <string name="boxplay_premium_adult_status_error_extraction_failed">L\'extraction a échoué.</string>
-    <string name="boxplay_premium_adult_status_error_vlc_not_installed">VLC n\'a pas été trouvé.</string>
 
     <!--  -->
     <!-- My Lists -->
@@ -449,12 +342,6 @@
 
     <!--  -->
     <!-- Settings -->
-    <!--  -->
-    <string name="boxplay_other_settings_store_music_category_title">Magasin > Musique</string>
-    <!--  -->
-    <string name="boxplay_other_settings_store_music_pref_my_genre_title">Mes préférence musicales</string>
-    <string name="boxplay_other_settings_store_music_pref_my_genre_summary_empty">*vide*</string>
-    <string name="boxplay_other_settings_store_music_pref_my_genre_dialog_ok">TERMINÉ</string>
     <!--  -->
     <string name="boxplay_other_settings_downloads_category_title">Téléchargements</string>
     <!--  -->
@@ -486,10 +373,6 @@
     <string name="boxplay_other_settings_boxplay_pref_force_factory_title">Forcer le traitement des données</string>
     <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_enabled">Les données seront re-travaillées de force quand vous rafraichirez</string>
     <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_disabled">Les données seront re-travaillées seulement si du nouveau contenu est disponible</string>
-    <!--  -->
-    <string name="boxplay_other_settings_boxplay_pref_reset_tutorials_title">Réinitialiser les tutoriels</string>
-    <string name="boxplay_other_settings_boxplay_pref_reset_tutorials_summary_done">Réinitialisés</string>
-    <string name="boxplay_other_settings_boxplay_pref_reset_tutorials_summary_error">Error: %s</string>
     <!--  -->
     <string name="boxplay_other_settings_premium_category_title">Plus</string>
     <!--  -->
@@ -547,8 +430,7 @@
     <string name="boxplay_other_about_about_team_format_type_creative_assistant">Assistant créatif</string>
     <string name="boxplay_other_about_about_team_format_type_eclipse">Eclipse fix</string>
     <string name="boxplay_other_about_about_team_format_separator">,%s</string>
-    <!--  -->
-    <string name="boxplay_other_about_hosting">Hébergement</string>
+
     <!--  -->
     <string name="boxplay_other_about_changelog">Historique</string>
     <!-- Libraries -->
@@ -568,6 +450,7 @@
     <string name="boxplay_error_video_activity_vlc_error">Erreur. VLC à renvoyé une erreur.</string>
     <string name="boxplay_error_video_file_forget">Erreur. Le dernier fichier ouvert a été oublié.</string>
     <string name="boxplay_error_config_failed">Erreur. La lecture/écriture du fichier a échoué.</string>
+    <string name="boxplay_error_vlc_not_installed">VLC n\'a pas été trouvé.</string>
 
     <!-- Error Row -->
     <string name="boxplay_error_row_default_title">Oups!</string>

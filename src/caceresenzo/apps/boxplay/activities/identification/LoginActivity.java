@@ -205,7 +205,7 @@ public class LoginActivity extends BaseBoxPlayActivty {
 		if (!NetworkUtils.isConnected(this)) {
 			error = getString(R.string.boxplay_identification_error_no_internet);
 		} else {
-			error = viewHelper.enumToStringCacheTranslation(sourceRequest.getStatus());
+			error = cacheHelper.translate(sourceRequest.getStatus());
 		}
 		
 		boxPlayApplication.toast(error).show();

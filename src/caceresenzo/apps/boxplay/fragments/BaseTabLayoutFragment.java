@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.BoxPlayActivity;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 
 /**
  * Base class for TabLayout-based fragment
@@ -22,13 +21,9 @@ import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	
 	/* Shortcuts Constants */
-	/**
-	 * See {@link TabLayout#MODE_FIXED}
-	 */
+	/** @see {@link TabLayout#MODE_FIXED} */
 	public static final int MODE_FIXED = TabLayout.MODE_FIXED;
-	/**
-	 * See {@link TabLayout#MODE_SCROLLABLE}
-	 */
+	/** @see {@link TabLayout#MODE_SCROLLABLE} */
 	public static final int MODE_SCROLLABLE = TabLayout.MODE_SCROLLABLE;
 	
 	/* Constants */
@@ -48,9 +43,10 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	/* Variables */
 	protected int onOpenPageId = 0, lastOpenPosition = 0;
 	
-	/* Create new instance of BaseTabLayoutFragment */
+	/* Constructor */
 	public BaseTabLayoutFragment() {
 		super();
+		
 		INSTANCE = this;
 	}
 	
@@ -83,7 +79,7 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	}
 	
 	/**
-	 * Private, called if the {@link ViewPager} is null when {@link #onActivityCreated(Bundle)} is called
+	 * Private, called if the {@link ViewPager} is null when {@link #onActivityCreated(Bundle)} is called.
 	 */
 	private void initializeViewPager() {
 		adapter = new BaseViewPagerAdapter(getChildFragmentManager());
@@ -118,61 +114,64 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	}
 	
 	/**
-	 * Need to be overrided!
-	 * 
-	 * Now use the addFragment(Fragment, String) method to add pages
+	 * Need to be overrided!<br>
+	 * Then use the {@link #addFragment(Fragment, int)} or {@link #addFragment(Fragment, String)} method to add pages.
 	 */
 	protected abstract void initialize();
 	
 	/**
-	 * Override if you you need to have a destroyer
+	 * Override if you you need to have a destroyer.
 	 */
 	protected void destroy() {
 		;
 	}
 	
 	/**
-	 * Delegate function of adapter.addFragment(Fragment, String);
+	 * Delegate function of {@link BaseViewPagerAdapter#addFragment(Fragment, String)}.
 	 * 
 	 * @param fragment
-	 *            a fragment instance
+	 *            A fragment instance.
 	 * @param title
-	 *            Corresponding title
+	 *            Corresponding title.
 	 */
 	protected void addFragment(Fragment fragment, String title) {
 		adapter.addFragment(fragment, title);
 	}
 	
 	/**
-	 * Delegate function of adapter.addFragment(Fragment, Context.getString(int));
+	 * Same as {@link #addFragment(Fragment, String)}.
 	 * 
 	 * @param fragment
-	 *            a fragment instance
-	 * @param titleRessource
-	 *            Corresponding title string ressource id
+	 *            A fragment instance.
+	 * @param titleRessourceId
+	 *            Corresponding title string ressource id.
+	 * @see #addFragment(Fragment, String)
 	 */
-	protected void addFragment(Fragment fragment, @StringRes int titleRessource) {
-		adapter.addFragment(fragment, getString(titleRessource));
+	protected void addFragment(Fragment fragment, @StringRes int titleRessourceId) {
+		addFragment(fragment, getString(titleRessourceId));
 	}
 	
 	/**
-	 * Change TabLayout behavior
-	 * 
-	 * Possible: TabLayout.MODE_FIXED or TabLayout.MODE_SCROLLABLE
+	 * Change TabLayout behavior.<br>
+	 * Possible values:
+	 * <ul>
+	 * <li>{@link #MODE_FIXED}</li>
+	 * <li>{@link #MODE_SCROLLABLE}</li>
+	 * </ul>
 	 * 
 	 * @param mode
-	 *            New bahavior
+	 *            New bahavior.
 	 */
 	protected void setTabMode(int mode) {
 		tabLayout.setTabMode(mode);
 	}
 	
 	/**
-	 * Quickly change page
+	 * Quickly change page.
 	 * 
 	 * @param pageId
-	 *            Open a page by its index
-	 * @return Fragment instance
+	 *            Open a page by its index.
+	 * @return Itself.
 	 */
 	public BaseTabLayoutFragment withPage(int pageId) {
 		if (viewPager == null) {
@@ -187,16 +186,17 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	}
 	
 	/**
-	 * Update drawer selection by {@link #lastOpenPosition}
+	 * Update drawer selection by {@link #lastOpenPosition}.
 	 */
 	private void updateDrawerSelection() {
 		updateDrawerSelection(getMenuItemIdByPageId(lastOpenPosition));
 	}
 	
 	/**
-	 * Update drawer selection by {@link MenuItem}'s id
+	 * Update drawer selection by {@link MenuItem}'s id.
 	 * 
 	 * @param menuItemId
+	 *            Target menu id.
 	 */
 	private void updateDrawerSelection(int menuItemId) {
 		if (BoxPlayActivity.getBoxPlayActivity() != null) {
@@ -210,36 +210,35 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	 * @param menuItem
 	 */
 	private void updateDrawerSelection(MenuItem menuItem) {
-		BoxPlayApplication.getViewHelper().unselectAllMenu();
+		menuHelper.unselectAllMenu();
 		menuItem.setChecked(true);
 	}
 	
 	/**
-	 * Get actual page's {@link Fragment}
+	 * Get actual page's {@link Fragment}.
 	 * 
-	 * @return The actual displayed {@link Fragment}
+	 * @return The actual displayed {@link Fragment}.
 	 */
 	public Fragment getActualFragment() {
 		return adapter.getItem(lastOpenPosition);
 	}
 	
 	/**
-	 * Get the last open {@link Fragment} id
+	 * Get the last open {@link Fragment} id.
 	 * 
-	 * @return Last open position
+	 * @return Last open position.
 	 */
 	public int getLastOpenPosition() {
 		return lastOpenPosition;
 	}
 	
 	/**
-	 * Get {@link MenuItem}'s id by page position
-	 * 
-	 * Used to select item in the drawer
+	 * Get {@link MenuItem}'s id by page position.<br>
+	 * Used to select item in the drawer.
 	 * 
 	 * @param pageId
-	 *            Actual oppened pageId/(supposed) index
-	 * @return
+	 *            Actual oppened pageId/(supposed) index.
+	 * @return The menu item id corresponding to the page id.
 	 */
 	protected abstract int getMenuItemIdByPageId(int pageId);
 	

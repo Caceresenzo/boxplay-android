@@ -44,7 +44,7 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 	protected void task() {
 		Log.i(TAG, "Clearing cache, size=" + ProviderWeakCache.computeMemorySizeAndDestroy());
 		
-		List<MyListable> myListables = subscriptionMyList.reload(myListManager.getSqliteBridge()).fetch();
+		List<MyListable> myListables = subscriptionMyList.reload().fetch();
 		
 		for (int i = 0; i < myListables.size(); i++) {
 			final SearchAndGoResult searchAndGoResult = (SearchAndGoResult) myListables.get(i);

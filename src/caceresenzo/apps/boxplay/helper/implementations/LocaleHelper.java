@@ -1,4 +1,4 @@
-package caceresenzo.apps.boxplay.helper;
+package caceresenzo.apps.boxplay.helper.implementations;
 
 import java.util.Locale;
 
@@ -10,12 +10,26 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import caceresenzo.apps.boxplay.R;
+import caceresenzo.apps.boxplay.application.BoxPlayApplication;
+import caceresenzo.apps.boxplay.helper.AbstractHelper;
+import caceresenzo.apps.boxplay.helper.HelperManager;
 
 /**
  * Manages setting of the app's locale.
  */
-public class LocaleHelper {
+public class LocaleHelper extends AbstractHelper {
 	
+	/* Constructor */
+	public LocaleHelper(BoxPlayApplication boxPlayApplication) {
+		super(boxPlayApplication);
+	}
+	
+	public void initialize(HelperManager helperManager) {
+		super.initialize(helperManager);
+		
+		setLocale();
+	}
+
 	public static Context onAttach(Context context) {
 		String locale = getPersistedLocale(context);
 		return setLocale(context, locale);
@@ -77,6 +91,41 @@ public class LocaleHelper {
 		resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 		
 		return context;
+	}
+	
+	public void setLocale() {
+		setLocale(false);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void setLocale(boolean autoReCache) {
+		final Resources resources = boxPlayApplication.getResources();
+		final Configuration configuration = resources.getConfiguration();
+		final Locale locale = getLocale();
+		if (!configuration.locale.equals(locale)) {
+			configuration.setLocale(locale);
+			resources.updateConfiguration(configuration, null);
+			
+			try {
+				Configuration config = boxPlayApplication.getBaseContext().getResources().getConfiguration();
+				config.setLocale(locale);
+				boxPlayApplication.createConfigurationContext(config);
+			} catch (Exception exception) {
+				; // Unavailable in old API
+			}
+			
+			if (autoReCache) {
+				helperManager.getCacheHelper().recache();
+			}
+		}
+	}
+	
+	public String getLocaleString() {
+		return boxPlayApplication.getPreferences().getString(getString(R.string.boxplay_other_settings_application_pref_language_key), getString(R.string.boxplay_other_settings_application_pref_language_default_value)).toLowerCase();
+	}
+	
+	public Locale getLocale() {
+		return new Locale(getLocaleString());
 	}
 	
 }

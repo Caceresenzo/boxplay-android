@@ -10,32 +10,37 @@ import android.support.v4.view.ViewPager;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 
 /**
- * Simple PageViewerAdapter for Fragment content
+ * Simple PageViewerAdapter for Fragment content.
  * 
  * @author Enzo CACERES
  */
 public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	
-	private final List<Fragment> fragments = new ArrayList<>();
-	private final List<String> titles = new ArrayList<>();
+	/* Variables */
+	private final List<Fragment> fragments;
+	private final List<String> titles;
+	private boolean clearing;
 	
-	private boolean clearing = false;
-	
+	/* Constructor */
 	/**
-	 * Constructor, create a new instance from {@link BoxPlayApplication}'s default {@link FragmentManager}
+	 * Create a new instance from {@link BoxPlayApplication}'s default {@link FragmentManager}.
 	 */
 	public BaseViewPagerAdapter(BaseBoxPlayFragment boxPlayFragment) {
-		super(boxPlayFragment.getChildFragmentManager());
+		this(boxPlayFragment.getChildFragmentManager());
 	}
 	
+	/* Constructor */
 	/**
-	 * Constructor, create a new instance from a specific {@link FragmentManager}
+	 * Create a new instance from a specific {@link FragmentManager}.
 	 * 
 	 * @param manager
-	 *            Specific {@link FragmentManager}
+	 *            Specific {@link FragmentManager}.
 	 */
 	public BaseViewPagerAdapter(FragmentManager manager) {
 		super(manager);
+		
+		fragments = new ArrayList<>();
+		titles = new ArrayList<>();
 	}
 	
 	@Override
@@ -58,22 +63,22 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	}
 	
 	/**
-	 * Add a fragment to the {@link ViewPager}
+	 * Add a fragment to the {@link ViewPager}.
 	 * 
 	 * @param fragment
-	 *            New fragment
+	 *            New fragment.
 	 */
 	public void addFragment(Fragment fragment) {
 		addFragment(fragment, "");
 	}
 	
 	/**
-	 * Add a fragment to the {@link ViewPager}
+	 * Add a fragment to the {@link ViewPager}.
 	 * 
 	 * @param fragment
-	 *            New fragment
+	 *            New fragment.
 	 * @param titleStringRessourceId
-	 *            New title from {@link R.string}
+	 *            New title from {@link R.string}.
 	 */
 	public void addFragment(Fragment fragment, int titleStringRessourceId) {
 		fragments.add(fragment);
@@ -81,18 +86,26 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	}
 	
 	/**
-	 * Add a fragment to the {@link ViewPager}
+	 * Add a fragment to the {@link ViewPager}.
 	 * 
 	 * @param fragment
-	 *            New fragment
+	 *            New fragment.
 	 * @param title
-	 *            New title
+	 *            Fragment's title.
 	 */
 	public void addFragment(Fragment fragment, String title) {
 		fragments.add(fragment);
 		titles.add(title);
 	}
 	
+	/**
+	 * Replace a fragment by another fragment.
+	 * 
+	 * @param index
+	 *            Old fragment index.
+	 * @param newFragment
+	 *            New fragment to replace the old one.
+	 */
 	public void updateFragment(int index, Fragment newFragment) {
 		if (newFragment != null && (index >= 0 && index <= fragments.size())) {
 			fragments.set(index, newFragment);
@@ -105,10 +118,10 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	}
 	
 	/**
-	 * Remove all fragment of the {@link ViewPager}
+	 * Remove all fragment of the {@link ViewPager}.
 	 * 
 	 * @param viewPager
-	 *            Parent {@link ViewPager} used with this {@link BaseViewPagerAdapter}
+	 *            Parent {@link ViewPager} used with this {@link BaseViewPagerAdapter}.
 	 */
 	public void clearFragments(ViewPager viewPager) {
 		clearing = true;

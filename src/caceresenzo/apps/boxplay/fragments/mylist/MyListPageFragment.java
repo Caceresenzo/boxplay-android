@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +17,7 @@ import android.widget.TextView;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.SearchAndGoDetailActivity;
 import caceresenzo.apps.boxplay.activities.VideoActivity;
-import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
-import caceresenzo.apps.boxplay.helper.ViewHelper;
-import caceresenzo.apps.boxplay.managers.MyListManager;
 import caceresenzo.apps.boxplay.managers.MyListManager;
 import caceresenzo.apps.boxplay.managers.MyListManager.MyList;
 import caceresenzo.libs.boxplay.culture.searchngo.data.models.SimpleData;
@@ -30,7 +26,6 @@ import caceresenzo.libs.boxplay.models.store.video.VideoGroup;
 import caceresenzo.libs.boxplay.mylist.MyListable;
 import caceresenzo.libs.string.StringUtils;
 
-@SuppressWarnings("unused")
 public abstract class MyListPageFragment extends BaseBoxPlayFragment implements MyListManager.FetchCallback {
 	
 	/* Managers */
@@ -50,7 +45,7 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 	public MyListPageFragment() {
 		super();
 		
-		this.myListManager = BoxPlayApplication.getManagers().getMyListManager();
+		this.myListManager = managers.getMyListManager();
 		
 		this.myListItems = new ArrayList<>();
 	}
@@ -182,7 +177,7 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 			final VideoGroup group = item.getVideoGroup();
 			
 			titleTextView.setText(group.getTitle());
-			viewHelper.downloadToImageView(thumbnailImageView, group.getGroupImageUrl());
+			imageHelper.download(thumbnailImageView, group.getGroupImageUrl()).validate();
 			
 			view.setOnClickListener(new OnClickListener() {
 				@Override
@@ -226,7 +221,8 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 			final SearchAndGoResult searchAndGoResult = item.getSearchAndGoResult();
 			
 			titleTextView.setText(searchAndGoResult.getName());
-			viewHelper.downloadToImageView(thumbnailImageView, searchAndGoResult.getImageUrl(), (Map<String, Object>) searchAndGoResult.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT));
+
+			imageHelper.download(thumbnailImageView, searchAndGoResult.getImageUrl()).headers((Map<String, Object>) searchAndGoResult.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT)).validate();
 			
 			view.setOnClickListener(new OnClickListener() {
 				@Override
