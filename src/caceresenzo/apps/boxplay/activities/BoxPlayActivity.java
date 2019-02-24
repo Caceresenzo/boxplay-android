@@ -21,9 +21,8 @@ import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.application.Constants;
-import caceresenzo.apps.boxplay.fragments.BaseTabLayoutFragment;
+import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.fragments.culture.CultureFragment;
-import caceresenzo.apps.boxplay.fragments.culture.searchngo.PageCultureSearchAndGoFragment;
 import caceresenzo.apps.boxplay.fragments.mylist.MyListFragment;
 import caceresenzo.apps.boxplay.fragments.other.SettingsFragment;
 import caceresenzo.apps.boxplay.fragments.other.about.AboutFragment;
@@ -38,7 +37,7 @@ import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 
 /**
- * Main BoxPlay class
+ * Main BoxPlay Activity class.
  * 
  * @author Enzo CACERES
  */
@@ -49,17 +48,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	
 	/* Bundle Keys */
 	public static final String BUNDLE_KEY_LAST_FRAGMENT_CLASS = "last_fragment_class";
-	public static final String BUNDLE_KEY_LAST_FRAGMENT_TAB_ID = "last_fragment_tab_id";
 	public static final String BUNDLE_KEY_LAST_DRAWER_SELECTED_ITEM_ID = "last_drawer_selected_item_id";
-	public static final String BUNDLE_KEY_EXTRA_FRAGMENT_CULTURE_SEARCHANDGO_LAST_QUERY = "extra_fragment_culture_searchandgo_last_query";
-	
-	/* Tutorial Path Ids */
-	public static final int TUTORIAL_PROGRESS_DRAWER = 0;
-	public static final int TUTORIAL_PROGRESS_SEARCH = 1;
-	public static final int TUTORIAL_PROGRESS_MENU = 2;
-	public static final int TUTORIAL_PROGRESS_SWIPE = 3;
-	public static final int TUTORIAL_PROGRESS_VIDEO = 4;
-	public static final int TUTORIAL_PROGRESS_MUSIC = 5;
 	
 	/* Instance */
 	private static BoxPlayActivity INSTANCE;
@@ -72,22 +61,21 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	private Menu optionsMenu;
 	
 	/* Variables */
-	private String lastOpenFragment, extraFragmentCultureSearchAndGoLastQuery;
-	private int lastOpenTab, lastDrawerSelectedItemId;
+	private Bundle savedInstanceState;
+	private String lastOpenFragment;
+	private int lastDrawerSelectedItemId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); /* Dynamic NavigationView */
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_boxplay);
 		INSTANCE = this;
 		
 		initializeViews();
 		
-		if (savedInstanceState != null) {
+		if ((this.savedInstanceState = savedInstanceState) != null) {
 			lastOpenFragment = savedInstanceState.getString(BUNDLE_KEY_LAST_FRAGMENT_CLASS);
-			lastOpenTab = savedInstanceState.getInt(BUNDLE_KEY_LAST_FRAGMENT_TAB_ID, NO_VALUE);
 			lastDrawerSelectedItemId = savedInstanceState.getInt(BUNDLE_KEY_LAST_DRAWER_SELECTED_ITEM_ID, NO_VALUE);
-			extraFragmentCultureSearchAndGoLastQuery = savedInstanceState.getString(BUNDLE_KEY_EXTRA_FRAGMENT_CULTURE_SEARCHANDGO_LAST_QUERY);
 			
 			initializeRestoration();
 		}
@@ -119,23 +107,6 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 							}
 						}, 200);
 					}
-					//
-					else if (FRAGMENT_TO_OPEN instanceof CultureFragment) {
-						final CultureFragment cultureFragment = (CultureFragment) FRAGMENT_TO_OPEN;
-						
-						if (CultureFragment.PAGE_SEARCHANDGO == lastOpenTab && extraFragmentCultureSearchAndGoLastQuery != null) {
-							handler.postDelayed(new Runnable() {
-								@Override
-								public void run() {
-									if (cultureFragment.getActualFragment() instanceof PageCultureSearchAndGoFragment) {
-										PageCultureSearchAndGoFragment searchAndGoFragment = (PageCultureSearchAndGoFragment) cultureFragment.getActualFragment();
-										
-										searchAndGoFragment.applyQuery(extraFragmentCultureSearchAndGoLastQuery);
-									}
-								}
-							}, 200);
-						}
-					}
 					
 					showFragment(FRAGMENT_TO_OPEN);
 					
@@ -145,6 +116,19 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 						updateDrawerSelection(getMenuItemById(MENUITEM_ID_TO_SELECT));
 						
 						MENUITEM_ID_TO_SELECT = NO_VALUE;
+					}
+				}
+				
+				if (savedInstanceState != null) {
+					final Fragment lastFragment = viewHelper.getLastFragment();
+					
+					if (lastFragment instanceof BaseBoxPlayFragment) {
+						handler.postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								((BaseBoxPlayFragment) lastFragment).restoreInstanceState(savedInstanceState);
+							}
+						}, 200);
 					}
 				}
 			}
@@ -186,22 +170,14 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		super.onSaveInstanceState(outState);
 		
 		Fragment lastFragment = viewHelper.getLastFragment();
+		
+		if (lastFragment instanceof BaseBoxPlayFragment) {
+			((BaseBoxPlayFragment) lastFragment).saveInstanceState(outState);
+		}
+		
 		if (lastFragment != null) {
 			outState.putString(BUNDLE_KEY_LAST_FRAGMENT_CLASS, lastFragment.getClass().getCanonicalName());
-			
-			if (lastFragment instanceof BaseTabLayoutFragment) {
-				outState.putInt(BUNDLE_KEY_LAST_FRAGMENT_TAB_ID, ((BaseTabLayoutFragment) lastFragment).getLastOpenPosition());
-			}
-			
 			outState.putInt(BUNDLE_KEY_LAST_DRAWER_SELECTED_ITEM_ID, viewHelper.getLastFragmentMenuItemId());
-			
-			if (lastFragment instanceof CultureFragment) {
-				CultureFragment cultureFragment = (CultureFragment) lastFragment;
-				
-				if (cultureFragment.getActualFragment() instanceof PageCultureSearchAndGoFragment) {
-					outState.putString(BUNDLE_KEY_EXTRA_FRAGMENT_CULTURE_SEARCHANDGO_LAST_QUERY, ((PageCultureSearchAndGoFragment) cultureFragment.getActualFragment()).getActualQuery());
-				}
-			}
 		}
 	}
 	
@@ -231,9 +207,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		}
 	}
 	
-	/**
-	 * Function to initialize views
-	 */
+	/** Function to initialize views. */
 	private void initializeViews() {
 		toolbar = (Toolbar) findViewById(R.id.activity_boxplay_toolbar_bar);
 		setSupportActionBar(toolbar);
@@ -251,9 +225,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_boxplay_coordinatorlayout_container);
 	}
 	
-	/**
-	 * Function to help restoring activity
-	 */
+	/** Function to help restoring activity. */
 	private void initializeRestoration() {
 		if (lastOpenFragment == null) {
 			return;
@@ -261,22 +233,12 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		
 		try {
 			FRAGMENT_TO_OPEN = (Fragment) Class.forName(lastOpenFragment).newInstance();
-			
-			if (FRAGMENT_TO_OPEN instanceof BaseTabLayoutFragment && lastOpenTab != NO_VALUE) {
-				((BaseTabLayoutFragment) FRAGMENT_TO_OPEN).withPage(lastOpenTab);
-			}
 		} catch (Exception exception) {
 			;
 		}
 		
 		if (lastDrawerSelectedItemId != NO_VALUE) {
 			MENUITEM_ID_TO_SELECT = lastDrawerSelectedItemId;
-		}
-		
-		if (extraFragmentCultureSearchAndGoLastQuery != null) {
-			if (extraFragmentCultureSearchAndGoLastQuery == " " || extraFragmentCultureSearchAndGoLastQuery.isEmpty()) {
-				extraFragmentCultureSearchAndGoLastQuery = null;
-			}
 		}
 	}
 	
@@ -313,9 +275,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		// "https://www.jetanime.co/assets/imgs/death-march-kara-hajimaru-isekai-kyousoukyoku.jpg")); //
 	}
 	
-	/**
-	 * Used to show the menu
-	 */
+	/** Used to show the menu. */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (menu instanceof MenuBuilder) {
@@ -332,9 +292,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		return true;
 	}
 	
-	/**
-	 * Function call when someone clicked on main menu item
-	 */
+	/** Function call when someone clicked on main menu item. */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -375,13 +333,12 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	}
 	
 	/**
-	 * Called when someone press the back button
-	 * 
+	 * Called when someone press the back button.<br>
 	 * Added a custom behavior:
-	 * 
-	 * If someone has the option to open/collapse the drawer menu with the back button, application will never stop
-	 * 
-	 * If someone don't have this option, and the drawer is already close, the application will quit
+	 * <ul>
+	 * <li>If someone has the option to open/collapse the drawer menu with the back button, application will never stop.</li>
+	 * <li>If someone don't have this option, and the drawer is already close, the application will quit.</li>
+	 * </ul>
 	 */
 	@Override
 	public void onBackPressed() {
@@ -397,10 +354,10 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	}
 	
 	/**
-	 * Force a new selected item for the drawer
+	 * Force a new selected item for the drawer.
 	 * 
 	 * @param id
-	 *            Correspond to the id of the menu, if don't exists, nothing will append
+	 *            Correspond to the id of the menu, if don't exists, nothing will append.
 	 */
 	public void forceFragmentPath(int id) {
 		MenuItem targetItem = getMenuItemById(id);
@@ -411,11 +368,11 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	}
 	
 	/**
-	 * Get a MenuItem from the Drawer by its id
+	 * Get a MenuItem from the Drawer by its id.
 	 * 
 	 * @param id
-	 *            Target id
-	 * @return Corresponding MenuItem, null if not found
+	 *            Target id.
+	 * @return Corresponding MenuItem, null if not found.
 	 */
 	public MenuItem getMenuItemById(int id) {
 		return navigationView.getMenu().findItem(id);
@@ -438,7 +395,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	}
 	
 	/**
-	 * Drawer function, called when a item has been clicked
+	 * Drawer function, called when a item has been clicked.
 	 */
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item) {
@@ -628,10 +585,10 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 	}
 	
 	/**
-	 * Function used to fill the main {@link FrameLayout} of the application with a fragment instance
+	 * Function used to fill the main {@link FrameLayout} of the application with a fragment instance.
 	 * 
 	 * @param fragment
-	 *            The new fragment
+	 *            The new fragment.
 	 */
 	public void showFragment(Fragment fragment) {
 		if (fragment == null) {
@@ -673,9 +630,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		return optionsMenu;
 	}
 	
-	/**
-	 * Get the activity instance
-	 */
+	/** @return Activity actual instance. */
 	public static BoxPlayActivity getBoxPlayActivity() {
 		return (BoxPlayActivity) INSTANCE;
 	}

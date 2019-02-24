@@ -55,6 +55,9 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 	/* Constants */
 	public static final int MAX_CONTENT_ITEM_DISPLAYABLE = 70;
 	
+	/* Bundle Keys */
+	public static final String BUNDLE_KEY_EXTRA_FRAGMENT_CULTURE_SEARCHANDGO_LAST_QUERY = "extra_fragment_culture_searchandgo_last_query";
+	
 	/* Instance */
 	private static PageCultureSearchAndGoFragment INSTANCE;
 	
@@ -324,6 +327,22 @@ public class PageCultureSearchAndGoFragment extends BaseBoxPlayFragment {
 		}
 		
 		return view;
+	}
+	
+	@Override
+	public void saveInstanceState(Bundle outState) {
+		super.saveInstanceState(outState);
+
+		outState.putString(BUNDLE_KEY_EXTRA_FRAGMENT_CULTURE_SEARCHANDGO_LAST_QUERY, getActualQuery());
+	}
+	
+	@Override
+	public void restoreInstanceState(Bundle savedInstanceState) {
+		super.restoreInstanceState(savedInstanceState);
+		
+		String extraFragmentCultureSearchAndGoLastQuery = savedInstanceState.getString(BUNDLE_KEY_EXTRA_FRAGMENT_CULTURE_SEARCHANDGO_LAST_QUERY);
+		
+		applyQuery(extraFragmentCultureSearchAndGoLastQuery);
 	}
 	
 	@Override

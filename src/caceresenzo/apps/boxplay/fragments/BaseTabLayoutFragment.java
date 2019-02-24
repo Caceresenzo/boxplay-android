@@ -29,6 +29,9 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 	/* Constants */
 	public static final int OFFSCREEN_PAGE_LIMIT = 10;
 	
+	/* Bundle Keys */
+	public static final String BUNDLE_KEY_LAST_OPENED_TAB_ID = "last_opened_tab_id";
+	
 	/* Instance */
 	public static BaseTabLayoutFragment INSTANCE;
 	
@@ -68,6 +71,37 @@ public abstract class BaseTabLayoutFragment extends BaseBoxPlayFragment {
 		
 		if (viewPager != null) {
 			viewPager.setCurrentItem(onOpenPageId, true);
+		}
+	}
+	
+	@Override
+	public void saveInstanceState(Bundle outState) {
+		super.saveInstanceState(outState);
+		
+		outState.putInt(BUNDLE_KEY_LAST_OPENED_TAB_ID, getLastOpenPosition());
+		
+		/* Event propagation */
+		for (Fragment fragment : adapter.getFragments()) {
+			if (fragment instanceof BaseBoxPlayFragment) {
+				((BaseBoxPlayFragment) fragment).saveInstanceState(outState);
+			}
+		}
+	}
+	
+	@Override
+	public void restoreInstanceState(Bundle savedInstanceState) {
+		super.restoreInstanceState(savedInstanceState);
+		
+		int lastOpenTab = savedInstanceState.getInt(BUNDLE_KEY_LAST_OPENED_TAB_ID, NO_VALUE);
+		if (lastOpenTab != NO_VALUE) {
+			withPage(lastOpenTab);
+		}
+		
+		/* Event propagation */
+		for (Fragment fragment : adapter.getFragments()) {
+			if (fragment instanceof BaseBoxPlayFragment) {
+				((BaseBoxPlayFragment) fragment).restoreInstanceState(savedInstanceState);
+			}
 		}
 	}
 	

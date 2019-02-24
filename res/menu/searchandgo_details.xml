@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:id="@+id/menu_searchandgo_details_reorder"
+        android:icon="@drawable/icon_sort_white_24dp"
+        android:title="@string/boxplay_menu_searchandgo_details_action_reorder"
+        android:visible="false"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/menu_searchandgo_details_open_in_browser"
         android:icon="@drawable/icon_open_in_browser_white_24dp"
         android:title="@string/boxplay_menu_searchandgo_details_action_open_in_browser"

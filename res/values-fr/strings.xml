@@ -31,6 +31,7 @@
     <string name="boxplay_menu_action_search">Recherche</string>
     <string name="boxplay_menu_action_logout">Se déconnecter</string>
     <!--  -->
+    <string name="boxplay_menu_searchandgo_details_action_reorder">Réorganiser</string>
     <string name="boxplay_menu_searchandgo_details_action_open_in_browser">Ouvrir dans le navigateur</string>
     <!--  -->
     <string name="boxplay_menu_searchandgo_history_action_clear_history">Vider l\'historique</string>
@@ -213,6 +214,7 @@
     <string name="boxplay_culture_searchngo_detail_info_button_remove_to_list_watch_later">Supprimer de votre liste\n\"À regarder plus tard\"</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_list_subscriptions">S\'abonner</string>
     <string name="boxplay_culture_searchngo_detail_info_button_remove_to_list_subscriptions">Se désabonner</string>
+    <string name="boxplay_culture_searchngo_detail_no_element_to_display">Aucun élément à afficher</string>
     <string name="boxplay_culture_searchngo_content_limit_reached" formatted="false">Limite d\'affichage dépassé, reduction de %s à %s resultats.</string>
     <string name="boxplay_culture_searchngo_info_no_provider">Aucun fournisseur sélectionné.\nDéroulez les Paramètres, et selectionnez au moins un fournisseur.</string>
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">Une erreur est apparu lors de l\'extraction: %s \n\nAllez dans les paramètres, et choissisez d\'ouvrir les logs d\'extraction pour plus de details!</string>

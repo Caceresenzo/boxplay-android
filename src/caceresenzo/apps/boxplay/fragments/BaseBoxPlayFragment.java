@@ -1,6 +1,7 @@
 package caceresenzo.apps.boxplay.fragments;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
@@ -10,16 +11,20 @@ import caceresenzo.apps.boxplay.helper.implementations.ImageHelper;
 import caceresenzo.apps.boxplay.helper.implementations.MenuHelper;
 import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
 import caceresenzo.apps.boxplay.managers.XManagers;
+import caceresenzo.apps.boxplay.utils.Restorable;
 
 /**
  * Base class for any fragment for BoxPlay
  * 
  * @author Enzo CACERES
  */
-public class BaseBoxPlayFragment extends Fragment {
+public class BaseBoxPlayFragment extends Fragment implements Restorable {
 	
 	/* Tag */
 	public static final String TAG = BaseBoxPlayFragment.class.getSimpleName();
+	
+	/* Constants */
+	public static final int NO_VALUE = -1;
 	
 	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
@@ -55,6 +60,14 @@ public class BaseBoxPlayFragment extends Fragment {
 		super.onAttach(context);
 		
 		this.context = context;
+	}
+	
+	public void saveInstanceState(Bundle outState) {
+		;
+	}
+	
+	public void restoreInstanceState(Bundle savedInstanceState) {
+		;
 	}
 	
 	@Override

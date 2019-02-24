@@ -50,6 +50,8 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 		this.myListItems = new ArrayList<>();
 	}
 	
+	Bundle savedInstanceState;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_mylist_page, container, false);
@@ -59,6 +61,8 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 		this.loadingProgressBar = (ProgressBar) view.findViewById(R.id.fragment_mylist_page_progressbar_loading);
 		
 		this.infoTextView = (TextView) view.findViewById(R.id.fragment_mylist_page_textview_info_text);
+		
+		this.savedInstanceState = savedInstanceState;
 		
 		return view;
 	}
@@ -97,8 +101,13 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 			}
 		}
 		
-		this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		this.recyclerView.setAdapter(new MyListAdapter());
+		if (recyclerView.getLayoutManager() == null) {
+			recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		}
+		if (recyclerView.getAdapter() == null) {
+			recyclerView.setAdapter(new MyListAdapter());
+		}
+		recyclerView.getAdapter().notifyDataSetChanged();
 		
 		setListHidden(false);
 	}
@@ -221,7 +230,7 @@ public abstract class MyListPageFragment extends BaseBoxPlayFragment implements 
 			final SearchAndGoResult searchAndGoResult = item.getSearchAndGoResult();
 			
 			titleTextView.setText(searchAndGoResult.getName());
-
+			
 			imageHelper.download(thumbnailImageView, searchAndGoResult.getImageUrl()).headers((Map<String, Object>) searchAndGoResult.getComplement(SimpleData.REQUIRE_HTTP_HEADERS_COMPLEMENT)).validate();
 			
 			view.setOnClickListener(new OnClickListener() {

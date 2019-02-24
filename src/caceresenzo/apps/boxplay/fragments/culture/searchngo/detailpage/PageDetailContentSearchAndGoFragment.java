@@ -1,8 +1,10 @@
 package caceresenzo.apps.boxplay.fragments.culture.searchngo.detailpage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.github.javiersantos.bottomdialogs.BottomDialog;
 
@@ -14,6 +16,7 @@ import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -51,11 +54,11 @@ import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.thread.implementations.WorkerThread;
 
 /**
- * Content page for the {@link SearchAndGoDetailActivity}
+ * Content page for the {@link SearchAndGoDetailActivity}.
  * 
  * @author Enzo CACERES
  */
-public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
+public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment implements SearchAndGoDetailActivity.PageListener {
 	
 	/* Tag */
 	public static final String TAG = PageDetailContentSearchAndGoFragment.class.getSimpleName();
@@ -71,6 +74,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	/* Views */
 	private LinearLayout listLinearLayout;
 	private ProgressBar progressBar;
+	private TextView noElementToDisplayTextView;
 	
 	/* Dialog */
 	private WorkingProgressDialog progressDialog;
@@ -79,6 +83,9 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	/* Worker */
 	private VideoExtractionWorker videoExtractionWorker;
 	
+	/* Variables */
+	private AtomicLong viewInflaterIncrementer;
+	
 	/* Constructor */
 	public PageDetailContentSearchAndGoFragment() {
 		super();
@@ -86,18 +93,22 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		this.dialogCreator = new DialogCreator();
 		
 		this.videoExtractionWorker = new VideoExtractionWorker();
+		
+		this.viewInflaterIncrementer = new AtomicLong();
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_culture_searchngo_activitypage_details, container, false);
 		
-		progressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_progressbar_loading);
-		
 		listLinearLayout = (LinearLayout) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_linearlayout_list);
 		
-		progressBar.setVisibility(View.VISIBLE);
+		progressBar = (ProgressBar) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_progressbar_loading);
+		
+		noElementToDisplayTextView = (TextView) view.findViewById(R.id.fragment_culture_searchngo_activitypage_details_text_view_no_element_to_display);
+		
 		listLinearLayout.setVisibility(View.GONE);
+		progressBar.setVisibility(View.VISIBLE);
 		
 		ready();
 		
@@ -116,29 +127,61 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 		progressDialog = WorkingProgressDialog.create(targetContext);
 	}
 	
+	@Override
+	public void onPageOpen(SearchAndGoDetailActivity searchAndGoDetailActivity, BaseBoxPlayFragment baseBoxPlayFragment) {
+		boolean visible = !contents.isEmpty();
+		
+		/* Only display with this fragment */
+		if (visible) {
+			visible = (this == baseBoxPlayFragment);
+		}
+
+		Menu menu = searchAndGoDetailActivity.getMenu();
+		if (menu != null) {
+			menu.findItem(R.id.menu_searchandgo_details_reorder).setVisible(visible);
+		}
+	}
+	
+	public void reorder() {
+		if (contents.isEmpty()) {
+			return;
+		}
+		
+		Collections.reverse(contents);
+		
+		applyResult(result, contents);
+	}
+	
 	public void applyResult(SearchAndGoResult result, List<AdditionalResultData> additionals) {
 		this.result = result;
 		
-		this.contents.clear();
-		this.contents.addAll(additionals);
+		if (additionals != contents) {
+			this.contents.clear();
+			this.contents.addAll(additionals);
+		}
 		
-		listLinearLayout.setVisibility(View.VISIBLE);
 		progressBar.setVisibility(View.GONE);
-		
-		createNextContentItemView(new AsyncLayoutInflater(context), additionals.iterator());
+		if (contents.isEmpty()) {
+			noElementToDisplayTextView.setVisibility(View.VISIBLE);
+		} else {
+			listLinearLayout.setVisibility(View.VISIBLE);
+			listLinearLayout.removeAllViews();
+			
+			createNextContentItemView(new AsyncLayoutInflater(context), additionals.iterator(), viewInflaterIncrementer.incrementAndGet());
+		}
 	}
 	
-	private void createNextContentItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<AdditionalResultData> contentIterator) {
+	private void createNextContentItemView(final AsyncLayoutInflater asyncLayoutInflater, final Iterator<AdditionalResultData> contentIterator, final long viewInflationId) {
 		if (contentIterator.hasNext() && isContextValid()) {
 			asyncLayoutInflater.inflate(R.layout.item_culture_searchandgo_activitypage_detail_content, listLinearLayout, new AsyncLayoutInflater.OnInflateFinishedListener() {
 				@Override
 				public void onInflateFinished(View view, int resid, ViewGroup parent) {
-					if (!destroyed) {
+					if (!destroyed && viewInflationId == viewInflaterIncrementer.get()) {
 						new ContentViewBinder(view).bind(contentIterator.next());
 						
 						parent.addView(view);
 						
-						createNextContentItemView(asyncLayoutInflater, contentIterator);
+						createNextContentItemView(asyncLayoutInflater, contentIterator, viewInflationId);
 					}
 				}
 			});
@@ -272,11 +315,13 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment {
 	}
 	
 	/**
-	 * Worker thread to extract video direct link
+	 * Worker thread to extract video direct link.
 	 * 
 	 * @author Enzo CACERES
 	 */
 	class VideoExtractionWorker extends WorkerThread {
+		
+		/* Variables */
 		private VideoItemResultData videoItem;
 		private String action;
 		private ContentViewBinder viewBinder;

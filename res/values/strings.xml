@@ -38,6 +38,7 @@
     <string name="boxplay_menu_action_force_service_call">Force Service Call</string>
     <string name="boxplay_menu_action_logout">Logout</string>
     <!--  -->
+    <string name="boxplay_menu_searchandgo_details_action_reorder">Reorder</string>
     <string name="boxplay_menu_searchandgo_details_action_open_in_browser">Open in browser</string>
     <!--  -->
     <string name="boxplay_menu_searchandgo_history_action_clear_history">Clear history</string>
@@ -215,6 +216,7 @@
     <string name="boxplay_culture_searchngo_detail_info_button_remove_to_list_watch_later">Remove from your Watch Later List</string>
     <string name="boxplay_culture_searchngo_detail_info_button_add_to_list_subscriptions">Subscribe</string>
     <string name="boxplay_culture_searchngo_detail_info_button_remove_to_list_subscriptions">Unsubscribe</string>
+    <string name="boxplay_culture_searchngo_detail_no_element_to_display">No element to display</string>
     <string name="boxplay_culture_searchngo_content_limit_reached" formatted="false">Display limit reached, reducing from %s to %s results.</string>
     <string name="boxplay_culture_searchngo_info_no_provider">No provider selected.\nExpand Settings, and select at least one provider.</string>
     <string name="boxplay_culture_searchngo_extractor_error_failed_to_extract">An error append when extracting: %s \n\nGo to settings and choose to open logs at the extraction end for more details!</string>

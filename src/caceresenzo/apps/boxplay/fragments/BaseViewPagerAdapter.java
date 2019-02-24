@@ -81,8 +81,7 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	 *            New title from {@link R.string}.
 	 */
 	public void addFragment(Fragment fragment, int titleStringRessourceId) {
-		fragments.add(fragment);
-		titles.add(BoxPlayApplication.getBoxPlayApplication().getString(titleStringRessourceId));
+		addFragment(fragment, BoxPlayApplication.getBoxPlayApplication().getString(titleStringRessourceId));
 	}
 	
 	/**
@@ -115,6 +114,11 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 	@Override
 	public CharSequence getPageTitle(int position) {
 		return titles.get(position);
+	}
+	
+	/** @return An array of the currently added {@link Fragment} created from the local {@link List}. */
+	public Fragment[] getFragments() {
+		return fragments.toArray(new Fragment[fragments.size()]);
 	}
 	
 	/**

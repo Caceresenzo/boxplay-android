@@ -28,4 +28,14 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/fragment_culture_searchngo_activitypage_details_text_view_no_element_to_display"
+        style="@style/textViewTitleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/boxplay_culture_searchngo_detail_no_element_to_display"
+        android:visibility="gone" />
+
 </RelativeLayout>
