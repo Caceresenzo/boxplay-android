@@ -40,8 +40,16 @@ public class BoxPlayForegroundService extends Service {
 	
 	public static final String ACTION_CANCEL = "ACTION_CANCEL";
 	
+	/* Managers */
+	private BoxPlayApplication boxPlayApplication;
+	
 	/* Variables */
 	private ForegroundTaskExecutor executorWorker;
+	
+	/* Constructor */
+	public BoxPlayForegroundService() {
+		this.boxPlayApplication = BoxPlayApplication.getBoxPlayApplication();
+	}
 	
 	@Override
 	public void onCreate() {
@@ -153,7 +161,7 @@ public class BoxPlayForegroundService extends Service {
 		
 		if (task != null) {
 			NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-			bigTextStyle.setBigContentTitle(getString(R.string.boxplay_service_foreground_task_actual, task.getTaskName()));
+			bigTextStyle.setBigContentTitle(boxPlayApplication.getString(R.string.boxplay_service_foreground_task_actual, task.getTaskName()));
 			bigTextStyle.bigText(task.getTaskDescription());
 			builder.setStyle(bigTextStyle);
 		}
