@@ -3,8 +3,11 @@ package caceresenzo.apps.boxplay.application;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -31,7 +34,7 @@ public class BoxPlayApplication extends Application {
 	/* Set Build as Debug */
 	public static final boolean BUILD_DEBUG = false;
 	
-	/* Constants */
+	/* Version */
 	private static final Version VERSION = new Version("3.1.21", VersionType.BETA);
 	
 	/* Instance */
@@ -75,6 +78,8 @@ public class BoxPlayApplication extends Application {
 		StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 		StrictMode.setVmPolicy(builder.build());
 		
+		createNotificationChannels();
+		
 		helperManager.initialize();
 		managers.initialize();
 		
@@ -98,6 +103,40 @@ public class BoxPlayApplication extends Application {
 		}
 		
 		return ATTACHED_ACTIVITY.isReady();
+	}
+	
+	/**
+	 * Create the notification channels that are required after Android O if necessary.<br>
+	 * If in {@link #BUILD_DEBUG}, the notification channels will alaways be destroyed then recreated
+	 */
+	private void createNotificationChannels() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationManager notificationManager = getSystemService(NotificationManager.class);
+			
+			if (BoxPlayApplication.BUILD_DEBUG) {
+				for (String channel : new String[] { Constants.NOTIFICATION_CHANNEL.MAIN, Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE }) {
+					if (notificationManager.getNotificationChannel(channel) != null) {
+						notificationManager.deleteNotificationChannel(channel);
+					}
+				}
+			}
+			
+			if (notificationManager.getNotificationChannel(Constants.NOTIFICATION_CHANNEL.MAIN) != null) {
+				NotificationChannel mainChannel = new NotificationChannel(Constants.NOTIFICATION_CHANNEL.MAIN, getString(R.string.boxplay_notification_channel_main_title), NotificationManager.IMPORTANCE_DEFAULT);
+				mainChannel.setDescription(getString(R.string.boxplay_notification_channel_main_description));
+				mainChannel.setImportance(NotificationManager.IMPORTANCE_LOW);
+				
+				notificationManager.createNotificationChannel(mainChannel);
+			}
+			
+			if (notificationManager.getNotificationChannel(Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE) != null) {
+				NotificationChannel searchAndGoUpdateChannel = new NotificationChannel(Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE, getString(R.string.boxplay_notification_channel_search_and_go_update_title), NotificationManager.IMPORTANCE_DEFAULT);
+				searchAndGoUpdateChannel.setDescription(getString(R.string.boxplay_notification_channel_search_and_go_update_description));
+				searchAndGoUpdateChannel.setImportance(NotificationManager.IMPORTANCE_MAX);
+				
+				notificationManager.createNotificationChannel(searchAndGoUpdateChannel);
+			}
+		}
 	}
 	
 	public Snackbar snackbar(String text, int duration) {

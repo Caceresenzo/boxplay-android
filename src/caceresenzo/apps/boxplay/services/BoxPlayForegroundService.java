@@ -1,7 +1,6 @@
 package caceresenzo.apps.boxplay.services;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -106,36 +105,12 @@ public class BoxPlayForegroundService extends Service {
 	private void startForegroundService() {
 		Log.d(TAG, "Start foreground service.");
 		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			NotificationManager notificationManager = getSystemService(NotificationManager.class);
-			
-			if (BoxPlayApplication.BUILD_DEBUG) {
-				for (String channel : new String[] { MAIN_NOTIFICATION_CHANNEL, SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL }) {
-					if (notificationManager.getNotificationChannel(channel) != null) {
-						notificationManager.deleteNotificationChannel(channel);
-					}
-				}
-			}
-			
-			NotificationChannel mainChannel = new NotificationChannel(MAIN_NOTIFICATION_CHANNEL, getString(R.string.boxplay_notification_channel_main_title), NotificationManager.IMPORTANCE_DEFAULT);
-			mainChannel.setDescription(getString(R.string.boxplay_notification_channel_main_description));
-			mainChannel.setImportance(NotificationManager.IMPORTANCE_LOW);
-			
-			notificationManager.createNotificationChannel(mainChannel);
-			
-			NotificationChannel searchAndGoUpdateChannel = new NotificationChannel(SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL, getString(R.string.boxplay_notification_channel_search_and_go_update_title), NotificationManager.IMPORTANCE_DEFAULT);
-			searchAndGoUpdateChannel.setDescription(getString(R.string.boxplay_notification_channel_search_and_go_update_description));
-			searchAndGoUpdateChannel.setImportance(NotificationManager.IMPORTANCE_MAX);
-			
-			notificationManager.createNotificationChannel(searchAndGoUpdateChannel);
-		}
-		
 		startForeground(NOTIFICATION_ID, createNotification(null, INDETERMINATE_PROGRESS));
 		
 		execute();
 	}
 	
-	/**  Used to ask the service to stop as soon as possible. */
+	/** Used to ask the service to stop as soon as possible. */
 	private void stopForegroundService() {
 		Log.d(TAG, "Stop foreground service.");
 		
@@ -198,7 +173,7 @@ public class BoxPlayForegroundService extends Service {
 		notificationManager.notify(NOTIFICATION_ID, notification);
 	}
 	
-	/**  Execute tasks. */
+	/** Execute tasks. */
 	public void execute() {
 		executorWorker = new ForegroundTaskExecutor(this, new Handler(Looper.getMainLooper())) {
 			@Override
