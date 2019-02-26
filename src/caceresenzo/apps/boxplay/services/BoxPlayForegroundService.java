@@ -46,6 +46,7 @@ public class BoxPlayForegroundService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
 		Log.d(TAG, "My foreground service onCreate().");
 	}
 	
@@ -93,9 +94,7 @@ public class BoxPlayForegroundService extends Service {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
-	/**
-	 * Used to build and start foreground service
-	 */
+	/** Used to build and start foreground service. */
 	private void startForegroundService() {
 		Log.d(TAG, "Start foreground service.");
 		
@@ -128,9 +127,7 @@ public class BoxPlayForegroundService extends Service {
 		execute();
 	}
 	
-	/**
-	 * Used to completly stop foreground service
-	 */
+	/**  Used to ask the service to stop as soon as possible. */
 	private void stopForegroundService() {
 		Log.d(TAG, "Stop foreground service.");
 		
@@ -156,8 +153,8 @@ public class BoxPlayForegroundService extends Service {
 		
 		if (task != null) {
 			NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-			bigTextStyle.setBigContentTitle(getString(R.string.boxplay_service_foreground_task_actual, getString(task.getTaskName())));
-			bigTextStyle.bigText(getString(task.getTaskDescription()));
+			bigTextStyle.setBigContentTitle(getString(R.string.boxplay_service_foreground_task_actual, task.getTaskName()));
+			bigTextStyle.bigText(task.getTaskDescription());
 			builder.setStyle(bigTextStyle);
 		}
 		
@@ -193,9 +190,7 @@ public class BoxPlayForegroundService extends Service {
 		notificationManager.notify(NOTIFICATION_ID, notification);
 	}
 	
-	/**
-	 * Execute tasks
-	 */
+	/**  Execute tasks. */
 	public void execute() {
 		executorWorker = new ForegroundTaskExecutor(this, new Handler(Looper.getMainLooper())) {
 			@Override

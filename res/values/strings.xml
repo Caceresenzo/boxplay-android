@@ -24,6 +24,7 @@
     <string name="boxplay_service_foreground_task_application_update_description">Check if any BoxPlay update is available.</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_title">Search n\' Go Subscription</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_description">Fetch site and check if there is any update/new content for the item you have subscribe.</string>
+    <string name="boxplay_service_foreground_task_searchngo_subscriptions_description_with_item">Fetch site and check if there is any update/new content for the item you have subscribe.\n\nChecking: %s</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_update_new_item">New content available</string>
     <string name="boxplay_service_foreground_task_searchngo_subscriptions_update_new_item_content" formatted="false">%s — %s</string>
     <string name="boxplay_service_foreground_notification_cancel_message">Cancelling asked\nStopping as soon as possible</string>

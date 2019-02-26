@@ -19,13 +19,13 @@ public class UpdateCheckerTask extends ForegroundTask {
 	}
 	
 	@Override
-	public int getTaskName() {
-		return R.string.boxplay_service_foreground_task_application_update_title;
+	public String getTaskName() {
+		return getString(R.string.boxplay_service_foreground_task_application_update_title);
 	}
 	
 	@Override
-	public int getTaskDescription() {
-		return R.string.boxplay_service_foreground_task_application_update_description;
+	public String getTaskDescription() {
+		return getString(R.string.boxplay_service_foreground_task_application_update_description);
 	}
 	
 }

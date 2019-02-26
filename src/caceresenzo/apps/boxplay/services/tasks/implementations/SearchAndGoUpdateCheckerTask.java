@@ -31,6 +31,10 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 	/* My List */
 	private MyList subscriptionMyList;
 	
+	/* Variables */
+	private SearchAndGoResult actuallyCheckedResult;
+	
+	/* Constructor */
 	public SearchAndGoUpdateCheckerTask() {
 		super();
 		
@@ -47,7 +51,7 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 		List<MyListable> myListables = subscriptionMyList.reload().fetch();
 		
 		for (int i = 0; i < myListables.size(); i++) {
-			final SearchAndGoResult searchAndGoResult = (SearchAndGoResult) myListables.get(i);
+			final SearchAndGoResult searchAndGoResult = actuallyCheckedResult = (SearchAndGoResult) myListables.get(i);
 			
 			foregroundTaskExecutor.publishUpdate(this, i + 1, myListables.size());
 			
@@ -115,16 +119,22 @@ public class SearchAndGoUpdateCheckerTask extends ForegroundTask {
 			
 			checkThread();
 		}
+		
+		actuallyCheckedResult = null;
 	}
 	
 	@Override
-	public int getTaskName() {
-		return R.string.boxplay_service_foreground_task_searchngo_subscriptions_title;
+	public String getTaskName() {
+		return getString(R.string.boxplay_service_foreground_task_searchngo_subscriptions_title);
 	}
 	
 	@Override
-	public int getTaskDescription() {
-		return R.string.boxplay_service_foreground_task_searchngo_subscriptions_description;
+	public String getTaskDescription() {
+		if (actuallyCheckedResult == null) {
+			return getString(R.string.boxplay_service_foreground_task_searchngo_subscriptions_description);
+		} else {
+			return getString(R.string.boxplay_service_foreground_task_searchngo_subscriptions_description_with_item, actuallyCheckedResult.getName());
+		}
 	}
 	
 }

@@ -1,5 +1,6 @@
 package caceresenzo.apps.boxplay.services.tasks;
 
+import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Handler;
@@ -86,38 +87,49 @@ public abstract class ForegroundTask extends WorkerThread {
 		return this;
 	}
 	
-	/**
-	 * @return A new instance of the {@link NotificationCompat.Builder}.
-	 */
+	/** @return A new instance of the {@link NotificationCompat.Builder}. */
 	protected NotificationCompat.Builder createNotificationBuilder() {
 		return new NotificationCompat.Builder(boxPlayApplication, BoxPlayForegroundService.SEARCH_AND_GO_UPDATE_NOTIFICATION_CHANNEL);
 	}
 	
+	/**
+	 * Send a notification.
+	 * 
+	 * @param id
+	 *            Target notification id.<br>
+	 *            If you put {@link #RANDOM_ID}, a random id will be chosen from the {@link System#currentTimeMillis()}.
+	 * @param builder
+	 *            {@link Builder} used to create the notification.
+	 */
 	protected void notificate(int id, NotificationCompat.Builder builder) {
 		if (id == RANDOM_ID) {
 			id = (int) System.currentTimeMillis();
 		}
-
+		
 		notificationManager.notify(id, builder.build());
 	}
 	
-	/**
-	 * @return A string ressource id corresponding to the task name.
-	 */
+	/** @return A {@link String} corresponding to the task name. */
 	@StringRes
-	public abstract int getTaskName();
+	public abstract String getTaskName();
 	
-	/**
-	 * @return A string ressource id corresponding to the task description.
-	 */
+	/** @return A {@link String} corresponding to the task description. */
 	@StringRes
-	public abstract int getTaskDescription();
+	public abstract String getTaskDescription();
 	
-	/**
-	 * @return Weather or not the task need an internet connection to work. (<code>true</code> by default)
-	 */
+	/** @return Weather or not the task need an internet connection to work. (<code>true</code> by default) */
 	public boolean requireNetwork() {
 		return true;
+	}
+	
+	/** @see {@link Application#getString(int)} */
+	public final String getString(int resId) {
+		return boxPlayApplication.getString(resId);
+	}
+	
+	/** @see {@link Application#getString(int, Object...)} */
+	public final String getString(int resId, Object... formatArgs) {
+		return boxPlayApplication.getString(resId, formatArgs);
 	}
 	
 }
