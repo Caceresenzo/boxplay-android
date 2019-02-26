@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.22 BETA" changeDate="26/02/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 19[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] A content re-sorting button in the Search n' Go details page.</changelogtext>
+		<changelogtext>[b]Added![/b] A message in the notification telling which item is currently being checked.</changelogtext>
+		<changelogtext>[b]Fixed![/b] JetAnime's item was sometimes having HTML in their name.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing the local storage to be updated as an empty list.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing duplicate item to always be notified as new item.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing list to always going to the top when she was resumed.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing a part of the notification to not using the right language.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing notification channel to always be recreated and removing items. (Android O or newer)</changelogtext>
+		<changelogtext>[b]Optimized![/b] Restoration system thank to a new implementation.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.21 BETA" changeDate="22/02/2019">
 		<changelogtext>[b]The Big Clean Up![/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Network requirement verification for the background tasks.</changelogtext>

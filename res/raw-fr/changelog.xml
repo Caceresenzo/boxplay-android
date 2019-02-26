@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">	
 
+	<changelogversion versionName="3.1.22 BETA" changeDate="26/02/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 19[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un bouton de ré-organisage dans la page de détail du Search n' Go.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un message dans la notification qui affiche quel élément est actuallement en train de se faire vérifier.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Les items de JetAnime avais de temps en temps de l'HTML dans leur nom.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que le stockage local était mis à jour avec une liste vide.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que les éléments dupliqué était toujours notifié en tant que nouveau élément.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que la liste remontait toujours en haut quand elle était re-afficher.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait qu'une partie de la notification n'utilisait pas la bonne langue.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que les canaux de notification était toujours re-crées et supprimais certaine notification. (Android O ou plus récent)</changelogtext>
+		<changelogtext>[b]Optimisé![/b] Le système de testauration grace à une réécriture.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.21 BETA" changeDate="22/02/2019">
 		<changelogtext>[b]Le Grand Nettoyage![/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Une vérification du réseau pour les taches de fonds.</changelogtext>
