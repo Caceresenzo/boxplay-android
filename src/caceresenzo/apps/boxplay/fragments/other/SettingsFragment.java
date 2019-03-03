@@ -64,7 +64,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				/* BoxPlay */
 				R.string.boxplay_other_settings_boxplay_pref_background_service_key, //
 				R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key, //
-				R.string.boxplay_other_settings_boxplay_pref_force_factory_key, //
 				
 				/* Premium */
 				R.string.boxplay_other_settings_premium_pref_premium_key_key, //
@@ -120,7 +119,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		if (preference instanceof SwitchPreference) {
 			SwitchPreference switchPreference = (SwitchPreference) preference;
 			
-			if (key == getString(R.string.boxplay_other_settings_boxplay_pref_background_service_key)) {
+			if (key.equals(getString(R.string.boxplay_other_settings_boxplay_pref_background_service_key))) {
 				if (switchPreference.isChecked()) {
 					preference.setSummary(R.string.boxplay_other_settings_boxplay_pref_background_service_summary_enabled);
 				} else {
@@ -132,7 +131,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				}
 			}
 			//
-			else if (key == getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key)) {
+			else if (key.equals(getString(R.string.boxplay_other_settings_application_pref_crash_reporter_key))) {
 				if (switchPreference.isChecked()) {
 					preference.setSummary(R.string.boxplay_other_settings_application_pref_crash_reporter_summary_enabled);
 				} else {
@@ -140,7 +139,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				}
 			}
 			//
-			else if (key == getString(R.string.boxplay_other_settings_debug_pref_extractor_show_logs_key)) {
+			else if (key.equals(getString(R.string.boxplay_other_settings_debug_pref_extractor_show_logs_key))) {
 				if (switchPreference.isChecked()) {
 					preference.setSummary(R.string.boxplay_other_settings_debug_pref_extractor_show_logs_summary_enabled);
 				} else {
@@ -150,7 +149,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				managers.getDebugManager().updatePreferences();
 			}
 			//
-			else if (key == getString(R.string.boxplay_other_settings_downloads_pref_use_adm_key)) {
+			else if (key.equals(getString(R.string.boxplay_other_settings_downloads_pref_use_adm_key))) {
 				if (!applicationHelper.isAdmInstalled()) {
 					switchPreference.setChecked(false);
 					switchPreference.setSummary(R.string.boxplay_other_settings_downloads_pref_use_adm_summary_not_installed);
@@ -169,26 +168,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		} else if (preference instanceof CheckBoxPreference) {
 			CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
 			
-			if (key == getString(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_key)) {
+			if (key.equals(getString(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_key))) {
 				if (checkBoxPreference.isChecked()) {
 					checkBoxPreference.setSummary(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_summary_enabled);
 				} else {
 					checkBoxPreference.setSummary(R.string.boxplay_other_settings_menu_pref_drawer_extend_collapse_back_button_summary_disabled);
 				}
 			}
-			//
-			else if (key == getString(R.string.boxplay_other_settings_boxplay_pref_force_factory_key)) {
-				if (checkBoxPreference.isChecked()) {
-					checkBoxPreference.setSummary(R.string.boxplay_other_settings_boxplay_pref_force_factory_summary_enabled);
-				} else {
-					checkBoxPreference.setSummary(R.string.boxplay_other_settings_boxplay_pref_force_factory_summary_disabled);
-				}
-			}
 		} else if (preference instanceof ListPreference) {
 			ListPreference listPreference = (ListPreference) preference;
 			int prefIndex = listPreference.findIndexOfValue(sharedPreferences.getString(key, ""));
 			
-			if (key == getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key)) {
+			if (key.equals(getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key))) {
 				preference.setSummary(getString(R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_summary, listPreference.getEntries()[prefIndex]));
 				
 				if (!initialization) {
@@ -196,7 +187,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				}
 			}
 			//
-			else if (key == getString(R.string.boxplay_other_settings_application_pref_language_key)) {
+			else if (key.equals(getString(R.string.boxplay_other_settings_application_pref_language_key))) {
 				if (prefIndex >= 0) {
 					preference.setSummary(getString(R.string.boxplay_other_settings_application_pref_language_summary, listPreference.getEntries()[prefIndex]));
 				}
@@ -213,7 +204,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		} else if (preference instanceof EditTextPreference) {
 			EditTextPreference editTextPreference = (EditTextPreference) preference;
 			
-			if (key == getString(R.string.boxplay_other_settings_premium_pref_premium_key_key)) {
+			if (key.equals(getString(R.string.boxplay_other_settings_premium_pref_premium_key_key))) {
 				LicenceKey licenceKey = LicenceKey.fromString(editTextPreference.getText());
 				
 				if (editTextPreference.getText() == null || editTextPreference.getText().isEmpty()) {

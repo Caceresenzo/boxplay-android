@@ -373,10 +373,6 @@
         <item>Chaque jour</item>
     </string-array>
     <!--  -->
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_title">Forcer le traitement des données</string>
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_enabled">Les données seront re-travaillées de force quand vous rafraichirez</string>
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_disabled">Les données seront re-travaillées seulement si du nouveau contenu est disponible</string>
-    <!--  -->
     <string name="boxplay_other_settings_premium_category_title">Plus</string>
     <!--  -->
     <string name="boxplay_other_settings_premium_pref_premium_key_title">Clé d\'activation</string>

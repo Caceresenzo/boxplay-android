@@ -394,11 +394,6 @@
         <item>86400000</item>
     </string-array>
     <!--  -->
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_title">Force data processing</string>
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_enabled">The data will be forced to be re-parsed when you will refresh</string>
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_summary_disabled">The data will only be refresh when new content is added</string>
-    <string name="boxplay_other_settings_boxplay_pref_force_factory_key">boxplay_force_factory</string>
-    <!--  -->
     <string name="boxplay_other_settings_premium_category_title">Premium</string>
     <!--  -->
     <string name="boxplay_other_settings_premium_pref_premium_key_title">Premium Activation Key</string>

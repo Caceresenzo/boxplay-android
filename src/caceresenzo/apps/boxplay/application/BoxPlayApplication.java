@@ -31,11 +31,14 @@ import caceresenzo.libs.comparator.VersionType;
 
 public class BoxPlayApplication extends Application {
 	
+	/* Tag */
+	public static final String TAG = BoxPlayApplication.class.getSimpleName();
+	
 	/* Set Build as Debug */
 	public static final boolean BUILD_DEBUG = false;
 	
 	/* Version */
-	private static final Version VERSION = new Version("3.1.22", VersionType.BETA);
+	private static final Version VERSION = new Version("3.1.22.1", VersionType.BETA);
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;
@@ -121,7 +124,7 @@ public class BoxPlayApplication extends Application {
 				}
 			}
 			
-			if (notificationManager.getNotificationChannel(Constants.NOTIFICATION_CHANNEL.MAIN) != null) {
+			if (notificationManager.getNotificationChannel(Constants.NOTIFICATION_CHANNEL.MAIN) == null) {
 				NotificationChannel mainChannel = new NotificationChannel(Constants.NOTIFICATION_CHANNEL.MAIN, getString(R.string.boxplay_notification_channel_main_title), NotificationManager.IMPORTANCE_DEFAULT);
 				mainChannel.setDescription(getString(R.string.boxplay_notification_channel_main_description));
 				mainChannel.setImportance(NotificationManager.IMPORTANCE_LOW);
@@ -129,7 +132,7 @@ public class BoxPlayApplication extends Application {
 				notificationManager.createNotificationChannel(mainChannel);
 			}
 			
-			if (notificationManager.getNotificationChannel(Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE) != null) {
+			if (notificationManager.getNotificationChannel(Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE) == null) {
 				NotificationChannel searchAndGoUpdateChannel = new NotificationChannel(Constants.NOTIFICATION_CHANNEL.SEARCH_AND_GO_UPDATE, getString(R.string.boxplay_notification_channel_search_and_go_update_title), NotificationManager.IMPORTANCE_DEFAULT);
 				searchAndGoUpdateChannel.setDescription(getString(R.string.boxplay_notification_channel_search_and_go_update_description));
 				searchAndGoUpdateChannel.setImportance(NotificationManager.IMPORTANCE_MAX);

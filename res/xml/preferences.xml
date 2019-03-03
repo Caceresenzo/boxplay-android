@@ -36,14 +36,6 @@
             android:positiveButtonText="@null"
             android:summary=""
             android:title="@string/boxplay_other_settings_boxplay_pref_background_service_frequency_title" />
-
-        <!-- BoxPlay > Processing > Force data processing -->
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="@string/boxplay_other_settings_boxplay_pref_force_factory_key"
-            android:summary=""
-            android:title="@string/boxplay_other_settings_boxplay_pref_force_factory_title" />
     </PreferenceCategory>
 
     <!-- Premium -->

@@ -19,7 +19,6 @@ import caceresenzo.libs.json.JsonObject;
 import caceresenzo.libs.json.parser.JsonException;
 import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.network.Downloader;
-import caceresenzo.libs.parse.ParseUtils;
 import caceresenzo.libs.string.StringUtils;
 import caceresenzo.libs.thread.ThreadUtils;
 import caceresenzo.libs.thread.implementations.WorkerThread;
@@ -32,7 +31,6 @@ public class DataManager extends AbstractManager {
 	private final File cacheFolder, cachedUrlFile;
 	
 	private JsonObject serverJsonData;
-	private int serverJsonRevision = 0;
 	
 	private boolean workableDataReady = false, runningOnCacheVersion;
 	
@@ -61,16 +59,16 @@ public class DataManager extends AbstractManager {
 	
 	@Override
 	protected void initializeWhenUiReady(BaseBoxPlayActivty attachedActivity) {
-		fetchData(false);
+		fetchData();
 	}
 	
-	public void fetchData(final boolean forceFetch) {
+	public void fetchData() {
 		if (worker.isRunning()) {
 			return;
 		}
 		
 		worker = new Worker();
-		worker.force(forceFetch).start();
+		worker.start();
 	}
 	
 	public JsonObject getJsonData() {
@@ -86,7 +84,6 @@ public class DataManager extends AbstractManager {
 	}
 	
 	class Worker extends WorkerThread {
-		private boolean forceFetch;
 		
 		@Override
 		protected void execute() {
@@ -104,13 +101,10 @@ public class DataManager extends AbstractManager {
 				}
 			});
 			
-			final int oldServerJsonRevision = serverJsonRevision;
 			String content = null;
 			try {
 				content = Downloader.getUrlContent(downloadUrl);
 				serverJsonData = new JsonObject((Map<?, ?>) new JsonParser().parse(new StringReader(content)));
-				
-				serverJsonRevision = ParseUtils.parseInt(serverJsonData.get("json_revision"), 0);
 			} catch (IOException | JsonException exception) {
 				Log.e(TAG, "Failed to download and parse json from the server, trying cached version.", exception);
 				
@@ -134,38 +128,24 @@ public class DataManager extends AbstractManager {
 			
 			workableDataReady = true;
 			
-			BoxPlayApplication.getHandler().post(new Runnable() {
+			handler.post(new Runnable() {
 				@Override
 				public void run() {
 					if (snackbar != null) {
 						snackbar.dismiss();
 					}
 					
-					boolean newContent = oldServerJsonRevision != serverJsonRevision;
-					boolean force = getManagers().getPreferences().getBoolean(getString(R.string.boxplay_other_settings_boxplay_pref_force_factory_key), false);
-					
-					if (forceFetch) {
-						force = true;
-					}
-					
-					if ((newContent || force) || isRunningOnCacheVersion()) {
-						getManagers().getVideoManager().callFactory();
-						getManagers().getUpdateManager().prepareDialogBuild();
-					}
+					getManagers().getVideoManager().callFactory();
+					getManagers().getUpdateManager().prepareDialogBuild();
 					
 					for (StorePageFragment storePageFragment : StorePageFragment.getStorePageFragmentRegisteredInstances()) {
 						if (storePageFragment != null) {
-							storePageFragment.callDataUpdater(newContent);
+							storePageFragment.callDataUpdater(!isRunningOnCacheVersion());
 						}
 					}
 				}
 			});
 			
-		}
-		
-		public WorkerThread force(boolean force) {
-			forceFetch = force;
-			return this;
 		}
 		
 	}

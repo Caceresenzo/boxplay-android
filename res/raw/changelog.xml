@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.22.1 BETA" changeDate="03/03/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 19.1[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] A Subscription support for the Manga Rock manga provider.</changelogtext>
+		<changelogtext>[b]Removed![/b] FilmStreamingVk.pro (a video provider) for the Search n' Go (site changed).</changelogtext>
+		<changelogtext>[b]Removed![/b] The option to disable the forced processing on refresh (will be always done).</changelogtext>
+		<changelogtext>[b]Fixed![/b] Openload extraction system.</changelogtext>
+		<changelogtext>[b]Fixed![/b] A bug causing notification channels to never being created.</changelogtext>
+		<changelogtext>[b]Fixed![/b] A bug causing fragment to be restored multiple times with old information.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Some encoding issue for some Search n' Go provider.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Some changes were missing in the previous changelog.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.22 BETA" changeDate="26/02/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 19[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] NekoSama as a video provider for the Search n' Go.</changelogtext>
+		<changelogtext>[b]Added![/b] An extractor for site FreshStream (with quality support).</changelogtext>
 		<changelogtext>[b]Added![/b] A content re-sorting button in the Search n' Go details page.</changelogtext>
 		<changelogtext>[b]Added![/b] A message in the notification telling which item is currently being checked.</changelogtext>
 		<changelogtext>[b]Fixed![/b] JetAnime's item was sometimes having HTML in their name.</changelogtext>

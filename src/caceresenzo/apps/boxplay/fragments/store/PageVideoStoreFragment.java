@@ -58,7 +58,7 @@ public class PageVideoStoreFragment extends StorePageFragment {
 	
 	@Override
 	public void onUserRefresh() {
-		managers.getDataManager().fetchData(true);
+		managers.getDataManager().fetchData();
 	}
 	
 	@Override
