@@ -54,7 +54,6 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 		String typeIcons = getString(R.string.boxplay_other_about_about_team_format_type_icons);
 		String typeHosting = getString(R.string.boxplay_other_about_about_team_format_type_hosting);
 		String typeCreativeAssistant = getString(R.string.boxplay_other_about_about_team_format_type_creative_assistant);
-		String typeEclipseFix = getString(R.string.boxplay_other_about_about_team_format_type_eclipse);
 		
 		addCard(new AboutCard.Builder(context) //
 				.setTitle(R.string.boxplay_other_about_about_team) //
@@ -66,15 +65,10 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 								.append(typeUi) //
 								.append(separator) //
 								.append(typeHosting) //
-								.toString()) //
-						.setIcon(R.drawable.profile_caceresenzo) //
-						.build()) //
-				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/TheWhoosher") //
-						.setTitle("@TheWhoosher") //
-						.setSubtitle(new StringBuilder() //
+								.append(separator) //
 								.append(typeApi) //
 								.toString()) //
-						.setIcon(R.drawable.profile_thewhoosher) //
+						.setIcon(R.drawable.profile_caceresenzo) //
 						.build()) //
 				.addItem(new PersonAboutItem.Builder(context) //
 						.setTitle("@valgrebon") //
@@ -91,13 +85,6 @@ public class PageAboutAboutFragment extends EasyAboutFragment {
 								.append(typeCreativeAssistant) //
 								.toString()) //
 						.setIcon(R.drawable.profile_paradox) //
-						.build()) //
-				.addItem(AboutItemBuilder.generatePersonaLinkItem(context, "https://github.com/dandar3") //
-						.setTitle("@dandar3") //
-						.setSubtitle(new StringBuilder() //
-								.append(typeEclipseFix) //
-								.toString()) //
-						.setIcon(R.drawable.profile_dandar3) //
 						.build()) //
 				.build()); //
 	}

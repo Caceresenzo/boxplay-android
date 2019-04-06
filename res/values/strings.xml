@@ -465,7 +465,6 @@
     <string name="boxplay_other_about_about_team_format_type_icons">Icons</string>
     <string name="boxplay_other_about_about_team_format_type_hosting">Hosting</string>
     <string name="boxplay_other_about_about_team_format_type_creative_assistant">Creative Assistant</string>
-    <string name="boxplay_other_about_about_team_format_type_eclipse">Eclipse fix</string>
     <string name="boxplay_other_about_about_team_format_separator">,%s</string>
 
     <!-- About -->
