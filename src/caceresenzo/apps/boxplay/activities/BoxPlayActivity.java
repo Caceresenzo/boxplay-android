@@ -33,6 +33,7 @@ import caceresenzo.apps.boxplay.fragments.store.StorePageFragment;
 import caceresenzo.apps.boxplay.fragments.user.UserFragment;
 import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
 import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
+import caceresenzo.apps.boxplay.utils.Restorable;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 
@@ -122,11 +123,14 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				if (savedInstanceState != null) {
 					final Fragment lastFragment = viewHelper.getLastFragment();
 					
-					if (lastFragment instanceof BaseBoxPlayFragment) {
+					if (lastFragment instanceof Restorable) {
 						handler.postDelayed(new Runnable() {
 							@Override
 							public void run() {
-								((BaseBoxPlayFragment) lastFragment).restoreInstanceState(savedInstanceState);
+								((Restorable) lastFragment).restoreInstanceState(savedInstanceState);
+								
+								savedInstanceState.clear();
+								savedInstanceState = null;
 							}
 						}, 200);
 					}
