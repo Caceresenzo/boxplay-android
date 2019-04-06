@@ -15,8 +15,6 @@ import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
 import caceresenzo.apps.boxplay.helper.implementations.ViewHelper;
-import caceresenzo.libs.boxplay.api.BoxPlayApi;
-import caceresenzo.libs.boxplay.users.User;
 
 public class XManagers {
 	
@@ -26,8 +24,6 @@ public class XManagers {
 	/* Managers */
 	protected BoxPlayApplication boxPlayApplication;
 	
-	protected IdentificationManager identificationManager;
-	protected UserManager userManager;
 	protected PermissionManager permissionManager;
 	protected DataManager dataManager;
 	protected VideoManager videoManager;
@@ -109,13 +105,6 @@ public class XManagers {
 		}
 	}
 	
-	public void onUserLogged(final User user, final BoxPlayApi boxPlayApi) {
-		// for (AbstractManager manager : managers) {
-		// manager.initializeWhenUserLogged(user, boxPlayApi);
-		// }
-		throw new IllegalStateException("Disabled.");
-	}
-	
 	public void destroy() {
 		for (AbstractManager manager : managers) {
 			manager.destroy();
@@ -132,14 +121,6 @@ public class XManagers {
 	
 	public SharedPreferences getPreferences() {
 		return preferences;
-	}
-	
-	public IdentificationManager getIdentificationManager() {
-		throw new IllegalStateException("Disabled.");
-	}
-	
-	public UserManager getUserManager() {
-		throw new IllegalStateException("Disabled.");
 	}
 	
 	public PermissionManager getPermissionManager() {
@@ -194,10 +175,6 @@ public class XManagers {
 		}
 		
 		protected void initializeWhenUiReady(BaseBoxPlayActivty attachedActivity) {
-			;
-		}
-		
-		protected void initializeWhenUserLogged(User user, BoxPlayApi boxPlayApi) {
 			;
 		}
 		

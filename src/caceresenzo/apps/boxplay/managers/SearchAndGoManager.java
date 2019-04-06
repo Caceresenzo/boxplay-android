@@ -22,7 +22,6 @@ import caceresenzo.libs.boxplay.culture.searchngo.callback.delegate.CallbackDele
 import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
 import caceresenzo.libs.boxplay.culture.searchngo.providers.SearchAndGoProvider;
 import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
-import caceresenzo.libs.codec.chartable.JsonCharTable;
 import caceresenzo.libs.json.JsonObject;
 import caceresenzo.libs.json.parser.JsonParser;
 import caceresenzo.libs.parse.ParseUtils;
@@ -383,7 +382,10 @@ public class SearchAndGoManager extends AbstractManager {
 		return searchHistorySubManager;
 	}
 	
-	public class SearchHistorySubManager extends SubManager implements JsonCharTable {
+	public class SearchHistorySubManager extends SubManager {
+		
+		public static final String TAB = "\t";
+		
 		private final String JSON_KEY_HISTORY = "history";
 		private final String JSON_KEY_HISTORY_QUERY = "query";
 		private final String JSON_KEY_HISTORY_DATE = "date";

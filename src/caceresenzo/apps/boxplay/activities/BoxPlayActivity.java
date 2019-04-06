@@ -309,7 +309,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			}
 			
 			case R.id.menu_main_action_logout: {
-				managers.getIdentificationManager().logout();
+				// TODO managers.getIdentificationManager().logout();
 				return true;
 			}
 			

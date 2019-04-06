@@ -359,7 +359,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 						dialogCreator.showPossiblePlayersDialog(compatibleVideoPageUrls, new PossiblePlayerDialogCallback() {
 							@Override
 							public void onClick(final int which) {
-								urlObjectWrapper.setValue(compatibleVideoPageUrls.get(which));
+								urlObjectWrapper.set(compatibleVideoPageUrls.get(which));
 								unlock();
 							}
 						}, new OnCancelListener() {
@@ -374,8 +374,8 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 				
 				waitUntilUnlock();
 				
-				if (!isCancelled() && urlObjectWrapper.getValue() != null) {
-					processUrl(urlObjectWrapper.getValue());
+				if (!isCancelled() && urlObjectWrapper.get() != null) {
+					processUrl(urlObjectWrapper.get());
 				}
 			} else if (compatibleVideoPageUrls.size() == 1) {
 				processUrl(compatibleVideoPageUrls.get(0));
@@ -464,7 +464,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 									dialogCreator.showAvailableVideoQualitiesDialog(qualities, new VideoQualityDialogCallback() {
 										@Override
 										public void onClick(final int which) {
-											videoQualityObjectWrapper.setValue(qualities.get(which));
+											videoQualityObjectWrapper.set(qualities.get(which));
 											unlock();
 										}
 									}, new OnCancelListener() {
@@ -479,7 +479,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 							
 							waitUntilUnlock();
 							
-							targetVideoQuality = videoQualityObjectWrapper.getValue();
+							targetVideoQuality = videoQualityObjectWrapper.get();
 						}
 						
 						if (targetVideoQuality != null) {
@@ -537,13 +537,13 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 								handler.post(new Runnable() {
 									@Override
 									public void run() {
-										fileSizeBottomDialogObjectWrapper.setValue(bottomDialogBuilder.build());
+										fileSizeBottomDialogObjectWrapper.set(bottomDialogBuilder.build());
 										unlock();
 									}
 								});
 								waitUntilUnlock();
 								
-								final BottomDialog fileSizeBottomDialog = fileSizeBottomDialogObjectWrapper.getValue();
+								final BottomDialog fileSizeBottomDialog = fileSizeBottomDialogObjectWrapper.get();
 								
 								handler.post(new Runnable() {
 									@Override
