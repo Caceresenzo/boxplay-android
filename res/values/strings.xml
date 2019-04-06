@@ -501,7 +501,7 @@
     <string name="title_activity_video">VideoActivity</string>
     <string name="title_activity_music">MusicActivity</string>
     <string name="title_activity_image_viewer">ImageViewerActivity</string>
-    <string name="title_activity_searchandgo_detail">SearchAndGoDetailActivity</string>
+    <string name="title_activity_searchandgo_detail">Search n\' Go - Element</string>
     <string name="title_activity_searchandgo_history">SearchAndGoHistoryActivity</string>
     <string name="title_activity_manga_reader">MangaReaderActivity</string>
     <string name="title_activity_login">LoginActivity</string>

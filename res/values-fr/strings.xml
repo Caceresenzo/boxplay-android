@@ -439,7 +439,6 @@
 
 
     <!-- Error -->
-
     <string name="boxplay_error_manager_json_null">Erreur. Les données reçu du serveur sont vide.</string>
     <string name="boxplay_error_activity_invalid_data">Erreur. Démarrage de l\'activité sans information valide.</string>
     <string name="boxplay_error_fragment_type_unbind" formatted="false">Erreur. Element avec l\'id %s a été désynchronisé.</string>
@@ -455,14 +454,7 @@
     <string name="boxplay_error_row_default_content">On dirait qu\'une erreur vient juste d\'arriver!</string>
     <string name="boxplay_error_row_default_button">Bouton</string>
 
-    <!-- Urls -->
-
-
-    <!-- <string name="boxplay_data_download_url">https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/data/boxplay_3.json</string> -->
-
-
     <!-- Other -->
-
-    <string name="title_activity_video">VideoActivity</string>
+    <string name="title_activity_searchandgo_detail">Search n\' Go - Élément</string>
 
 </resources>

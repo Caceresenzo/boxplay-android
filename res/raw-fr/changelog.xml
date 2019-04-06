@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">	
 
+	<changelogversion versionName="3.1.23 BETA" changeDate="06/04/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 20[/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] La capacité de re-montrer de bouton de téléchargement si l'extraction a échoué, il faut juste appuyé longtemps sur l'élément.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un caractère coché qui vous indique si vous avez déja cliquer ou non sur un élément, mais ils ne seront pas persistants.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] L'extracteur Youtube, il sera remplacé par un meilleur plus tard.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Des bibliothèque inutile.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Quelque personnes dans la section de l'équipe.</changelogtext>
+		<changelogtext>[b]Supprimé![/b] Le fournisseur de manga JapScan, le contourneur cloudflare était cassé et bloquais la recherche dans une boucle infini.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que la restoration de l'application se faisait plusieurs fois.</changelogtext>
+		<changelogtext>[b]Fixé![/b] L'extracteur de vidéo Openload marche de nouveau.</changelogtext>
+		<changelogtext>[b]Nettoyé![/b] Beaucoup de code des libraries qui n'était pas utilisé, l'application est maintenant beaucoup plus légére (autour des 3Mo).</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.22.1 BETA" changeDate="03/03/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 19.1[/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un support d'Abonnement pour le founisseur de manga Manga Rock.</changelogtext>

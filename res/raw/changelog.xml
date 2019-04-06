@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.23 BETA" changeDate="06/04/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 20[/b]</changelogtext>
+		<changelogtext>[b]Added![/b] Capability to show back the download button if the extraction failed, you just need to long-press the item.</changelogtext>
+		<changelogtext>[b]Added![/b] A check mark indication to show you weather or not you have clicked on an item, but will not be presistant.</changelogtext>
+		<changelogtext>[b]Removed![/b] The low-success-rate Youtube Extractor, it will be replaced for a better one later.</changelogtext>
+		<changelogtext>[b]Removed![/b] Useless libraries.</changelogtext>
+		<changelogtext>[b]Removed![/b] Some peoples in the Team section.</changelogtext>
+		<changelogtext>[b]Removed![/b] JapScan manga provider, the cloudflare bypass was broken and was locking the search in an infinite loop.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing restoration to be done multiple times.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Openload video extractor is now working again.</changelogtext>
+		<changelogtext>[b]Cleaned up![/b] Lot of unused library code, the application is now lighter (around 3MB).</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.22.1 BETA" changeDate="03/03/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 19.1[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] A Subscription support for the Manga Rock manga provider.</changelogtext>
