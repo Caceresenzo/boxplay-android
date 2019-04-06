@@ -302,6 +302,7 @@
     <string name="boxplay_culture_searchngo_search_result_data_type_item_chapter">Chapter</string>
     <string name="boxplay_culture_searchngo_search_result_data_type_null">NULL</string>
     <!-- Other -->
+    <string name="boxplay_culture_searchngo_search_result_data_item_clicked">&#10003;</string>
     <string name="boxplay_culture_searchngo_search_result_data_item_disabled">Disabled</string>
     <!-- MANGA VIEWER -->
     <string name="boxplay_manga_chapter_reader_format_info" formatted="false">%s\nPage %s/%s</string>

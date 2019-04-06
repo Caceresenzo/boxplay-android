@@ -27,11 +27,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:gravity="start"
                 android:text="TYPE"
                 android:textColor="@color/colorAccent"
                 android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/item_culture_searchandgo_activitypage_detail_content_textview_clicked"
+                style="@style/textViewSimpleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/boxplay_culture_searchngo_search_result_data_item_clicked"
+                android:textColor="@color/colorAccent"
+                android:textSize="10dp"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/item_culture_searchandgo_activitypage_detail_content_textview_disabled"

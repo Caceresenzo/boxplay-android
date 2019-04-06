@@ -11,6 +11,8 @@ import com.github.javiersantos.bottomdialogs.BottomDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.AsyncLayoutInflater;
 import android.support.v7.app.AlertDialog;
@@ -19,11 +21,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import caceresenzo.android.libs.color.ColorUtils;
 import caceresenzo.android.libs.dialog.DialogUtils;
 import caceresenzo.android.libs.intent.CommonIntentUtils;
 import caceresenzo.android.libs.internet.AdmAndroidDownloader;
@@ -135,7 +139,7 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 		if (visible) {
 			visible = (this == baseBoxPlayFragment);
 		}
-
+		
 		Menu menu = searchAndGoDetailActivity.getMenu();
 		if (menu != null) {
 			menu.findItem(R.id.menu_searchandgo_details_reorder).setVisible(visible);
@@ -196,19 +200,21 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 	class ContentViewBinder {
 		
 		/* Views */
-		private View view;
-		private TextView typeTextView, disabledTextView, contentTextView;
+		private View itemView;
+		private TextView typeTextView, disabledTextView, clickedTextView, contentTextView;
 		private ImageView iconImageView, downloadImageView;
 		
 		/* Variables */
 		private String bindedDataUrl;
+		private boolean downloadRemoved, clicked;
 		
 		/* Constructor */
 		public ContentViewBinder(View view) {
-			this.view = view;
+			this.itemView = view;
 			
 			typeTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_type);
 			disabledTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_disabled);
+			clickedTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_clicked);
 			
 			iconImageView = (ImageView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_imageview_icon);
 			contentTextView = (TextView) view.findViewById(R.id.item_culture_searchandgo_activitypage_detail_content_textview_content);
@@ -253,11 +259,11 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 			this.bindedDataUrl = url;
 			
 			if (url == null && checkNeeded) {
-				view.setClickable(false);
+				itemView.setClickable(false);
 				disabledTextView.setVisibility(View.VISIBLE);
 			} else {
 				if (validType) {
-					OnClickListener onClickListener = new OnClickListener() {
+					final OnClickListener onClickListener = new OnClickListener() {
 						@Override
 						public void onClick(View view) {
 							if (videoExtractionWorker != null && videoExtractionWorker.isRunning()) {
@@ -289,17 +295,41 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 								}
 							}
 							
+							if (!clicked) {
+								clicked = true;
+								
+								clickedTextView.setVisibility(View.VISIBLE);
+							}
 						}
 					};
 					
-					view.setOnClickListener(onClickListener);
-					downloadImageView.setOnClickListener(onClickListener);
+					OnLongClickListener onLongClickListener = new OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View view) {
+							if (!downloadRemoved) {
+								return false;
+							}
+							downloadRemoved = false;
+							
+							downloadImageView.setImageResource(R.drawable.icon_download_white_24dp);
+							applyActionClickListener(onClickListener);
+							
+							return true;
+						}
+					};
+					
+					applyActionClickListener(onClickListener);
+					
+					itemView.setOnLongClickListener(onLongClickListener);
+					downloadImageView.setOnLongClickListener(onLongClickListener);
 				}
 			}
 		}
 		
 		@SuppressWarnings("deprecation")
 		public void removeDownload() {
+			downloadRemoved = true;
+			
 			downloadImageView.setImageDrawable(getResources().getDrawable(R.drawable.icon_open_in_new_white_24dp));
 			downloadImageView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -312,6 +342,12 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 				}
 			});
 		}
+		
+		private void applyActionClickListener(OnClickListener onClickListener) {
+			itemView.setOnClickListener(onClickListener);
+			downloadImageView.setOnClickListener(onClickListener);
+		}
+		
 	}
 	
 	/**
