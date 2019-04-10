@@ -547,7 +547,12 @@ public class PageDetailContentSearchAndGoFragment extends BaseBoxPlayFragment im
 							if (applicationHelper.isVlcInstalled()) {
 								managers.getVideoManager().openVLC(directUrl, result.getName() + "\n" + videoItem.getName());
 							} else {
-								boxPlayApplication.toast(R.string.boxplay_error_vlc_not_installed).show();
+								handler.post(new Runnable() {
+									@Override
+									public void run() {
+										boxPlayApplication.toast(R.string.boxplay_error_vlc_not_installed).show();
+									}
+								});
 							}
 							break;
 						}
