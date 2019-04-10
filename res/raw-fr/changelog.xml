@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<changelog bulletedList="false">	
+<changelog bulletedList="false">
+
+	<changelogversion versionName="3.1.23.1 BETA" changeDate="10/04/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 20.1[/b]</changelogtext>
+		<changelogtext>[b]Fixé![/b] Le fournisseur de vidéo FullStream.co était cassé, ils remarche à présent.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Un bug qui faisait que l'application plantais si vous essayez de voir une vidéo dans le Search n' Go alors que VLC n'était pas installé.</changelogtext>
+	</changelogversion>
 
 	<changelogversion versionName="3.1.23 BETA" changeDate="06/04/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 20[/b]</changelogtext>

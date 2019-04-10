@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.23.1 BETA" changeDate="10/04/2019">
+		<changelogtext>[b]Search n' Go Update PREVIEW 20.1[/b]</changelogtext>
+		<changelogtext>[b]Fixed![/b] FullStream.co video provider was broken, its now working again.</changelogtext>
+		<changelogtext>[b]Fixed![/b] Bug causing application crash if you was trying to see a video in the Search n' Go and VLC was not installed.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.23 BETA" changeDate="06/04/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 20[/b]</changelogtext>
 		<changelogtext>[b]Added![/b] Capability to show back the download button if the extraction failed, you just need to long-press the item.</changelogtext>
