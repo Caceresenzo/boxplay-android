@@ -13,9 +13,7 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
-import android.media.tv.TvContract.Programs;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,7 +79,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 					
 					@Override
 					public void onAdFailedToLoad(int errorCode) {
-						Toast.makeText(boxPlayApplication, "Ad (banner) failed to load! error code: " + errorCode + "(" + errorToReason(errorCode)  + ")", Toast.LENGTH_SHORT).show();
+						Toast.makeText(boxPlayApplication, "Ad (banner) failed to load! error code: " + errorCode + "(" + errorToReason(errorCode) + ")", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
 						progressBar.setProgressTintList(ColorStateList.valueOf(boxPlayApplication.getColor(R.color.colorError)));
@@ -148,7 +146,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 					
 					@Override
 					public void onAdFailedToLoad(int errorCode) {
-						Toast.makeText(boxPlayApplication, "Ad failed to load! error code: " + errorCode + "(" + errorToReason(errorCode)  + ")", Toast.LENGTH_SHORT).show();
+						Toast.makeText(boxPlayApplication, "Ad failed to load! error code: " + errorCode + "(" + errorToReason(errorCode) + ")", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
 						progressBar.setProgressTintList(ColorStateList.valueOf(boxPlayApplication.getColor(R.color.colorError)));
@@ -214,7 +212,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 					
 					@Override
 					public void onRewardedVideoAdFailedToLoad(int errorCode) {
-						Toast.makeText(boxPlayApplication, "onRewardedVideoAdFailedToLoad error code: " + errorCode + "(" + errorToReason(errorCode)  + ")", Toast.LENGTH_SHORT).show();
+						Toast.makeText(boxPlayApplication, "onRewardedVideoAdFailedToLoad error code: " + errorCode + "(" + errorToReason(errorCode) + ")", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
 						progressBar.setProgressTintList(ColorStateList.valueOf(boxPlayApplication.getColor(R.color.colorError)));
@@ -374,6 +372,10 @@ public class AdsFragment extends BaseBoxPlayFragment {
 			rewardedVideoAd.resume(boxPlayApplication);
 		}
 		
+		if (adView != null) {
+			adView.pause();
+		}
+		
 		super.onResume();
 	}
 	
@@ -383,6 +385,10 @@ public class AdsFragment extends BaseBoxPlayFragment {
 			rewardedVideoAd.pause(boxPlayApplication);
 		}
 		
+		if (adView != null) {
+			adView.resume();
+		}
+		
 		super.onPause();
 	}
 	
@@ -390,6 +396,10 @@ public class AdsFragment extends BaseBoxPlayFragment {
 	public void onDestroy() {
 		if (rewardedVideoAd != null) {
 			rewardedVideoAd.destroy(boxPlayApplication);
+		}
+		
+		if (adView != null) {
+			adView.destroy();
 		}
 		
 		super.onDestroy();
