@@ -43,7 +43,7 @@ public class AdsTestActivity extends BaseBoxPlayActivty {
 		
 		// TODO - remove this if condition
 		// it's for demo purpose
-		if (TextUtils.isEmpty(getString(R.string.banner_home_footer))) {
+		if (TextUtils.isEmpty(getString(R.string.admob_adunit_test_banner))) {
 			Toast.makeText(getApplicationContext(), "Please mention your Banner Ad ID in strings.xml", Toast.LENGTH_LONG).show();
 			return;
 		}

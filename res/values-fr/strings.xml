@@ -414,6 +414,12 @@
     <string name="boxplay_other_settings_application_pref_clear_image_cache_summary_done">Terminé</string>
     <string name="boxplay_other_settings_application_pref_clear_image_cache_summary_error">Erreur: %s</string>
 
+    <!-- Other > Ads -->
+
+    <string name="boxplay_other_ads_type_banner">Bannière</string>
+    <string name="boxplay_other_ads_type_interstitial">Interstitiel</string>
+    <string name="boxplay_other_ads_type_rewarded_video">Avec récompense (vidéo)</string>
+
     <!-- Other > About -->
 
     <string name="boxplay_other_about_about">A propos</string>

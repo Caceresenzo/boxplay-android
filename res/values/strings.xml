@@ -455,6 +455,12 @@
     <string name="boxplay_other_settings_application_pref_clear_image_cache_summary_error">Error: %s</string>
     <string name="boxplay_other_settings_application_pref_clear_image_cache_key">application_clear_image_cache</string>
 
+    <!-- Other > Ads -->
+
+    <string name="boxplay_other_ads_type_banner">Banner</string>
+    <string name="boxplay_other_ads_type_interstitial">Interstitial</string>
+    <string name="boxplay_other_ads_type_rewarded_video">Rewarded Video</string>
+
     <!-- Other > About -->
 
     <string name="boxplay_other_about_about">About</string>
@@ -518,9 +524,12 @@
     <string name="title_activity_manga_reader">MangaReaderActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
-    
+
     <!-- AdMob ad unit IDs -->
+<!--     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string> -->
     <string name="admob_app_id">ca-app-pub-8224350508001877~2233339960</string>
-    <string name="banner_home_footer">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_adunit_test_banner">ca-app-pub-8224350508001877/4096128111</string>
+    <string name="admob_adunit_test_interstitial">ca-app-pub-8224350508001877/5497807564</string>
+    <string name="admob_adunit_test_rewarded_video">ca-app-pub-8224350508001877/5745343281</string>
 
 </resources>

@@ -36,7 +36,7 @@ public class BoxPlayApplication extends Application {
 	public static final String TAG = BoxPlayApplication.class.getSimpleName();
 	
 	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = true;
+	public static final boolean BUILD_DEBUG = false;
 	
 	/* Version */
 	private static final Version VERSION = new Version("3.1.23.1", VersionType.BETA);
