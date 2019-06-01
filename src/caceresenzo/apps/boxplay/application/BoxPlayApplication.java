@@ -1,5 +1,6 @@
 package caceresenzo.apps.boxplay.application;
 
+import com.google.android.gms.ads.MobileAds;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import android.app.Application;
@@ -35,7 +36,7 @@ public class BoxPlayApplication extends Application {
 	public static final String TAG = BoxPlayApplication.class.getSimpleName();
 	
 	/* Set Build as Debug */
-	public static final boolean BUILD_DEBUG = false;
+	public static final boolean BUILD_DEBUG = true;
 	
 	/* Version */
 	private static final Version VERSION = new Version("3.1.23.1", VersionType.BETA);
@@ -87,6 +88,8 @@ public class BoxPlayApplication extends Application {
 		managers.initialize();
 		
 		AndroidJavaScriptExecutorLibrary.use(this, HANDLER);
+		
+		MobileAds.initialize(this, getString(R.string.admob_app_id));
 	}
 	
 	@Override

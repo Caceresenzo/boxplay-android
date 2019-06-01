@@ -74,6 +74,7 @@
     <!--  -->
     <string name="boxplay_other">Autre</string>
     <string name="boxplay_other_settings">Paramètres</string>
+    <string name="boxplay_other_ads">Publicités</string>
     <string name="boxplay_other_about">A propos</string>
     <!-- <string name="boxplay_preferences_title">BoxPlay Settings</string> -->
 

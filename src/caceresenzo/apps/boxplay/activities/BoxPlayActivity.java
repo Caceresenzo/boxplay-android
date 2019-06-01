@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import caceresenzo.android.libs.menu.MenuTintUtils;
 import caceresenzo.apps.boxplay.R;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
+import caceresenzo.apps.boxplay.activities.test.AdsTestActivity;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
@@ -265,10 +266,10 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		// startActivity(new Intent(this, VideoPlayerActivity.class));
 		
 		// Manga
-		SearchAndGoDetailActivity.start(new SearchAndGoResult(ProviderManager.MANGALEL.create(), //
-				"Arifureta Shokugyou de Sekai Saikyou", //
-				"https://www.manga-lel.com/manga/arifureta-shokugyou-de-sekai-saikyou/", //
-				"https://www.manga-lel.com//uploads/manga/arifureta-shokugyou-de-sekai-saikyou/cover/cover_250x350.jpg")); //
+		// SearchAndGoDetailActivity.start(new SearchAndGoResult(ProviderManager.MANGALEL.create(), //
+		// "Arifureta Shokugyou de Sekai Saikyou", //
+		// "https://www.manga-lel.com/manga/arifureta-shokugyou-de-sekai-saikyou/", //
+		// "https://www.manga-lel.com//uploads/manga/arifureta-shokugyou-de-sekai-saikyou/cover/cover_250x350.jpg")); //
 		
 		// MangaChapterReaderActivity.start(null);
 		
@@ -277,6 +278,8 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 		// "Death March Kara Hajimaru Isekai Kyousoukyoku", //
 		// "https://www.jetanime.co/anime/death-march-kara-hajimaru-isekai-kyousoukyoku/", //
 		// "https://www.jetanime.co/assets/imgs/death-march-kara-hajimaru-isekai-kyousoukyoku.jpg")); //
+		
+		AdsTestActivity.start();
 	}
 	
 	/** Used to show the menu. */

@@ -96,6 +96,10 @@
                     android:icon="@drawable/icon_settings_white_24dp"
                     android:title="@string/boxplay_other_settings"/>
                 <item
+                    android:id="@+id/drawer_boxplay_other_ads"
+                    android:icon="@drawable/icon_heart_white_24dp"
+                    android:title="@string/boxplay_other_ads"/>
+                <item
                     android:id="@+id/drawer_boxplay_other_about"
                     android:icon="@drawable/icon_info_white_24dp"
                     android:title="@string/boxplay_other_about"/>
