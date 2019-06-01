@@ -1,14 +1,19 @@
 package caceresenzo.apps.boxplay.fragments.other;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.text.Editable;
+import android.widget.EditText;
 import caceresenzo.android.libs.application.ApplicationUtils;
 import caceresenzo.android.libs.internet.AdmAndroidDownloader;
 import caceresenzo.apps.boxplay.R;
@@ -18,6 +23,7 @@ import caceresenzo.apps.boxplay.helper.implementations.ApplicationHelper;
 import caceresenzo.apps.boxplay.helper.implementations.CacheHelper;
 import caceresenzo.apps.boxplay.helper.implementations.ImageHelper;
 import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
+import caceresenzo.apps.boxplay.managers.PremiumManager;
 import caceresenzo.apps.boxplay.managers.XManagers;
 import caceresenzo.libs.licencekey.LicenceKey;
 
@@ -57,7 +63,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		
 		sharedPreferences = managers.getPreferences();
 		
-		int[] keysStringIds = {				
+		int[] keysStringIds = {
 				/* Downloads */
 				R.string.boxplay_other_settings_downloads_pref_use_adm_key, //
 				
@@ -66,7 +72,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				R.string.boxplay_other_settings_boxplay_pref_background_service_frequency_key, //
 				
 				/* Premium */
+				R.string.boxplay_other_settings_premium_pref_premium_locked_key, //
 				R.string.boxplay_other_settings_premium_pref_premium_key_key, //
+				R.string.boxplay_other_settings_premium_pref_premium_hiding_key, //
 				
 				/* Debug */
 				R.string.boxplay_other_settings_debug_pref_extractor_show_logs_key, //
@@ -85,7 +93,60 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 		
 		initialization = false;
 		
+		initializeSpecifics();
 		initializeButton();
+	}
+	
+	private void initializeSpecifics() {
+		final SwitchPreference lockingSwitchPreference = (SwitchPreference) findPreference(getString(R.string.boxplay_other_settings_premium_pref_premium_locked_key));
+		
+		lockingSwitchPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				final PremiumManager premiumManager = managers.getPremiumManager();
+				
+				final EditText editText = new EditText(boxPlayApplication.getAttachedActivity());
+				
+				final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(boxPlayApplication.getAttachedActivity()) //
+						.setTitle("Password") //
+						.setView(editText) //
+				;
+				
+				if (premiumManager.isPremiumLocked()) {
+					alertDialogBuilder.setPositiveButton("UNLOCK", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							if (premiumManager.tryToUnlock(editText.getText().toString())) {
+								lockingSwitchPreference.setChecked(false);
+							} else {
+								lockingSwitchPreference.setChecked(true);
+								boxPlayApplication.toast("Bad password").show();
+							}
+							
+							premiumManager.updateDrawer();
+						}
+					});
+				} else {
+					alertDialogBuilder.setPositiveButton("LOCK", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							if (premiumManager.lock(editText.getText().toString())) {
+								lockingSwitchPreference.setChecked(true);
+							} else {
+								lockingSwitchPreference.setChecked(false);
+								boxPlayApplication.toast("Error").show();
+							}
+							
+							premiumManager.updateDrawer();
+						}
+					});
+				}
+				
+				alertDialogBuilder.show();
+				
+				premiumManager.updateDrawer();
+				return false;
+			}
+		});
+		
 	}
 	
 	private void initializeButton() {
@@ -165,6 +226,42 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 					}
 				}
 			}
+			//
+			else if (key.equals(getString(R.string.boxplay_other_settings_premium_pref_premium_locked_key))) {
+				boolean locked = managers.getPremiumManager().isPremiumLocked();
+				
+				if (locked) {
+					preference.setSummary(R.string.boxplay_other_settings_premium_pref_premium_locked_summary_locked);
+				} else {
+					preference.setSummary(R.string.boxplay_other_settings_premium_pref_premium_locked_summary_unlocked);
+				}
+
+				findPreference(getString(R.string.boxplay_other_settings_premium_pref_premium_hiding_key)).setEnabled(!locked);
+				findPreference(getString(R.string.boxplay_other_settings_premium_pref_premium_key_key)).setEnabled(!locked);
+			}
+			//
+			else if (key.equals(getString(R.string.boxplay_other_settings_premium_pref_premium_hiding_key))) {
+				PremiumManager premiumManager = managers.getPremiumManager();
+				
+				boolean keyIsValid = premiumManager.isPremiumKeyValid();
+				int summary = 0;
+				
+				if (keyIsValid) {
+					if (premiumManager.isPremiumHidden()) {
+						summary = R.string.boxplay_other_settings_premium_pref_premium_hiding_summary_hidden;
+					} else {
+						summary = R.string.boxplay_other_settings_premium_pref_premium_hiding_summary_visible;
+					}
+				} else {
+					summary = R.string.boxplay_other_settings_premium_pref_premium_hiding_summary_invalid;
+					switchPreference.setChecked(false);
+				}
+				
+				preference.setEnabled(keyIsValid && !premiumManager.isPremiumLocked());
+				preference.setSummary(summary);
+				
+				premiumManager.updateDrawer();
+			}
 		} else if (preference instanceof CheckBoxPreference) {
 			CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
 			
@@ -218,6 +315,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				}
 				
 				managers.getPremiumManager().updateLicence(licenceKey);
+				onSharedPreferenceChanged(sharedPreferences, getString(R.string.boxplay_other_settings_premium_pref_premium_hiding_key));
 				
 				editTextPreference.setText(licenceKey.getKey());
 			}

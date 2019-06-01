@@ -25,6 +25,7 @@ import caceresenzo.apps.boxplay.application.Constants;
 import caceresenzo.apps.boxplay.fragments.BaseBoxPlayFragment;
 import caceresenzo.apps.boxplay.fragments.culture.CultureFragment;
 import caceresenzo.apps.boxplay.fragments.mylist.MyListFragment;
+import caceresenzo.apps.boxplay.fragments.other.AdsFragment;
 import caceresenzo.apps.boxplay.fragments.other.SettingsFragment;
 import caceresenzo.apps.boxplay.fragments.other.about.AboutFragment;
 import caceresenzo.apps.boxplay.fragments.premium.adult.AdultExplorerFragment;
@@ -35,8 +36,6 @@ import caceresenzo.apps.boxplay.fragments.user.UserFragment;
 import caceresenzo.apps.boxplay.helper.implementations.LocaleHelper;
 import caceresenzo.apps.boxplay.services.BoxPlayForegroundService;
 import caceresenzo.apps.boxplay.utils.Restorable;
-import caceresenzo.libs.boxplay.culture.searchngo.providers.ProviderManager;
-import caceresenzo.libs.boxplay.culture.searchngo.result.SearchAndGoResult;
 
 /**
  * Main BoxPlay Activity class.
@@ -563,6 +562,20 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 				}
 				
 				showFragment(settingsFragment);
+				break;
+			}
+			
+			/* Ads */
+			case R.id.drawer_boxplay_other_ads: {
+				AdsFragment adsFragment;
+				
+				if (actualFragment instanceof AdsFragment) {
+					adsFragment = ((AdsFragment) actualFragment);
+				} else {
+					adsFragment = new AdsFragment();
+				}
+				
+				showFragment(adsFragment);
 				break;
 			}
 			

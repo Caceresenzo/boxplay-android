@@ -376,10 +376,19 @@
     <!--  -->
     <string name="boxplay_other_settings_premium_category_title">Plus</string>
     <!--  -->
+    <string name="boxplay_other_settings_premium_pref_premium_locked_title">Verrouillage</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_summary_locked">Les fonctionnalités Plus sont maintenant verrouillées avec un mot de passe</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_summary_unlocked">Les fonctionnalités Plus ne sont pas verrouillées par un mot de passe</string>
+    <!--  -->
     <string name="boxplay_other_settings_premium_pref_premium_key_title">Clé d\'activation</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_no_key">Aucune clé</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_valid">Clé valide (%s)</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_invalid">Clé invalide (%s)</string>
+    <!--  -->
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_title">Visibilité</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_summary_invalid">Non activé (clé invalide)</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_summary_visible">La section Plus est visible</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_summary_hidden">La section Plus est cachée</string>
     <!--  -->
     <string name="boxplay_other_settings_debug_category_title">Débugage</string>
     <!--  -->

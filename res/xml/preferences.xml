@@ -44,11 +44,26 @@
 
         <!-- Premium > Activation > Key -->
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:disableDependentsState="true"
+            android:key="@string/boxplay_other_settings_premium_pref_premium_locked_key"
+            android:summary=""
+            android:title="@string/boxplay_other_settings_premium_pref_premium_locked_title" />
+
         <EditTextPreference
+            android:dependency="@string/boxplay_other_settings_premium_pref_premium_locked_key"
             android:inputType="textCapCharacters"
             android:key="@string/boxplay_other_settings_premium_pref_premium_key_key"
             android:summary=""
             android:title="@string/boxplay_other_settings_premium_pref_premium_key_title" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:dependency="@string/boxplay_other_settings_premium_pref_premium_locked_key"
+            android:key="@string/boxplay_other_settings_premium_pref_premium_hiding_key"
+            android:summary=""
+            android:title="@string/boxplay_other_settings_premium_pref_premium_hiding_title" />
     </PreferenceCategory>
 
     <!-- Extraction -->

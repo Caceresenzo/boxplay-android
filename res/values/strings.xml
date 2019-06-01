@@ -398,11 +398,22 @@
     <!--  -->
     <string name="boxplay_other_settings_premium_category_title">Premium</string>
     <!--  -->
-    <string name="boxplay_other_settings_premium_pref_premium_key_title">Premium Activation Key</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_title">Locking</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_summary_locked">Premium functionalities are now locked with a password.</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_summary_unlocked">Premium functionalities are not locked with a password.</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_key">premium_locked</string>
+    <!--  -->
+    <string name="boxplay_other_settings_premium_pref_premium_key_title">Activation Key</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_no_key">No key</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_valid">Valid key (%s)</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_invalid">Invalid key (%s)</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_key">premium_key</string>
+    <!--  -->
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_title">Visibility</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_summary_invalid">Not activated (invalid key)</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_summary_visible">Premium section is visible</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_summary_hidden">Premium section is hidden</string>
+    <string name="boxplay_other_settings_premium_pref_premium_hiding_key">premium_hiding</string>
     <!--  -->
     <string name="boxplay_other_settings_debug_category_title">Debug</string>
     <!--  -->

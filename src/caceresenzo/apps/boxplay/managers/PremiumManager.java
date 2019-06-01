@@ -1,5 +1,7 @@
 package caceresenzo.apps.boxplay.managers;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Map;
 
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import caceresenzo.android.libs.dialog.DialogUtils;
@@ -28,6 +31,8 @@ import caceresenzo.libs.boxplay.factory.AdultFactory;
 import caceresenzo.libs.boxplay.factory.AdultFactory.AdultFactoryListener;
 import caceresenzo.libs.boxplay.factory.AdultFactory.VideoOrigin;
 import caceresenzo.libs.boxplay.models.premium.adult.AdultVideo;
+import caceresenzo.libs.cryptography.MD5;
+import caceresenzo.libs.filesystem.FileUtils;
 import caceresenzo.libs.licencekey.LicenceKey;
 import caceresenzo.libs.network.Downloader;
 import caceresenzo.libs.string.StringUtils;
@@ -42,18 +47,27 @@ public class PremiumManager extends AbstractManager {
 	private static final String TAG = PremiumManager.class.getSimpleName();
 	
 	/* Menu Ids List */
-	private static final List<Integer> premiumMenusId = new ArrayList<Integer>();
+	private static final List<Integer> premiumMenusId = new ArrayList<>();
 	
 	static {
 		premiumMenusId.add(R.id.drawer_boxplay_premium);
 		premiumMenusId.add(R.id.drawer_boxplay_premium_adult);
 	}
 	
+	/* Locking */
+	private File lockingFile;
+	private String lockingPasswordMd5;
+	
 	/* Validation */
 	private LicenceKey licenceKey;
 	
 	/* Sub Managers */
 	private AdultPremiumSubManager adultSubManager;
+	
+	@Override
+	protected void initialize() {
+		checkLocking();
+	}
 	
 	@Override
 	protected void initializeWhenUiReady(BaseBoxPlayActivty attachedActivity) {
@@ -65,11 +79,89 @@ public class PremiumManager extends AbstractManager {
 		}
 	}
 	
+	private boolean checkLocking() {
+		File documentFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+		
+		if (documentFolder != null) {
+			try {
+				FileUtils.forceDirectoryCreation(documentFolder);
+				
+				if (lockingFile == null) {
+					lockingFile = new File(documentFolder, "/boxplay/premium/lock");
+					
+					Log.i(TAG, "Locking file path: " + lockingFile.getAbsolutePath());
+				} else {
+					FileUtils.forceFileCreation(lockingFile);
+				}
+				
+				String content = StringUtils.fromFile(lockingFile);
+				boolean locked = StringUtils.validate(content);
+				
+				getManagers().getPreferences().edit().putBoolean(getString(R.string.boxplay_other_settings_premium_pref_premium_locked_key), locked).commit();
+				
+				if (locked) {
+					lockingPasswordMd5 = content.replace("\n", "");
+				}
+				
+				return locked;
+			} catch (IOException exception) {
+				Log.e(TAG, "Failed to create or read the locking file.", exception);
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean lock(String password) {
+		if (isPremiumLocked() || lockingFile == null) {
+			return false;
+		}
+		
+		String md5 = MD5.silentMd5(password);
+		Log.d(TAG, "LOCKING:: PASSWORD:" + password + ":   MD5:" + md5 + ":");
+		
+		try {
+			FileUtils.writeStringToFile(md5, lockingFile);
+			
+			return checkLocking();
+		} catch (Exception exception) {
+			Log.e(TAG, "Failed to save the password, locking aborted.", exception);
+		}
+		
+		return false;
+	}
+	
+	public boolean tryToUnlock(String password) {
+		if (!isPremiumLocked() || lockingFile == null) {
+			return false;
+		}
+		
+		String md5 = MD5.silentMd5(password);
+		
+		Log.d(TAG, "UNLOCKING:: PASSWORD:" + password + ":   MD5:" + md5 + ":    LOCKING MD5:" + lockingPasswordMd5 + ":");
+		
+		if (String.valueOf(lockingPasswordMd5).equals(String.valueOf(md5))) {
+			try {
+				Log.i(TAG, "Deleting file.");
+				if (lockingFile.delete()) {
+					Log.i(TAG, "Ok");
+					return !checkLocking();
+				}
+			} catch (Exception exception) {
+				Log.e(TAG, "Failed to remove locking file.", exception);
+			}
+		} else {
+			Log.i(TAG, "Password not the same.");
+		}
+		
+		return false;
+	}
+	
 	/**
-	 * Call to check the {@link LicenceKey} and call {@link #updateDrawer()} just to be sure that the ui is sync
+	 * Call to check the {@link LicenceKey} and call {@link #updateDrawer()} just to be sure that the ui is sync.
 	 * 
 	 * @param licenceKey
-	 *            Your new {@link LicenceKey}
+	 *            Your new {@link LicenceKey}.
 	 */
 	public void updateLicence(LicenceKey licenceKey) {
 		this.licenceKey = licenceKey;
@@ -82,9 +174,9 @@ public class PremiumManager extends AbstractManager {
 	}
 	
 	/**
-	 * Update the drawer, hide the premium menu ids if the {@link LicenceKey} key is not valid
+	 * Update the drawer, hide the premium menu ids if the {@link LicenceKey} key is not valid.
 	 */
-	private void updateDrawer() {
+	public void updateDrawer() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -92,14 +184,14 @@ public class PremiumManager extends AbstractManager {
 					ThreadUtils.sleep(100L);
 				}
 				
-				boolean keyIsValid = isPremiumKeyValid();
+				boolean shouldDisplay = isPremiumUsable();
 				
 				try {
 					for (int menuId : premiumMenusId) {
 						MenuItem menuItem = BoxPlayActivity.getBoxPlayActivity().getNavigationView().getMenu().findItem(menuId);
 						
 						if (menuItem != null) {
-							menuItem.setVisible(keyIsValid);
+							menuItem.setVisible(shouldDisplay);
 							menuItem.setChecked(false);
 						}
 					}
@@ -110,26 +202,38 @@ public class PremiumManager extends AbstractManager {
 		}).start();
 	}
 	
+	public boolean isPremiumHidden() {
+		return isPremiumKeyValid() && getManagers().getPreferences().getBoolean(getString(R.string.boxplay_other_settings_premium_pref_premium_hiding_key), false);
+	}
+	
 	/**
-	 * Check if the actually registered {@link LicenceKey} is not null and valid
+	 * Check if the actually registered {@link LicenceKey} is not null and valid.
 	 * 
-	 * @return {@link LicenceKey} validation
+	 * @return {@link LicenceKey} validity.
 	 */
 	public boolean isPremiumKeyValid() {
 		return licenceKey != null && licenceKey.isChecked() && licenceKey.isValid();
 	}
 	
+	public boolean isPremiumLocked() {
+		return getManagers().getPreferences().getBoolean(getString(R.string.boxplay_other_settings_premium_pref_premium_locked_key), false);
+	}
+	
 	/**
-	 * Get the {@link AdultPremiumSubManager} instance
-	 * 
-	 * @return The actual instance
+	 * @return Weather or not the premium module can be used or not.<br>
+	 *         This will check if the premium is not locked, and the key is valid, and if it should not be hidden.
 	 */
+	public boolean isPremiumUsable() {
+		return !isPremiumLocked() && isPremiumKeyValid() && !isPremiumHidden();
+	}
+	
+	/** @return The actual {@link AdultPremiumSubManager} instance. */
 	public AdultPremiumSubManager getAdultSubManager() {
 		return adultSubManager;
 	}
 	
 	/**
-	 * Sub-Manager for Adult
+	 * Sub-Manager for Adult.
 	 * 
 	 * @author Enzo CACERES
 	 */
@@ -236,8 +340,9 @@ public class PremiumManager extends AbstractManager {
 						@Override
 						public void onAdultVideoCreated(AdultVideo adultVideo, VideoOrigin origin) {
 							List<AdultVideo> videos = actualPageVideosMap.get(origin);
+							
 							if (videos == null) {
-								videos = new ArrayList<AdultVideo>();
+								videos = new ArrayList<>();
 								actualPageVideosMap.put(origin, videos);
 							}
 							
@@ -252,7 +357,7 @@ public class PremiumManager extends AbstractManager {
 					
 					working = false;
 					
-					BoxPlayApplication.getHandler().post(new Runnable() {
+					handler.post(new Runnable() {
 						@Override
 						public void run() {
 							if (callback != null) {

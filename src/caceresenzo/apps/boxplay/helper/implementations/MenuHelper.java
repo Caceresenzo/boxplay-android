@@ -49,6 +49,7 @@ public class MenuHelper extends AbstractHelper {
 		menu(R.id.drawer_boxplay_mylist_watchlater);
 		menu(R.id.drawer_boxplay_mylist_subscriptions);
 		menu(R.id.drawer_boxplay_other_settings);
+		menu(R.id.drawer_boxplay_other_ads);
 		menu(R.id.drawer_boxplay_other_about);
 	}
 	
