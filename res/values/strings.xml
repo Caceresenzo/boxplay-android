@@ -2,7 +2,7 @@
 <resources>
 
     <string name="application_name">BoxPlay</string>
-    <string name="application_website">https://boxplay.io</string>
+    <string name="application_website">http://boxplay.io</string>
     <string name="application_email">caceresenzo1502@gmail.com</string>
     <!--  -->
     <string name="author_github">https://github.com/Caceresenzo</string>
@@ -402,6 +402,11 @@
     <string name="boxplay_other_settings_premium_pref_premium_locked_summary_locked">Premium functionalities are now locked with a password.</string>
     <string name="boxplay_other_settings_premium_pref_premium_locked_summary_unlocked">Premium functionalities are not locked with a password.</string>
     <string name="boxplay_other_settings_premium_pref_premium_locked_key">premium_locked</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_dialog_title">Password</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_dialog_button_lock">LOCK</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_dialog_button_unlock">UNLOCK</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_error_already_locked">Error: Already Locked</string>
+    <string name="boxplay_other_settings_premium_pref_premium_locked_error_wrong_password">Error: Wrong Password</string>
     <!--  -->
     <string name="boxplay_other_settings_premium_pref_premium_key_title">Activation Key</string>
     <string name="boxplay_other_settings_premium_pref_premium_key_summary_no_key">No key</string>

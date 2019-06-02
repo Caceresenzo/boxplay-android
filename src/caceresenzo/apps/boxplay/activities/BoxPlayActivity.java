@@ -513,7 +513,7 @@ public class BoxPlayActivity extends BaseBoxPlayActivty implements NavigationVie
 			/* Premium */
 			// TODO: Do PremiumFragment instead of AdultExplorerFragment
 			case R.id.drawer_boxplay_premium_adult: {
-				if (managers.getPremiumManager().isPremiumKeyValid()) {
+				if (managers.getPremiumManager().isPremiumUsable()) {
 					showFragment(new AdultExplorerFragment());
 				} else {
 					managers.getPremiumManager().updateLicence(null);

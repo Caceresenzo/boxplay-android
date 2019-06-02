@@ -12,7 +12,6 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.text.Editable;
 import android.widget.EditText;
 import caceresenzo.android.libs.application.ApplicationUtils;
 import caceresenzo.android.libs.internet.AdmAndroidDownloader;
@@ -108,31 +107,31 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 				final EditText editText = new EditText(boxPlayApplication.getAttachedActivity());
 				
 				final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(boxPlayApplication.getAttachedActivity()) //
-						.setTitle("Password") //
+						.setTitle(R.string.boxplay_other_settings_premium_pref_premium_locked_dialog_title) //
 						.setView(editText) //
 				;
 				
 				if (premiumManager.isPremiumLocked()) {
-					alertDialogBuilder.setPositiveButton("UNLOCK", new DialogInterface.OnClickListener() {
+					alertDialogBuilder.setPositiveButton(R.string.boxplay_other_settings_premium_pref_premium_locked_dialog_button_unlock, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							if (premiumManager.tryToUnlock(editText.getText().toString())) {
 								lockingSwitchPreference.setChecked(false);
 							} else {
 								lockingSwitchPreference.setChecked(true);
-								boxPlayApplication.toast("Bad password").show();
+								boxPlayApplication.toast(R.string.boxplay_other_settings_premium_pref_premium_locked_error_wrong_password).show();
 							}
 							
 							premiumManager.updateDrawer();
 						}
 					});
 				} else {
-					alertDialogBuilder.setPositiveButton("LOCK", new DialogInterface.OnClickListener() {
+					alertDialogBuilder.setPositiveButton(R.string.boxplay_other_settings_premium_pref_premium_locked_dialog_button_lock, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
 							if (premiumManager.lock(editText.getText().toString())) {
 								lockingSwitchPreference.setChecked(true);
 							} else {
 								lockingSwitchPreference.setChecked(false);
-								boxPlayApplication.toast("Error").show();
+								boxPlayApplication.toast(R.string.boxplay_other_settings_premium_pref_premium_locked_error_already_locked).show();
 							}
 							
 							premiumManager.updateDrawer();

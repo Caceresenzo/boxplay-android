@@ -15,6 +15,7 @@ import caceresenzo.apps.boxplay.activities.ImageViewerActivity;
 import caceresenzo.apps.boxplay.activities.base.BaseBoxPlayActivty;
 import caceresenzo.apps.boxplay.application.BoxPlayApplication;
 
+@SuppressWarnings({ "all" })
 public class AdsTestActivity extends BaseBoxPlayActivty {
 	
 	private AdView mAdView;
