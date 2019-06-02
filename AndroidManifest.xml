@@ -2,8 +2,8 @@
 <!DOCTYPE xml>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="caceresenzo.apps.boxplay"
-    android:versionCode="0030123100"
-    android:versionName="3.1.23.1 BETA" >
+    android:versionCode="0030124000"
+    android:versionName="3.1.24 BETA" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

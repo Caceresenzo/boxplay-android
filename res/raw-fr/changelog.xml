@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.24 BETA" changeDate="02/06/2019">
+		<changelogtext>[b]Révolution des Publicités![/b]</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Un fragment de publicité sur lequel vous pouvez cliquer si vous voulez me soutenir!</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Options de verrouillage (avec mot de passe) pour la section Premium.</changelogtext>
+		<changelogtext>[b]Ajouté![/b] Options de masquage pour la section Premium.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Bug avec le fournisseur vidéo JetAnime du Search n' Go en raison de leur nouveau lecteur.</changelogtext>
+		<changelogtext>[b]Fixé![/b] Bug avec le fournisseur de manga MangaNelo du Search n' Go.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.23.1 BETA" changeDate="10/04/2019">
 		<changelogtext>[b]Search n' Go Update PREVIEW 20.1[/b]</changelogtext>
 		<changelogtext>[b]Fixé![/b] Le fournisseur de vidéo FullStream.co était cassé, ils remarche à présent.</changelogtext>
