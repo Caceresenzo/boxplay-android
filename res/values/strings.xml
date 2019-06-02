@@ -460,6 +460,14 @@
     <string name="boxplay_other_ads_type_banner">Banner</string>
     <string name="boxplay_other_ads_type_interstitial">Interstitial</string>
     <string name="boxplay_other_ads_type_rewarded_video">Rewarded Video</string>
+    
+    <string name="boxplay_other_ads_eta_loading">Loading...</string>
+    <string name="boxplay_other_ads_eta_ready">Ready</string>
+    
+    <string name="boxplay_other_ads_error_internal_error">Internal Error</string>
+    <string name="boxplay_other_ads_error_invalid_request">Invalid Request</string>
+    <string name="boxplay_other_ads_error_network_error">Network Error</string>
+    <string name="boxplay_other_ads_error_no_fill">No Ads Available</string>
 
     <!-- Other > About -->
 

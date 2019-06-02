@@ -50,7 +50,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 		
 		this.adsItems.add(new SimpleAdsItem(R.string.boxplay_other_ads_type_banner) {
 			@Override
-			public void load(final ProgressBar progressBar) {
+			public void load(final ProgressBar progressBar, final TextView etaTextView) {
 				adView = new AdView(boxPlayApplication);
 				adView.setAdSize(AdSize.BANNER);
 				
@@ -69,6 +69,8 @@ public class AdsFragment extends BaseBoxPlayFragment {
 						Toast.makeText(boxPlayApplication, "Ad (banner) is loaded!", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
+						
+						etaTextView.setText(R.string.boxplay_other_ads_eta_ready);
 					}
 					
 					@Override
@@ -79,10 +81,12 @@ public class AdsFragment extends BaseBoxPlayFragment {
 					
 					@Override
 					public void onAdFailedToLoad(int errorCode) {
-						Toast.makeText(boxPlayApplication, "Ad (banner) failed to load! error code: " + errorCode + "(" + errorToReason(errorCode) + ")", Toast.LENGTH_SHORT).show();
+						Toast.makeText(boxPlayApplication, "Ad (banner) failed to load! error code: " + errorCode + "(" + getString(errorToReason(errorCode)) + ")", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
 						progressBar.setProgressTintList(ColorStateList.valueOf(boxPlayApplication.getColor(R.color.colorError)));
+						
+						etaTextView.setText(errorToReason(errorCode));
 					}
 					
 					@Override
@@ -98,10 +102,12 @@ public class AdsFragment extends BaseBoxPlayFragment {
 					}
 				});
 				
-				loadAds();
+				loadAds(etaTextView);
 			}
 			
-			private void loadAds() {
+			private void loadAds(TextView etaTextView) {
+				etaTextView.setText(R.string.boxplay_other_ads_eta_loading);
+				
 				adView.loadAd(new AdRequest.Builder().build());
 			}
 			
@@ -118,7 +124,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 		
 		this.adsItems.add(new SimpleAdsItem(R.string.boxplay_other_ads_type_interstitial) {
 			@Override
-			public void load(final ProgressBar progressBar) {
+			public void load(final ProgressBar progressBar, final TextView etaTextView) {
 				interstitialAd = new InterstitialAd(boxPlayApplication);
 				
 				if (BoxPlayApplication.BUILD_DEBUG) {
@@ -133,6 +139,8 @@ public class AdsFragment extends BaseBoxPlayFragment {
 						Toast.makeText(boxPlayApplication, "Ad is loaded!", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
+						
+						etaTextView.setText(R.string.boxplay_other_ads_eta_ready);
 					}
 					
 					@Override
@@ -141,15 +149,17 @@ public class AdsFragment extends BaseBoxPlayFragment {
 						
 						progressBar.setIndeterminate(true);
 						
-						loadAds();
+						loadAds(etaTextView);
 					}
 					
 					@Override
 					public void onAdFailedToLoad(int errorCode) {
-						Toast.makeText(boxPlayApplication, "Ad failed to load! error code: " + errorCode + "(" + errorToReason(errorCode) + ")", Toast.LENGTH_SHORT).show();
+						Toast.makeText(boxPlayApplication, "Ad failed to load! error code: " + errorCode + "(" + getString(errorToReason(errorCode)) + ")", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
 						progressBar.setProgressTintList(ColorStateList.valueOf(boxPlayApplication.getColor(R.color.colorError)));
+						
+						etaTextView.setText(errorToReason(errorCode));
 					}
 					
 					@Override
@@ -163,10 +173,12 @@ public class AdsFragment extends BaseBoxPlayFragment {
 					}
 				});
 				
-				loadAds();
+				loadAds(etaTextView);
 			}
 			
-			private void loadAds() {
+			private void loadAds(TextView etaTextView) {
+				etaTextView.setText(R.string.boxplay_other_ads_eta_loading);
+				
 				interstitialAd.loadAd(new AdRequest.Builder().build());
 			}
 			
@@ -185,7 +197,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 		
 		this.adsItems.add(new SimpleAdsItem(R.string.boxplay_other_ads_type_rewarded_video) {
 			@Override
-			public void load(final ProgressBar progressBar) {
+			public void load(final ProgressBar progressBar, final TextView etaTextView) {
 				rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(boxPlayApplication);
 				
 				rewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
@@ -207,15 +219,17 @@ public class AdsFragment extends BaseBoxPlayFragment {
 						
 						progressBar.setIndeterminate(true);
 						
-						loadAds();
+						loadAds(etaTextView);
 					}
 					
 					@Override
 					public void onRewardedVideoAdFailedToLoad(int errorCode) {
-						Toast.makeText(boxPlayApplication, "onRewardedVideoAdFailedToLoad error code: " + errorCode + "(" + errorToReason(errorCode) + ")", Toast.LENGTH_SHORT).show();
+						Toast.makeText(boxPlayApplication, "onRewardedVideoAdFailedToLoad error code: " + errorCode + "(" + getString(errorToReason(errorCode)) + ")", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
 						progressBar.setProgressTintList(ColorStateList.valueOf(boxPlayApplication.getColor(R.color.colorError)));
+						
+						etaTextView.setText(errorToReason(errorCode));
 					}
 					
 					@Override
@@ -223,6 +237,8 @@ public class AdsFragment extends BaseBoxPlayFragment {
 						Toast.makeText(boxPlayApplication, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
 						
 						progressBar.setIndeterminate(false);
+						
+						etaTextView.setText(R.string.boxplay_other_ads_eta_ready);
 					}
 					
 					@Override
@@ -243,15 +259,17 @@ public class AdsFragment extends BaseBoxPlayFragment {
 				
 				// mRewardedVideoAd.loadAd("ca-app-pub-8224350508001877/5745343281", new AdRequest.Builder().build());
 				
-				loadAds();
+				loadAds(etaTextView);
 			}
 			
-			private void loadAds() {
+			private void loadAds(TextView etaTextView) {
 				String adUnit = "ca-app-pub-3940256099942544/5224354917";
 				
 				if (!BoxPlayApplication.BUILD_DEBUG) {
 					adUnit = getString(R.string.admob_adunit_test_interstitial);
 				}
+				
+				etaTextView.setText(R.string.boxplay_other_ads_eta_loading);
 				
 				rewardedVideoAd.loadAd(adUnit, new AdRequest.Builder().build());
 			}
@@ -318,7 +336,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 		
 		/* Views */
 		private View view;
-		private TextView contentTextView;
+		private TextView contentTextView, etaTextView;
 		private ProgressBar progressBar;
 		
 		/* Constructor */
@@ -327,6 +345,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 			
 			this.view = itemView;
 			this.contentTextView = (TextView) itemView.findViewById(R.id.item_ads_item_textview_content);
+			this.etaTextView = (TextView) itemView.findViewById(R.id.item_ads_item_textview_eta);
 			this.progressBar = (ProgressBar) itemView.findViewById(R.id.item_ads_item_progressview_eta);
 		}
 		
@@ -335,7 +354,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 			view.setOnClickListener(item.getOnClickListener());
 			contentTextView.setText(getString(item.getTextStringId()));
 			
-			item.load(progressBar);
+			item.load(progressBar, etaTextView);
 		}
 	}
 	
@@ -357,7 +376,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 		/**
 		 * Called when the corresponding view has been created.
 		 */
-		public abstract void load(ProgressBar progressBar);
+		public abstract void load(ProgressBar progressBar, TextView etaTextView);
 		
 		/**
 		 * Called when the user click on the corresponding view.
@@ -405,26 +424,26 @@ public class AdsFragment extends BaseBoxPlayFragment {
 		super.onDestroy();
 	}
 	
-	public static String errorToReason(int errorCode) {
+	public static int errorToReason(int errorCode) {
 		switch (errorCode) {
-			case 0: {
-				return "ERROR_CODE_INTERNAL_ERROR";
+			case AdRequest.ERROR_CODE_INTERNAL_ERROR: {
+				return R.string.boxplay_other_ads_error_internal_error;
 			}
 			
-			case 1: {
-				return "ERROR_CODE_INVALID_REQUEST";
+			case AdRequest.ERROR_CODE_INVALID_REQUEST: {
+				return R.string.boxplay_other_ads_error_invalid_request;
 			}
 			
-			case 2: {
-				return "ERROR_CODE_NETWORK_ERROR";
+			case AdRequest.ERROR_CODE_NETWORK_ERROR: {
+				return R.string.boxplay_other_ads_error_network_error;
 			}
 			
-			case 3: {
-				return "ERROR_CODE_NO_FILL";
+			case AdRequest.ERROR_CODE_NO_FILL: {
+				return R.string.boxplay_other_ads_error_no_fill;
 			}
 			
 			default: {
-				return null;
+				throw new IllegalStateException("Unknown error with code: " + errorCode);
 			}
 		}
 	}

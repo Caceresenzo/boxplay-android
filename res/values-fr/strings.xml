@@ -419,6 +419,14 @@
     <string name="boxplay_other_ads_type_banner">Bannière</string>
     <string name="boxplay_other_ads_type_interstitial">Interstitiel</string>
     <string name="boxplay_other_ads_type_rewarded_video">Avec récompense (vidéo)</string>
+    
+    <string name="boxplay_other_ads_eta_loading">Chargement...</string>
+    <string name="boxplay_other_ads_eta_ready">Prêt</string>
+    
+    <string name="boxplay_other_ads_error_internal_error">Erreur Interne</string>
+    <string name="boxplay_other_ads_error_invalid_request">Requête Invalide</string>
+    <string name="boxplay_other_ads_error_network_error">Erreur de Réseau</string>
+    <string name="boxplay_other_ads_error_no_fill">Aucune Annonce Disponible</string>
 
     <!-- Other > About -->
 

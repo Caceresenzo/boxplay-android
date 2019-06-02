@@ -26,15 +26,23 @@
             android:textSize="18sp"
             tools:text="Name" />
 
+        <TextView
+            android:id="@+id/item_ads_item_textview_eta"
+            style="@style/textViewSimpleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="Loading" />
+
         <ProgressBar
             android:id="@+id/item_ads_item_progressview_eta"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            android:progress="100"
             android:max="100"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:progress="100" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
