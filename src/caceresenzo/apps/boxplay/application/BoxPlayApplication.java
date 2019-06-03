@@ -39,7 +39,7 @@ public class BoxPlayApplication extends Application {
 	public static final boolean BUILD_DEBUG = false;
 	
 	/* Version */
-	private static final Version VERSION = new Version("3.1.24", VersionType.BETA);
+	private static final Version VERSION = new Version("3.1.24.1", VersionType.BETA);
 	
 	/* Instance */
 	private static BoxPlayApplication APPLICATION;

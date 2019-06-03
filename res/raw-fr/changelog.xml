@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="false">
 
+	<changelogversion versionName="3.1.24.1 BETA" changeDate="03/06/2019">
+		<changelogtext>[b]Révolution des Publicités! Patch 1[/b]</changelogtext>
+		<changelogtext>[b]Fixé![/b] Utilisation du mauvais identifiant de publicité pour les vidéos à récompenses.</changelogtext>
+	</changelogversion>
+
 	<changelogversion versionName="3.1.24 BETA" changeDate="02/06/2019">
 		<changelogtext>[b]Révolution des Publicités![/b]</changelogtext>
 		<changelogtext>[b]Ajouté![/b] Un fragment de publicité sur lequel vous pouvez cliquer si vous voulez me soutenir!</changelogtext>

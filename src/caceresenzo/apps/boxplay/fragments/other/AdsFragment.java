@@ -266,7 +266,7 @@ public class AdsFragment extends BaseBoxPlayFragment {
 				String adUnit = "ca-app-pub-3940256099942544/5224354917";
 				
 				if (!BoxPlayApplication.BUILD_DEBUG) {
-					adUnit = getString(R.string.admob_adunit_test_interstitial);
+					adUnit = getString(R.string.admob_adunit_test_rewarded_video);
 				}
 				
 				etaTextView.setText(R.string.boxplay_other_ads_eta_loading);
