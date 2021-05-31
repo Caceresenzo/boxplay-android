@@ -1,0 +1,710 @@
+{
+	"json_revision": 10,
+	"boxplay": {
+		"config_version": 3
+	},
+	"update": {
+		"update_last_version": "3.1.23",
+		"update_last_version_type": "BETA",
+		"update_file_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/release/boxplay.3-1-23.release.apk"
+		"update_name": "Search n' Go Update PREVIEW 20",
+	},
+	"files": {
+		"type/music": {
+			"j_son": {
+				"display": "J@SON",
+				"author": "",
+				"type": "author",
+				"image_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/artist_icon.png",
+				"recommended": true,
+				"language": "speechless",
+				"downloadable": true,
+				"ressources": {
+					"ressource/album": { 
+						"j_msic": {
+							"name": "J-MSIC",
+							"genre": "ELECTRONIC",
+							"image_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.j_msic/album_icon.jpg",
+							"release_date_string": "11/05/18",
+							"musics": {
+								"relax": {
+									"title": "Relax",
+									"track_id": 1,
+									"available": true,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.j_msic/J%40SON%20-%20Relax%20(J-MSIC).mp3",
+									"duration": "00:02:30"
+								},
+								"golden_beat": {
+									"title": "Golden Beat",
+									"track_id": 2,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.j_msic/J%40SON%20-%20Golden%20Beat%20(J-MSIC).mp3",
+									"duration": "00:02:23"
+								},
+								"childhood": {
+									"title": "Childhood",
+									"track_id": 3,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.j_msic/J%40SON%20-%20Childhood%20(J-MSIC).mp3",
+									"duration": "00:03:05"
+								},
+								"golden_evening": {
+									"title": "Golden Evening",
+									"track_id": 4,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.j_msic/J%40SON%20-%20Golden%20Evening%20(J-MSIC).mp3",
+									"duration": "00:07:16"
+								},
+								"sound_thunder": {
+									"title": "Sound Thunder",
+									"track_id": 5,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.j_msic/J%40SON%20-%20Sound%20Thunder%20(J-MSIC).mp3",
+									"duration": "00:04:13"
+								}
+							}
+						},
+						"jess_music": {
+							"name": "JESS_MUSIC",
+							"genre": "EASY_LISTENING;ELECTRONIC;HIP_HOP",
+							"image_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/album_icon.png",
+							"release_date_string": "09/05/18",
+							"musics": {
+								"jess_music": {
+									"title": "Jess_Music",
+									"track_id": 1,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Jess_Music%20(JESS_MUSIC).mp3",
+									"duration": "00:02:44"
+								},
+								"sound": {
+									"title": "Sound",
+									"track_id": 2,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sound%20(JESS_MUSIC).mp3",
+									"duration": "00:06:49"
+								},
+								"sound_1": {
+									"title": "Sound 1",
+									"track_id": 3,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sound%201%20(JESS_MUSIC).mp3",
+									"duration": "00:08:22"
+								},
+								"sound_2": {
+									"title": "Sound 2",
+									"track_id": 4,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sound%202%20(JESS_MUSIC).mp3",
+									"duration": "00:08:27"
+								},
+								"sound_3": {
+									"title": "Sound 3",
+									"track_id": 5,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sound%203%20(JESS_MUSIC).mp3",
+									"duration": "00:06:48"
+								},
+								"sic_1": {
+									"title": "Sic 1",
+									"track_id": 6,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sic%201%20(JESS_MUSIC).mp3",
+									"duration": "00:04:33"
+								},
+								"sic_2": {
+									"title": "Sic 2",
+									"track_id": 7,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sic%202%20(JESS_MUSIC).mp3",
+									"duration": "00:05:39"
+								},
+								"sic_3": {
+									"title": "Sic 3",
+									"track_id": 8,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sic%203%20(JESS_MUSIC).mp3",
+									"duration": "00:04:49"
+								},
+								"sic_4": {
+									"title": "Sic 4",
+									"track_id": 9,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sic%204%20(JESS_MUSIC).mp3",
+									"duration": "00:02:25"
+								},
+								"sound_techno": {
+									"title": "Sound Techno",
+									"track_id": 10,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sound%20Techno%20(JESS_MUSIC).mp3",
+									"duration": "00:05:00"
+								},
+								"sound_regea": {
+									"title": "Sound Regea",
+									"track_id": 11,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sound%20Regea%20(JESS_MUSIC).mp3",
+									"duration": "00:02:36"
+								},
+								"sounds_for_evening__part_1_": {
+									"title": "Sounds for evening [Part 1]",
+									"track_id": 12,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20Sounds%20for%20evening%20%5BPart%201%5D%20(JESS_MUSIC).mp3",
+									"duration": "00:04:01"
+								},
+								"hiphop": {
+									"title": "HipHop",
+									"track_id": 13,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/j_son/ressources/album.jess_music/J%40SON%20-%20HipHop%20(JESS_MUSIC).mp3",
+									"duration": "00:02:53"
+								}
+							}
+						}
+					}
+				}
+			},
+			"benoit": {
+				"display": "Benoit",
+				"type": "author",
+				"image_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/benoit/artist_icon.png",
+				"recommended": true,
+				"downloadable": true,
+				"ressources": {
+					"ressource/album": {
+						"best_of": {
+							"name": "Best Music",
+							"genre": "ELECTRONIC;COMEDY;EASY_LISTENING",
+							"image_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/benoit/ressources/album.best_of/album_icon.png",
+							"release_date_string": "09/02/18",
+							"musics": {
+								"tourne_toi_benoit": {
+									"title": "Tourne Toi Benoit",
+									"track_id": 1,
+									"available": true,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/benoit/ressources/album.best_of/Benoit%20-%20Tourne%20Toi%20Benoit.mp3",
+									"duration": "00:03:33"
+								},
+								"tourne_toi_benoit_video": {
+									"title": "Tourne Toi Benoit (Video)",
+									"track_id": 2,
+									"url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/store/music/benoit/ressources/album.best_of/Benoit%20-%20Tourne%20Toi%20Benoit%20%5B480p%5D.mp4",
+									"duration": "00:03:33"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"type/video": {
+			"video/anime": {
+				"rezero_kara_hajimeru_isekai_seikatsu": {
+					"language": "jpsubfr",
+					"title": "Re:Zero kara Hajimeru Isekai Seikatsu",
+					"recommended": true,
+					"image_url": "https://www.nautiljon.com/images/anime/00/61/mini/re_zero_kara_hajimeru_isekai_seikatsu_4616.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/ReZero%20kara%20Hajimeru%20Isekai%20Seikatsu/Saison%2001/ReZero%20kara%20Hajimeru%20Isekai%20Seikatsu%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"image_hd_url": "https://i1.wp.com/www.mangamag.fr/wp-content/uploads/2016/03/Re-Zero-CP.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-25"
+								}
+							}
+						}
+					},
+					"informations": {
+						"time": {
+							"added": 3213156467,
+							"updated": -1
+						}
+					}
+				},
+				"no_game__no_life": {
+					"language": "jpsubfr",
+					"title": "No Game, No Life",
+					"recommended": true,
+					"image_url": "https://www.nautiljon.com/images/anime/00/66/mini/no_game_no_life_3066.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/No%20Game,%20No%20Life/Saison%2001/No%20Game,%20No%20Life%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"image_hd_url": "https://ae01.alicdn.com/kf/HTB1f54SQVXXXXbdXFXXq6xXFXXXb/No-font-b-Game-b-font-No-Life-Shiro-Japonais-font-b-Anime-b-font-Wall.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-12"
+								}
+							}
+						}
+					}
+				},
+				"kono_subarashii_sekai_ni_shukufuku_wo_": {
+					"language": "jpsubfr",
+					"recommended": true,
+					"title": "Kono Subarashii Sekai ni Shukufuku wo!",
+					"image_url": "https://www.nautiljon.com/images/anime/00/79/mini/kono_subarashii_sekai_ni_shukufuku_wo_4697.jpg?11480376513",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Kono%20Subarashii%20Sekai%20ni%20Shukufuku%20wo!/Kono%20Subarashii%20Sekai%20ni%20Shukufuku%20wo!%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"image_hd_url": "https://orig00.deviantart.net/a8e2/f/2016/099/a/c/konosuba_poster_by_fu_reiji-d9ycmln.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-10"
+								},
+								"type/oav": {
+									"avaliable_pattern": "1"
+								}
+							}
+						},
+						"02": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Kono%20Subarashii%20Sekai%20ni%20Shukufuku%20wo!/Kono%20Subarashii%20Sekai%20ni%20Shukufuku%20wo!%20S02__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"image_hd_url": "http://blog-imgs-99.fc2.com/f/c/2/fc2momonokanzume/yandere-380460-armor-banda.jpg",
+							"title": "Kono Subarashii Sekai ni Shukufuku wo! 2",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-10"
+								},
+								"type/oav": {
+									"avaliable_pattern": "1"
+								}
+							}
+						}
+					}
+				},
+				"seitokai_yakuindomo": {
+					"language": "jpsubfr",
+					"recommended": true,
+					"title": "Seitokai Yakuindomo",
+					"image_url": "https://www.nautiljon.com/images/anime/00/69/mini/seitokai_yakuindomo_1796.jpg?11508015435",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Seitokai%20Yakuindomo/Seitokai%20Yakuindomo%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"image_hd_url": "http://ia.media-imdb.com/images/M/MV5BMzg0OGZmMzctZDAyNS00OTRjLTg3MWMtODdhNDY5OGM5MGE3XkEyXkFqcGdeQXVyMjI5MjU5OTI@._V1_UY1200_CR14606301200_AL_.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								},
+								"type/oav": {
+									"avaliable_pattern": "1-6"
+								}
+							}
+						},
+						"02": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Seitokai%20Yakuindomo/Seitokai%20Yakuindomo%20S02__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"title": "Seitokai Yakuindomo*",
+							"image_hd_url": "http://cfile28.uf.tistory.com/original/2420C54E5839842F144A27",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								},
+								"type/oav": {
+									"avaliable_pattern": "1-6",
+									"unavaliable_pattern": "7-9"
+								},
+								"type/movie": {
+									"avaliable_pattern": "1"
+								}
+							}
+						}
+					}
+				},
+				"d_frag_": {
+					"language": "jpsubfr",
+					"recommended": true,
+					"title": "D-Frag!",
+					"image_url": "https://www.nautiljon.com/images/anime/00/56/mini/d-fragments_2965.jpg?11520036908",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/D-Frag!/D-Frag!%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"title": "D-Frag!",
+							"image_hd_url": "https://cdn.snsimg.carview.co.jp/minkara/userstorage/000/013/787/521/77c532caec.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-12"
+								},
+								"type/oav": {
+									"avaliable_pattern": "1"
+								}
+							}
+						}
+					}
+				},
+				"gabriel_dropout": {
+					"language": "jpsubfr",
+					"recommended": true,
+					"title": "Gabriel DropOut",
+					"image_url": "https://www.nautiljon.com/images/anime/00/11/mini/gabriel_dropout_5811.jpg?11499150340",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Gabriel%20DropOut/Gabriel%20DropOut%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"image_hd_url": "http://b.blog.xuite.net/b/d/9/c/13390437/blog_1172061/txt/486528084/11.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-12"
+								},
+								"type/oav": {
+									"avaliable_pattern": "1-2"
+								}
+							}
+						}
+					}
+				},
+				"sword_art_online": {
+					"language": "jpsubfr",
+					"title": "Sword Art Online",
+					"image_url": "https://www.nautiljon.com/images/anime/00/43/mini/sword_art_online_2234.jpg?11509654674",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Sword%20Art%20Online/Sword%20Art%20Online%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+							"title": "Sword Art Online",
+							"image_hd_url": "https://image.tmdb.org/t/p/w1280/o1bvewomNxhKIxmk67SkwQh1HZO.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-25"
+								}
+							}
+						}
+					}
+				}
+			},
+			"video/serie": {
+				"futurama": {
+					"title": "Futurama",
+					"language": "fr",
+					"image_url": "https://seriesaddict.fr/images/saison/affiche/thumbs/affiche[1926].jpg",
+					"saisons": {
+						"01": {
+							"image_url": "http://french-stream.co/img/french-stream.com.php?src=https://i.imgur.com/V8WJwvB.jpg&w=190&h=260",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2001/Futurama%20S01__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								}
+							}
+						},
+						"02": {
+							"image_url": "http://upload.dpstreaming.cc/2013/10/Futurama_2.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2002/Futurama%20S02__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-19"
+								}
+							}
+						},
+						"03": {
+							"image_url": "http://upload.dpstreaming.ws/2013/10/poxF4.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2003/Futurama%20S03__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-22"
+								}
+							}
+						},
+						"04": {
+							"image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/f/fa/Futurama_Volume_4.png/220px-Futurama_Volume_4.png",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2004/Futurama%20S04__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-18"
+								}
+							}
+						},
+						"05": {
+							"image_url": "https://i.pinimg.com/originals/92/e6/14/92e61465a6bb7b01df005df0ec954571.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2005/Futurama%20S05__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-16"
+								}
+							}
+						},
+						"06": {
+							"image_url": "http://www.dvdseries.net/images/dvd/1311441432-futurama_vol6.jpeg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2006/Futurama%20S06__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-26"
+								}
+							}
+						},
+						"07": {
+							"image_url": "https://d2zqwr0sok29ez.cloudfront.net/series/cache/225x300_futurama-764-season-7_51dacbf46d08c.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2007/Futurama%20S07__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-26"
+								}
+							}
+						}
+					}
+				},
+				"rick_and_morty": {
+					"title": "Rick and Morty",
+					"language": "fr",
+					"image_url": "https://upload.wikimedia.org/wikipedia/en/b/b8/Rick_and_Morty_season_1.png",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Rick%20and%20Morty/Saison%201/Rick%20et%20Morty%20S01__videoFileType____episodeFormatted__%20FRENCH%20720p.mkv",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-11"
+								}
+							}
+						},
+						"02": {
+							"image_url": "https://i.pinimg.com/736x/d1/a1/d7/d1a1d72c6a4b11af18b78fac4eaf654d--top-tv-poster-print.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Rick%20and%20Morty/Saison%202/Rick%20et%20Morty%20S02__videoFileType____episodeFormatted__%20FRENCH%20480p.avi",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-10"
+								}
+							}
+						},
+						"03": {
+							"image_url": "https://i.pinimg.com/originals/1c/2c/b2/1c2cb2c6185f64df7a90b99c137ee3d5.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Rick%20and%20Morty/Saison%2003/Rick%20et%20Morty%20S3__videoFileType____episodeFormatted__.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-10"
+								}
+							}
+						}
+					}
+				},
+				"black_mirror": {
+					"title": "Black Mirror",
+					"language": "fr",
+					"image_url": "http://www.ohmygore.com/movies/black_mirror_tv/poster_01.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Black%20Mirror/Black%20Mirror%20S01E__episodeFormatted__%20FRENCH.mp4",
+							"image_hd_url": "https://www.lecranalapage.fr/wp-content/uploads/2018/01/black-mirror.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-3"
+								}
+							}
+						},
+						"02": {
+							"image_hd_url": "https://images-na.ssl-images-amazon.com/images/I/81b65lKD1WL._SL1500_.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Black%20Mirror/Black%20Mirror%20S02E__episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-3"
+								}
+							}
+						},
+						"03": {
+							"image_hd_url": "https://fanart.tv/fanart/tv/253463/seasonthumb/black-mirror-58311698dfd9f.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Black%20Mirror/Black%20Mirror%20S03E__episodeFormatted__%20FRENCH.avi",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-6"
+								}
+							}
+						},
+						"04": {
+							"image_hd_url": "https://1.bp.blogspot.com/-fngPEuJdmZ0/WkeAPH63EbI/AAAAAAAAM8s/1ga8zLrFTjo4iyAgJp-IJJivQvOC0CfhgCLcBGAs/s1600/DQ_rMSxWsAENd6L.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Black%20Mirror/Black%20Mirror%20S04E__episodeFormatted__%20FRENCH.avi",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-6"
+								}
+							}
+						}
+					}
+				},
+				"westworld": {
+					"title": "Westworld",
+					"language": "fr",
+					"image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/b/bd/Westworld_%28season_1_soundtrack%29_cover.jpg/220px-Westworld_%28season_1_soundtrack%29_cover.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Westworld/Westworld%20S01E__episodeFormatted__%20FRENCH.avi",
+							"image_hd_url": "https://media.senscritique.com/media/000016309912/source_big/Westworld.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-10"
+								}
+							}
+						},
+						"02": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Westworld/Westworld%20S02E__episodeFormatted__%20FRENCH.avi",
+							"image_hd_url": "https://i.pinimg.com/originals/fe/f4/3f/fef43f4a64aa445e342c4e8ab51e12af.jpg",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-10"
+								}
+							}
+						}
+					}
+				},
+				"batman_the_annimated_series": {
+					"title": "Batman The Animated Series (1992)",
+					"language": "fr",
+					"image_url": "http://2.media.dorkly.cvcdn.com/86/21/c862baa1f1365c78d6332cc0203394a4.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Batman%20The%20Animated%20Series/Batman%20The%20Animated%20Series%20(1992)%20S01E__episodeFormatted__%20FRENCH.mp4",
+							"image_hd_url": "https://vignette.wikia.nocookie.net/batmantheanimatedseries/images/e/e9/BTAS_Vol_3_%28Front%29.jpg/revision/latest?cb=20150920023204",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-15"
+								}
+							}
+						}
+					}
+				},
+				"las_chicas_del_cable": {
+					"title": "Les Demoiselles du téléphone",
+					"language": "fr",
+					"image_url": "http://fr.web.img6.acsta.net/pictures/17/03/03/15/00/391827.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Las%20chicas%20del%20cable/%5BStreamingDivX.co%5D__Las.Chicas.Del.Cable.S03E__episodeFormatted__.FRENCH.WEBRip.Xvid.mkv.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-8"
+								}
+							}
+						}
+					}
+				},
+				"south_park": {
+					"title": "South Park",
+					"language": "fr",
+					"image_url": "http://south-park-tv.eu/wp-content/uploads/2015/03/saison_1.jpg",
+					"saisons": {
+						"01": {
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/South%20Park/South%20Park%20S01__videoFileType____episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								}
+							}
+						},
+						"02": {
+							"image_url": "http://www.turbopix.fr/i/0fBgexSzQS.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/South%20Park/South%20Park%20S02__videoFileType____episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-18"
+								}
+							}
+						},
+						"03": {
+							"image_url": "https://images-na.ssl-images-amazon.com/images/I/51Na7t4EJbL._AC_UL320_SR226,320_.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/South%20Park/South%20Park%20S03__videoFileType____episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-17"
+								}
+							}
+						},
+						"04": {
+							"image_url": "https://images-na.ssl-images-amazon.com/images/I/71cCvICf1KL._SY445_.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/South%20Park/South%20Park%20S04__videoFileType____episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-17"
+								}
+							}
+						}
+					}
+				},
+				"breaking_bad": {
+					"title": "Breaking Bad",
+					"language": "fr",
+					"image_url": "https://images.amcnetworks.com/amc.com/wp-content/uploads/2010/12/breaking-bad-S5-400x600-compressedV1.jpg",
+					"saisons": {
+						"01": {
+							"image_url_hd": "https://pbs.twimg.com/media/DWk78m1W0AAcDse.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Breaking%20Bad/Breaking%20Bad%20S01__videoFileType____episodeFormatted__%20FRENCH.avi",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-7"
+								}
+							}
+						},
+						"02": {
+							"image_url_hd": "https://i2.wp.com/www.coverwhiz.com/content/Breaking-Bad-Season-2.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Breaking%20Bad/Breaking%20Bad%20S02__videoFileType____episodeFormatted__%20FRENCH.avi",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								}
+							}
+						},
+						"03": {
+							"image_url_hd": "http://puui.qpic.cn/vcover_vt_pic/0/pxsfnbpa25rqw2et1444957925.jpg/0",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Breaking%20Bad/Breaking%20Bad%20S03__videoFileType____episodeFormatted__%20FRENCH.avi",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								}
+							}
+						},
+						"04": {
+							"image_url_hd": "https://marvelll.fr/wp-content/uploads/2013/09/breaking-bad-poster.jpg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Breaking%20Bad/Breaking%20Bad%20S04__videoFileType____episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-13"
+								}
+							}
+						},
+						"05": {
+							"image_url_hd": "http://cdn.collider.com/wp-content/uploads/beaking-bad-season-5-part-1-poster.jpeg",
+							"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Breaking%20Bad/Breaking%20Bad%20S05__videoFileType____episodeFormatted__%20FRENCH.mp4",
+							"episodes": {
+								"type/episode": {
+									"avaliable_pattern": "1-16"
+								}
+							}
+						}
+					}
+				}
+			},
+			"video/animemovie": {
+				"a_slient_voice_1": {
+					"language": "jpsubfr",
+					"title": "Koe no Katachi",
+					"image_url": "https://www.nautiljon.com/images/anime/00/84/mini/koe_no_katachi_4548.jpg?11504612053",
+					"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime%20(Film)/Koe%20no%20Katachi%20(A%20Silent%20Voice)%20VOSTFR%20(BLURAY%201920x1036%20H264%2010b%20HE%20AAC).mp4",
+					"informations": {
+						"time": {
+							"added": 3213156467,
+							"updated": -1
+						},
+						"filedata": {
+							"warning": [
+								"cpu.usage",
+								"quality.hd"
+							]
+						}
+					}
+				},
+				"no_game_no_life__zero_1": {
+					"language": "jpsubfr",
+					"title": "No Game No Life: Zero",
+					"image_url": "https://www.nautiljon.com/images/anime/00/83/no_game_no_life_zero_5738.jpg?1528215534",
+					"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime%20(Film)/No%20Game%20no%20Life%20Zero%20(2017)%20VOSTFR-FANSUB%20BDRip%201080p%20x265%2010Bits%20-Punisher694.mkv",
+					"informations": {
+						"filedata": {
+							"warning": [
+								"cpu.usage",
+								"quality.hd"
+							]
+						}
+					}
+				}
+			},
+			"video/movie": {
+				"kingsman_1": {
+					"language": "fr",
+					"title": "Kingsman : Services secrets",
+					"image_url": "http://fr.web.img5.acsta.net/c_215_290/pictures/15/01/08/15/02/290347.jpg",
+					"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Kingsman.avi"
+				},
+				"freddy_les_griffes_de_la_nuit_1": {
+					"language": "fr",
+					"title": "Freddy - Les griffes de la nuit",
+					"image_url": "http://fr.web.img2.acsta.net/c_215_290/medias/nmedia/18/77/63/81/19416681.jpg",
+					"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Freddy%20-%20Les%20griffes%20de%20la%20nuit.avi"
+				},
+				"les_tuche_2": {
+					"language": "fr",
+					"title": "Les Tuche 2 : Le Rêve américain",
+					"image_url": "http://t1.gstatic.com/images?q=tbn:ANd9GcQUD0UrSMLZ3BToZ4mnBWy7IIf1Y0aMpTM6VYuZZS-dClSHGvcs",
+					"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Les%20Tuche%202%20FRENCH.mkv"
+				}
+			}
+		}
+	}
+}

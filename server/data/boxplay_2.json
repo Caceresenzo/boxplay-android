@@ -1,0 +1,396 @@
+{
+	"update": {
+		"update_last_version": "3",
+		"update_name": "BoxPlay 3",
+		"update_file_url": "https://caceres.freeboxos.fr:583/share/n9npNCIdbJr1Wbq8/Android/release/boxplay.3-0-0.release.apk"
+	},
+	"files": {
+		"video/anime": {
+			"rezero_kara_hajimeru_isekai_seikatsu_s01": {
+				"language" : "jp_vostfr",
+				"title": "* Re:Zero kara Hajimeru Isekai Seikatsu S01",
+				"image_url": "https://www.nautiljon.com/images/anime/00/61/mini/re_zero_kara_hajimeru_isekai_seikatsu_4616.jpg?11504131411",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/ReZero%20kara%20Hajimeru%20Isekai%20Seikatsu/Saison%2001/ReZero%20kara%20Hajimeru%20Isekai%20Seikatsu%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-25"
+					}
+				}
+			},
+			"no_game__no_life_s01": {
+				"language" : "jp_vostfr",
+				"title": "* No Game, No Life",
+				"image_url": "https://www.nautiljon.com/images/anime/00/66/mini/no_game_no_life_3066.jpg?11507667601",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/No%20Game,%20No%20Life/Saison%2001/No%20Game,%20No%20Life%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-12"
+					}
+				}
+			},
+			"assassination_classroom_s01": {
+				"language" : "jp_vostfr",
+				"title": "Assassination Classroom S01",
+				"image_url": "https://www.nautiljon.com/images/manga/00/77/mini/assassination_classroom_1677.jpg?11489846582",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Assassination%20Classroom/Saison%201/Assassination%20Classroom%20__episodeFormatted__%20Vostfr.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-22"
+					}
+				}
+			},
+			"assassination_classroom_s02": {
+				"language" : "jp_vostfr",
+				"title": "Assassination Classroom S02",
+				"image_url": "https://www.nautiljon.com/images/anime/00/03/mini/ansatsu_kyoushitsu_2nd_season_4330.jpg?11494529931",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Assassination%20Classroom/Saison%202/Assassination%20Classroom%20S02__videoFileType____episodeFormatted__%20VOSTFR%20720p.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-25"
+					}
+				}
+			},
+			"code_geass_s01": {
+				"language" : "jp_vostfr",
+				"title": "Code Geass S01",
+				"image_url": "https://www.nautiljon.com/images/anime/00/49/mini/code_geass_hangyaku_no_lelouch_294.jpg?11461966860",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Code%20Geass/Saison%201/Code%20Geass%20-%20Hangyaku%20No%20Lelouch%20R1%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-25"
+					}
+				}
+			},
+			"code_geass_s02": {
+				"language" : "jp_vostfr",
+				"title": "Code Geass S02",
+				"image_url": "https://www.nautiljon.com/images/anime/00/42/mini/code_geass_hangyaku_no_lelouch_r2_624.jpg?11480320322",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Code%20Geass/Saison%202/Code%20Geass%20-%20Hangyaku%20No%20Lelouch%20R2%20S02__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-25"
+					}
+				}
+			},
+			"nichijou_s01": {
+				"language" : "jp_vostfr",
+				"title": "Nichijou S01",
+				"image_url": "https://myanimelist.cdn-dena.com/images/anime/3/75617.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Nichijou/Saison%2001/Nichijou%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-26"
+					},
+					"type/oav": {
+						"avaliable_pattern": "1"
+					}
+				}
+			},
+			"boku_no_hero_academia_s01": {
+				"language" : "jp_vostfr",
+				"title": "Boku no Hero Academia S01",
+				"image_url": "https://www.nautiljon.com/images/anime/00/72/mini/boku_no_hero_academia_4927.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Boku%20no%20Hero%20Academia/Saison%2001/Boku%20no%20Hero%20Academia%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				}
+			},
+			"boku_no_hero_academia_s02": {
+				"language" : "jp_vostfr",
+				"title": "Boku no Hero Academia S02",
+				"image_url": "https://www.nautiljon.com/images/anime/00/72/mini/boku_no_hero_academia_4927.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Boku%20no%20Hero%20Academia/Saison%2002/Boku%20no%20Hero%20Academia%20S02__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "0-25"
+					}
+				}
+			},
+			"boku_no_hero_academia_s03": {
+				"language" : "jp_vostfr",
+				"title": "Boku no Hero Academia S03",
+				"image_url": "https://www.nautiljon.com/images/anime/00/74/mini/boku_no_hero_academia_3_7347.jpg?11523124240",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Boku%20no%20Hero%20Academia/Saison%2003/Boku%20no%20Hero%20Academia%20S03__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-3",
+						"unavaliable_pattern": "4-25"
+					}
+				}
+			},
+			"danganronpa_the_nimation_s01_present": {
+				"language" : "jp_vostfr",
+				"title": "Danganronpa The Animation (Present) S01",
+				"image_url": "https://www.nautiljon.com/images/anime/00/40/danganronpa_the_animation_2504.jpg?1467481294",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Danganronpa%20The%20Animation/Danganronpa%20The%20Animation%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				}
+			},
+			"one_punch_man_s01": {
+				"language" : "jp_vostfr",
+				"title": "One Punch-Man S01",
+				"image_url": "https://www.nautiljon.com/images/anime/00/80/mini/one_punch-man_4208.jpg?11522624195",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/One%20Punch%20Man/One.Punch.Man.__videoFileType__.__episodeFormatted__.MULTI.1080p.BluRay.x265-JOYSTICK-.mkv",
+				"episodes": {
+					"type/oav": {
+						"avaliable_pattern": "1-6"
+					}
+				}
+			},
+			"durarara___s01": {
+				"language" : "jp_vostfr",
+				"title": "Durarara!! S01",
+				"image_url": "https://www.nautiljon.com/images/anime/00/36/mini/durarara_1563.jpg?11468694178",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime/Durarara!!/Durarara!!%20S01__videoFileType____episodeFormatted__%20VOSTFR.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-24"
+					},
+					"type/oav": {
+						"avaliable_pattern": "1"
+					}
+				}
+			}
+		},
+		"video/serie": {
+			"futurama_s01": {
+				"language" : "fr",
+				"title": "Futurama S01",
+				"image_url": "https://s9.postimg.org/kx38uht4v/ag2_X6.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2001/Futurama%20S01__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				}
+			},
+			"futurama_s02": {
+				"language" : "fr",
+				"title": "Futurama S02",
+				"image_url": "http://upload.dpstreaming.cc/2013/10/Futurama_2.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2002/Futurama%20S02__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-19"
+					}
+				}
+			},
+			"futurama_s03": {
+				"language" : "fr",
+				"title": "Futurama S03",
+				"image_url": "http://upload.dpstreaming.ws/2013/10/poxF4.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2003/Futurama%20S03__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-22"
+					}
+				}
+			},
+			"futurama_s04": {
+				"language" : "fr",
+				"title": "Futurama S04",
+				"image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/f/fa/Futurama_Volume_4.png/220px-Futurama_Volume_4.png",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2004/Futurama%20S04__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-18"
+					}
+				}
+			},
+			"futurama_s05": {
+				"language" : "fr",
+				"title": "Futurama S05",
+				"image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/6/69/FuturamaMovies1.jpg/250px-FuturamaMovies1.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2005/Futurama%20S05__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-16"
+					}
+				}
+			},
+			"futurama_s06": {
+				"language" : "fr",
+				"title": "Futurama S06",
+				"image_url": "http://www.dvdseries.net/images/dvd/1311441432-futurama_vol6.jpeg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2006/Futurama%20S06__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-26"
+					}
+				}
+			},
+			"futurama_s07": {
+				"language" : "fr",
+				"title": "Futurama S07",
+				"image_url": "https://d2zqwr0sok29ez.cloudfront.net/series/cache/225x300_futurama-764-season-7_51dacbf46d08c.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Futurama/Saison%2007/Futurama%20S07__videoFileType____episodeFormatted__.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-26"
+					}
+				}
+			},
+			"rick_and_morty_s01": {
+				"language" : "fr",
+				"title": "Rick and Morty S1",
+				"image_url": "https://upload.wikimedia.org/wikipedia/en/b/b8/Rick_and_Morty_season_1.png",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Rick%20and%20Morty/Saison%201/Rick%20et%20Morty%20S01__videoFileType____episodeFormatted__%20FRENCH%20720p.mkv"
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-11"
+					}
+				},
+				"infos": [
+					"cpu.usage",
+					"quality.hd"
+				]
+			},
+			"rick_and_morty_s02": {
+				"language" : "fr",
+				"title": "Rick and Morty S2",
+				"image_url": "https://i.pinimg.com/736x/d1/a1/d7/d1a1d72c6a4b11af18b78fac4eaf654d--top-tv-poster-print.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Rick%20and%20Morty/Saison%202/Rick%20et%20Morty%20S02__videoFileType____episodeFormatted__%20FRENCH%20480p.avi"
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-10"
+					}
+				}
+			},
+			"rick_and_morty_s03": {
+				"language" : "fr",
+				"title": "Rick and Morty S3",
+				"image_url": "https://i.pinimg.com/originals/1c/2c/b2/1c2cb2c6185f64df7a90b99c137ee3d5.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Rick%20and%20Morty/Saison%2003/Rick%20et%20Morty%20S3__videoFileType____episodeFormatted__.mp4"
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-10"
+					}
+				}
+			},
+			"doctor_who_s04": {
+				"language" : "fr",
+				"title": "Doctor Who (2005) S04",
+				"image_url": "https://images-na.ssl-images-amazon.com/images/I/81pVhvSverL._SY445_.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Doctor%20Who/Saison%2004/Doctor%20Who%20(2005)%20S04__videoFileType____episodeFormatted__%20FRENCH.avi",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				}
+				"infos": [
+					"streaming.support.bad",
+					"quality.lq"
+				]
+			},
+			"doctor_who_s05": {
+				"language" : "fr",
+				"title": "Doctor Who (2005) S05",
+				"image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/85/Doctor_Who_Series_5.png/200px-Doctor_Who_Series_5.png",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/Doctor%20Who/Saison%2005/Doctor%20Who%20(2005)%20S05__videoFileType____episodeFormatted__%20FRENCH.avi",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				}
+				"infos": [
+					"streaming.support.bad",
+					"quality.lq"
+				]
+			},
+			"south_park_s01": {
+				"language" : "fr",
+				"title": "South Park S01",
+				"image_url": "http://south-park-tv.eu/wp-content/uploads/2015/03/saison_1.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/South%20Park/South%20Park%20S01__videoFileType____episodeFormatted__%20FRENCH.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				}
+			},
+			"south_park_s02": {
+				"language" : "fr",
+				"title": "South Park S02",
+				"image_url": "http://www.turbopix.fr/i/0fBgexSzQS.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/South%20Park/South%20Park%20S02__videoFileType____episodeFormatted__%20FRENCH.mp4",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-18"
+					}
+				}
+			},
+			"la_casa_de_papel_s01": {
+				"language" : "fr",
+				"title": "La Casa de Papel S01",
+				"image_url": "http://fr.web.img3.acsta.net/f_png/c_150_200/o_logo-netflix-n.png_5_se/pictures/17/05/03/08/45/266320.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/La%20Casa%20de%20Papel/Saison%2001/La%20Casa%20de%20Papel%20S01E__episodeFormatted__%20FRENCH.avi",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-13"
+					}
+				},
+				"infos": [
+					"streaming.support.bad"
+				]
+			},
+			"la_casa_de_papel_s02": {
+				"language" : "fr",
+				"title": "La Casa de Papel S02",
+				"image_url": "http://fr.web.img3.acsta.net/f_png/c_150_200/o_logo-netflix-n.png_5_se/pictures/17/05/03/08/45/266320.jpg",
+				"url_format": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Serie/La%20Casa%20de%20Papel/Saison%2002/La%20Casa%20de%20Papel%20S02E__episodeFormatted__%20FRENCH.avi",
+				"episodes": {
+					"type/episode": {
+						"avaliable_pattern": "1-9"
+					}
+				},
+				"infos": [
+					"streaming.support.bad"
+				]
+			}
+		},
+		"video/animemovie": {
+			"a_slient_voice_1": {
+				"language" : "jp_vostfr",
+				"title": "Koe no Katachi (A Silent Voice)",
+				"image_url": "https://www.nautiljon.com/images/anime/00/84/mini/koe_no_katachi_4548.jpg?11504612053",
+				"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Anime%20(Film)/Koe%20no%20Katachi%20(A%20Silent%20Voice)%20VOSTFR%20(BLURAY%201920x1036%20H264%2010b%20HE%20AAC).mp4",
+				"avaliable": true,
+				"infos": [
+					"cpu.usage",
+					"quality.hd"
+				]
+			}
+		},
+		"video/movie": {
+			"kingsman_1": {
+				"language" : "fr",
+				"title": "Kingsman : Services secrets",
+				"image_url": "http://fr.web.img5.acsta.net/c_215_290/pictures/15/01/08/15/02/290347.jpg",
+				"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Kingsman.avi",
+			},
+			"pirate_des_caraibes_5": {
+				"language" : "fr",
+				"title": "Pirates des Caraïbes : La Vengeance de Salazar",
+				"image_url": "http://fr.web.img3.acsta.net/c_215_290/pictures/17/03/02/10/13/106609.jpg",
+				"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Pirates%20des%20Cara%C3%AFbes%20%3A%20La%20Vengeance%20de%20Salazar.mkv",
+			},
+			"freddy_les_griffes_de_la_nuit_1": {
+				"language" : "fr",
+				"title": "Freddy - Les griffes de la nuit",
+				"image_url": "http://fr.web.img2.acsta.net/c_215_290/medias/nmedia/18/77/63/81/19416681.jpg",
+				"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Freddy%20-%20Les%20griffes%20de%20la%20nuit.avi",
+			},
+			"les_tuche_2": {
+				"language" : "fr",
+				"title": "Les Tuche 2 : Le Rêve américain",
+				"image_url": "http://t1.gstatic.com/images?q=tbn:ANd9GcQUD0UrSMLZ3BToZ4mnBWy7IIf1Y0aMpTM6VYuZZS-dClSHGvcs",
+				"url": "https://caceres.freeboxos.fr:583/share/tH7SEYp7Fdv0hDUN/Film/Les%20Tuche%202%20FRENCH.mkv",
+			}
+		}
+	}
+}
